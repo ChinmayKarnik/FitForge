@@ -1,0 +1,1 @@
+export { databaseController } from './DatabaseController';
