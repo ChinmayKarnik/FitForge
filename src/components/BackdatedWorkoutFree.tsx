@@ -176,6 +176,7 @@ export const BackdatedWorkoutFree = ({ onEnd }: { onEnd: () => void }) => {
       <View style={styles.container}>
         <Text style={styles.title}>Backdated Workout (Free Entry)</Text>
         <Text style={styles.subtitle}>Workout start time: {workoutDateTime ? new Date(workoutDateTime).toLocaleString() : 'Not set'}</Text>
+        <Text style={styles.text}>{JSON.stringify(workoutRef.current, null, 2)}</Text>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.addButtonText}>+ Add Exercise</Text>
         </TouchableOpacity>
