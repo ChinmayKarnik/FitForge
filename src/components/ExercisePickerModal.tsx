@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, TextInput } from 'react-native';
 import { Exercise } from '../data/types';
 
 type Props = {
@@ -10,31 +10,67 @@ type Props = {
 };
 
 export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onClose }: Props) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredExercises = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return exercises;
+    }
+    return exercises.filter((exercise) =>
+      exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [exercises, searchQuery]);
+
+  const handleClose = () => {
+    setSearchQuery('');
+    onClose();
+  };
+
+  const handleSelectExercise = (exercise: Exercise) => {
+    setSearchQuery('');
+    onSelectExercise(exercise);
+  };
+
   return (
     <Modal
       visible={visible}
       transparent={true}
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Select Exercise</Text>
+          
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search exercises..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+
           <FlatList
-            data={exercises}
+            data={filteredExercises}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.exerciseItem}
-                onPress={() => onSelectExercise(item)}
+                onPress={() => handleSelectExercise(item)}
               >
                 <Text style={styles.exerciseItemText}>{item.name}</Text>
               </TouchableOpacity>
             )}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>No exercises found</Text>
+              </View>
+            }
           />
           <TouchableOpacity
             style={styles.cancelButton}
-            onPress={onClose}
+            onPress={handleClose}
           >
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
@@ -62,6 +98,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 16,
     textAlign: 'center',
+  },
+  searchInput: {
+    borderWidth: 1,
+    borderColor: '#d0d0d0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    marginBottom: 12,
+  },
+  emptyContainer: {
+    paddingVertical: 32,
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
+    color: '#888888',
   },
   exerciseItem: {
     paddingVertical: 16,
