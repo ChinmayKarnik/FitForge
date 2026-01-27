@@ -1,9 +1,17 @@
+export interface ExerciseParameter {
+  name: string;
+  type: 'number' | 'boolean' | 'string';
+  moreIsBetter?: boolean;
+}
+
 export interface Exercise {
   id: string;
   name: string;
   description: string;
-  muscleGroups: string[];
+  muscleGroups?: string[];
   equipment?: string;
+  requiredParameters?: ExerciseParameter[];
+  optionalParameters?: ExerciseParameter[];
 }
 
 export interface Workout {

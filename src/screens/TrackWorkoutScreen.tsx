@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { databaseController } from '../data';
+import { ActiveWorkoutTracker } from '../components';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -11,19 +12,27 @@ type Props = {
 };
 
 export const TrackWorkoutScreen = ({ navigation }: Props) => {
-  const workouts = databaseController.getAllWorkouts();
-  const exercises = databaseController.getAllExercises();
+  const [isWorkoutStarted, setIsWorkoutStarted] = useState(false);
+
+  const endWorkout = () => {
+    setIsWorkoutStarted(false);
+  };
+
+  if (isWorkoutStarted) {
+    return <ActiveWorkoutTracker onEndWorkout={endWorkout} />; 
+  }
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>TrackWorkout</Text>
       
-      <Text style={styles.sectionTitle}>Workouts:</Text>
-      <Text style={styles.data}>{JSON.stringify(workouts, null, 2)}</Text>
-      
-      <Text style={styles.sectionTitle}>Exercises:</Text>
-      <Text style={styles.data}>{JSON.stringify(exercises, null, 2)}</Text>
-      
+      <TouchableOpacity 
+        style={styles.startButton} 
+        onPress={() => setIsWorkoutStarted(true)}
+      >
+        <Text style={styles.startButtonText}>Start Live Workout</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity 
         style={styles.button} 
         onPress={() => navigation.goBack()}
@@ -56,6 +65,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'monospace',
     marginBottom: 16,
+  },
+  startButton: {
+    backgroundColor: '#34C759',
+    paddingHorizontal: 30,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  startButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
   },
   button: {
     backgroundColor: '#007AFF',

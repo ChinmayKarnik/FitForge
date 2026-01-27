@@ -1,1 +1,1 @@
-export {};
+export { ActiveWorkoutTracker } from './ActiveWorkoutTracker';
