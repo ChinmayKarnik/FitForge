@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { ActiveWorkoutTracker } from '../components';
+import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -95,19 +96,10 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
     );
   }
 
-  // Placeholder for backdated workout - Free
+  // Backdated workout - Free
   if (workoutMode === 'backdated-free') {
     return (
-      <View style={styles.placeholderContainer}>
-        <Text style={styles.placeholderTitle}>Backdated Workout - Free Entry</Text>
-        <Text style={styles.placeholderText}>Coming soon...</Text>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => setWorkoutMode('backdated')}
-        >
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-      </View>
+      <BackdatedWorkoutFree onEnd={() => setWorkoutMode('selection')} />
     );
   }
 

@@ -1,0 +1,394 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput } from 'react-native';
+import AddExerciseModal from './AddExerciseModal';
+import { useWorkoutState } from '../hooks';
+
+export const BackdatedWorkoutFree = ({ onEnd }: { onEnd: () => void }) => {
+  const [showAddExercise, setShowAddExercise] = useState(false);
+  const [showDateTimePicker, setShowDateTimePicker] = useState(true);
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
+  const [year, setYear] = useState('');
+  const [hour, setHour] = useState('');
+  const [minute, setMinute] = useState('');
+  const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
+
+  const workoutRef = useRef({})
+
+  useEffect(()=>{
+     workoutRef.current = {
+        startTime:workoutDateTime,
+        endTime: workoutDateTime,
+        exercises: []
+     }
+  },[workoutDateTime])
+  
+    const addSetsForExercise = (exercise, params, loggedData) => {
+        const workout = workoutRef.current;
+        const firstSetStartTime = workout.endTime;
+        const defaultSetTime = 60*1000;
+        const numberOfSets = params.numberOfSets;
+        const restTimeBetweenSets = params.restTimeBetweenSets;
+        for (let i = 0; i < numberOfSets; i++) {
+          const setExercise = {id:exercise.id};
+          setExercise.startTime = firstSetStartTime + defaultSetTime*(i) + restTimeBetweenSets*(i);
+          setExercise.endTime = setExercise.startTime + defaultSetTime;
+          setExercise.loggedData = loggedData[i];
+          workoutRef.current.exercises.push(setExercise);
+        }
+        workoutRef.current.endTime =  firstSetStartTime + numberOfSets*(defaultSetTime) + 
+        numberOfSets*(restTimeBetweenSets);
+    }
+
+  const handleConfirmDateTime = () => {
+    if (!month || !day || !year || !hour || !minute) {
+      Alert.alert('Error', 'Please fill in all date and time fields.');
+      return;
+    }
+    const monthNum = parseInt(month);
+    const dayNum = parseInt(day);
+    const yearNum = parseInt(year);
+    const hourNum = parseInt(hour);
+    const minuteNum = parseInt(minute);
+    // Validate ranges
+    if (monthNum < 1 || monthNum > 12) {
+      Alert.alert('Error', 'Please enter a valid month (1-12).');
+      return;
+    }
+    if (dayNum < 1 || dayNum > 31) {
+      Alert.alert('Error', 'Please enter a valid day (1-31).');
+      return;
+    }
+    if (yearNum < 2020 || yearNum > new Date().getFullYear()) {
+      Alert.alert('Error', 'Please enter a valid year.');
+      return;
+    }
+    if (hourNum < 0 || hourNum > 23) {
+      Alert.alert('Error', 'Please enter a valid hour (0-23).');
+      return;
+    }
+    if (minuteNum < 0 || minuteNum > 59) {
+      Alert.alert('Error', 'Please enter a valid minute (0-59).');
+      return;
+    }
+    try {
+      const workoutDateTime = new Date(yearNum, monthNum - 1, dayNum, hourNum, minuteNum);
+      const now = new Date();
+      if (workoutDateTime > now) {
+        Alert.alert('Error', 'Workout date/time cannot be in the future.');
+        return;
+      }
+      setWorkoutDateTime(workoutDateTime.getTime());
+      setShowDateTimePicker(false);
+    } catch (error) {
+      Alert.alert('Error', 'Invalid date or time.');
+    }
+  };
+
+  const handleAddExercise = () => setShowAddExercise(true);
+  const handleEndWorkout = () => {
+    console.log('workout ending ',workoutRef.current);
+    onEnd();
+  }
+
+  return (
+    <>
+      {/* Date/Time Picker Modal */}
+      <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
+        <View style={styles.dateTimeModalOverlay}>
+          <View style={styles.dateTimeModal}>
+            <Text style={styles.dateTimeModalTitle}>When did this workout happen?</Text>
+            {/* Date Section */}
+            <Text style={styles.sectionLabel}>Date</Text>
+            <View style={styles.dateInputRow}>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabelSmall}>Month</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="MM"
+                  value={month}
+                  onChangeText={setMonth}
+                  keyboardType="numeric"
+                  maxLength={2}
+                  placeholderTextColor="#888"
+                />
+              </View>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabelSmall}>Day</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="DD"
+                  value={day}
+                  onChangeText={setDay}
+                  keyboardType="numeric"
+                  maxLength={2}
+                  placeholderTextColor="#888"
+                />
+              </View>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabelSmall}>Year</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="YYYY"
+                  value={year}
+                  onChangeText={setYear}
+                  keyboardType="numeric"
+                  maxLength={4}
+                  placeholderTextColor="#888"
+                />
+              </View>
+            </View>
+            {/* Time Section */}
+            <Text style={styles.sectionLabel}>Time (24-hour format)</Text>
+            <View style={styles.timeInputRow}>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabelSmall}>Hour</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="HH"
+                  value={hour}
+                  onChangeText={setHour}
+                  keyboardType="numeric"
+                  maxLength={2}
+                  placeholderTextColor="#888"
+                />
+              </View>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabelSmall}>Minute</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="MM"
+                  value={minute}
+                  onChangeText={setMinute}
+                  keyboardType="numeric"
+                  maxLength={2}
+                  placeholderTextColor="#888"
+                />
+              </View>
+            </View>
+            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmDateTime}>
+              <Text style={styles.confirmButtonText}>Start Logging Workout</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      {/* Main Workout Logging Interface */}
+      <View style={styles.container}>
+        <Text style={styles.title}>Backdated Workout (Free Entry)</Text>
+        <Text style={styles.subtitle}>Workout start time: {workoutDateTime ? new Date(workoutDateTime).toLocaleString() : 'Not set'}</Text>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+          <Text style={styles.addButtonText}>+ Add Exercise</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
+          <Text style={styles.endButtonText}>End Workout</Text>
+        </TouchableOpacity>
+        <Modal visible={showAddExercise} transparent animationType="slide" onRequestClose={() => setShowAddExercise(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <AddExerciseModal onClose={() => setShowAddExercise(false)} 
+                addSetsForExercise = {addSetsForExercise}/>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+    color: '#1a1a1a',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666666',
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  exerciseLogCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  exerciseName: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  exerciseDetail: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 2,
+  },
+  addButton: {
+    backgroundColor: '#34C759',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginVertical: 16,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  endButton: {
+    backgroundColor: '#FF9500',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  endButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  exerciseItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    width: '100%',
+  },
+  selectedExerciseItem: {
+    backgroundColor: '#e6f7ff',
+  },
+  exerciseItemText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#d0d0d0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    marginBottom: 12,
+    width: '100%',
+    color: '#333',
+  },
+  saveButton: {
+    backgroundColor: '#34C759',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginVertical: 8,
+    width: '100%',
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  dateTimeModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dateTimeModal: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+  },
+  dateTimeModalTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 24,
+    textAlign: 'center',
+    color: '#333',
+  },
+  sectionLabel: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 12,
+    marginTop: 16,
+    color: '#333',
+  },
+  dateInputRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  timeInputRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  inputGroup: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 4,
+  },
+  inputLabelSmall: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 4,
+    color: '#666',
+  },
+  smallInput: {
+    borderWidth: 1,
+    borderColor: '#d0d0d0',
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    textAlign: 'center',
+    width: '100%',
+    minWidth: 60,
+    color: '#333',
+  },
+  confirmButton: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 16,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  confirmButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+});

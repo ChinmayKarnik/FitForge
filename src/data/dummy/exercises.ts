@@ -42,7 +42,6 @@ export const dummyExercises: Exercise[] = [
     name: 'Deadlift',
     description: 'A compound exercise that works the entire posterior chain',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
@@ -55,7 +54,7 @@ export const dummyExercises: Exercise[] = [
     name: 'Overhead Press',
     description: 'A compound exercise that works the shoulders and triceps',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
+    
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
@@ -68,7 +67,7 @@ export const dummyExercises: Exercise[] = [
     name: 'Barbell Row',
     description: 'A compound exercise targeting the back muscles',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
+    
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
@@ -94,7 +93,7 @@ export const dummyExercises: Exercise[] = [
     name: 'Lunges',
     description: 'A unilateral leg exercise',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
+    
       { name: 'reps', type: 'number', moreIsBetter: true },
     ],
     optionalParameters: [
@@ -118,7 +117,7 @@ export const dummyExercises: Exercise[] = [
     name: 'Bicep Curls',
     description: 'An isolation exercise for the biceps',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
+    
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
@@ -131,7 +130,7 @@ export const dummyExercises: Exercise[] = [
     name: 'Tricep Extensions',
     description: 'An isolation exercise for the triceps',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
+    
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
@@ -144,7 +143,6 @@ export const dummyExercises: Exercise[] = [
     name: 'Leg Press',
     description: 'A machine-based leg exercise',
     requiredParameters: [
-      { name: 'sets', type: 'number', moreIsBetter: true },
       { name: 'reps', type: 'number', moreIsBetter: true },
       { name: 'weight', type: 'number', moreIsBetter: true },
     ],
