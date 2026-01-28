@@ -5,6 +5,7 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import { ActiveWorkoutTracker } from '../components';
 import { BackdatedWorkoutRoutine } from '../components/BackdatedWorkoutRoutine';
 import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
+import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -52,9 +53,6 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
             <Text style={styles.optionDescription}>
               Log exercises freely without following a preset structure
             </Text>
-            <View style={styles.comingSoonBadge}>
-              <Text style={styles.comingSoonText}>Coming Soon</Text>
-            </View>
           </TouchableOpacity>
 
           {/* Option 2: Backdated - Routine */}
@@ -70,9 +68,6 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
             <Text style={styles.optionDescription}>
               Fill in data for a pre-defined workout routine
             </Text>
-            <View style={styles.comingSoonBadge}>
-              <Text style={styles.comingSoonText}>Coming Soon</Text>
-            </View>
           </TouchableOpacity>
         </View>
 
