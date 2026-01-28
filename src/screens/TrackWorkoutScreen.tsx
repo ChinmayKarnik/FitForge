@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { ActiveWorkoutTracker } from '../components';
 import { BackdatedWorkoutRoutine } from '../components/BackdatedWorkoutRoutine';
+import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -25,20 +26,9 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
     return <ActiveWorkoutTracker onEndWorkout={endWorkout} />; 
   }
 
-  // Placeholder for live workout with routine
+  // Live workout with routine
   if (workoutMode === 'live-routine') {
-    return (
-      <View style={styles.placeholderContainer}>
-        <Text style={styles.placeholderTitle}>Live Workout with Routine</Text>
-        <Text style={styles.placeholderText}>Coming soon...</Text>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => setWorkoutMode('selection')}
-        >
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    return <LiveWorkoutRoutine onEndWorkout={endWorkout} />;
   }
 
   // Placeholder for backdated workout - Selection screen
@@ -132,22 +122,19 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
           </Text>
         </TouchableOpacity>
 
-        {/* Option 2: Live Workout - Template */}
+        {/* Option 2: Live Workout - Routine */}
         <TouchableOpacity 
           style={styles.optionCard} 
-          onPress={() => setWorkoutMode('live-template')}
+          onPress={() => setWorkoutMode('live-routine')}
         >
           <View style={styles.optionIcon}>
             <Text style={styles.optionIconText}>📋</Text>
           </View>
           <Text style={styles.optionTitle}>Live Workout</Text>
-          <Text style={styles.optionSubtitle}>With Template</Text>
+          <Text style={styles.optionSubtitle}>With Routine</Text>
           <Text style={styles.optionDescription}>
             Follow a pre-planned workout with rest timers and structure
           </Text>
-          <View style={styles.comingSoonBadge}>
-            <Text style={styles.comingSoonText}>Coming Soon</Text>
-          </View>
         </TouchableOpacity>
 
         {/* Option 3: Backdated Workout */}
