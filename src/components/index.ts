@@ -2,3 +2,4 @@ export { ActiveWorkoutTracker } from './ActiveWorkoutTracker';
 export { ExercisePickerModal } from './ExercisePickerModal';
 export { ExerciseFormModal } from './ExerciseFormModal';
 export { ExerciseFormField } from './ExerciseFormField';
+export { BackdatedWorkoutRoutine } from './BackdatedWorkoutRoutine';

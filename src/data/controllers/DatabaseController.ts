@@ -1,10 +1,40 @@
 import { Exercise, Workout } from '../types';
 import { dummyExercises } from '../dummy/exercises';
 import { dummyWorkouts } from '../dummy/workouts';
+import { routines as dummyRoutines } from '../dummy/routines';
 
 class DatabaseController {
   private exercises: Exercise[] = [...dummyExercises];
   private workouts: Workout[] = [...dummyWorkouts];
+  private routines = dummyRoutines.map(r => ({ ...r, exercises: r.exercises.map(e => ({ ...e })) }));
+  // Routines CRUD
+  getAllRoutines() {
+    return [...this.routines];
+  }
+
+  getRoutineById(id) {
+    return this.routines.find(routine => routine.id === id);
+  }
+
+  addRoutine(routine) {
+    const newRoutine = { ...routine, id: Date.now().toString() };
+    this.routines.push(newRoutine);
+    return newRoutine;
+  }
+
+  updateRoutine(id, updates) {
+    const index = this.routines.findIndex(routine => routine.id === id);
+    if (index === -1) return undefined;
+    this.routines[index] = { ...this.routines[index], ...updates };
+    return this.routines[index];
+  }
+
+  deleteRoutine(id) {
+    const index = this.routines.findIndex(routine => routine.id === id);
+    if (index === -1) return false;
+    this.routines.splice(index, 1);
+    return true;
+  }
 
   getAllExercises(): Exercise[] {
     return [...this.exercises];
