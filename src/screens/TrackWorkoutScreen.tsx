@@ -6,6 +6,7 @@ import { ActiveWorkoutTracker } from '../components';
 import { BackdatedWorkoutRoutine } from '../components/BackdatedWorkoutRoutine';
 import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
 import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
+import { databaseController } from '../data';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -16,6 +17,10 @@ type Props = {
 type WorkoutMode = 'selection' | 'live-free' | 'live-routine' | 'backdated' | 'backdated-free' | 'backdated-routine';
 
 export const TrackWorkoutScreen = ({ navigation }: Props) => {
+
+  console.log("ckck exercises,routines, workouts inside", databaseController.getAllExercises(),
+    databaseController.getAllRoutines(),
+    databaseController.getAllWorkouts());
   const [workoutMode, setWorkoutMode] = useState<WorkoutMode>('selection');
 
   const endWorkout = () => {
