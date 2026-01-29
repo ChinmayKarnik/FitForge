@@ -22,9 +22,18 @@ export const WorkoutSummaryCard = ({ workout }) => {
       .filter(Boolean);
   }
 
+  // Get routine name if routineId exists
+  let routineName = null;
+  if (workout.routineId) {
+    const routine = databaseController.getRoutineById(workout.routineId);
+    routineName = routine ? routine.name : null;
+  }
+
   return (
     <View style={styles.workoutItem}>
-      <Text style={styles.workoutText}>Workout ID: {workout.id}</Text>
+      {routineName && (
+        <Text style={[styles.workoutText, { color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }]}>Routine: {routineName}</Text>
+      )}
       <Text style={styles.workoutText}>Start: {new Date(workout.startTime).toLocaleString()}</Text>
       <Text style={styles.workoutText}>End: {new Date(workout.endTime).toLocaleString()}</Text>
       <Text style={styles.workoutText}>Duration: {durationStr}</Text>

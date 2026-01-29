@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
+import { databaseController } from '../data';
 
 export const ActivityScreen = () => {
   const [workouts, setWorkouts] = useState([]);

@@ -48,6 +48,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
     }
 
     const submitWorkout = ()=>{
+        workoutRef.current.routineId = selectedRoutineId;
         databaseController.addWorkout(workoutRef.current);
     }
 
