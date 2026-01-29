@@ -47,6 +47,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
         console.log("ckck ref after adding sets ", workoutRef.current)
     }
 
+    const submitWorkout = ()=>{
+        databaseController.addWorkout(workoutRef.current);
+    }
+
     const handleConfirmDateTime = () => {
         if (!month || !day || !year || !hour || !minute) {
             Alert.alert('Error', 'Please fill in all date and time fields.');
@@ -233,6 +237,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
                     setInputs={setInputs}
                     handleSetInputChange={handleSetInputChange}
                     addSetsForExercise={addSetsForExercise}
+                    submitWorkout = {submitWorkout}
                     onDiscard={() => setSelectedRoutineId(null)}
                     workoutDateTime={workoutDateTime}
                 />

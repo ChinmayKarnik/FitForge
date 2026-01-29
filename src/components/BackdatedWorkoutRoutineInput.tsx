@@ -20,14 +20,11 @@ export const BackdatedWorkoutRoutineInput = ({
   setInputs,
   handleSetInputChange,
   addSetsForExercise,
+  submitWorkout,
   onDiscard,
   workoutDateTime,
 }: Props) => {
 
- useEffect(()=>{
-    console.log('ckck set inputs are ',setInputs)
-
- },[setInputs])
 
   // Collect all set parameters for the selected routine and exercises
   let allSetParameters: { [exerciseId: string]: { setIdx: number; param: string; value: string }[] } = {};
@@ -61,6 +58,7 @@ console.log("ckck rout",routine)
         restTimeBetweenSets: Number(ex.rest)*(1000)
     },data)
     })
+    submitWorkout();
     onDiscard()
   }
 
