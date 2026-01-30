@@ -23,3 +23,5 @@ export function normalizeWidth(size: number): number {
 export function normalizeHeight(size: number): number {
   return Math.round((SCREEN_HEIGHT / REFERENCE_HEIGHT) * size);
 }
+
+export const normalize = normalizeHeight;

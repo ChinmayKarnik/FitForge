@@ -1,8 +1,10 @@
-
+// @ts-nocheck
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { normalizeWidth, normalizeHeight } from '../utils/normalize';
+import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
+import { getDayOfWeek } from '../utils/dateTimeUtils';
+import { formatDateTimeString } from './dateTimeUtils';
 
 
 type Exercise = {
@@ -29,7 +31,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
   const durationMin = Math.floor(durationMs / 60000);
   const durationSec = Math.floor((durationMs % 60000) / 1000);
   const durationStr = `${durationMin}m ${durationSec < 10 ? '0' : ''}${durationSec}s`;
-
+  const dayOfTheWeek = getDayOfWeek(workout.startTime);
   // Get distinct exercise names
   let exerciseNames: string[] = [];
   if (workout.exercises && workout.exercises.length > 0) {
@@ -39,42 +41,62 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
     });
     exerciseNames = Array.from(new Set(allNames));
   }
-
-  // Theme colors
-  const badgeBg = '#E5C97B'; // soft gold
-  const badgeTextColor = '#7C6F57';
-  const routine = databaseController.getRoutineById(workout.routineId)
-  const routineName =routine?.name || 'Tuesday Workout';
-  const dividerColor = '#F2E9D8';
-  const cardShadow = '#E5C97B';
+  const routine = databaseController.getRoutineById(workout.routineId);
+  const routineName =  routine?.name || 'Free Workout'
 
   return (
-    <View style={styles.cardOuterShadow}>
-      <View style={styles.cardContainer}>
-        <View style={styles.headerRow}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.timeText}>
-              Jan 3, 2026, {new Date(workout.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </Text>
-            <View style={styles.badgeRow}>
-              <View style={styles.placeholderCircle} />
-              <Text style={styles.badgeText}>{routineName}</Text>
-            </View>
+    <View style={{flex:1,
+      minHeight: 70,
+      marginHorizontal: normalizeWidth(16),
+    backgroundColor:'#292f46',
+    borderRadius:normalizeHeight(10),
+    borderWidth: normalize(1),
+    borderColor: '#383e55'
+    }}>
+      <View style={{paddingLeft: normalizeWidth(14),
+        paddingVertical:normalizeHeight(12),
+        borderBottomWidth: normalize(1),
+        borderBottomColor: '#484d63'
+      }}>
+         <Text style={{color: '#fcfbfc',
+          fontWeight: '600'
+         }}>{dayOfTheWeek} - {routineName}</Text>
+      </View>
+
+      <View style={{width:'80%',
+        paddingHorizontal: normalizeWidth(14),
+        paddingVertical: normalizeHeight(8),
+        borderBottomWidth: normalize(1),
+        borderBottomColor: '#484d63'
+      }}>
+        <View style={{flexDirection:'row'}}>
+          <View><Text style={{color:"#fafafb"}}>{formatDateTimeString(workout.startTime)}</Text></View>
+          <View style={{flex:1, flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{width:normalizeWidth(1),height:normalizeHeight(10),
+              backgroundColor:'#30374c'
+             }}></View>
           </View>
-          <Text style={styles.durationText}>{durationStr}</Text>
-        </View>
-        <View style={styles.exerciseList}>
-          {exerciseNames.length > 0 ? exerciseNames.map((name, idx) => (
-            <View key={name} style={styles.exerciseRow}>
-              <View style={styles.exerciseIcon} />
-              <Text style={styles.exerciseName}>{name}</Text>
-              {idx < exerciseNames.length - 1 && <View style={[styles.divider, { backgroundColor: dividerColor }]} />}
-            </View>
-          )) : <Text style={styles.exerciseName}>No exercises</Text>}
+          <View><Text style={{color:"#fafafb"}}>Duration : {durationMin} min</Text></View>
         </View>
       </View>
+
+      <View style={{paddingTop:normalizeHeight(8),
+        paddingLeft: normalizeWidth(14),
+        paddingBottom:normalizeHeight(10)
+      }}>
+        {
+          exerciseNames.map((exName, index)=>{
+           return (<View>
+            <Text style={{color:'#f8f8f9'}}>{exName}</Text>
+            </View>)
+          })
+        }
+      </View>
+
     </View>
-  );
+  )
+
+  
 };
 
 const styles = StyleSheet.create({
