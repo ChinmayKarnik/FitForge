@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import workoutSummaryCardBg from '../images/workout_summary_card_bg.png';
+import { normalizeWidth, normalizeHeight } from '../utils/normalize';
 import { databaseController } from '../data';
 
 export const WorkoutSummaryCard = ({ workout }) => {
@@ -29,27 +31,115 @@ export const WorkoutSummaryCard = ({ workout }) => {
     routineName = routine ? routine.name : null;
   }
 
+  // Card background and badge colors
+  const badgeBg = '#C6A15B'; // Closer to the reference gold
+  const badgeTextColor = '#fff';
+  const dividerColor = 'rgba(44, 36, 24, 0.08)';
+
   return (
-    <View style={styles.workoutItem}>
-      {routineName && (
-        <Text style={[styles.workoutText, { color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }]}>Routine: {routineName}</Text>
-      )}
-      <Text style={styles.workoutText}>Start: {new Date(workout.startTime).toLocaleString()}</Text>
-      <Text style={styles.workoutText}>End: {new Date(workout.endTime).toLocaleString()}</Text>
-      <Text style={styles.workoutText}>Duration: {durationStr}</Text>
-      <Text style={styles.workoutText}>Exercises: {exerciseNames.length > 0 ? exerciseNames.join(', ') : 'N/A'}</Text>
-    </View>
+    <ImageBackground
+      source={workoutSummaryCardBg}
+      style={styles.cardContainer}
+     // imageStyle={styles.cardImage}
+      resizeMode="stretch"
+    >
+     
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  workoutItem: {
-    backgroundColor: '#fff',
-    padding: 16,
-    marginBottom: 8,
-    borderRadius: 8,
+  cardContainer: {
+    overflow: 'hidden',
+    width: normalizeWidth(320),
+    aspectRatio: 1536/1024,
+    alignSelf: 'center',
   },
-  workoutText: {
+  cardImage: {
+    borderRadius: 18,
+    width: '100%',
+    height: '100%',
+  },
+  cardHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  timeText: {
+    color: '#7C6F57',
+    fontSize: 14,
+    fontFamily: 'System',
+  },
+  durationText: {
+    color: '#BFA76A',
+    fontWeight: 'bold',
+    fontSize: 15,
+    fontFamily: 'System',
+  },
+  routineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    marginTop: 2,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 999,
+    paddingVertical: 2,
+    paddingHorizontal: 14,
+    marginRight: 8,
+    minWidth: 32,
+    backgroundColor: '#C6A15B',
+    shadowColor: '#BFA76A',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  badgeIcon: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#BFA76A',
+    marginRight: 6,
+  },
+  badgeText: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    fontFamily: 'System',
+  },
+  routineName: {
+    color: '#2D2212',
+    fontWeight: 'bold',
     fontSize: 16,
+    fontFamily: 'System',
+  },
+  exerciseList: {
+    marginTop: 2,
+  },
+  exerciseRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+  },
+  exerciseIcon: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: '#E5C97B',
+    marginRight: 10,
+  },
+  exerciseName: {
+    color: '#2D2212',
+    fontSize: 15,
+    fontFamily: 'System',
+  },
+  divider: {
+    height: 1,
+    marginLeft: 28,
+    marginVertical: 0,
+    backgroundColor: '#E0DED9',
   },
 });
