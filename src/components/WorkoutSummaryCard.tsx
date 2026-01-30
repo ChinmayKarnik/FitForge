@@ -1,145 +1,169 @@
+
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import workoutSummaryCardBg from '../images/workout_summary_card_bg.png';
+import { View, Text, StyleSheet } from 'react-native';
 import { normalizeWidth, normalizeHeight } from '../utils/normalize';
 import { databaseController } from '../data';
 
-export const WorkoutSummaryCard = ({ workout }) => {
+
+type Exercise = {
+  name?: string;
+  exerciseName?: string;
+  exerciseId?: string;
+  id?: string;
+};
+
+type Workout = {
+  startTime: number;
+  endTime: number;
+  exercises?: Exercise[];
+  routineName?: string;
+};
+
+type Props = {
+  workout: Workout;
+};
+
+export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
   // Calculate duration in minutes and seconds
   const durationMs = workout.endTime - workout.startTime;
   const durationMin = Math.floor(durationMs / 60000);
   const durationSec = Math.floor((durationMs % 60000) / 1000);
-  const durationStr = `${durationMin}m ${durationSec}s`;
+  const durationStr = `${durationMin}m ${durationSec < 10 ? '0' : ''}${durationSec}s`;
 
   // Get distinct exercise names
-  let exerciseNames = [];
+  let exerciseNames: string[] = [];
   if (workout.exercises && workout.exercises.length > 0) {
-    const allIds = workout.exercises.map(e => e.exerciseId || e.id);
-    const uniqueIds = Array.from(new Set(allIds));
-    exerciseNames = uniqueIds
-      .map(id => {
-        const ex = databaseController.getExerciseById(id);
-        return ex ? ex.name : id;
-      })
-      .filter(Boolean);
+    const allNames = workout.exercises.map((e: Exercise) => {
+      const ex = databaseController.getExerciseById(e.id);
+      return ex.name;
+    });
+    exerciseNames = Array.from(new Set(allNames));
   }
 
-  // Get routine name if routineId exists
-  let routineName = null;
-  if (workout.routineId) {
-    const routine = databaseController.getRoutineById(workout.routineId);
-    routineName = routine ? routine.name : null;
-  }
-
-  // Card background and badge colors
-  const badgeBg = '#C6A15B'; // Closer to the reference gold
-  const badgeTextColor = '#fff';
-  const dividerColor = 'rgba(44, 36, 24, 0.08)';
+  // Theme colors
+  const badgeBg = '#E5C97B'; // soft gold
+  const badgeTextColor = '#7C6F57';
+  const routine = databaseController.getRoutineById(workout.routineId)
+  const routineName =routine?.name || 'Tuesday Workout';
+  const dividerColor = '#F2E9D8';
+  const cardShadow = '#E5C97B';
 
   return (
-    <ImageBackground
-      source={workoutSummaryCardBg}
-      style={styles.cardContainer}
-     // imageStyle={styles.cardImage}
-      resizeMode="stretch"
-    >
-     
-    </ImageBackground>
+    <View style={styles.cardOuterShadow}>
+      <View style={styles.cardContainer}>
+        <View style={styles.headerRow}>
+          <View style={styles.headerLeft}>
+            <Text style={styles.timeText}>
+              Jan 3, 2026, {new Date(workout.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </Text>
+            <View style={styles.badgeRow}>
+              <View style={styles.placeholderCircle} />
+              <Text style={styles.badgeText}>{routineName}</Text>
+            </View>
+          </View>
+          <Text style={styles.durationText}>{durationStr}</Text>
+        </View>
+        <View style={styles.exerciseList}>
+          {exerciseNames.length > 0 ? exerciseNames.map((name, idx) => (
+            <View key={name} style={styles.exerciseRow}>
+              <View style={styles.exerciseIcon} />
+              <Text style={styles.exerciseName}>{name}</Text>
+              {idx < exerciseNames.length - 1 && <View style={[styles.divider, { backgroundColor: dividerColor }]} />}
+            </View>
+          )) : <Text style={styles.exerciseName}>No exercises</Text>}
+        </View>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  cardOuterShadow: {
+    marginHorizontal: 16,
+    marginVertical: 14,
+    borderRadius: 24,
+    shadowColor: '#E5C97B',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.10,
+    shadowRadius: 16,
+    elevation: 8,
+  },
   cardContainer: {
-    overflow: 'hidden',
-    width: normalizeWidth(320),
-    aspectRatio: 1536/1024,
-    alignSelf: 'center',
+    backgroundColor: '#FFFDF7',
+    borderRadius: 24,
+    padding: 22,
+    minHeight: 120,
+    justifyContent: 'center',
   },
-  cardImage: {
-    borderRadius: 18,
-    width: '100%',
-    height: '100%',
-  },
-  cardHeaderRow: {
+  headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 2,
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  headerLeft: {
+    flex: 1,
   },
   timeText: {
-    color: '#7C6F57',
-    fontSize: 14,
-    fontFamily: 'System',
-  },
-  durationText: {
-    color: '#BFA76A',
-    fontWeight: 'bold',
+    color: '#A89B7C',
     fontSize: 15,
     fontFamily: 'System',
+    marginBottom: 6,
+    fontWeight: '600',
   },
-  routineRow: {
+  badgeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
-    marginTop: 2,
+    marginBottom: 0,
   },
-  badge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 999,
-    paddingVertical: 2,
-    paddingHorizontal: 14,
+  placeholderCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#F7B733',
     marginRight: 8,
-    minWidth: 32,
-    backgroundColor: '#C6A15B',
-    shadowColor: '#BFA76A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.12,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  badgeIcon: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: '#BFA76A',
-    marginRight: 6,
   },
   badgeText: {
     fontWeight: 'bold',
-    fontSize: 14,
-    fontFamily: 'System',
-  },
-  routineName: {
-    color: '#2D2212',
-    fontWeight: 'bold',
     fontSize: 16,
+    color: '#7C6F57',
     fontFamily: 'System',
+    letterSpacing: 0.2,
+  },
+  durationText: {
+    color: '#C6A15B',
+    fontWeight: 'bold',
+    fontSize: 18,
+    fontFamily: 'System',
+    alignSelf: 'flex-start',
+    marginLeft: 12,
   },
   exerciseList: {
-    marginTop: 2,
+    marginTop: 8,
   },
   exerciseRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
+    marginBottom: 4,
   },
   exerciseIcon: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     backgroundColor: '#E5C97B',
     marginRight: 10,
   },
   exerciseName: {
-    color: '#2D2212',
+    color: '#7C6F57',
     fontSize: 15,
     fontFamily: 'System',
+    fontWeight: '500',
   },
   divider: {
     height: 1,
-    marginLeft: 28,
-    marginVertical: 0,
-    backgroundColor: '#E0DED9',
+    flex: 1,
+    marginLeft: 24,
+    marginVertical: 2,
+    backgroundColor: '#F2E9D8',
   },
 });

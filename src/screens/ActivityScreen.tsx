@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
-import grokAttemptBackground from '../images/grok_attempt.jpg';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
@@ -15,13 +14,12 @@ export const ActivityScreen = () => {
     };
     loadWorkouts();
   }, []);
-
+  console.log("ckck workotus are ",workouts)
   const renderWorkout = ({ item }: { item: any }) => <WorkoutSummaryCard workout={item} />;
 
   return (
-    <ImageBackground source={grokAttemptBackground} style={styles.bg} resizeMode="cover">
+    <View style={styles.bg}>
       <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-        {/* Removed header and subheader for a cleaner look */}
         <FlatList
           data={workouts}
           renderItem={renderWorkout}
@@ -31,7 +29,7 @@ export const ActivityScreen = () => {
           contentContainerStyle={{ paddingBottom: 16 }}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -40,12 +38,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#FFF9ED', // soft light background
   },
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-    borderWidth:1,
-    borderColor:'red'
   },
   header: {
     fontSize: 28,

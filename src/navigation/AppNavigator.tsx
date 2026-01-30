@@ -4,16 +4,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import activityTabSelected from '../images/activity_tab_selected.png';
-import activityTabUnselected from '../images/activity_tab_unselected.png';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
 
-// Custom Tab Bar implementation and color constants (move above AppNavigator)
-const GOLD = '#D4AF37';
-const GOLD_DARK = '#BFA76A';
-const INACTIVE = '#A89B7C';
-const BAR_BG = '#F7F5F2';
+
+// Color palette for tab icons
+const TAB_COLORS = {
+  Activity: ['#F7B733', '#FC4A1A'], // orange gradient
+  Calendar: ['#56CCF2', '#2F80ED'], // blue gradient
+  TrackWorkout: ['#43E97B', '#38F9D7'], // green gradient
+  Statistics: ['#B06AB3', '#4568DC'], // purple gradient
+  Profile: ['#F7971E', '#FFD200'], // yellow gradient
+  Inactive: ['#E0E0E0', '#BDBDBD'],
+};
 
 function CustomTabBar({ state, descriptors, navigation }) {
   return (
@@ -31,18 +34,23 @@ function CustomTabBar({ state, descriptors, navigation }) {
           const onPress = () => {
             if (!isFocused) navigation.navigate(route.name);
           };
-          let icon = null;
-          if (route.name === 'Activity') {
-            icon = (
-              <Image
-                source={isFocused ? activityTabSelected : activityTabUnselected}
-                style={{ width: 36, height: 36, marginBottom: 2, backgroundColor: 'transparent' }}
-                resizeMode="contain"
-              />
-            );
-          } else {
-            icon = <View style={[stylesTabBar.iconCircle, { backgroundColor: isFocused ? GOLD : INACTIVE }]} />;
-          }
+          // Pick color for each tab
+          const [color1, color2] = isFocused
+            ? TAB_COLORS[route.name] || TAB_COLORS.Inactive
+            : TAB_COLORS.Inactive;
+          // Use a circle for all icons
+          const icon = (
+            <View
+              style={[
+                stylesTabBar.iconCircle,
+                {
+                  backgroundColor: color1,
+                  borderWidth: isFocused ? 2 : 0,
+                  borderColor: isFocused ? color2 : 'transparent',
+                },
+              ]}
+            />
+          );
           return (
             <TouchableOpacity
               key={route.key}
@@ -53,7 +61,17 @@ function CustomTabBar({ state, descriptors, navigation }) {
               activeOpacity={0.7}
             >
               {icon}
-              <Text style={[stylesTabBar.tabLabel, { color: isFocused ? GOLD_DARK : INACTIVE, fontWeight: isFocused ? 'bold' : 'normal' }]}>{label}</Text>
+              <Text
+                style={[
+                  stylesTabBar.tabLabel,
+                  {
+                    color: isFocused ? color2 : color1,
+                    fontWeight: isFocused ? 'bold' : 'normal',
+                  },
+                ]}
+              >
+                {label}
+              </Text>
             </TouchableOpacity>
           );
         })}
