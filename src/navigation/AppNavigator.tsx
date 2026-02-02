@@ -19,7 +19,6 @@ const TAB_COLORS = {
 };
 
 function CustomTabBar({ state, descriptors, navigation }) {
-  return null;
   return (
     <View style={stylesTabBar.barWrapper}>
       <View style={stylesTabBar.barContainer}>

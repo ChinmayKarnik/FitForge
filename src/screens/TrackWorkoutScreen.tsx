@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { ActiveWorkoutTracker } from '../components';
@@ -7,6 +7,9 @@ import { BackdatedWorkoutRoutine } from '../components/BackdatedWorkoutRoutine';
 import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
 import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
 import { databaseController } from '../data';
+import { normalizeHeight, normalizeWidth } from '../utils/normalize';
+import white_left_arrow from '../images/white-left-arrow.png';
+import TrackWorkoutCard from '../components/TrackWorkoutCard';
 
 type TrackWorkoutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'TrackWorkout'>;
 
@@ -99,6 +102,57 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
       <BackdatedWorkoutRoutine onEnd={() => setWorkoutMode('selection')} />
     );
   }
+
+  return (
+  <View style={{
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#1c2238',
+  }}>
+
+      <View style={{
+        width: '100%', borderBottomWidth: 1,
+        borderColor: 'rgba(68, 75, 95)',
+        alignItems: 'center',
+        backgroundColor: 'rgba(36, 42, 65)',
+        paddingTop: normalizeHeight(40),
+        paddingBottom: normalizeHeight(12)
+      }}>
+        <Image style={{
+          position: 'absolute',
+           top: normalizeHeight(46), left: normalizeWidth(16),
+             width:normalizeWidth(9),
+             height:normalizeWidth(9)*(86.0/51.0),
+          aspectRatio: (51.0/86.0),
+          resizeMode:'stretch'
+        }}
+          source={white_left_arrow}
+        >
+
+        </Image>
+        <Text
+          style={{
+            fontSize: 22,
+            letterSpacing: 1,
+            fontWeight: '700',
+            color: "#fefefe"
+          }}
+        >Track Workout</Text>
+
+
+
+      </View>
+
+      <View style={{marginTop:normalizeHeight(10)}}>
+        <TrackWorkoutCard type={"live-free"} onPress={() => setWorkoutMode('live-free')}/>
+        <View style={{height:normalizeHeight(12)}} ></View>
+        <TrackWorkoutCard type={"live-routine"} onPress={() => setWorkoutMode('live-routine')}/>
+        <View style={{height:normalizeHeight(12)}}></View>
+         <TrackWorkoutCard type={"live-backdated"}  onPress={() => setWorkoutMode('backdated')}/>
+      </View>
+    
+  </View>)
 
   // Workout mode selection screen
   return (
