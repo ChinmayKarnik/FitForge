@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BackHandler } from 'react-native';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { databaseController } from '../data';
 import { useWorkoutTimer, useWorkoutState, useActiveExercise } from '../hooks';
@@ -14,7 +15,8 @@ type Props = {
   onEndWorkout: () => void;
 };
 
-export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
+export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
+    
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer();
   const { workout, addExercise, endWorkout } = useWorkoutState(startTime);
   const {
@@ -56,6 +58,17 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
     onEndWorkout();
   };
 
+  useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        if (onBackPress) {
+          onBackPress();
+          return true; // Prevent other back handlers from running
+        }
+        return true;
+      });
+      return () => backHandler.remove();
+    }, [onBackPress]);
+
   return (
     <View style={{
       flex: 1,
@@ -72,9 +85,16 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
         paddingTop: normalizeHeight(40),
         paddingBottom: normalizeHeight(12)
       }}>
-        <Image style={{
-          position: 'absolute',
+        <TouchableOpacity
+        style={{
+           position: 'absolute',
           top: normalizeHeight(46), left: normalizeWidth(16),
+        }}
+        onPress ={onBackPress}
+        hitSlop={{top:20,bottom:20,left:20,right:20}}
+        >
+        <Image style={{
+         
           width: normalizeWidth(9),
           height: normalizeWidth(9) * (86.0 / 51.0),
           aspectRatio: (51.0 / 86.0),
@@ -84,6 +104,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
         >
 
         </Image>
+        </TouchableOpacity>
         <Text
           style={{
             fontSize: 22,
