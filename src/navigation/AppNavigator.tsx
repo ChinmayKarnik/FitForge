@@ -6,10 +6,17 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
-import activity_icon_unselected from '../images/activity-tab-unselected.png'
-import activity_icon_selected from '../images/activity-tab-selected.png'
-import calendar_icon_selected from '../images/calendar-tab-selected.png'
-import calendar_icon_unselected from '../images/calendar-tab-unselected.png'
+
+import activity_icon_unselected from '../images/activity-tab-unselected.png';
+import activity_icon_selected from '../images/activity-tab-selected.png';
+import calendar_icon_selected from '../images/calendar-tab-selected.png';
+import calendar_icon_unselected from '../images/calendar-tab-unselected.png';
+import track_icon_selected from '../images/track-tab-selected.png';
+import track_icon_unselected from '../images/track-tab-unselected.png';
+import stats_icon_selected from '../images/stats-tab-selected.png';
+import stats_icon_unselected from '../images/stats-tab-unselected.png';
+import profile_icon_selected from '../images/profile-tab-selected.png';
+import profile_icon_unselected from '../images/profile-tab-unselected.png';
 
 import { normalize, normalizeHeight } from '../utils/normalize';
 
@@ -36,18 +43,18 @@ const TAB_ICONS_DATA = {
     aspectRatio: (75.0/67.0)
   },
   TrackWorkout:  {
-    unselectedImage: activity_icon_unselected,
-    selectedImage: activity_icon_selected,
+    unselectedImage: track_icon_unselected,
+    selectedImage: track_icon_selected,
     aspectRatio: (79.0/78.0)
   },
   Statistics:  {
-    unselectedImage: activity_icon_unselected,
-    selectedImage: activity_icon_selected,
+    unselectedImage: stats_icon_unselected,
+    selectedImage: stats_icon_selected,
     aspectRatio: (87.0/63.0)
   },
   Profile:  {
-    unselectedImage: activity_icon_unselected,
-    selectedImage: activity_icon_selected,
+    unselectedImage: profile_icon_unselected,
+    selectedImage: profile_icon_selected,
     aspectRatio: (79.0/74.0)
   },
 }
