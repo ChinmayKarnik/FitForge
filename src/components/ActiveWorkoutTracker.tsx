@@ -182,7 +182,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
         paddingHorizontal: normalizeWidth(16),
         paddingVertical: normalizeHeight(12)
       }}>
-        <View style={{
+        <TouchableOpacity style={{
           alignItems: 'center',
           paddingVertical: normalizeHeight(12),
           borderWidth: normalize(1),
@@ -191,7 +191,9 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
           borderRadius: normalize(12),
           flexDirection: 'row',
           justifyContent: 'center',
-        }}>
+        }}
+        onPress={() => setShowExercisePicker(true)}
+        >
           <Image
             source={white_plus}
             style={{
@@ -209,8 +211,10 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
               color: '#FFFFFF',
             }}
           >Start Exercise</Text>
-        </View>
-        <View style={{
+        </TouchableOpacity>
+
+
+        <TouchableOpacity style={{
           alignItems: 'center',
           paddingVertical: normalizeHeight(12),
           borderWidth: normalize(1),
@@ -220,7 +224,9 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
           marginTop: normalize(12),
           flexDirection: 'row',
           justifyContent: 'center',
-        }}>
+        }}
+        onPress = {handleEndWorkout}
+        >
           <Image
             source={white_donut}
             style={{
@@ -238,43 +244,10 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
               color: '#FFFFFF',
             }}
           >End Workout </Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
-    </View>
-  )
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Active Workout Tracker</Text>
-
-      {activeExercise ? (
-        <>
-          <Text style={styles.timer}>Exercise: {activeExercise.name}</Text>
-          <Text style={styles.instructionText}>
-            Doing exercise, press stop when done
-          </Text>
-          <TouchableOpacity style={styles.stopButton} onPress={handleStopExercise}>
-            <Text style={styles.stopButtonText}>Stop Exercise</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <Text style={styles.timer}>Total time: {formatTime(elapsedTime)}</Text>
-          <TouchableOpacity
-            style={styles.startExerciseButton}
-            onPress={() => setShowExercisePicker(true)}
-          >
-            <Text style={styles.startExerciseButtonText}>Start Exercise</Text>
-          </TouchableOpacity>
-        </>
-      )}
-
-      <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
-        <Text style={styles.endButtonText}>End Workout</Text>
-      </TouchableOpacity>
-
-      <ExercisePickerModal
+       <ExercisePickerModal
         visible={showExercisePicker}
         exercises={exercises}
         onSelectExercise={handleSelectExercise}
@@ -290,8 +263,9 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
         onDiscard={handleDiscardExercise}
         onClose={() => setShowExerciseForm(false)}
       />
+
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
