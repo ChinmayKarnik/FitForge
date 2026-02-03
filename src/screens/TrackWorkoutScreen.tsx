@@ -154,67 +154,7 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
     
   </View>)
 
-  // Workout mode selection screen
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text style={styles.title}>Track Workout</Text>
-      <Text style={styles.subtitle}>How would you like to log your workout?</Text>
-      
-      <View style={styles.optionsContainer}>
-        {/* Option 1: Live Workout - Free */}
-        <TouchableOpacity 
-          style={styles.optionCard} 
-          onPress={() => setWorkoutMode('live-free')}
-        >
-          <View style={styles.optionIcon}>
-            <Text style={styles.optionIconText}>🏋️</Text>
-          </View>
-          <Text style={styles.optionTitle}>Live Workout</Text>
-          <Text style={styles.optionSubtitle}>Without Template</Text>
-          <Text style={styles.optionDescription}>
-            Start a workout session and log exercises as you go
-          </Text>
-        </TouchableOpacity>
-
-        {/* Option 2: Live Workout - Routine */}
-        <TouchableOpacity 
-          style={styles.optionCard} 
-          onPress={() => setWorkoutMode('live-routine')}
-        >
-          <View style={styles.optionIcon}>
-            <Text style={styles.optionIconText}>📋</Text>
-          </View>
-          <Text style={styles.optionTitle}>Live Workout</Text>
-          <Text style={styles.optionSubtitle}>With Routine</Text>
-          <Text style={styles.optionDescription}>
-            Follow a pre-planned workout with rest timers and structure
-          </Text>
-        </TouchableOpacity>
-
-        {/* Option 3: Backdated Workout */}
-        <TouchableOpacity 
-          style={styles.optionCard} 
-          onPress={() => setWorkoutMode('backdated')}
-        >
-          <View style={styles.optionIcon}>
-            <Text style={styles.optionIconText}>📝</Text>
-          </View>
-          <Text style={styles.optionTitle}>Backdated Workout</Text>
-          <Text style={styles.optionSubtitle}>Log Past Activity</Text>
-          <Text style={styles.optionDescription}>
-            Record a workout you've already completed
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity 
-        style={styles.cancelButton} 
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.cancelButtonText}>Cancel</Text>
-      </TouchableOpacity>
-    </ScrollView>
-  );
+  
 };
 
 const styles = StyleSheet.create({

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { databaseController } from '../data';
 import { useWorkoutTimer, useWorkoutState, useActiveExercise } from '../hooks';
 import { ExercisePickerModal } from './ExercisePickerModal';
 import { ExerciseFormModal } from './ExerciseFormModal';
 import { Exercise } from '../data/types';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import white_left_arrow from '../images/white-left-arrow.png';
+import white_plus from '../images/white-plus.png'
+import white_donut from '../images/white-donut.png'
 
 type Props = {
   onEndWorkout: () => void;
@@ -51,6 +55,194 @@ export const ActiveWorkoutTracker = ({ onEndWorkout }: Props) => {
     console.log('Final workout:', finalWorkout);
     onEndWorkout();
   };
+
+  return (
+    <View style={{
+      flex: 1,
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#1c2238',
+    }}>
+
+      <View style={{
+        width: '100%', borderBottomWidth: 1,
+        borderColor: 'rgba(68, 75, 95)',
+        alignItems: 'center',
+        backgroundColor: 'rgba(36, 42, 65)',
+        paddingTop: normalizeHeight(40),
+        paddingBottom: normalizeHeight(12)
+      }}>
+        <Image style={{
+          position: 'absolute',
+          top: normalizeHeight(46), left: normalizeWidth(16),
+          width: normalizeWidth(9),
+          height: normalizeWidth(9) * (86.0 / 51.0),
+          aspectRatio: (51.0 / 86.0),
+          resizeMode: 'stretch'
+        }}
+          source={white_left_arrow}
+        >
+
+        </Image>
+        <Text
+          style={{
+            fontSize: 22,
+            letterSpacing: 1,
+            fontWeight: '700',
+            color: "#fefefe"
+          }}
+        >Active Workout</Text>
+
+
+
+      </View>
+
+      <View style={{
+        borderWidth: normalize(2),
+        borderColor: '#4b5171',
+        borderRadius: normalize(12),
+        marginHorizontal: normalizeWidth(30),
+        marginTop: normalizeHeight(40),
+      }}>
+        <View style={{
+          backgroundColor: '#282e4e',
+          borderTopLeftRadius: normalize(12),
+          borderTopRightRadius: normalize(12),
+          width: '100%',
+          alignItems: 'center'
+        }}>
+          <View style={{
+            position: 'absolute',
+            right: normalizeWidth(15),
+            top: normalizeHeight(18),
+            paddingHorizontal: normalizeWidth(5),
+            paddingVertical: normalizeHeight(4),
+            backgroundColor: '#4ba15c',
+            borderRadius: normalize(8),
+            borderWidth: normalize(1),
+            borderColor: '#b0dbb5'
+          }}>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+              <View style={{
+                backgroundColor: 'white',
+                width: normalizeWidth(5),
+                height: normalizeHeight(5),
+                borderRadius: normalize(20),
+              }}></View>
+              <Text style={{
+                marginLeft: normalizeWidth(4),
+                fontSize: normalize(10),
+                fontWeight: '600',
+                letterSpacing: normalize(0.5),
+                color: '#FFFFFF',
+              }}>LIVE</Text>
+            </View>
+          </View>
+          <Text style={{
+            paddingTop: normalizeHeight(12),
+            fontSize: normalize(30),
+            fontWeight: '600',
+            letterSpacing: normalize(1),
+            lineHeight: normalizeHeight(52),
+            color: '#f2f1f4',
+          }}>{formatTime(elapsedTime)}</Text>
+
+        </View>
+
+        <View style={{
+          alignItems: 'center',
+          borderTopWidth: normalize(1),
+          borderColor: '#2b304b',
+          backgroundColor: 'rgb(30, 35, 52)a',
+          borderBottomLeftRadius: normalize(12),
+          borderBottomRightRadius: normalize(12)
+        }}>
+          <Text
+            style={{
+              fontSize: normalize(14),
+              fontWeight: '500',
+              lineHeight: normalize(18),
+              color: '#818398',
+              paddingVertical: normalizeHeight(8),
+            }}
+          >Elapsed Time</Text>
+        </View>
+      </View>
+
+      <View style={{
+        borderRadius: normalize(8),
+        borderColor: '#485172',
+        backgroundColor: '#262d51',
+        borderWidth: normalize(1),
+        marginTop: normalizeHeight(35),
+        marginHorizontal: normalizeWidth(16),
+        paddingHorizontal: normalizeWidth(16),
+        paddingVertical: normalizeHeight(12)
+      }}>
+        <View style={{
+          alignItems: 'center',
+          paddingVertical: normalizeHeight(12),
+          borderWidth: normalize(1),
+          borderColor: '#4e68a6',
+          backgroundColor: '#2f4880',
+          borderRadius: normalize(12),
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
+          <Image
+            source={white_plus}
+            style={{
+              height: normalizeHeight(12),
+              width: (112.0 / 115.0) * normalize(12),
+              aspectRatio: (115.0 / 112.0),
+              marginRight: normalizeWidth(6)
+            }}
+          />
+          <Text
+            style={{
+              fontSize: normalize(16),
+              fontWeight: '500',
+              lineHeight: normalize(20),
+              color: '#FFFFFF',
+            }}
+          >Start Exercise</Text>
+        </View>
+        <View style={{
+          alignItems: 'center',
+          paddingVertical: normalizeHeight(12),
+          borderWidth: normalize(1),
+          borderColor: '#dc6c72',
+          backgroundColor: '#ad2126',
+          borderRadius: normalize(12),
+          marginTop: normalize(12),
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
+          <Image
+            source={white_donut}
+            style={{
+              height: normalizeHeight(12),
+              width: (138.0 / 140.0) * normalize(12),
+              aspectRatio: (140.0 / 138.0),
+              marginRight: normalizeWidth(6)
+            }}
+          />
+          <Text
+            style={{
+              fontSize: normalize(16),
+              fontWeight: '500',
+              lineHeight: normalize(20),
+              color: '#FFFFFF',
+            }}
+          >End Workout </Text>
+        </View>
+      </View>
+
+    </View>
+  )
 
   return (
     <View style={styles.container}>

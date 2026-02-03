@@ -22,7 +22,7 @@ export const useWorkoutTimer = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedTime(Date.now() - startTime.current);
-    }, 700);
+    }, 100);
 
     return () => clearInterval(interval);
   }, []);
