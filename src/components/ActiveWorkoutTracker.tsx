@@ -69,6 +69,83 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
     return () => backHandler.remove();
   }, [onBackPress]);
 
+  const TimerComponent = () => {
+    return (<View style={{
+      borderWidth: normalize(2),
+      borderColor: '#4b5171',
+      borderRadius: normalize(12),
+      marginHorizontal: normalizeWidth(30),
+      marginTop: normalizeHeight(40),
+    }}>
+      <View style={{
+        backgroundColor: '#282e4e',
+        borderTopLeftRadius: normalize(12),
+        borderTopRightRadius: normalize(12),
+        width: '100%',
+        alignItems: 'center'
+      }}>
+        <View style={{
+          position: 'absolute',
+          right: normalizeWidth(15),
+          top: normalizeHeight(18),
+          paddingHorizontal: normalizeWidth(5),
+          paddingVertical: normalizeHeight(4),
+          backgroundColor: '#4ba15c',
+          borderRadius: normalize(8),
+          borderWidth: normalize(1),
+          borderColor: '#b0dbb5'
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+            <View style={{
+              backgroundColor: 'white',
+              width: normalizeWidth(5),
+              height: normalizeHeight(5),
+              borderRadius: normalize(20),
+            }}></View>
+            <Text style={{
+              marginLeft: normalizeWidth(4),
+              fontSize: normalize(10),
+              fontWeight: '600',
+              letterSpacing: normalize(0.5),
+              color: '#FFFFFF',
+            }}>LIVE</Text>
+          </View>
+        </View>
+        <Text style={{
+          paddingTop: normalizeHeight(12),
+          fontSize: normalize(30),
+          fontWeight: '600',
+          letterSpacing: normalize(1),
+          lineHeight: normalizeHeight(52),
+          color: '#f2f1f4',
+        }}>{formatTime(elapsedTime)}</Text>
+
+      </View>
+
+      <View style={{
+        alignItems: 'center',
+        borderTopWidth: normalize(1),
+        borderColor: '#2b304b',
+        backgroundColor: 'rgb(30, 35, 52)a',
+        borderBottomLeftRadius: normalize(12),
+        borderBottomRightRadius: normalize(12)
+      }}>
+        <Text
+          style={{
+            fontSize: normalize(14),
+            fontWeight: '500',
+            lineHeight: normalize(18),
+            color: '#818398',
+            paddingVertical: normalizeHeight(8),
+          }}
+        >Elapsed Time</Text>
+      </View>
+    </View>)
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -117,84 +194,108 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
 
 
       </View>
-      {activeExercise ? (<></>) :
+      {activeExercise ? (<>
+        <TimerComponent />
+        <View style={{
+          marginTop: normalizeHeight(30), alignItems: 'center',
+          marginBottom: normalize(40)
+        }}>
+          <Text
+            style={
+              {
+                fontSize: normalize(18),
+                fontWeight: '500',
+                lineHeight: normalize(20),
+                letterSpacing: normalize(0.2),
+                color: '#A9B1C2',
+              }
+            }
+          >{"Currently Performing:"}</Text>
+          <Text
+            style={
+              {
+                fontSize: normalize(28),
+                fontWeight: '600',
+                lineHeight: normalize(34),
+                letterSpacing: normalize(0.3),
+                color: '#F2F4F8',
+                marginTop: normalizeHeight(10)
+              }
+            }
+          >Pull-Ups</Text>
+        </View>
+
+
+        <TouchableOpacity style={{
+          alignItems: 'center',
+          paddingVertical: normalizeHeight(12),
+          marginHorizontal: normalizeWidth(24),
+          borderWidth: normalize(1),
+          borderColor: '#4e68a6',
+          backgroundColor: '#2f4880',
+          borderRadius: normalize(12),
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+          onPress={() => handleStopExercise()}
+        >
+          <Image
+            source={white_donut}
+            style={{
+              height: normalizeHeight(12),
+              width: (138.0 / 140.0) * normalize(12),
+              aspectRatio: (140.0 / 138.0),
+              marginRight: normalizeWidth(6)
+            }}
+          />
+          <Text
+            style={{
+              fontSize: normalize(16),
+              fontWeight: '500',
+              lineHeight: normalize(20),
+              color: '#FFFFFF',
+            }}
+          >Finish Exercise</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity style={{
+          alignItems: 'center',
+          paddingVertical: normalizeHeight(12),
+           marginHorizontal: normalizeWidth(24),
+          borderWidth: normalize(1),
+          borderColor: '#dc6c72',
+          backgroundColor: '#ad2126',
+          borderRadius: normalize(12),
+          marginTop: normalize(12),
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+          onPress={handleEndWorkout}
+        >
+          <Image
+            source={white_donut}
+            style={{
+              height: normalizeHeight(12),
+              width: (138.0 / 140.0) * normalize(12),
+              aspectRatio: (140.0 / 138.0),
+              marginRight: normalizeWidth(6)
+            }}
+          />
+          <Text
+            style={{
+              fontSize: normalize(16),
+              fontWeight: '500',
+              lineHeight: normalize(20),
+              color: '#FFFFFF',
+            }}
+          >End Workout   </Text>
+        </TouchableOpacity>
+
+      </>) :
         (
           <>
-            <View style={{
-              borderWidth: normalize(2),
-              borderColor: '#4b5171',
-              borderRadius: normalize(12),
-              marginHorizontal: normalizeWidth(30),
-              marginTop: normalizeHeight(40),
-            }}>
-              <View style={{
-                backgroundColor: '#282e4e',
-                borderTopLeftRadius: normalize(12),
-                borderTopRightRadius: normalize(12),
-                width: '100%',
-                alignItems: 'center'
-              }}>
-                <View style={{
-                  position: 'absolute',
-                  right: normalizeWidth(15),
-                  top: normalizeHeight(18),
-                  paddingHorizontal: normalizeWidth(5),
-                  paddingVertical: normalizeHeight(4),
-                  backgroundColor: '#4ba15c',
-                  borderRadius: normalize(8),
-                  borderWidth: normalize(1),
-                  borderColor: '#b0dbb5'
-                }}>
-                  <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                    <View style={{
-                      backgroundColor: 'white',
-                      width: normalizeWidth(5),
-                      height: normalizeHeight(5),
-                      borderRadius: normalize(20),
-                    }}></View>
-                    <Text style={{
-                      marginLeft: normalizeWidth(4),
-                      fontSize: normalize(10),
-                      fontWeight: '600',
-                      letterSpacing: normalize(0.5),
-                      color: '#FFFFFF',
-                    }}>LIVE</Text>
-                  </View>
-                </View>
-                <Text style={{
-                  paddingTop: normalizeHeight(12),
-                  fontSize: normalize(30),
-                  fontWeight: '600',
-                  letterSpacing: normalize(1),
-                  lineHeight: normalizeHeight(52),
-                  color: '#f2f1f4',
-                }}>{formatTime(elapsedTime)}</Text>
-
-              </View>
-
-              <View style={{
-                alignItems: 'center',
-                borderTopWidth: normalize(1),
-                borderColor: '#2b304b',
-                backgroundColor: 'rgb(30, 35, 52)a',
-                borderBottomLeftRadius: normalize(12),
-                borderBottomRightRadius: normalize(12)
-              }}>
-                <Text
-                  style={{
-                    fontSize: normalize(14),
-                    fontWeight: '500',
-                    lineHeight: normalize(18),
-                    color: '#818398',
-                    paddingVertical: normalizeHeight(8),
-                  }}
-                >Elapsed Time</Text>
-              </View>
-            </View>
-
+            <TimerComponent />
             <View style={{
               borderRadius: normalize(8),
               borderColor: '#485172',
