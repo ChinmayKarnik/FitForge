@@ -4,8 +4,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
+import activity_icon_unselected from '../images/activity-tab-unselected.png'
+import activity_icon_selected from '../images/activity-tab-selected.png'
+import calendar_icon_selected from '../images/calendar-tab-selected.png'
+import calendar_icon_unselected from '../images/calendar-tab-unselected.png'
+
+import { normalize, normalizeHeight } from '../utils/normalize';
 
 
 // Color palette for tab icons
@@ -17,6 +23,34 @@ const TAB_COLORS = {
   Profile: ['#F7971E', '#FFD200'], // yellow gradient
   Inactive: ['#E0E0E0', '#BDBDBD'],
 };
+
+const TAB_ICONS_DATA = {
+  Activity:  {
+    unselectedImage: activity_icon_unselected,
+    selectedImage: activity_icon_selected,
+    aspectRatio: (73.0/71.0)
+  },
+  Calendar:  {
+    unselectedImage: calendar_icon_unselected,
+    selectedImage: calendar_icon_selected,
+    aspectRatio: (75.0/67.0)
+  },
+  TrackWorkout:  {
+    unselectedImage: activity_icon_unselected,
+    selectedImage: activity_icon_selected,
+    aspectRatio: (79.0/78.0)
+  },
+  Statistics:  {
+    unselectedImage: activity_icon_unselected,
+    selectedImage: activity_icon_selected,
+    aspectRatio: (87.0/63.0)
+  },
+  Profile:  {
+    unselectedImage: activity_icon_unselected,
+    selectedImage: activity_icon_selected,
+    aspectRatio: (79.0/74.0)
+  },
+}
 
 function CustomTabBar({ state, descriptors, navigation }) {
   return (
@@ -35,18 +69,18 @@ function CustomTabBar({ state, descriptors, navigation }) {
             if (!isFocused) navigation.navigate(route.name);
           };
           // Pick color for each tab
-          const [color1, color2] = isFocused
-            ? TAB_COLORS[route.name] || TAB_COLORS.Inactive
-            : TAB_COLORS.Inactive;
+          const color = isFocused ?"#c62230" : "#a5a7c1"
+
+          const imgSource = isFocused ? TAB_ICONS_DATA[route.name].selectedImage:TAB_ICONS_DATA[route.name].unselectedImage 
+      
           // Use a circle for all icons
           const icon = (
-            <View
+            <Image
+              source={imgSource}
               style={[
-                stylesTabBar.iconCircle,
                 {
-                  backgroundColor: color1,
-                  borderWidth: isFocused ? 2 : 0,
-                  borderColor: isFocused ? color2 : 'transparent',
+                  height:normalizeHeight(30),
+                  aspectRatio: TAB_ICONS_DATA[route.name].aspectRatio,
                 },
               ]}
             />
@@ -58,15 +92,14 @@ function CustomTabBar({ state, descriptors, navigation }) {
               accessibilityState={isFocused ? { selected: true } : {}}
               onPress={onPress}
               style={stylesTabBar.tabItem}
-              activeOpacity={0.7}
             >
               {icon}
               <Text
                 style={[
                   stylesTabBar.tabLabel,
                   {
-                    color: isFocused ? color2 : color1,
-                    fontWeight: isFocused ? 'bold' : 'normal',
+                    color,
+                    fontWeight: 'bold',
                   },
                 ]}
               >

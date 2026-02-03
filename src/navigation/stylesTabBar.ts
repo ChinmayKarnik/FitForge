@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { normalizeHeight } from '../utils/normalize';
 
 export const stylesTabBar = StyleSheet.create({
   barWrapper: {
@@ -15,41 +16,20 @@ export const stylesTabBar = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%', // Change to less than 100% for floating effect
-    marginHorizontal: 0,
-    marginBottom: 12,
-    marginTop: 4,
-    borderRadius: 32,
-    backgroundColor: '#F7F5F2',
+    backgroundColor: '#0e1021',
     shadowColor: '#D4AF37',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.10,
     shadowRadius: 10,
     elevation: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    minHeight: 64,
-  },
-  barContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 32,
-    backgroundColor: '#F7F5F2',
-    shadowColor: '#D4AF37',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.10,
-    shadowRadius: 10,
-    elevation: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    minHeight: 64,
+    borderTopWidth: normalizeHeight(1),
+    borderTopColor: '#464969'
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 2,
+    height: normalizeHeight(70),
+    paddingTop:normalizeHeight(8)
   },
   iconCircle: {
     width: 28,
@@ -59,7 +39,6 @@ export const stylesTabBar = StyleSheet.create({
   },
   tabLabel: {
     fontSize: 13,
-    marginTop: 2,
     fontFamily: 'System',
   },
 });
