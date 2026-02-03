@@ -86,7 +86,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
       }}>
         {
           exerciseNames.map((exName, index)=>{
-           return (<View>
+           return (<View key={exName}>
             <Text style={{color:'#f8f8f9'}}>{exName}</Text>
             </View>)
           })

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
 import { normalizeHeight } from '../utils/normalize';

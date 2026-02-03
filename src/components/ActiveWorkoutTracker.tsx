@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
-    
+
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer();
   const { workout, addExercise, endWorkout } = useWorkoutState(startTime);
   const {
@@ -59,15 +59,15 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
   };
 
   useEffect(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-        if (onBackPress) {
-          onBackPress();
-          return true; // Prevent other back handlers from running
-        }
-        return true;
-      });
-      return () => backHandler.remove();
-    }, [onBackPress]);
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (onBackPress) {
+        onBackPress();
+        return true; // Prevent other back handlers from running
+      }
+      return true;
+    });
+    return () => backHandler.remove();
+  }, [onBackPress]);
 
   return (
     <View style={{
@@ -86,24 +86,24 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
         paddingBottom: normalizeHeight(12)
       }}>
         <TouchableOpacity
-        style={{
-           position: 'absolute',
-          top: normalizeHeight(46), left: normalizeWidth(16),
-        }}
-        onPress ={onBackPress}
-        hitSlop={{top:20,bottom:20,left:20,right:20}}
+          style={{
+            position: 'absolute',
+            top: normalizeHeight(46), left: normalizeWidth(16),
+          }}
+          onPress={onBackPress}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-        <Image style={{
-         
-          width: normalizeWidth(9),
-          height: normalizeWidth(9) * (86.0 / 51.0),
-          aspectRatio: (51.0 / 86.0),
-          resizeMode: 'stretch'
-        }}
-          source={white_left_arrow}
-        >
+          <Image style={{
 
-        </Image>
+            width: normalizeWidth(9),
+            height: normalizeWidth(9) * (86.0 / 51.0),
+            aspectRatio: (51.0 / 86.0),
+            resizeMode: 'stretch'
+          }}
+            source={white_left_arrow}
+          >
+
+          </Image>
         </TouchableOpacity>
         <Text
           style={{
@@ -117,158 +117,163 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
 
 
       </View>
-
-      <View style={{
-        borderWidth: normalize(2),
-        borderColor: '#4b5171',
-        borderRadius: normalize(12),
-        marginHorizontal: normalizeWidth(30),
-        marginTop: normalizeHeight(40),
-      }}>
-        <View style={{
-          backgroundColor: '#282e4e',
-          borderTopLeftRadius: normalize(12),
-          borderTopRightRadius: normalize(12),
-          width: '100%',
-          alignItems: 'center'
-        }}>
-          <View style={{
-            position: 'absolute',
-            right: normalizeWidth(15),
-            top: normalizeHeight(18),
-            paddingHorizontal: normalizeWidth(5),
-            paddingVertical: normalizeHeight(4),
-            backgroundColor: '#4ba15c',
-            borderRadius: normalize(8),
-            borderWidth: normalize(1),
-            borderColor: '#b0dbb5'
-          }}>
+      {activeExercise ? (<></>) :
+        (
+          <>
             <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              borderWidth: normalize(2),
+              borderColor: '#4b5171',
+              borderRadius: normalize(12),
+              marginHorizontal: normalizeWidth(30),
+              marginTop: normalizeHeight(40),
             }}>
               <View style={{
-                backgroundColor: 'white',
-                width: normalizeWidth(5),
-                height: normalizeHeight(5),
-                borderRadius: normalize(20),
-              }}></View>
-              <Text style={{
-                marginLeft: normalizeWidth(4),
-                fontSize: normalize(10),
-                fontWeight: '600',
-                letterSpacing: normalize(0.5),
-                color: '#FFFFFF',
-              }}>LIVE</Text>
+                backgroundColor: '#282e4e',
+                borderTopLeftRadius: normalize(12),
+                borderTopRightRadius: normalize(12),
+                width: '100%',
+                alignItems: 'center'
+              }}>
+                <View style={{
+                  position: 'absolute',
+                  right: normalizeWidth(15),
+                  top: normalizeHeight(18),
+                  paddingHorizontal: normalizeWidth(5),
+                  paddingVertical: normalizeHeight(4),
+                  backgroundColor: '#4ba15c',
+                  borderRadius: normalize(8),
+                  borderWidth: normalize(1),
+                  borderColor: '#b0dbb5'
+                }}>
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                    <View style={{
+                      backgroundColor: 'white',
+                      width: normalizeWidth(5),
+                      height: normalizeHeight(5),
+                      borderRadius: normalize(20),
+                    }}></View>
+                    <Text style={{
+                      marginLeft: normalizeWidth(4),
+                      fontSize: normalize(10),
+                      fontWeight: '600',
+                      letterSpacing: normalize(0.5),
+                      color: '#FFFFFF',
+                    }}>LIVE</Text>
+                  </View>
+                </View>
+                <Text style={{
+                  paddingTop: normalizeHeight(12),
+                  fontSize: normalize(30),
+                  fontWeight: '600',
+                  letterSpacing: normalize(1),
+                  lineHeight: normalizeHeight(52),
+                  color: '#f2f1f4',
+                }}>{formatTime(elapsedTime)}</Text>
+
+              </View>
+
+              <View style={{
+                alignItems: 'center',
+                borderTopWidth: normalize(1),
+                borderColor: '#2b304b',
+                backgroundColor: 'rgb(30, 35, 52)a',
+                borderBottomLeftRadius: normalize(12),
+                borderBottomRightRadius: normalize(12)
+              }}>
+                <Text
+                  style={{
+                    fontSize: normalize(14),
+                    fontWeight: '500',
+                    lineHeight: normalize(18),
+                    color: '#818398',
+                    paddingVertical: normalizeHeight(8),
+                  }}
+                >Elapsed Time</Text>
+              </View>
             </View>
-          </View>
-          <Text style={{
-            paddingTop: normalizeHeight(12),
-            fontSize: normalize(30),
-            fontWeight: '600',
-            letterSpacing: normalize(1),
-            lineHeight: normalizeHeight(52),
-            color: '#f2f1f4',
-          }}>{formatTime(elapsedTime)}</Text>
 
-        </View>
-
-        <View style={{
-          alignItems: 'center',
-          borderTopWidth: normalize(1),
-          borderColor: '#2b304b',
-          backgroundColor: 'rgb(30, 35, 52)a',
-          borderBottomLeftRadius: normalize(12),
-          borderBottomRightRadius: normalize(12)
-        }}>
-          <Text
-            style={{
-              fontSize: normalize(14),
-              fontWeight: '500',
-              lineHeight: normalize(18),
-              color: '#818398',
-              paddingVertical: normalizeHeight(8),
-            }}
-          >Elapsed Time</Text>
-        </View>
-      </View>
-
-      <View style={{
-        borderRadius: normalize(8),
-        borderColor: '#485172',
-        backgroundColor: '#262d51',
-        borderWidth: normalize(1),
-        marginTop: normalizeHeight(35),
-        marginHorizontal: normalizeWidth(16),
-        paddingHorizontal: normalizeWidth(16),
-        paddingVertical: normalizeHeight(12)
-      }}>
-        <TouchableOpacity style={{
-          alignItems: 'center',
-          paddingVertical: normalizeHeight(12),
-          borderWidth: normalize(1),
-          borderColor: '#4e68a6',
-          backgroundColor: '#2f4880',
-          borderRadius: normalize(12),
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-        onPress={() => setShowExercisePicker(true)}
-        >
-          <Image
-            source={white_plus}
-            style={{
-              height: normalizeHeight(12),
-              width: (112.0 / 115.0) * normalize(12),
-              aspectRatio: (115.0 / 112.0),
-              marginRight: normalizeWidth(6)
-            }}
-          />
-          <Text
-            style={{
-              fontSize: normalize(16),
-              fontWeight: '500',
-              lineHeight: normalize(20),
-              color: '#FFFFFF',
-            }}
-          >Start Exercise</Text>
-        </TouchableOpacity>
+            <View style={{
+              borderRadius: normalize(8),
+              borderColor: '#485172',
+              backgroundColor: '#262d51',
+              borderWidth: normalize(1),
+              marginTop: normalizeHeight(35),
+              marginHorizontal: normalizeWidth(16),
+              paddingHorizontal: normalizeWidth(16),
+              paddingVertical: normalizeHeight(12)
+            }}>
+              <TouchableOpacity style={{
+                alignItems: 'center',
+                paddingVertical: normalizeHeight(12),
+                borderWidth: normalize(1),
+                borderColor: '#4e68a6',
+                backgroundColor: '#2f4880',
+                borderRadius: normalize(12),
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}
+                onPress={() => setShowExercisePicker(true)}
+              >
+                <Image
+                  source={white_plus}
+                  style={{
+                    height: normalizeHeight(12),
+                    width: (112.0 / 115.0) * normalize(12),
+                    aspectRatio: (115.0 / 112.0),
+                    marginRight: normalizeWidth(6)
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: normalize(16),
+                    fontWeight: '500',
+                    lineHeight: normalize(20),
+                    color: '#FFFFFF',
+                  }}
+                >Start Exercise</Text>
+              </TouchableOpacity>
 
 
-        <TouchableOpacity style={{
-          alignItems: 'center',
-          paddingVertical: normalizeHeight(12),
-          borderWidth: normalize(1),
-          borderColor: '#dc6c72',
-          backgroundColor: '#ad2126',
-          borderRadius: normalize(12),
-          marginTop: normalize(12),
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-        onPress = {handleEndWorkout}
-        >
-          <Image
-            source={white_donut}
-            style={{
-              height: normalizeHeight(12),
-              width: (138.0 / 140.0) * normalize(12),
-              aspectRatio: (140.0 / 138.0),
-              marginRight: normalizeWidth(6)
-            }}
-          />
-          <Text
-            style={{
-              fontSize: normalize(16),
-              fontWeight: '500',
-              lineHeight: normalize(20),
-              color: '#FFFFFF',
-            }}
-          >End Workout </Text>
-        </TouchableOpacity>
-      </View>
+              <TouchableOpacity style={{
+                alignItems: 'center',
+                paddingVertical: normalizeHeight(12),
+                borderWidth: normalize(1),
+                borderColor: '#dc6c72',
+                backgroundColor: '#ad2126',
+                borderRadius: normalize(12),
+                marginTop: normalize(12),
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}
+                onPress={handleEndWorkout}
+              >
+                <Image
+                  source={white_donut}
+                  style={{
+                    height: normalizeHeight(12),
+                    width: (138.0 / 140.0) * normalize(12),
+                    aspectRatio: (140.0 / 138.0),
+                    marginRight: normalizeWidth(6)
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: normalize(16),
+                    fontWeight: '500',
+                    lineHeight: normalize(20),
+                    color: '#FFFFFF',
+                  }}
+                >End Workout </Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
 
-       <ExercisePickerModal
+
+      <ExercisePickerModal
         visible={showExercisePicker}
         exercises={exercises}
         onSelectExercise={handleSelectExercise}
