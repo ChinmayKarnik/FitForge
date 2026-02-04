@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, act } from 'react';
 import { BackHandler } from 'react-native';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { databaseController } from '../data';
@@ -11,6 +11,8 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
+import white_cross from '../images/cross-icon-white.png'
+import ExerciseForm from './ExerciseForm';
 
 type Props = {
   onEndWorkout: () => void;
@@ -32,7 +34,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
   const [showExercisePicker, setShowExercisePicker] = useState(false);
   const [showExerciseForm, setShowExerciseForm] = useState(false);
 
-  const exercises = databaseController.getAllExercises();
+  const exercises = databaseController.getAllExercises();;
 
   const handleSelectExercise = (exercise: Exercise) => {
     startExercise(exercise);
@@ -40,7 +42,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
   };
 
   const handleStopExercise = () => {
-    setShowExerciseForm(true);
+    setShowExerciseForm(true)
   };
 
   const handleSaveExercise = () => {
@@ -52,6 +54,10 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
     discardExercise();
     setShowExerciseForm(false);
   };
+
+  const onCloseExerciseForm = ()=>{
+    setShowExerciseForm(false)
+  }
 
   const handleEndWorkout = () => {
     const finalWorkout = endWorkout();
@@ -103,21 +109,36 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
           >{activeExercise.name}</Text>
         </View>
 
+        {
+          showExerciseForm ? (<>
+            <ExerciseForm 
+            exerciseName ={activeExercise.name}
+            onCloseForm = {onCloseExerciseForm}
+            exerciseId = {activeExercise.id}
+            onFormDataChange = {setFormData}
+            onSave ={handleSaveExercise}
+            onDiscard = {handleDiscardExercise}
+            />
+          </>) : (
+            <>
+              <TouchableOpacity style={styles.finishExerciseButton}
+                onPress={() => handleStopExercise()}
+              >
+                <Image
+                  source={white_donut}
+                  style={styles.buttonImage}
+                />
+                <Text
+                  style={styles.buttonText}
+                >Finish Exercise</Text>
+              </TouchableOpacity>
+            </>
+          )
+        }
 
-        <TouchableOpacity style={styles.finishExerciseButton}
-          onPress={() => handleStopExercise()}
-        >
-          <Image
-            source={white_donut}
-            style={styles.buttonImage}
-          />
-          <Text
-            style={styles.buttonText}
-          >Finish Exercise</Text>
-        </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.endWorkoutButton}
+        <TouchableOpacity style={styles.endWorkoutButton2}
           onPress={handleEndWorkout}
         >
           <Image
@@ -146,7 +167,6 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
                 >Start Exercise</Text>
               </TouchableOpacity>
 
-
               <TouchableOpacity style={styles.endWorkoutButton}
                 onPress={handleEndWorkout}
               >
@@ -170,7 +190,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
         onClose={() => setShowExercisePicker(false)}
       />
 
-      <ExerciseFormModal
+      {/* <ExerciseFormModal
         visible={showExerciseForm}
         exercise={activeExercise}
         formData={formData}
@@ -178,7 +198,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
         onSave={handleSaveExercise}
         onDiscard={handleDiscardExercise}
         onClose={() => setShowExerciseForm(false)}
-      />
+      /> */}
 
     </View>
   )
@@ -249,6 +269,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   endWorkoutButton: {
+    alignItems: 'center',
+    paddingVertical: normalizeHeight(12),
+    borderWidth: normalize(1),
+    borderColor: '#dc6c72',
+    backgroundColor: '#ad2126',
+    borderRadius: normalize(12),
+    marginTop: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  endWorkoutButton2: {
     alignItems: 'center',
     paddingVertical: normalizeHeight(12),
     marginHorizontal: normalizeWidth(24),

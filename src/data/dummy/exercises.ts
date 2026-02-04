@@ -1,14 +1,14 @@
 import { Exercise } from '../types';
 
-export const dummyExercises: Exercise[] = [
+export const dummyExercises = [
   {
     id: '1',
     name: 'Weighted Push-ups',
     description: 'A compound exercise that works the chest, shoulders, and triceps',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
-      { name: 'toFailure', type: 'boolean' },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
+      { name: 'Weight', type: 'weight', moreIsBetter: true },
+      { name: 'To Failure', type: 'boolean' },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -20,8 +20,8 @@ export const dummyExercises: Exercise[] = [
     description: 'A compound exercise that works the legs and core',
     requiredParameters: [
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
-      { name: 'toFailure', type: 'boolean' },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
+      { name: 'To Failure', type: 'boolean' },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -32,8 +32,8 @@ export const dummyExercises: Exercise[] = [
     name: 'Pull-ups',
     description: 'An upper body exercise that works the back and biceps',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true, },
-      { name: 'toFailure', type: 'boolean' },
+      { name: 'Reps', type: 'reps', moreIsBetter: true, },
+      { name: 'To Failure', type: 'boolean' },
     ],
     optionalParameters: [],
   },
@@ -42,8 +42,8 @@ export const dummyExercises: Exercise[] = [
     name: 'Deadlift',
     description: 'A compound exercise that works the entire posterior chain',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
+      { name: 'Weight', type: 'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -56,7 +56,7 @@ export const dummyExercises: Exercise[] = [
     requiredParameters: [
     
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -69,7 +69,7 @@ export const dummyExercises: Exercise[] = [
     requiredParameters: [
     
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -81,10 +81,10 @@ export const dummyExercises: Exercise[] = [
     description: 'A bodyweight exercise for chest and triceps',
     requiredParameters: [
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'toFailure', type: 'boolean' },
+      { name: 'To Failure', type: 'boolean' },
     ],
     optionalParameters: [
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
       { name: 'notes', type: 'string' },
     ],
   },
@@ -97,7 +97,7 @@ export const dummyExercises: Exercise[] = [
       { name: 'reps', type: 'number', moreIsBetter: true },
     ],
     optionalParameters: [
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
       { name: 'notes', type: 'string' },
     ],
   },
@@ -119,7 +119,7 @@ export const dummyExercises: Exercise[] = [
     requiredParameters: [
     
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -132,7 +132,7 @@ export const dummyExercises: Exercise[] = [
     requiredParameters: [
     
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
@@ -144,7 +144,7 @@ export const dummyExercises: Exercise[] = [
     description: 'A machine-based leg exercise',
     requiredParameters: [
       { name: 'reps', type: 'number', moreIsBetter: true },
-      { name: 'weight', type: 'number', moreIsBetter: true },
+      { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'notes', type: 'string' },
