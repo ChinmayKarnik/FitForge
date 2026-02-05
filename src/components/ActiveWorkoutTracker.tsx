@@ -62,6 +62,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
   }
 
   const handleEndWorkout = () => {
+    endWorkout()
     setShowEndModal(true);
   };
 
