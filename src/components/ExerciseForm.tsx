@@ -5,6 +5,7 @@ import white_cross from '../images/cross-icon-white.png'
 import { databaseController } from '../data';
 import YesNoSelection from './YesNoSelection';
 import NumberSelection from './NumberSelection';
+import WeightSelection from './WeightSelection';
 
 const ParameterValueSelection = ({value,setValue,parameter}) =>{
 
@@ -13,6 +14,9 @@ const ParameterValueSelection = ({value,setValue,parameter}) =>{
     } 
     if(parameter.type==='reps'){
         return <NumberSelection value={value} setValue={setValue} />
+    }
+    if(parameter.type ==='weight'){
+      return <WeightSelection value={value} setValue={setValue} />
     }
     return <></>
 }
@@ -23,6 +27,7 @@ const RequiredParameterField = ({ parameter, showBottomSeparator = true,
   let defaultValue = null;
   if(parameter.type === 'boolean')defaultValue = true;
   if(parameter.type==='reps') defaultValue = 0;
+  if(parameter.type==='weight') defaultValue = 0;
 
   const [value, setValue] = useState(defaultValue);
 
@@ -127,7 +132,7 @@ const ExerciseForm: React.FC = ({
                     marginLeft: -normalize(12),
                     backgroundColor:'#383856',
                     marginTop:normalizeHeight(15),
-                 }}> </View>
+                 }}></View>
                  
                  <View>
                     {
