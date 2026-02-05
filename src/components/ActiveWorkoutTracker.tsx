@@ -1,6 +1,6 @@
 import React, { useState, useEffect, act } from 'react';
 import { BackHandler } from 'react-native';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native';
 import { databaseController } from '../data';
 import { useWorkoutTimer, useWorkoutState, useActiveExercise } from '../hooks';
 import { ExercisePickerModal } from './ExercisePickerModal';
@@ -13,6 +13,7 @@ import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
 import white_cross from '../images/cross-icon-white.png'
 import ExerciseForm from './ExerciseForm';
+import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
 type Props = {
   onEndWorkout: () => void;
@@ -33,6 +34,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
 
   const [showExercisePicker, setShowExercisePicker] = useState(false);
   const [showExerciseForm, setShowExerciseForm] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
 
   const exercises = databaseController.getAllExercises();;
 
@@ -60,9 +62,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
   }
 
   const handleEndWorkout = () => {
-    const finalWorkout = endWorkout();
-    console.log('Final workout:', finalWorkout);
-    onEndWorkout();
+    setShowEndModal(true);
   };
 
   useEffect(() => {
@@ -203,6 +203,10 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
         onDiscard={handleDiscardExercise}
         onClose={() => setShowExerciseForm(false)}
       /> */}
+
+      <EndActiveWorkoutModal
+       workout = {workout}
+       visible={showEndModal} onClose={() => setShowEndModal(false)} />
 
     </View>
   )
