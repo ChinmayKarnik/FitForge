@@ -5,6 +5,9 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const EndActiveWorkoutModal = ({ visible, onClose }) => {
 
+    const dayOfTheWeek = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+    
+    const workoutDefaultName = `${dayOfTheWeek} Workout`
     const exercisesList = [
         {
             name: 'Pull-Ups',
@@ -84,7 +87,7 @@ return (
             fontSize: normalize(16),
             paddingVertical: normalizeHeight(5)
            }}
-           >Thursday Pull Workout</Text>
+           >{workoutDefaultName}</Text>
         </View>
 
         <Text
