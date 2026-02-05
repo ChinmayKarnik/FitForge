@@ -179,8 +179,12 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
                 >End Workout </Text>
               </TouchableOpacity>
             </View>
+            {
+              
+            }
           </>
         )}
+      
 
 
       <ExercisePickerModal
