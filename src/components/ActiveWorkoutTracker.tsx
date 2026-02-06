@@ -14,6 +14,7 @@ import white_donut from '../images/white-donut.png'
 import white_cross from '../images/cross-icon-white.png'
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
+import CurrentWorkoutList from './CurrentWorkoutList';
 
 type Props = {
   onEndWorkout: () => void;
@@ -181,7 +182,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
               </TouchableOpacity>
             </View>
             {
-              
+              <CurrentWorkoutList workout={workout}/> 
             }
           </>
         )}

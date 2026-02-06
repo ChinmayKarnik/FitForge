@@ -20,11 +20,17 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
     // Calculate duration in ms
     const durationMs = workout?.duration;
     // Format duration as HH : MM : SS
-    const pad = (n) => n.toString().padStart(2, '0');
     const hours = Math.floor(durationMs / (1000 * 60 * 60));
     const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((durationMs % (1000 * 60)) / 1000);
-    const workoutDurationFormatted = `${pad(hours)} : ${pad(minutes)} : ${pad(seconds)}`;
+    let workoutDurationFormatted = '';
+    if (hours > 0) {
+        workoutDurationFormatted = `${hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''}` : ''}${minutes > 0 ? `${hours > 0 ? ' ' : ''}${minutes} min${minutes !== 1 ? 's' : ''}` : ''}`.trim();
+    } else if (minutes > 0) {
+        workoutDurationFormatted = `${minutes} min${minutes !== 1 ? 's' : ''}${seconds > 0 ? ` ${seconds} sec${seconds !== 1 ? 's' : ''}` : ''}`;
+    } else {
+        workoutDurationFormatted = `${seconds} sec${seconds !== 1 ? 's' : ''}`;
+    }
 
     const onSaveWorkout = () => {
         databaseController.addWorkout(workout);
