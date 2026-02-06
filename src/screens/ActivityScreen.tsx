@@ -40,7 +40,9 @@ export const ActivityScreen = () => {
           keyExtractor={(item) => item.id}
           ListEmptyComponent={<Text style={styles.emptyText}>No workouts yet.</Text>}
           ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(12) }} />}
-          contentContainerStyle={{ marginTop:normalizeHeight(12) }}
+          contentContainerStyle={{ marginTop:normalizeHeight(12),
+            marginVertical:normalizeHeight(40)
+           }}
         />
     </View>
   );

@@ -19,7 +19,7 @@ type Props = {
   onEndWorkout: () => void;
 };
 
-export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
+export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) => {
 
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer();
   const { workout, addExercise, endWorkout } = useWorkoutState(startTime);
@@ -206,8 +206,11 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress }) => {
       /> */}
 
       <EndActiveWorkoutModal
-       workout = {workout}
-       visible={showEndModal} onClose={() => setShowEndModal(false)} />
+        workout={workout}
+        visible={showEndModal}
+        onClose={() => setShowEndModal(false)}
+        navigation={navigation}
+      />
 
     </View>
   )

@@ -32,11 +32,11 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
   // Live workout without template (already implemented)
   if (workoutMode === 'live-free') {
-    return <ActiveWorkoutTracker onEndWorkout={endWorkout} onBackPress = {
-      ()=>{
-        setWorkoutMode('selection')
-      }
-    } />; 
+    return <ActiveWorkoutTracker 
+      onEndWorkout={endWorkout} 
+      onBackPress={() => setWorkoutMode('selection')} 
+      navigation={navigation}
+    />;
   }
 
   // Live workout with routine

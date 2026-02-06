@@ -4,17 +4,19 @@ import { Modal, View, Text, TouchableOpacity, TextInput, Image } from 'react-nat
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getExercisesListFromWorkout } from '../data/utils/workoutUtils';
 import notepad_with_exclam from '../images/notepad-with-exclaim.png'
+import { databaseController } from '../data';
 
-const EndActiveWorkoutModal = ({ visible, onClose, workout }) => {
+const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
 
     const dayOfTheWeek = new Date().toLocaleDateString('en-US', { weekday: 'long' });
 
     const workoutDefaultName = `${dayOfTheWeek} Workout`
     const [workoutName, setWorkoutName] = useState(workoutDefaultName);
 
-
+    
 
     const exercisesList = getExercisesListFromWorkout(workout)
+    const isNoExercisesLogged = !exercisesList.length
     // Calculate duration in ms
     const durationMs = workout?.duration;
     // Format duration as HH : MM : SS
@@ -24,6 +26,16 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout }) => {
     const seconds = Math.floor((durationMs % (1000 * 60)) / 1000);
     const workoutDurationFormatted = `${pad(hours)} : ${pad(minutes)} : ${pad(seconds)}`;
 
+    const onSaveWorkout = () => {
+        databaseController.addWorkout(workout);
+        if (navigation) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Activity' }],
+            });
+        }
+    }
+   
     return (
         <Modal
             visible={visible}
@@ -113,7 +125,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout }) => {
                             }}
                         >Exercises Performed</Text>
 
-                        {!!exercisesList?.length &&
+                        {!isNoExercisesLogged &&
                             (<View style={{
                                 borderWidth: normalize(1), borderColor: '#33344f',
                                 backgroundColor: "#1d2039",
@@ -210,7 +222,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout }) => {
                             marginBottom: normalizeHeight(16)
                         }}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     backgroundColor: '#313967',
                                     borderRadius: normalize(8),
@@ -219,8 +231,13 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout }) => {
                                     alignItems: 'center',
                                     borderWidth: normalize(1),
                                     borderColor: '#536196',
-                                }}
-                                onPress={() => { }}
+                                },
+                                !!isNoExercisesLogged && {
+                                    opacity:0.3
+                                }
+                            ]}
+                                onPress={onSaveWorkout}
+                                disabled= {isNoExercisesLogged}
                                 activeOpacity={0.8}
                             >
                                 <Text style={{ color: '#e4e5ee', fontWeight: '500', fontSize: normalize(15), letterSpacing: 0.5 }}>Save Workout</Text>

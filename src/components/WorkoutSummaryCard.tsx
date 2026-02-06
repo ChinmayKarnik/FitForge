@@ -36,7 +36,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
   let exerciseNames: string[] = [];
   if (workout.exercises && workout.exercises.length > 0) {
     const allNames = workout.exercises.map((e: Exercise) => {
-      const ex = databaseController.getExerciseById(e.id);
+      const ex = databaseController.getExerciseById(e.exerciseId);
       return ex.name;
     });
     exerciseNames = Array.from(new Set(allNames));
