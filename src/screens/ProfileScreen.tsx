@@ -1,13 +1,170 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { Activity } from 'react';
+import ProfilePageSection from '../components/ProfilePageSection';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import profile_photo_default from '../images/profile-photo-default.png';
+import camera from '../images/camera-blue-white.png'
+import activity_image from '../images/activity-tab-selected.png'
+import blue_pencil from '../images/blue-pencil.png';
+import calendar from '../images/calendar-tab-selected.png';
+import stats_icon from '../images/stats-tab-unselected.png';
+import routines_icon from '../images/notepad-with-ticks.png'
+
+const sections = [
+  {
+    name: 'Routines',
+    route: 'Routines',
+    icon: routines_icon,
+    aspectRatio: (379.0/432.0)
+  },
+  {
+    name: 'Activity',
+    route: 'Activity',
+    icon: activity_image,
+    aspectRatio: 1.0
+  },
+  {
+    name: 'Stats',
+    route: 'Statistics',
+    icon: stats_icon,
+    aspectRatio: (87.0/63.0)
+  },
+  {
+    name: 'Calendar',
+    route: 'Calendar',
+    icon: calendar,
+    aspectRatio: (78.0/69.0)
+  },
+];
 
 export const ProfileScreen = () => {
-  return <View style={styles.container} />;
+
+  const profilePhotoHeight = normalizeHeight(150);
+  const profilePhotoAspectRatio = 100.0/100.0;
+  const profilePhotoWidth = profilePhotoHeight * profilePhotoAspectRatio;
+
+  const cameraIconHeight = normalizeHeight(40);
+  const cameraIconAspectRatio = 24.0/24.0;
+  const cameraIconWidth = cameraIconHeight * cameraIconAspectRatio;
+
+  const bluePencilHeight = normalizeHeight(14);
+  const bluePencilAspectRatio = 24.0/24.0;
+  const bluePencilWidth = bluePencilHeight * bluePencilAspectRatio;
+
+  return (<View style={styles.container} >
+     <View style={{width:'100%',borderWidth:1,
+            borderColor: 'rgba(68, 75, 95)',
+              alignItems:'center',
+              backgroundColor: 'rgba(36, 42, 65)',
+              paddingTop:normalizeHeight(40),
+              paddingBottom:normalizeHeight(12)
+            }}>
+              <Text
+              style={{fontSize:22,
+                letterSpacing: 1,
+                fontWeight: '700',
+                color:"#fefefe"
+              }}
+              >Profile</Text>
+            </View>
+     <TouchableOpacity key={"profile-pic-section"}
+     style={{alignItems:'center',
+      marginTop:normalizeHeight(20),
+     }}
+     >
+        <Image
+        style={{width:profilePhotoWidth,height:profilePhotoHeight}}
+        source={profile_photo_default}
+         />
+      <TouchableOpacity style={{
+        position: 'absolute',
+        bottom: normalizeHeight(10),
+        right: normalizeHeight(105),
+      }}>
+        <Image
+          style={{
+            width: cameraIconWidth, height: cameraIconHeight,
+
+          }}
+          source={camera}
+        />
+      </TouchableOpacity>
+     </TouchableOpacity>
+     <TouchableOpacity style={{
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'center',
+      marginTop: normalizeHeight(5)
+      }}>
+      <Text
+        style={{
+          fontSize: normalize(22),
+          fontWeight: '600',
+          color: '#f9fafb',
+          letterSpacing: 0.2,
+          textAlign: 'center',
+        }}
+      >John Doe</Text>
+      <Image 
+        style={{width:bluePencilWidth,height:bluePencilHeight,
+          marginTop:normalize(6),
+          marginLeft:normalize(6),
+          tintColor: '#6e94cd'
+        }}
+        source={blue_pencil}
+      />
+     </TouchableOpacity>
+      
+    <TouchableOpacity
+      key={"bio-section"}
+      style={{
+        padding: normalize(12),
+        borderWidth: normalize(1),
+        borderColor: '#323b62',
+        borderRadius: normalize(10),
+        marginTop:normalizeHeight(15),
+        backgroundColor: '#2a3259',
+        marginHorizontal:normalizeWidth(12)
+      }}
+    >
+      <Text
+        style={
+          {
+            fontSize: normalize(14),
+            fontWeight: '400',
+            color: '#abb1cf',
+            lineHeight: normalizeHeight(20),
+          }
+        }
+      >
+        Fitness enthusiast. Working hard everyday{"\n"}to improve myself and reach new goals.
+      </Text>
+      <Image 
+        style={{width:bluePencilWidth,height:bluePencilHeight,
+          marginTop:normalize(6),
+          marginLeft:normalize(6),
+          position:'absolute',
+          right:normalizeWidth(12),
+          bottom:normalizeHeight(10),
+          tintColor: '#6e94cd'
+        }}
+        source={blue_pencil}
+      />
+    </TouchableOpacity>
+    
+    <View style={{marginTop:normalizeHeight(20)}}>
+      {sections.map((section, idx) => (
+        <ProfilePageSection key={section.route} section = {section}/>
+      ))}
+    </View>
+    </View>);
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
-    backgroundColor: '#F7F5F2',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#1c2238',
   },
 });
