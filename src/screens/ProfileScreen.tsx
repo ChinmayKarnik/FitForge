@@ -9,6 +9,7 @@ import blue_pencil from '../images/blue-pencil.png';
 import calendar from '../images/calendar-tab-selected.png';
 import stats_icon from '../images/stats-tab-unselected.png';
 import routines_icon from '../images/notepad-with-ticks.png'
+import { databaseController } from '../data';
 
 const sections = [
   {
@@ -38,6 +39,10 @@ const sections = [
 ];
 
 export const ProfileScreen = () => {
+
+  const userInfo = databaseController.getUserInfo();
+  const name = userInfo.name;
+  const bio = userInfo.bio;
 
   const profilePhotoHeight = normalizeHeight(150);
   const profilePhotoAspectRatio = 100.0/100.0;
@@ -104,7 +109,7 @@ export const ProfileScreen = () => {
           letterSpacing: 0.2,
           textAlign: 'center',
         }}
-      >John Doe</Text>
+      >{name}</Text>
       <Image 
         style={{width:bluePencilWidth,height:bluePencilHeight,
           marginTop:normalize(6),
@@ -137,7 +142,7 @@ export const ProfileScreen = () => {
           }
         }
       >
-        Fitness enthusiast. Working hard everyday{"\n"}to improve myself and reach new goals.
+        {bio}
       </Text>
       <Image 
         style={{width:bluePencilWidth,height:bluePencilHeight,

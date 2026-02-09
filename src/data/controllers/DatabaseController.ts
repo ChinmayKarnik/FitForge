@@ -8,6 +8,49 @@ class DatabaseController {
   private exercises =null;
   private workouts= null;
   private routines =null;
+  private userInfo = null;
+
+  // User Info CRUD
+  getUserInfo() {
+    return this.userInfo ? { ...this.userInfo } : null;
+  }
+
+  async setUserInfo(userInfo) {
+    this.userInfo = { ...userInfo };
+    await this.syncUserInfoWithAsyncStorage();
+    return this.userInfo;
+  }
+
+  async updateUserInfo(updates) {
+    if (!this.userInfo) return undefined;
+    this.userInfo = { ...this.userInfo, ...updates };
+    await this.syncUserInfoWithAsyncStorage();
+    return this.userInfo;
+  }
+
+  async deleteUserInfo() {
+    this.userInfo = null;
+    await this.syncUserInfoWithAsyncStorage();
+    return true;
+  }
+
+  async getUserInfoFromAsyncStorage() {
+    try {
+      const data = await AsyncStorage.getItem('@FitForge:userInfo');
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      console.error('Error getting userInfo from AsyncStorage:', error);
+      return null;
+    }
+  }
+
+  async syncUserInfoWithAsyncStorage() {
+    try {
+      await AsyncStorage.setItem('@FitForge:userInfo', JSON.stringify(this.userInfo));
+    } catch (error) {
+      console.error('Error syncing userInfo to AsyncStorage:', error);
+    }
+  }
   // Routines CRUD
   getAllRoutines() {
     return [...this.routines];

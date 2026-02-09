@@ -10,7 +10,8 @@ export const initializeDatabase = async () => {
     const exercises = await databaseController.getExercisesFromAsyncStorage();
     const routines = await databaseController.getRoutinesFromAsyncStorage();
     const workouts = await databaseController.getWorkoutsFromAsyncStorage();
-    
+    const userInfo = await databaseController.getUserInfoFromAsyncStorage();
+
     console.log("ckck exercises,routines,workouts from async", exercises, routines, workouts);
     if (exercises.length === 0 && routines.length === 0 && workouts.length === 0) {
       databaseController.setExercises([...dummyExercises]);
@@ -20,6 +21,16 @@ export const initializeDatabase = async () => {
       databaseController.setExercises(exercises);
       databaseController.setRoutines(routines);
       databaseController.setWorkouts(workouts);
+    }
+
+    if(userInfo){
+      databaseController.setUserInfo(userInfo);
+    } else {
+      databaseController.setUserInfo({
+        name: "John Doe",
+        bio: "Fitness enthusiast. Working hard everyday to improve myself and reach new goals.",
+        profilePicture: null
+      })
     }
 
   } catch (error) {
