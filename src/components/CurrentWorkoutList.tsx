@@ -69,6 +69,7 @@ const CurrentWorkoutList = (
     }
     return (
         <View style={{
+            flex: 1,
             marginTop:normalizeHeight(10),
             paddingHorizontal: normalize(14),
         }} >
@@ -94,12 +95,17 @@ const CurrentWorkoutList = (
             
                         <FlatList
                                 data={separatedExercises}
+                                contentContainerStyle ={{
+                                    paddingBottom: normalizeHeight(100)
+                                }}
                                 keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
                                 renderItem={renderItem}
                                 scrollEnabled={true}
                                 ItemSeparatorComponent={() => (
                                     <View style={{ marginVertical: normalizeHeight(7) }} />
                                 )}
+                                showsVerticalScrollIndicator = {false}
+
                         />
         </View>
     );
