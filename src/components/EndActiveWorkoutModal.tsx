@@ -33,7 +33,9 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
     }
 
     const onSaveWorkout = () => {
-        databaseController.addWorkout(workout);
+        databaseController.addWorkout({...workout,
+            name: workoutName,
+        });
         if (navigation) {
             navigation.reset({
                 index: 0,
