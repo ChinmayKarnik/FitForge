@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
 import { normalizeHeight } from '../utils/normalize';
@@ -38,7 +39,7 @@ export const ActivityScreen = () => {
           data={workouts}
           renderItem={renderWorkout}
           keyExtractor={(item) => item.id}
-          ListEmptyComponent={<Text style={styles.emptyText}>No workouts yet.</Text>}
+          ListEmptyComponent={<ActivityListEmpty />}
           ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(12) }} />}
           contentContainerStyle={{ marginTop:normalizeHeight(12),
             marginVertical:normalizeHeight(40)
