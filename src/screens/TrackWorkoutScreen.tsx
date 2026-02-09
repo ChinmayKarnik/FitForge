@@ -21,9 +21,7 @@ type WorkoutMode = 'selection' | 'live-free' | 'live-routine' | 'backdated' | 'b
 
 export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
-  console.log("ckck exercises,routines, workouts inside", databaseController.getAllExercises(),
-    databaseController.getAllRoutines(),
-    databaseController.getAllWorkouts());
+
   const [workoutMode, setWorkoutMode] = useState<WorkoutMode>('selection');
 
   const endWorkout = () => {

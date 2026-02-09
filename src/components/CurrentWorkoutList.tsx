@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { normalize, normalizeHeight } from '../utils/normalize';
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import no_workout_image from '../images/notepad-with-dumbell.png'
+import ExerciseSummaryCard from './ExerciseSummaryCard';
 
 const CurrentWorkoutList = (
     {
@@ -9,7 +10,26 @@ const CurrentWorkoutList = (
     }
 ) => {
     const exercises = workout?.exercises || [];
+    // Group exercises by exerciseId
+    const separatedExercises = Object.values(
+        exercises.reduce((acc, exercise) => {
+            const id = exercise.exerciseId;
+            if (!id) return acc;
+            if (!acc[id]) {
+                acc[id] = [];
+            }
+            acc[id].push(exercise);
+            return acc;
+        }, {})
+    );
+     console.log("ckck exercieses sep exercieses",
+        exercises,
+        separatedExercises)
     const isNoExercises = !exercises.length;
+
+    const renderItem = ({item}) => {
+        return (<ExerciseSummaryCard exercises={item} />)
+    }
 
     if (isNoExercises) {
         return (
@@ -48,8 +68,39 @@ const CurrentWorkoutList = (
         )
     }
     return (
-        <View >
-            <Text>CurrentWorkoutList Component</Text>
+        <View style={{
+            marginTop:normalizeHeight(10),
+            paddingHorizontal: normalize(14),
+        }} >
+            <View style={{
+                flexDirection:'row',
+                alignItems:'center',
+                marginBottom: normalizeHeight(12)
+            }}>
+            <Text
+            style={{
+                color:'#807e97',
+                fontWeight:'500',
+                fontSize: normalize(14),
+                marginRight:normalizeWidth(7)
+            }}
+            >Completed Exercises</Text>
+            <View style={{
+               flex:1,
+                height:normalizeHeight(1),
+                backgroundColor:'#464668'
+            }}/>
+            </View>
+            
+                        <FlatList
+                                data={separatedExercises}
+                                keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
+                                renderItem={renderItem}
+                                scrollEnabled={true}
+                                ItemSeparatorComponent={() => (
+                                    <View style={{ marginVertical: normalizeHeight(7) }} />
+                                )}
+                        />
         </View>
     );
 };

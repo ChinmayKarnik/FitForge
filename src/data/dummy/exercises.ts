@@ -19,7 +19,7 @@ export const dummyExercises = [
     name: 'Pulsating Squats',
     description: 'A compound exercise that works the legs and core',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
       { name: 'To Failure', type: 'boolean' },
     ],
@@ -55,7 +55,7 @@ export const dummyExercises = [
     description: 'A compound exercise that works the shoulders and triceps',
     requiredParameters: [
     
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
@@ -68,7 +68,7 @@ export const dummyExercises = [
     description: 'A compound exercise targeting the back muscles',
     requiredParameters: [
     
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
@@ -80,7 +80,7 @@ export const dummyExercises = [
     name: 'Dips',
     description: 'A bodyweight exercise for chest and triceps',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'To Failure', type: 'boolean' },
     ],
     optionalParameters: [
@@ -94,7 +94,7 @@ export const dummyExercises = [
     description: 'A unilateral leg exercise',
     requiredParameters: [
     
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
     ],
     optionalParameters: [
       { name: 'Weight', type:'weight', moreIsBetter: true },
@@ -118,7 +118,7 @@ export const dummyExercises = [
     description: 'An isolation exercise for the biceps',
     requiredParameters: [
     
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
@@ -131,7 +131,7 @@ export const dummyExercises = [
     description: 'An isolation exercise for the triceps',
     requiredParameters: [
     
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
@@ -143,7 +143,7 @@ export const dummyExercises = [
     name: 'Leg Press',
     description: 'A machine-based leg exercise',
     requiredParameters: [
-      { name: 'reps', type: 'number', moreIsBetter: true },
+      { name: 'Reps', type: 'reps', moreIsBetter: true },
       { name: 'Weight', type:'weight', moreIsBetter: true },
     ],
     optionalParameters: [
