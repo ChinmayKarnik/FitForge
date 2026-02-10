@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import RoutinesScreen from '../screens/RoutinesScreen';
+import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
@@ -174,6 +175,7 @@ export const AppNavigator = () => {
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen name="MainTabs" component={MainTabs} />
         <RootStack.Screen name="Routines" component={RoutinesScreen} />
+        <RootStack.Screen name="RoutineDetails" component={RoutineDetailsScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

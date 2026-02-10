@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const RoutineCard = ({ routine }) => {
+    const navigation = useNavigation();
     
     const name = routine.name || 'Unnamed Routine';
     
@@ -15,8 +17,12 @@ const RoutineCard = ({ routine }) => {
         createdAtText = `Created ${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
     }
 
+    const handlePress = () => {
+        navigation.navigate('RoutineDetails', { routine });
+    };
+
     return (
-        <TouchableOpacity style={{
+        <TouchableOpacity onPress={handlePress} style={{
             borderWidth:normalize(1),
             backgroundColor:'#292f46',
             marginHorizontal: normalize(16),
