@@ -131,9 +131,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.35,
+        shadowRadius: 16,
+        elevation: 10, // for Android
         borderWidth: normalize(1),
         borderColor: 'gray',
         backgroundColor: '#31467b',
@@ -147,9 +148,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#4f5b93',
         color: '#fff',
         fontSize: normalize(18),
-       
-        elevation: 2,
-        
+        // Remove elevation from text, keep it on container
     },
 });
 
