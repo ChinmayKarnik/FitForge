@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import RoutinesScreen from '../screens/RoutinesScreen';
 
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
@@ -120,7 +122,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
   );
 }
 
-export type RootTabParamList = {
+ type RootTabParamList = {
   Activity: undefined;
   Calendar: undefined;
   TrackWorkout: undefined;
@@ -130,40 +132,49 @@ export type RootTabParamList = {
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
+const RootStack = createNativeStackNavigator();
+
+const MainTabs = () => (
+  <Tab.Navigator
+    initialRouteName="Activity"
+    tabBar={props => <CustomTabBar {...props} />}
+    screenOptions={{ headerShown: false }}
+  >
+    <Tab.Screen 
+      name="Activity" 
+      component={ActivityScreen}
+      options={{ title: 'Activity' }}
+    />
+    <Tab.Screen 
+      name="Calendar" 
+      component={CalendarScreen}
+      options={{ title: 'Calendar' }}
+    />
+    <Tab.Screen 
+      name="TrackWorkout" 
+      component={TrackWorkoutScreen}
+      options={{ title: 'Track' }}
+    />
+    <Tab.Screen 
+      name="Statistics" 
+      component={StatisticsScreen}
+      options={{ title: 'Stats' }}
+    />
+    <Tab.Screen 
+      name="Profile" 
+      component={ProfileScreen}
+      options={{ title: 'Profile' }}
+    />
+  </Tab.Navigator>
+);
+
 export const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Activity"
-        tabBar={props => <CustomTabBar {...props} />}
-        screenOptions={{ headerShown: false }}
-      >
-        <Tab.Screen 
-          name="Activity" 
-          component={ActivityScreen}
-          options={{ title: 'Activity' }}
-        />
-        <Tab.Screen 
-          name="Calendar" 
-          component={CalendarScreen}
-          options={{ title: 'Calendar' }}
-        />
-        <Tab.Screen 
-          name="TrackWorkout" 
-          component={TrackWorkoutScreen}
-          options={{ title: 'Track' }}
-        />
-        <Tab.Screen 
-          name="Statistics" 
-          component={StatisticsScreen}
-          options={{ title: 'Stats' }}
-        />
-        <Tab.Screen 
-          name="Profile" 
-          component={ProfileScreen}
-          options={{ title: 'Profile' }}
-        />
-      </Tab.Navigator>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="MainTabs" component={MainTabs} />
+        <RootStack.Screen name="Routines" component={RoutinesScreen} />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };
