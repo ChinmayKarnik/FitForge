@@ -1,4 +1,4 @@
-import React, { Activity } from 'react';
+import React, { Activity, useState } from 'react';
 import ProfilePageSection from '../components/ProfilePageSection';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -10,6 +10,7 @@ import calendar from '../images/calendar-tab-selected.png';
 import stats_icon from '../images/stats-tab-unselected.png';
 import routines_icon from '../images/notepad-with-ticks.png'
 import { databaseController } from '../data';
+import EditNameModal from '../components/EditNameModal';
 
 const sections = [
   {
@@ -39,10 +40,12 @@ const sections = [
 ];
 
 export const ProfileScreen = () => {
-
-  const userInfo = databaseController.getUserInfo();
+  const userInfo = databaseController.getUserInfo() || { name: 'John Doe', bio: 'Fitness enthusiast. Working hard every day to improve myself and reach new goals.' };
   const name = userInfo.name;
   const bio = userInfo.bio;
+
+  const [editNameVisible, setEditNameVisible] = useState(false);
+  const [editNameValue, setEditNameValue] = useState(name);
 
   const profilePhotoHeight = normalizeHeight(150);
   const profilePhotoAspectRatio = 100.0/100.0;
@@ -56,7 +59,19 @@ export const ProfileScreen = () => {
   const bluePencilAspectRatio = 24.0/24.0;
   const bluePencilWidth = bluePencilHeight * bluePencilAspectRatio;
 
-  return (<View style={styles.container} >
+  const openEditNameModal = () => setEditNameVisible(true);
+  const closeEditNameModal = () => setEditNameVisible(false);
+
+  const onSave = (name)=>{
+    databaseController.updateUserInfo({
+      ...userInfo,
+      name});
+      setEditNameValue(name);
+      closeEditNameModal();
+  }
+
+  return (
+    <View style={styles.container} >
      <View style={{width:'100%',borderWidth:1,
             borderColor: 'rgba(68, 75, 95)',
               alignItems:'center',
@@ -95,12 +110,15 @@ export const ProfileScreen = () => {
         />
       </TouchableOpacity>
      </TouchableOpacity>
-     <TouchableOpacity style={{
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:'center',
-      marginTop: normalizeHeight(5)
-      }}>
+     <TouchableOpacity
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: normalizeHeight(5),
+      }}
+      onPress={openEditNameModal}
+    >
       <Text
         style={{
           fontSize: normalize(22),
@@ -110,15 +128,17 @@ export const ProfileScreen = () => {
           textAlign: 'center',
         }}
       >{name}</Text>
-      <Image 
-        style={{width:bluePencilWidth,height:bluePencilHeight,
-          marginTop:normalize(6),
-          marginLeft:normalize(6),
-          tintColor: '#6e94cd'
+      <Image
+        style={{
+          width: bluePencilWidth,
+          height: bluePencilHeight,
+          marginTop: normalize(6),
+          marginLeft: normalize(6),
+          tintColor: '#6e94cd',
         }}
         source={blue_pencil}
       />
-     </TouchableOpacity>
+    </TouchableOpacity>
       
     <TouchableOpacity
       key={"bio-section"}
@@ -162,7 +182,15 @@ export const ProfileScreen = () => {
         <ProfilePageSection key={section.route} section = {section}/>
       ))}
     </View>
-    </View>);
+    <EditNameModal
+      visible={editNameVisible}
+      value={editNameValue}
+      onChangeText={setEditNameValue}
+      onCancel={closeEditNameModal}
+      onSave={onSave}
+    />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
