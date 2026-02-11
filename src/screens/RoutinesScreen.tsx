@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList, TextInput, Image } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { normalizeHeight, normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import RoutineCard from '../components/RoutineCard';
@@ -7,16 +9,13 @@ import magnifying_glass from '../images/magnifying-glass-white.png'
 import white_plus from '../images/white-plus.png'
 
 const RoutinesScreen = () => {
+    const navigation = useNavigation();
     const routines = databaseController.getAllRoutines();
     const [searchText, setSearchText] = useState('');
 
     const filteredRoutines = routines.filter(routine =>
         routine.name.toLowerCase().includes(searchText.toLowerCase())
     );
-
-    useEffect(() => {
-        console.log("routines are ", routines)
-    }, [])
 
     const renderItem = ({ item }) => {
         return (
@@ -94,7 +93,14 @@ const RoutinesScreen = () => {
                  }}
                  showsVerticalScrollIndicator = {false}
             />
-            <View style={styles.addButtonContainer}>
+            <TouchableOpacity 
+                style={styles.addButtonContainer}
+                onPress={() => {
+                    if (typeof navigation !== 'undefined') {
+                        navigation.navigate('AddRoutine');
+                    }
+                }}
+            >
                 <Image style={
                     {
                         width: normalizeWidth(16),
@@ -112,7 +118,7 @@ const RoutinesScreen = () => {
                         }
                     }
                 >Add Routine</Text>
-            </View>
+            </TouchableOpacity>
         </View>)
 };
 

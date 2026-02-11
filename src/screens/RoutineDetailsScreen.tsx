@@ -150,7 +150,8 @@ const RoutineDetailsScreen = (props) => {
     return (
         <View style={styles.container}>
             <View style={{
-                width: '100%', borderWidth: 1,
+                width: '100%',
+                borderWidth: 1,
                 borderColor: 'rgba(68, 75, 95)',
                 alignItems: 'center',
                 backgroundColor: 'rgba(36, 42, 65)',
