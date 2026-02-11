@@ -98,7 +98,14 @@ const AddRoutineScreen = () => {
                        textAlign: 'left'
                    }}
                    value={String(item.sets || '')}
-                   editable={false}
+                   keyboardType='numeric'
+                   editable={true}
+                   onChangeText={(text) => {
+                       const updatedExercises = routine.exercises.map((ex: any) => 
+                           ex.id === item.id ? { ...ex, sets: Number(text) || '' } : ex
+                       );
+                       setRoutine({ ...routine, exercises: updatedExercises } as any);
+                   }}
                />
            </View>
 
@@ -121,8 +128,15 @@ const AddRoutineScreen = () => {
                        fontSize: normalize(14),
                        textAlign: 'left'
                    }}
-                   value={String(item.reps || '-')}
-                   editable={false}
+                   value={String(item.reps || '')}
+                   editable={true}
+                   keyboardType='numeric'
+                   onChangeText={(text) => {
+                       const updatedExercises = routine.exercises.map((ex: any) => 
+                           ex.id === item.id ? { ...ex, reps: Number(text) || undefined } : ex
+                       );
+                       setRoutine({ ...routine, exercises: updatedExercises } as any);
+                   }}
                />
            </View>
 
@@ -148,7 +162,14 @@ const AddRoutineScreen = () => {
                            textAlign: 'left'
                        }}
                        value={String(item.rest || '')}
-                       editable={false}
+                       keyboardType='numeric'
+                       editable={true}
+                       onChangeText={(text) => {
+                           const updatedExercises = routine.exercises.map((ex: any) => 
+                               ex.id === item.id ? { ...ex, rest: Number(text) || undefined } : ex
+                           );
+                           setRoutine({ ...routine, exercises: updatedExercises } as any);
+                       }}
                    />
                    <Text style={{
                        color: '#fff',
