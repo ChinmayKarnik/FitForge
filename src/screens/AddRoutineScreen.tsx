@@ -282,6 +282,7 @@ const AddRoutineScreen = () => {
                 renderItem={renderItem}
                 ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />}
                 scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(12) }}
                 ListFooterComponent={()=>{
                     return (
@@ -325,6 +326,52 @@ const AddRoutineScreen = () => {
                     )
                 }}
             />
+            <View style={{
+                flexDirection: 'row',
+                paddingHorizontal: normalizeWidth(16),
+                paddingVertical: normalizeHeight(16),
+                gap: normalizeWidth(12),
+                borderTopWidth: normalizeHeight(1),
+                borderColor: 'rgba(255,255,255,0.1)',
+            }}>
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                        borderWidth: normalize(1),
+                        borderColor: '#383e55',
+                        borderRadius: normalize(8),
+                        paddingVertical: normalizeHeight(12),
+                        alignItems: 'center'
+                    }}
+                    onPress={() => {
+                        // Cancel
+                    }}
+                >
+                    <Text style={{
+                        color: '#8a8a9e',
+                        fontSize: normalize(16),
+                        fontWeight: '500'
+                    }}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                        backgroundColor: '#4f5b93',
+                        borderRadius: normalize(8),
+                        paddingVertical: normalizeHeight(12),
+                        alignItems: 'center'
+                    }}
+                    onPress={() => {
+                        // Create
+                    }}
+                >
+                    <Text style={{
+                        color: '#fff',
+                        fontSize: normalize(16),
+                        fontWeight: '500'
+                    }}>Create</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
