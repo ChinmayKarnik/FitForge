@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import purple_dumbbell from '../images/purple-dumbbell.png';
 import clock from '../images/clock.png'
+import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
+import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
 
 const ShortDivider = ()=>{
     return (
@@ -25,7 +27,22 @@ const RoutineDetailsScreen = (props) => {
     const renderItem = ({ item }) => {
         const exercise = item;
         const name = exercise.name;
-       
+        let setRepsText = '';
+        if (typeof exercise.sets === 'number') {
+            if (typeof exercise.reps === 'number') {
+                setRepsText = `${exercise.sets} sets of ${exercise.reps} reps`;
+            } else {
+                setRepsText = `${exercise.sets} sets`;
+            }
+        }
+        let restText = '';
+        if (typeof exercise.rest === 'number') {
+            restText = `Rest ${exercise.rest} sec between sets`;
+        }
+        const estimatedTimeSec = getEstimatedExerciseTimeSeconds(exercise);
+        const estimatedTimeMin = Math.ceil(estimatedTimeSec / 60);
+        const estimatedTimeText = `Estimated time: ${estimatedTimeMin} min`;
+
         return (
             <View style={{
                 marginHorizontal: normalizeWidth(16),
@@ -48,7 +65,7 @@ const RoutineDetailsScreen = (props) => {
                             fontWeight: '400',
                             color: 'rgba(255,255,255,0.45)',
                         }}
-                    >4 sets of 10 reps</Text>
+                    >{setRepsText}</Text>
                     <View style={{
                         width: normalizeWidth(3),
                         height: normalizeHeight(3),
@@ -63,7 +80,7 @@ const RoutineDetailsScreen = (props) => {
                             fontWeight: '400',
                             color: 'rgba(255,255,255,0.45)',
                         }}
-                    >Rest 90 sec between sets</Text>
+                    >{restText}</Text>
                 </View>
                 <ShortDivider />
                 <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -75,26 +92,27 @@ const RoutineDetailsScreen = (props) => {
                    }
                    }/>
                     <Text 
-                    style={{
+                        style={{
                             fontSize: normalize(12),
                             fontWeight: '400',
                             color: 'rgba(255,255,255,0.45)',
                         }}
-                    >Estimated time: 8 min</Text>
+                    >{estimatedTimeText}</Text>
                 </View>
                 <ShortDivider />
                 <Text
                 style={{
-                            fontSize: normalize(12),
-                            fontWeight: '400',
+                            fontSize: normalize(14),
+                            fontWeight: '500',
                             color: '#cfcfe3',
                         }}
-                >Notes:</Text>
+                >Notes</Text>
                 <Text
                 style={{
                             fontSize: normalize(12),
                             fontWeight: '400',
                             color: 'rgba(255,255,255,0.45)',
+                            marginTop: normalizeHeight(4)
                         }}
                 >Don't go to failure. Try to pick a weight so that you can complete all reps with good form.</Text>
             </View>

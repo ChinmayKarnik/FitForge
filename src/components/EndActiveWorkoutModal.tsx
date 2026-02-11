@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import { getExercisesListFromWorkout } from '../data/utils/workoutUtils';
+import { getExercisesListFromWorkout } from '../utils/workoutUtils';
 import notepad_with_exclam from '../images/notepad-with-exclaim.png'
 import { databaseController } from '../data';
 
