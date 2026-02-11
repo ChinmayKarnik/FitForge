@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import down_arrow from '../images/down-arrow.png';
+import red_dustbin from '../images/red-dustbin.png';
+import white_plus from '../images/white-plus.png'
+
 
 const AddRoutineScreen = () => {
     const [routine, setRoutine] = useState({
@@ -15,6 +18,9 @@ const AddRoutineScreen = () => {
     ],
     createdAt : Date.now()
   })
+
+  const onDeleteExercise = (exerciseId: string) => {
+  }
 
   const renderItem = ({ item }: { item: any }) => {
     return (<View style={{
@@ -94,7 +100,7 @@ const AddRoutineScreen = () => {
                        fontSize: normalize(14),
                        textAlign: 'left'
                    }}
-                   value={String(item.reps || '')}
+                   value={String(item.reps || '-')}
                    editable={false}
                />
            </View>
@@ -165,6 +171,34 @@ const AddRoutineScreen = () => {
                    setRoutine({ ...routine, exercises: updatedExercises } as any);
                }}
            />
+       </View>
+       <View style={{
+           marginTop: normalizeHeight(12)
+       }}>
+           <TouchableOpacity 
+               style={{
+                   flexDirection: 'row',
+                   alignItems: 'center'
+               }}
+               onPress={() => {
+                   onDeleteExercise(item.id)
+               }}
+           >
+               <Image 
+                   source={red_dustbin}
+                   style={{
+                       width: normalizeWidth(16),
+                       height: normalizeHeight(16),
+                       aspectRatio: 325/348,
+                       marginRight: normalizeWidth(8)
+                   }}
+               />
+               <Text style={{
+                   color: '#e75c6d',
+                   fontSize: normalize(14),
+                   fontWeight: '500'
+               }}>Delete</Text>
+           </TouchableOpacity>
        </View>
         </View>);
   };
@@ -247,8 +281,49 @@ const AddRoutineScreen = () => {
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />}
-                scrollEnabled={false}
+                scrollEnabled={true}
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(12) }}
+                ListFooterComponent={()=>{
+                    return (
+                        <View style={{
+                            alignItems: 'center',
+                            marginTop: normalizeHeight(20),
+                            marginBottom: normalizeHeight(30)
+                        }}>
+                            <TouchableOpacity
+                                style={{
+                                    borderWidth: normalize(1),
+                                    borderColor: '#383e55',
+                                    borderRadius: normalize(8),
+                                    paddingHorizontal: normalizeWidth(20),
+                                    paddingVertical: normalizeHeight(8),
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginBottom: normalizeHeight(100)
+                                }}
+                                onPress={() => {
+                                    // Add exercise
+                                }}
+                            >
+                                <Image
+                                    source={white_plus}
+                                    style={{
+                                        height: normalizeHeight(10),
+                                        width: (112.0 / 115.0) * normalize(10),
+                                        aspectRatio: (115.0 / 112.0),
+                                        marginRight: normalizeWidth(6),
+                                        tintColor: 'rgba(255,255,255,0.8)'
+                                    }}
+                                />
+                                <Text style={{
+                                    color: 'rgba(255,255,255,0.6)',
+                                    fontSize: normalize(14),
+                                    fontWeight: '500'
+                                }}>Add Exercise</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )
+                }}
             />
         </View>
     );
