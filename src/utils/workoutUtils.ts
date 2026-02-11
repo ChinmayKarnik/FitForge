@@ -10,7 +10,7 @@ export function getEstimatedExerciseTimeSeconds(exercise: any): number {
 	const sets = exercise.sets;
 	const rest = typeof exercise.rest === 'number' && exercise.rest > 0 ? exercise.rest : 0;
 	// There are (sets - 1) rest periods between sets
-	const totalRest = rest * Math.max(sets - 1, 0);
+	const totalRest = rest * Math.max(sets, 0);
 	const totalWork = sets * 60; // 1 min per set
 	return totalWork + totalRest;
 }
