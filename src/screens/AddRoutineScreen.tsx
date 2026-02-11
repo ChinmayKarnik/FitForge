@@ -19,8 +19,29 @@ const AddRoutineScreen = () => {
     createdAt : Date.now()
   })
 
-  const onDeleteExercise = (exerciseId: string) => {
-  }
+    const onDeleteExercise = (exerciseId: string) => {
+        const updatedExercises = routine.exercises.filter((ex: any) => ex.id !== exerciseId);
+        setRoutine({ ...routine, exercises: updatedExercises } as any);
+    };
+
+    const onAddExercise = () => {
+        // Generate a unique id for the new exercise
+        const newId = (routine.exercises.length > 0
+            ? String(Number(routine.exercises[routine.exercises.length - 1].id) + 1)
+            : '1');
+        const newExercise = {
+            id: newId,
+            name: undefined,
+            sets: 1,
+            reps: undefined,
+            rest: undefined,
+            notes: undefined,
+        };
+        setRoutine({
+            ...routine,
+            exercises: [...routine.exercises, newExercise],
+        } as any);
+    };
 
   const renderItem = ({ item }: { item: any }) => {
     return (<View style={{
@@ -302,9 +323,7 @@ const AddRoutineScreen = () => {
                                     alignItems: 'center',
                                     marginBottom: normalizeHeight(100)
                                 }}
-                                onPress={() => {
-                                    // Add exercise
-                                }}
+                                onPress={onAddExercise}
                             >
                                 <Image
                                     source={white_plus}
