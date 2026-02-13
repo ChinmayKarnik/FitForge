@@ -354,11 +354,32 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 data={routine.exercises}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
-                ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />}
+                ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />} 
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(12) }}
-                ListFooterComponent={()=>{
+                ListEmptyComponent={() => (
+                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
+                        <Text style={{
+                            color: '#d4d7e4',
+                            fontSize: normalize(18),
+                            fontWeight: '500',
+                            marginBottom: normalizeHeight(8),
+                            textAlign: 'center',
+                        }}>
+                            No exercises added yet
+                        </Text>
+                        <Text style={{
+                            color: '#b3b2c5',
+                            fontSize: normalize(15),
+                            fontWeight: '400',
+                            textAlign: 'center',
+                        }}>
+                            Tap the button below to add your first exercise.
+                        </Text>
+                    </View>
+                )}
+                ListFooterComponent={() => {
                     return (
                         <View style={{
                             alignItems: 'center',
