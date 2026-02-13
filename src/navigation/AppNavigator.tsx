@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen, ExercisesScreen } from '../screens';
+import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen, ExercisesScreen, AddExerciseScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
@@ -181,6 +181,7 @@ export const AppNavigator = () => {
         <RootStack.Screen name="AddRoutine" component={AddRoutineScreen} />
         <RootStack.Screen name="EditRoutine" component={EditRoutineScreen} />
         <RootStack.Screen name="Exercises" component={ExercisesScreen} />
+        <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
