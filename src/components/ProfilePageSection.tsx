@@ -8,7 +8,7 @@ const ProfilePageSection = ({ section }) => {
   const navigation = useNavigation();
   const { name, route, icon, aspectRatio } = section;
 
-  const width = normalizeWidth(30);
+  const width = normalizeWidth(26);
   const height = width / aspectRatio;
 
   const arrowHeight = normalizeHeight(14);
@@ -28,7 +28,7 @@ const ProfilePageSection = ({ section }) => {
         borderRadius: normalize(10),
         marginHorizontal: normalizeWidth(12),
         marginBottom: normalizeHeight(12),
-        height: normalizeHeight(60),
+        height: normalizeHeight(54),
       }}
       onPress={() => navigation.navigate(route)}
     >

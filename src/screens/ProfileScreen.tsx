@@ -5,10 +5,12 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import profile_photo_default from '../images/profile-photo-default.png';
 import camera from '../images/camera-blue-white.png'
 import activity_image from '../images/activity-tab-selected.png'
+import kettlebell_image from '../images/red-black-kettlebell.png'
 import blue_pencil from '../images/blue-pencil.png';
 import calendar from '../images/calendar-tab-selected.png';
 import stats_icon from '../images/stats-tab-unselected.png';
 import routines_icon from '../images/notepad-with-ticks.png'
+
 import { databaseController } from '../data';
 import EditNameModal from '../components/EditNameModal';
 
@@ -20,10 +22,16 @@ const sections = [
     aspectRatio: (379.0/432.0)
   },
   {
+    name: 'Exercises',
+    route: 'Exercises',
+    icon: kettlebell_image,
+    aspectRatio: (457.0/582.0)
+  },
+  {
     name: 'Activity',
     route: 'Activity',
     icon: activity_image,
-    aspectRatio: 1.0
+    aspectRatio: 1
   },
   {
     name: 'Stats',

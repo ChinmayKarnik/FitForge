@@ -3,3 +3,4 @@ export { TrackWorkoutScreen } from './TrackWorkoutScreen';
 export { ActivityScreen } from './ActivityScreen';
 export { StatisticsScreen } from './StatisticsScreen';
 export { CalendarScreen } from './CalendarScreen';
+export { default as ExercisesScreen } from './ExercisesScreen';
