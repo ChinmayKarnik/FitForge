@@ -61,7 +61,12 @@ class DatabaseController {
   }
 
   async addRoutine(routine) {
-    const newRoutine = { ...routine, id: Date.now().toString() };
+    const newRoutine = { 
+      ...routine, 
+      id: Date.now().toString(),
+      createdAt: routine.createdAt || Date.now()
+    };
+      
     this.routines.push(newRoutine);
     await this.syncRoutinesWithAsyncStorage();
     return newRoutine;

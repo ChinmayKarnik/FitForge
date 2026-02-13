@@ -112,14 +112,16 @@ const RoutineCard = ({ routine }) => {
                                                 color: 'rgba(255,255,255,0.45)',
                                             }}
                                         >{setsReps}</Text>
-                                        <View style={{
-                                            width: normalizeWidth(2),
-                                            height: normalizeHeight(2),
-                                            borderRadius: normalize(1),
-                                            backgroundColor: '#808093',
-                                            marginHorizontal: normalizeWidth(6),
-                                            marginTop: normalizeHeight(2)
-                                        }} />
+                                        {restText !== '' && (
+                                            <View style={{
+                                                width: normalizeWidth(2),
+                                                height: normalizeHeight(2),
+                                                borderRadius: normalize(1),
+                                                backgroundColor: '#808093',
+                                                marginHorizontal: normalizeWidth(6),
+                                                marginTop: normalizeHeight(2)
+                                            }} />
+                                        )}
                                         <Text
                                             style={
                                                 {

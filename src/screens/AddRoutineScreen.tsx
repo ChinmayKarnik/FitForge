@@ -6,24 +6,29 @@ import { databaseController } from '../data';
 import down_arrow from '../images/down-arrow.png';
 import red_dustbin from '../images/red-dustbin.png';
 import white_plus from '../images/white-plus.png'
+import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 
 
-const AddRoutineScreen = () => {
+const AddRoutineScreen = ({ navigation }: any) => {
     const [routine, setRoutine] = useState({
-    id: '1',
-    name: 'Push Day',
-    exercises: [
-      { id: '1', name: 'Weighted Push-ups', sets: 4, reps: 10, rest: 90, 
-        notes: "Don't go to failure.  Try to pick a weight so that you can complete all sets with reps"
-       },
-      { id: '2', name: 'Pulsating Squats', sets: 3, rest: 60 },
-    ],
-    createdAt : Date.now()
-  })
+        exercises: []
+    })
 
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
     const exercises = databaseController.getAllExercises();
+
+    const isRoutineValid = 
+        routine.name && 
+        routine.name.trim() !== '' &&
+        routine.exercises && 
+        routine.exercises.length > 0 &&
+        routine.exercises.every((exercise: any) => 
+            exercise.id && 
+            exercise.name && 
+            exercise.name.trim() !== '' &&
+            exercise.sets !== undefined
+        );
 
     const handleSelectExercise = (exercise: any) => {
         console.log("ckck exercise inside ",exercise)
@@ -43,12 +48,7 @@ const AddRoutineScreen = () => {
     };
 
     const onAddExercise = () => {
-        // Generate a unique id for the new exercise
-        const newId = (routine.exercises.length > 0
-            ? String(Number(routine.exercises[routine.exercises.length - 1].id) + 1)
-            : '1');
         const newExercise = {
-            id: newId,
             name: undefined,
             sets: 1,
             reps: undefined,
@@ -59,6 +59,16 @@ const AddRoutineScreen = () => {
             ...routine,
             exercises: [...routine.exercises, newExercise],
         } as any);
+    };
+
+    const onCancelRoutine = () => {
+        navigation.goBack();
+    };
+
+    const onCreateRoutine = () => {
+        console.log('Routine Object:', routine);
+        databaseController.addRoutine(routine);
+        navigation.goBack();
     };
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
@@ -405,9 +415,7 @@ const AddRoutineScreen = () => {
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
                     }}
-                    onPress={() => {
-                        // Cancel
-                    }}
+                    onPress={onCancelRoutine}
                 >
                     <Text style={{
                         color: '#8a8a9e',
@@ -418,17 +426,16 @@ const AddRoutineScreen = () => {
                 <TouchableOpacity
                     style={{
                         flex: 1,
-                        backgroundColor: '#4f5b93',
+                        backgroundColor: isRoutineValid ? '#4f5b93' : 'rgba(79,91,147,0.5)',
                         borderRadius: normalize(8),
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
                     }}
-                    onPress={() => {
-                        // Create
-                    }}
+                    disabled={!isRoutineValid}
+                    onPress={onCreateRoutine}
                 >
                     <Text style={{
-                        color: '#fff',
+                        color: isRoutineValid ? '#fff' : 'rgba(255,255,255,0.5)',
                         fontSize: normalize(16),
                         fontWeight: '500'
                     }}>Create</Text>
