@@ -13,7 +13,9 @@ type Props = {
   onClose: () => void;
 };
 
-export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onClose }: Props) => {
+export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onClose,
+  startButtonText = "Start"
+ }: Props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const isExerciseSelected = !!selectedExercise
@@ -167,7 +169,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
                 color: isExerciseSelected ? '#fefeff': '#dbdde4',
                 fontSize: normalize(16),
                 fontWeight: '600'
-              }}>Start</Text>
+              }}>{startButtonText}</Text>
             </TouchableOpacity>
           </View>
         </View>

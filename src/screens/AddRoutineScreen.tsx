@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { ExercisePickerModal } from '../components';
+import { databaseController } from '../data';
 import down_arrow from '../images/down-arrow.png';
 import red_dustbin from '../images/red-dustbin.png';
 import white_plus from '../images/white-plus.png'
@@ -18,6 +20,22 @@ const AddRoutineScreen = () => {
     ],
     createdAt : Date.now()
   })
+
+    const [showExercisePicker, setShowExercisePicker] = useState(false);
+   const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
+    const exercises = databaseController.getAllExercises();
+
+    const handleSelectExercise = (exercise: any) => {
+        console.log("ckck exercise inside ",exercise)
+       const newRoutine = {...routine};
+       newRoutine.exercises[pickerExerciseIndex] = {
+        ...newRoutine.exercises[pickerExerciseIndex],
+        name: exercise.name,
+        id: exercise.id
+       }
+       setRoutine(newRoutine);
+    setPickerExerciseIndex(null);
+    };
 
     const onDeleteExercise = (exerciseId: string) => {
         const updatedExercises = routine.exercises.filter((ex: any) => ex.id !== exerciseId);
@@ -43,7 +61,7 @@ const AddRoutineScreen = () => {
         } as any);
     };
 
-  const renderItem = ({ item }: { item: any }) => {
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (<View style={{
         backgroundColor: '#292f46',
         borderColor: '#383e55',
@@ -59,12 +77,16 @@ const AddRoutineScreen = () => {
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center'
+       }}
+       onPress={() => {
+           setPickerExerciseIndex(index);
+           setShowExercisePicker(true);
        }}>
         <Text style={{
             color: '#d4d7e4',
             fontSize: normalize(14),
             fontWeight: '400',
-        }}>Select Exercise</Text>
+        }}>{item.name || 'Select Exercise'}</Text>
         <Image source={down_arrow} style={{
             height:normalizeHeight(6),
             aspectRatio: (320.0/173.0),
@@ -412,6 +434,17 @@ const AddRoutineScreen = () => {
                     }}>Create</Text>
                 </TouchableOpacity>
             </View>
+
+            <ExercisePickerModal
+                visible={showExercisePicker}
+                startButtonText = "Select"
+                exercises={exercises}
+                onSelectExercise={handleSelectExercise}
+                onClose={() => {
+                    setShowExercisePicker(false);
+                    setPickerExerciseIndex(null);
+                }}
+            />
         </View>
     );
 };
