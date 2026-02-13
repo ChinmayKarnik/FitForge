@@ -10,9 +10,9 @@ const ExerciseCard = ({ exercise }) => {
     const name = exercise.name || 'Unnamed Exercise';
     const description = exercise.description || '';
 
+
     const handlePress = () => {
-        // Navigate to ExerciseDetails when created
-        // navigation.navigate('ExerciseDetails', { exercise });
+        navigation.navigate('EditExercise', { exercise });
     };
 
     return (

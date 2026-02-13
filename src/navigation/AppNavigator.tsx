@@ -182,6 +182,7 @@ export const AppNavigator = () => {
         <RootStack.Screen name="EditRoutine" component={EditRoutineScreen} />
         <RootStack.Screen name="Exercises" component={ExercisesScreen} />
         <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
+        <RootStack.Screen name="EditExercise" component={require('../screens/EditExerciseScreen').default} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
