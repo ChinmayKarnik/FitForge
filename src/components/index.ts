@@ -4,3 +4,4 @@ export { ExerciseFormModal } from './ExerciseFormModal';
 export { ExerciseFormField } from './ExerciseFormField';
 export { BackdatedWorkoutRoutine } from './BackdatedWorkoutRoutine';
 export { default as ExerciseCard } from './ExerciseCard';
+export { SelectRoutineLive } from './SelectRoutineLive';

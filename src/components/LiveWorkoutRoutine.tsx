@@ -2,8 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from 'react-native';
- 
-import { routines } from '../data/dummy/routines';
+import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
 
 export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void }) => {
@@ -71,20 +70,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
   };
 
   if (!selectedRoutineId) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Choose a Routine</Text>
-        {routines.map(routine => (
-          <TouchableOpacity
-            key={routine.id}
-            style={styles.routineButton}
-            onPress={() => setSelectedRoutineId(routine.id)}
-          >
-            <Text style={styles.routineButtonText}>{routine.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
+    return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} />;
   }
 
   // UI for when no active workout is running
@@ -275,20 +261,6 @@ const styles = StyleSheet.create({
   endButtonText: {
     color: '#fff',
     fontSize: 20,
-    fontWeight: '700',
-  },
-  routineButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginVertical: 8,
-    width: '80%',
-    alignSelf: 'center',
-  },
-  routineButtonText: {
-    color: '#fff',
-    fontSize: 16,
     fontWeight: '700',
   },
 });
