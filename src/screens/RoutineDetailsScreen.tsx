@@ -22,6 +22,7 @@ const ShortDivider = ()=>{
 const RoutineDetailsScreen = (props) => {
     const { params } = props.route;
     const { routine } = params || {};
+    const { navigation } = props;
     
     let totalEstimatedTimeText = '';
     if (Array.isArray(routine?.exercises)) {
@@ -217,6 +218,9 @@ const RoutineDetailsScreen = (props) => {
                 paddingVertical: normalizeHeight(10),
                 marginTop: normalizeHeight(12),
                 borderRadius: normalize(10),
+            }}
+            onPress={() => {
+                navigation.navigate('EditRoutine', { routine });
             }}> 
                <Image source={pencil} 
                style={{

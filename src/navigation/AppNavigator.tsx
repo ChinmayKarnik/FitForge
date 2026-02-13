@@ -7,6 +7,7 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 import AddRoutineScreen from '../screens/AddRoutineScreen';
+import EditRoutineScreen from '../screens/EditRoutineScreen';
 
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
@@ -178,6 +179,7 @@ export const AppNavigator = () => {
         <RootStack.Screen name="Routines" component={RoutinesScreen} />
         <RootStack.Screen name="RoutineDetails" component={RoutineDetailsScreen} />
         <RootStack.Screen name="AddRoutine" component={AddRoutineScreen} />
+        <RootStack.Screen name="EditRoutine" component={EditRoutineScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
