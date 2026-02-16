@@ -39,7 +39,7 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
   // Live workout with routine
   if (workoutMode === 'live-routine') {
-    return <LiveWorkoutRoutine onEndWorkout={endWorkout} />;
+    return <LiveWorkoutRoutine onEndWorkout={endWorkout} navigation={navigation} />;
   }
 
   // Placeholder for backdated workout - Selection screen

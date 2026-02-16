@@ -14,8 +14,9 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
     const [workoutName, setWorkoutName] = useState(workoutDefaultName);
 
     
-
+    console.log('ckck workout ',workout)
     const exercisesList = getExercisesListFromWorkout(workout)
+    console.log('ckck ex list  ',exercisesList)
     const isNoExercisesLogged = !exercisesList.length
     // Calculate duration in ms
     const durationMs = workout?.duration;
@@ -33,6 +34,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
     }
 
     const onSaveWorkout = () => {
+        console.log('Saving workout ', workout);
         databaseController.addWorkout({...workout,
             name: workoutName,
         });

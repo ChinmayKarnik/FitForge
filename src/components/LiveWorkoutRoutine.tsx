@@ -9,9 +9,11 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
 import ExerciseForm from './ExerciseForm';
+import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
-export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void }) => {
+export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout: () => void; navigation?: any }) => {
    const [showFinishModal, setShowFinishModal] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
   const [exerciseParams, setExerciseParams] = useState<Record<string, any>>({});
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const routine = databaseController.getRoutineById(selectedRoutineId);
@@ -70,8 +72,8 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
 
   const handleEndWorkout = () => {
     workout.current.endTime = Date.now();
-    console.log('Final workout:', workout.current);
-    onEndWorkout();
+    workout.current.duration = workout.current.endTime - workout.current.startTime;
+    setShowEndModal(true);
   };
 
   if (!selectedRoutineId) {
@@ -115,7 +117,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
       exercises:[
         ...workout.current.exercises,
         {
-          id: activeExercise.id,
+          exerciseId: activeExercise.id,
           startTime: startTime,
           endTime: endTime,
           loggedData: params
@@ -206,6 +208,12 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
         />
         <Text style={styles.buttonText}>End Workout</Text>
       </TouchableOpacity>
+      <EndActiveWorkoutModal
+        workout={workout.current}
+        visible={showEndModal}
+        onClose={() => setShowEndModal(false)}
+        navigation={navigation}
+      />
     </View>
   );
 };
