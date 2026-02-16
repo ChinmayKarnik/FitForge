@@ -1,9 +1,13 @@
 
 
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Switch, Image } from 'react-native';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
+import { TimerComponent } from './TimerComponent';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import white_plus from '../images/white-plus.png';
+import white_donut from '../images/white-donut.png';
 
 export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void }) => {
    const [showFinishModal, setShowFinishModal] = useState(false);
@@ -128,42 +132,54 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Live Workout (Routine)</Text>
-      <Text style={styles.timer}>{formatTime(seconds)}</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Live Workout</Text>
+      </View>
+
+      <TimerComponent formatTime={formatTime} elapsedTime={seconds} />
+
       { !isExerciseInProgress && (
         nextExerciseRef.current ? (
           nextExerciseMessage && (
-            <View style={{ alignItems: 'center', marginVertical: 16 }}>
-              <Text style={{ fontSize: 18, color: '#333', marginBottom: 8 }}>{nextExerciseMessage}</Text>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#007AFF', marginBottom: 4 }}>{nextExerciseRef.current.name}</Text>
-              <Text style={{ fontSize: 16, color: '#333', marginBottom: 4 }}>Set {workout.current.exercises.length + 1}</Text>
+            <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
+              <Text style={styles.nextExerciseText}>{nextExerciseMessage}</Text>
+              <Text style={styles.exerciseNameText}>{nextExerciseRef.current.name}</Text>
+              <Text style={styles.setNumberText}>Set {workout.current.exercises.length + 1}</Text>
               {showCountdown && (
-                <Text style={{ fontSize: 32, color: '#007AFF', fontWeight: 'bold' }}>{countdownSeconds}</Text>
+                <Text style={styles.countdownText}>{countdownSeconds}</Text>
               )}
             </View>
           )
         ) : (
-          <View style={{ alignItems: 'center', marginVertical: 16 }}>
-            <Text style={{ fontSize: 20, color: '#333', fontWeight: 'bold', marginBottom: 8 }}>Your workout has finished.</Text>
+          <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
+            <Text style={styles.finishedText}>Your workout has finished.</Text>
           </View>
         )
       )}
       {isExerciseInProgress && activeExercise && (
-        <View style={{ alignItems: 'center', marginVertical: 16 }}>
-          <Text style={{ fontSize: 18, color: '#333', marginBottom: 8 }}>Doing exercise right now</Text>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#007AFF', marginBottom: 4 }}>{activeExercise.name}</Text>
-          <Text style={{ fontSize: 16, color: '#333' }}>Set {workout.current.exercises.length + 1}</Text>
+        <View style={styles.exerciseInfoContainer}>
+          <Text style={styles.currentlyPerformingText}>Currently Performing:</Text>
+          <Text style={styles.exerciseNameText}>{activeExercise.name}</Text>
+          <Text style={styles.setNumberText}>Set {workout.current.exercises.length + 1}</Text>
         </View>
       )}
-      <View style={{ flex: 1 }} />
+      
       {!isExerciseInProgress && nextExerciseRef.current && (
-        <TouchableOpacity style={styles.endButton} onPress={handleStartExercise}>
-          <Text style={styles.endButtonText}>Start Exercise</Text>
+        <TouchableOpacity style={styles.startExerciseButton} onPress={handleStartExercise}>
+          <Image
+            source={white_plus}
+            style={styles.startExerciseImage}
+          />
+          <Text style={styles.buttonText}>Start Exercise</Text>
         </TouchableOpacity>
       )}
       {isExerciseInProgress && (
-        <TouchableOpacity style={styles.endButton} onPress={() => setShowFinishModal(true)}>
-          <Text style={styles.endButtonText}>Finish Exercise</Text>
+        <TouchableOpacity style={styles.finishExerciseButton} onPress={() => setShowFinishModal(true)}>
+          <Image
+            source={white_donut}
+            style={styles.buttonImage}
+          />
+          <Text style={styles.buttonText}>Finish Exercise</Text>
         </TouchableOpacity>
       )}
       <Modal
@@ -222,8 +238,12 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
           </View>
         </View>
       </Modal>
-      <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
-        <Text style={styles.endButtonText}>End Workout</Text>
+      <TouchableOpacity style={styles.endWorkoutButton} onPress={handleEndWorkout}>
+        <Image
+          source={white_donut}
+          style={styles.buttonImage}
+        />
+        <Text style={styles.buttonText}>End Workout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -232,35 +252,118 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#1c2238',
+  },
+  header: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(68, 75, 95)',
     alignItems: 'center',
+    backgroundColor: 'rgba(36, 42, 65)',
+    paddingTop: normalizeHeight(40),
+    paddingBottom: normalizeHeight(12),
   },
-  title: {
-    fontSize: 24,
+  headerText: {
+    fontSize: 22,
+    letterSpacing: 1,
     fontWeight: '700',
-    marginBottom: 8,
-    color: '#1a1a1a',
+    color: '#fefefe',
   },
-  timer: {
-    fontSize: 36,
+  exerciseInfoContainer: {
+    marginTop: normalizeHeight(30),
+    alignItems: 'center',
+    marginBottom: normalize(40),
+  },
+  currentlyPerformingText: {
+    fontSize: normalize(18),
+    fontWeight: '500',
+    lineHeight: normalize(20),
+    letterSpacing: normalize(0.2),
+    color: '#A9B1C2',
+  },
+  exerciseNameText: {
+    fontSize: normalize(28),
+    fontWeight: '600',
+    lineHeight: normalize(34),
+    letterSpacing: normalize(0.3),
+    color: '#F2F4F8',
+    marginTop: normalizeHeight(10),
+  },
+  setNumberText: {
+    fontSize: normalize(16),
+    color: '#A9B1C2',
+    marginTop: normalizeHeight(4),
+  },
+  nextExerciseText: {
+    fontSize: normalize(18),
+    color: '#A9B1C2',
+    marginBottom: normalizeHeight(8),
+  },
+  countdownText: {
+    fontSize: normalize(32),
+    color: '#4ECDC4',
     fontWeight: 'bold',
-    color: '#007AFF',
-    marginVertical: 24,
-    letterSpacing: 2,
+    marginTop: normalizeHeight(8),
   },
-  endButton: {
-    backgroundColor: '#FF3B30',
-    paddingVertical: 18,
-    borderRadius: 10,
+  finishedText: {
+    fontSize: normalize(20),
+    color: '#F2F4F8',
+    fontWeight: 'bold',
+    marginBottom: normalizeHeight(8),
+  },
+  startExerciseButton: {
     alignItems: 'center',
-    marginBottom: 32,
-    width: '90%',
-    alignSelf: 'center',
+    paddingVertical: normalizeHeight(12),
+    marginHorizontal: normalizeWidth(24),
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
+    backgroundColor: '#2f4880',
+    borderRadius: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
-  endButtonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '700',
+  finishExerciseButton: {
+    alignItems: 'center',
+    paddingVertical: normalizeHeight(12),
+    marginHorizontal: normalizeWidth(24),
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
+    backgroundColor: '#2f4880',
+    borderRadius: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  endWorkoutButton: {
+    alignItems: 'center',
+    paddingVertical: normalizeHeight(12),
+    marginHorizontal: normalizeWidth(24),
+    borderWidth: normalize(1),
+    borderColor: '#dc6c72',
+    backgroundColor: '#ad2126',
+    borderRadius: normalize(12),
+    marginTop: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: normalizeHeight(32),
+  },
+  buttonImage: {
+    height: normalizeHeight(12),
+    width: (138.0 / 140.0) * normalize(12),
+    aspectRatio: (140.0 / 138.0),
+    marginRight: normalizeWidth(6),
+  },
+  startExerciseImage: {
+    height: normalizeHeight(12),
+    width: (112.0 / 115.0) * normalize(12),
+    aspectRatio: (115.0 / 112.0),
+    marginRight: normalizeWidth(6),
+  },
+  buttonText: {
+    fontSize: normalize(16),
+    fontWeight: '500',
+    lineHeight: normalize(20),
+    color: '#FFFFFF',
   },
 });
