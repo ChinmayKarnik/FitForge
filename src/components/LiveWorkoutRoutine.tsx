@@ -1,13 +1,14 @@
 
 
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Switch, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
 import { TimerComponent } from './TimerComponent';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
+import ExerciseForm from './ExerciseForm';
 
 export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void }) => {
    const [showFinishModal, setShowFinishModal] = useState(false);
@@ -122,6 +123,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
       ],
       endTime: endTime
     };
+
     nextExerciseRef.current = getNthExerciseInRoutine(workout.current.exercises.length+1) 
     nextExerciseTime.current = endTime + getNthExerciseInRoutine(workout.current.exercises.length).rest * 1000 
      setIsExerciseInProgress(false);
@@ -145,9 +147,6 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
               <Text style={styles.nextExerciseText}>{nextExerciseMessage}</Text>
               <Text style={styles.middleExerciseName}>{nextExerciseRef.current.name}</Text>
               <Text style={styles.middleSetNumber}>Set {workout.current.exercises.length + 1}</Text>
-              {showCountdown && (
-                <Text style={styles.countdownText}>{countdownSeconds}</Text>
-              )}
             </View>
           )
         ) : (
@@ -173,7 +172,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
           <Text style={styles.buttonText}>Start Exercise</Text>
         </TouchableOpacity>
       )}
-      {isExerciseInProgress && (
+      {isExerciseInProgress && !showFinishModal && (
         <TouchableOpacity style={styles.finishExerciseButton} onPress={() => setShowFinishModal(true)}>
           <Image
             source={white_donut}
@@ -182,62 +181,24 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
           <Text style={styles.buttonText}>Finish Exercise</Text>
         </TouchableOpacity>
       )}
-      <Modal
-        visible={showFinishModal}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowFinishModal(false)}
-      >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.4)' }}>
-          <View style={{ backgroundColor: '#fff', padding: 24, borderRadius: 12, width: '85%' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8 }}>Enter Exercise Details</Text>
-            {activeExercise && (
-              <>
-                <Text style={{ fontSize: 18, color: '#007AFF', fontWeight: 'bold', marginBottom: 2 }}>{activeExercise.name}</Text>
-                <Text style={{ fontSize: 16, color: '#333', marginBottom: 12 }}>Set {workout.current.exercises.length + 1}</Text>
-                {(() => {
-                  const exercise = databaseController.getExerciseById(activeExercise.id);
-                  const allParams = [...(exercise?.requiredParameters || []), ...(exercise?.optionalParameters || [])];
-                  return allParams.map((param, index) => (
-                    <View key={param.name} style={{ marginBottom: 12 }}>
-                      <Text style={{ fontSize: 16, marginBottom: 4 }}>{param.name.charAt(0).toUpperCase() + param.name.slice(1)}{exercise?.requiredParameters?.find(p => p.name === param.name) ? ' *' : ''}</Text>
-                      {param.type === 'boolean' ? (
-                        <Switch
-                          value={exerciseParams[param.name] || false}
-                          onValueChange={(value) => setExerciseParams(p => ({ ...p, [param.name]: value }))}
-                        />
-                      ) : (
-                        <TextInput
-                          placeholder={`Enter ${param.name}`}
-                          placeholderTextColor="#000"
-                          keyboardType={param.type === 'number' ? 'numeric' : 'default'}
-                          value={exerciseParams[param.name] || ''}
-                          onChangeText={(text) => setExerciseParams(p => ({ ...p, [param.name]: param.type === 'number' ? (text ? parseFloat(text) : '') : text }))}
-                          style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 8 }}
-                        />
-                      )}
-                    </View>
-                  ));
-                })()}
-              </>
-            )}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TouchableOpacity
-                style={[styles.endButton, { backgroundColor: '#007AFF', width: '48%', marginBottom: 0 }]}
-                onPress={() => handleFinishExercise(exerciseParams)}
-              >
-                <Text style={styles.endButtonText}>Submit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.endButton, { backgroundColor: '#aaa', width: '48%', marginBottom: 0 }]}
-                onPress={() => setShowFinishModal(false)}
-              >
-                <Text style={styles.endButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {showFinishModal && activeExercise && (
+        <ExerciseForm
+          exerciseName={activeExercise.name}
+          exerciseId={activeExercise.id}
+          onFormDataChange={setExerciseParams}
+          onSave={() => {
+            handleFinishExercise(exerciseParams);
+          }}
+          onDiscard={() => {
+            setShowFinishModal(false);
+            setExerciseParams({});
+          }}
+          onCloseForm={() => {
+            setShowFinishModal(false);
+            setExerciseParams({});
+          }}
+        />
+      )}
       <TouchableOpacity style={styles.endWorkoutButton} onPress={handleEndWorkout}>
         <Image
           source={white_donut}
