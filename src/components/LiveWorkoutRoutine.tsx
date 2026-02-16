@@ -141,10 +141,10 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
       { !isExerciseInProgress && (
         nextExerciseRef.current ? (
           nextExerciseMessage && (
-            <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
+            <View style={styles.middleSectionContainer}>
               <Text style={styles.nextExerciseText}>{nextExerciseMessage}</Text>
-              <Text style={styles.exerciseNameText}>{nextExerciseRef.current.name}</Text>
-              <Text style={styles.setNumberText}>Set {workout.current.exercises.length + 1}</Text>
+              <Text style={styles.middleExerciseName}>{nextExerciseRef.current.name}</Text>
+              <Text style={styles.middleSetNumber}>Set {workout.current.exercises.length + 1}</Text>
               {showCountdown && (
                 <Text style={styles.countdownText}>{countdownSeconds}</Text>
               )}
@@ -250,6 +250,26 @@ export const LiveWorkoutRoutine = ({ onEndWorkout }: { onEndWorkout: () => void 
 };
 
 const styles = StyleSheet.create({
+    middleSectionContainer: {
+      alignItems: 'center',
+      marginVertical: normalizeHeight(16),
+    },
+    middleExerciseName: {
+      fontSize: normalize(32),
+      fontWeight: '700',
+      color: '#FFFFFF',
+      marginTop: normalizeHeight(12),
+      marginBottom: normalizeHeight(4),
+      letterSpacing: 0.5,
+    },
+    middleSetNumber: {
+      fontSize: normalize(18),
+      color: '#A9B1C2',
+      marginTop: normalizeHeight(2),
+      marginBottom: normalizeHeight(8),
+      fontWeight: '400',
+      letterSpacing: 0.2,
+    },
   container: {
     flex: 1,
     width: '100%',
