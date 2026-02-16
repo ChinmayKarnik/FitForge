@@ -97,6 +97,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
               ]}
             />
           );
+        
           return (
             <TouchableOpacity
               key={route.key}
