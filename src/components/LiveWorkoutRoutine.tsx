@@ -77,7 +77,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   };
 
   if (!selectedRoutineId) {
-    return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} />;
+    return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEndWorkout} />;
   }
 
   // UI for when no active workout is running

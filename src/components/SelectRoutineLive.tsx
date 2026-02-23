@@ -1,17 +1,29 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
 import { routines } from '../data/dummy/routines';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import checkbox_blue_bg from '../images/checkbox-blue-bg.png';
+import white_left_arrow from '../images/white-left-arrow.png';
 
 interface SelectRoutineLiveProps {
   onSelectRoutine: (routineId: string) => void;
+  onEndWorkout?: () => void;
 }
 
-export const SelectRoutineLive = ({ onSelectRoutine }: SelectRoutineLiveProps) => {
+export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRoutineLiveProps) => {
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    if (onEndWorkout) {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        onEndWorkout();
+        return true;
+      });
+      return () => backHandler.remove();
+    }
+  }, [onEndWorkout]);
 
   const filteredRoutines = routines.filter(routine =>
     routine.name.toLowerCase().includes(searchText.toLowerCase())
@@ -50,6 +62,16 @@ export const SelectRoutineLive = ({ onSelectRoutine }: SelectRoutineLiveProps) =
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onEndWorkout}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
+          <Image
+            style={styles.backButtonImage}
+            source={white_left_arrow}
+          />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Track Workout</Text>
       </View>
 
@@ -109,12 +131,23 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(68, 75, 95)',
     alignItems: 'center',
     backgroundColor: 'rgba(36, 42, 65)',
     paddingTop: normalizeHeight(40),
     paddingBottom: normalizeHeight(12),
+  },
+  backButton: {
+    position: 'absolute',
+    top: normalizeHeight(46),
+    left: normalizeWidth(16),
+  },
+  backButtonImage: {
+    width: normalizeWidth(9),
+    height: normalizeWidth(9) * (86.0 / 51.0),
+    aspectRatio: 51.0 / 86.0,
+    resizeMode: 'stretch',
   },
   headerText: {
     fontSize: 22,

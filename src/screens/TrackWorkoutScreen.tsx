@@ -42,7 +42,8 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
     return <LiveWorkoutRoutine onEndWorkout={endWorkout} navigation={navigation} />;
   }
 
-  // Placeholder for backdated workout - Selection screen
+  // Placeholder for backdated workout - 
+  //  screen
   if (workoutMode === 'backdated') {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
