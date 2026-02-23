@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput, Image } from 'react-native';
 import AddExerciseModal from './AddExerciseModal';
 import { useWorkoutState } from '../hooks';
+import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
+import white_left_arrow from '../images/white-left-arrow.png';
 
-export const BackdatedWorkoutFree = ({ onEnd }: { onEnd: () => void }) => {
+export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [showDateTimePicker, setShowDateTimePicker] = useState(true);
   const [month, setMonth] = useState('');
@@ -89,10 +91,29 @@ export const BackdatedWorkoutFree = ({ onEnd }: { onEnd: () => void }) => {
   const handleEndWorkout = () => {
     console.log('workout ending ',workoutRef.current);
     onEnd();
-  }
+  };
+  const handleBackPress = () => {
+    if (onBackPress) {
+      onBackPress();
+    }
+  };
 
   return (
     <>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={handleBackPress}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
+          <Image
+            style={styles.backButtonImage}
+            source={white_left_arrow}
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Log Workout</Text>
+      </View>
       {/* Date/Time Picker Modal */}
       <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
         <View style={styles.dateTimeModalOverlay}>
@@ -199,7 +220,33 @@ export const BackdatedWorkoutFree = ({ onEnd }: { onEnd: () => void }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1c2238',
+  },
+  header: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(68, 75, 95)',
+    alignItems: 'center',
+    backgroundColor: 'rgba(36, 42, 65)',
+    paddingTop: normalizeHeight(40),
+    paddingBottom: normalizeHeight(12),
+  },
+  backButton: {
+    position: 'absolute',
+    top: normalizeHeight(46),
+    left: normalizeWidth(16),
+  },
+  backButtonImage: {
+    width: normalizeWidth(9),
+    height: normalizeWidth(9) * (86.0 / 51.0),
+    aspectRatio: 51.0 / 86.0,
+    resizeMode: 'stretch',
+  },
+  headerText: {
+    fontSize: 22,
+    letterSpacing: 1,
+    fontWeight: '700',
+    color: '#fefefe',
   },
   contentContainer: {
     padding: 20,
@@ -209,37 +256,35 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 8,
     textAlign: 'center',
-    color: '#1a1a1a',
+    color: '#F2F4F8',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666666',
+    color: '#A9B1C2',
     textAlign: 'center',
     marginBottom: 24,
   },
   exerciseLogCard: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(42, 50, 75)',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(68, 75, 95)',
   },
   exerciseName: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#F2F4F8',
   },
   exerciseDetail: {
     fontSize: 14,
-    color: '#555',
+    color: '#A9B1C2',
     marginBottom: 2,
   },
   addButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#4ECDC4',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
@@ -251,7 +296,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   endButton: {
-    backgroundColor: '#FF9500',
+    backgroundColor: '#4ECDC4',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
@@ -264,51 +309,54 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1c2238',
     borderRadius: 16,
     padding: 24,
     width: '90%',
     maxWidth: 400,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(68, 75, 95)',
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 16,
     textAlign: 'center',
+    color: '#F2F4F8',
   },
   exerciseItem: {
     paddingVertical: 12,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: 'rgba(68, 75, 95)',
     width: '100%',
   },
   selectedExerciseItem: {
-    backgroundColor: '#e6f7ff',
+    backgroundColor: 'rgba(78, 205, 196, 0.2)',
   },
   exerciseItemText: {
     fontSize: 16,
-    color: '#333',
+    color: '#F2F4F8',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#d0d0d0',
+    borderColor: 'rgba(68, 75, 95)',
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: 'rgba(42, 50, 75)',
     marginBottom: 12,
     width: '100%',
-    color: '#333',
+    color: '#F2F4F8',
   },
   saveButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#4ECDC4',
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -322,30 +370,32 @@ const styles = StyleSheet.create({
   },
   dateTimeModalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   dateTimeModal: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1c2238',
     borderRadius: 20,
     padding: 24,
     width: '90%',
     maxWidth: 400,
+    borderWidth: 1,
+    borderColor: 'rgba(68, 75, 95)',
   },
   dateTimeModalTitle: {
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 24,
     textAlign: 'center',
-    color: '#333',
+    color: '#F2F4F8',
   },
   sectionLabel: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 12,
     marginTop: 16,
-    color: '#333',
+    color: '#F2F4F8',
   },
   dateInputRow: {
     flexDirection: 'row',
@@ -366,22 +416,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     marginBottom: 4,
-    color: '#666',
+    color: '#A9B1C2',
   },
   smallInput: {
     borderWidth: 1,
-    borderColor: '#d0d0d0',
+    borderColor: 'rgba(68, 75, 95)',
     borderRadius: 8,
     padding: 10,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: 'rgba(42, 50, 75)',
     textAlign: 'center',
     width: '100%',
     minWidth: 60,
-    color: '#333',
+    color: '#F2F4F8',
   },
   confirmButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#4ECDC4',
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: 'center',

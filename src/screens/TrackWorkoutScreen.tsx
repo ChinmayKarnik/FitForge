@@ -6,6 +6,7 @@ import { ActiveWorkoutTracker } from '../components';
 import { BackdatedWorkoutRoutine } from '../components/BackdatedWorkoutRoutine';
 import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
 import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
+import { BackdatedWorkoutSelection } from '../components/BackdatedWorkoutSelection';
 import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -42,54 +43,9 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
     return <LiveWorkoutRoutine onEndWorkout={endWorkout} navigation={navigation} />;
   }
 
-  // Placeholder for backdated workout - 
-  //  screen
+  // Placeholder for backdated workout - Selection screen
   if (workoutMode === 'backdated') {
-    return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Backdated Workout</Text>
-        <Text style={styles.subtitle}>Choose your logging method</Text>
-        
-        <View style={styles.optionsContainer}>
-          {/* Option 1: Backdated - Free */}
-          <TouchableOpacity 
-            style={styles.optionCard} 
-            onPress={() => setWorkoutMode('backdated-free')}
-          >
-            <View style={styles.optionIcon}>
-              <Text style={styles.optionIconText}>✍️</Text>
-            </View>
-            <Text style={styles.optionTitle}>Free Entry</Text>
-            <Text style={styles.optionSubtitle}>Without Template</Text>
-            <Text style={styles.optionDescription}>
-              Log exercises freely without following a preset structure
-            </Text>
-          </TouchableOpacity>
-
-          {/* Option 2: Backdated - Routine */}
-          <TouchableOpacity 
-            style={styles.optionCard} 
-            onPress={() => setWorkoutMode('backdated-routine')}
-          >
-            <View style={styles.optionIcon}>
-              <Text style={styles.optionIconText}>📄</Text>
-            </View>
-            <Text style={styles.optionTitle}>Routine Entry</Text>
-            <Text style={styles.optionSubtitle}>With Routine</Text>
-            <Text style={styles.optionDescription}>
-              Fill in data for a pre-defined workout routine
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity 
-          style={styles.cancelButton} 
-          onPress={() => setWorkoutMode('selection')}
-        >
-          <Text style={styles.cancelButtonText}>Back</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    );
+    return <BackdatedWorkoutSelection onSelectMode={setWorkoutMode} />;
   }
 
   // Backdated workout - Free
