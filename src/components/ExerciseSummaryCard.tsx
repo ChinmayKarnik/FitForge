@@ -73,7 +73,8 @@ const ExerciseSummaryCard =  ({exercises}) => {
     }));
     
   return (
-    <View style={{backgroundColor:  '#202144',
+    <View style={{
+      backgroundColor: 'rgba(42, 50, 75, 1)',
         borderWidth:normalize(1),
         borderColor: '#3c3c68',
         borderRadius: normalize(12),
