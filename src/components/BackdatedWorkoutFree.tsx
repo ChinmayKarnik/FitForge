@@ -115,11 +115,10 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         <Text style={styles.headerText}>Log Workout</Text>
       </View>
       {/* Date/Time Picker Modal */}
-      <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
+      {/* <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
         <View style={styles.dateTimeModalOverlay}>
           <View style={styles.dateTimeModal}>
             <Text style={styles.dateTimeModalTitle}>When did this workout happen?</Text>
-            {/* Date Section */}
             <Text style={styles.sectionLabel}>Date</Text>
             <View style={styles.dateInputRow}>
               <View style={styles.inputGroup}>
@@ -159,7 +158,6 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
                 />
               </View>
             </View>
-            {/* Time Section */}
             <Text style={styles.sectionLabel}>Time (24-hour format)</Text>
             <View style={styles.timeInputRow}>
               <View style={styles.inputGroup}>
@@ -192,12 +190,61 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       {/* Main Workout Logging Interface */}
       <View style={styles.container}>
-        <Text style={styles.title}>Backdated Workout (Free Entry)</Text>
-        <Text style={styles.subtitle}>Workout start time: {workoutDateTime ? new Date(workoutDateTime).toLocaleString() : 'Not set'}</Text>
-        <Text style={styles.text}>{JSON.stringify(workoutRef.current, null, 2)}</Text>
+        <View style={{ marginTop: normalizeHeight(10) }}>
+          <Text style={{
+            fontSize: normalize(15),
+            fontWeight: '600',
+            color: '#B0B7C3',
+            marginBottom: normalizeHeight(8),
+          }}>Date and time</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: 'rgba(42, 50, 75, 1)',
+              borderRadius: normalizeHeight(12),
+              borderWidth: 1,
+              borderColor: 'rgba(68, 75, 95, 1)',
+              paddingVertical: normalizeHeight(10),
+              paddingHorizontal: normalizeWidth(16),
+              marginRight: normalizeWidth(8),
+            }}>
+              <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                March 5, 2026
+              </Text>
+            </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: 'rgba(42, 50, 75, 1)',
+              borderRadius: normalizeHeight(12),
+              borderWidth: 1,
+              borderColor: 'rgba(68, 75, 95, 1)',
+              paddingVertical: normalizeHeight(10),
+              paddingHorizontal: normalizeWidth(16),
+              marginLeft: normalizeWidth(8),
+              justifyContent: 'space-between',
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                  11:05 AM
+                </Text>
+              </View>
+            </View>
+          </View>
+             
+        </View>
+
+
+        <Text style={{color:'white',
+          marginTop:normalizeHeight(10)
+        }}>{JSON.stringify(workoutRef.current, null, 2)}</Text>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.addButtonText}>+ Add Exercise</Text>
         </TouchableOpacity>
@@ -221,6 +268,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1c2238',
+    paddingHorizontal:normalizeWidth(16)
   },
   header: {
     width: '100%',
