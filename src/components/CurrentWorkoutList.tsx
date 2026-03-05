@@ -6,7 +6,9 @@ import ExerciseSummaryCard from './ExerciseSummaryCard';
 
 const CurrentWorkoutList = (
     {
-        workout
+        workout,
+        emptyStateText = 'Tap "Start Exercise" to log your first set',
+        horizontalPadding = true,
     }
 ) => {
     const exercises = workout?.exercises || [];
@@ -62,7 +64,7 @@ const CurrentWorkoutList = (
                 fontSize : normalize(15),
                 marginTop:normalizeHeight(10)
              }}
-             >Tap "Start Exercise" to log your first set</Text>
+             >{emptyStateText}</Text>
             </View>
 
         )
@@ -71,7 +73,7 @@ const CurrentWorkoutList = (
         <View style={{
             flex: 1,
             marginTop:normalizeHeight(10),
-            paddingHorizontal: normalize(14),
+            paddingHorizontal: horizontalPadding ? normalize(14) : 0,
         }} >
             <View style={{
                 flexDirection:'row',

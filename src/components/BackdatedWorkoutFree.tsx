@@ -249,7 +249,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         <View style={{
           flex:1
         }}>
-        <CurrentWorkoutList workout={workoutRef.current} />
+        <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} />
         </View>
         <View 
         style={{marginBottom:
