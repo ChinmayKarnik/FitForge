@@ -4,6 +4,9 @@ import AddExerciseModal from './AddExerciseModal';
 import { useWorkoutState } from '../hooks';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import CurrentWorkoutList from './CurrentWorkoutList';
+import white_plus from '../images/white-plus.png'
+import white_donut from '../images/white-donut.png'
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
@@ -32,7 +35,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         const numberOfSets = params.numberOfSets;
         const restTimeBetweenSets = params.restTimeBetweenSets;
         for (let i = 0; i < numberOfSets; i++) {
-          const setExercise = {id:exercise.id};
+          const setExercise = {exerciseId:exercise.id,};
           setExercise.startTime = firstSetStartTime + defaultSetTime*(i) + restTimeBetweenSets*(i);
           setExercise.endTime = setExercise.startTime + defaultSetTime;
           setExercise.loggedData = loggedData[i];
@@ -242,14 +245,26 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         </View>
 
 
-        <Text style={{color:'white',
-          marginTop:normalizeHeight(10)
-        }}>{JSON.stringify(workoutRef.current, null, 2)}</Text>
+        {/* Render the current workout list */}
+        <CurrentWorkoutList workout={workoutRef.current} />
+
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
-          <Text style={styles.addButtonText}>+ Add Exercise</Text>
+          <Image
+            source={white_plus}
+            style={styles.startExerciseImage}
+          />
+          <Text
+            style={styles.buttonText}
+          >Add Exercise</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
-          <Text style={styles.endButtonText}>End Workout</Text>
+          <Image
+            source={white_donut}
+            style={styles.buttonImage}
+          />
+          <Text
+            style={styles.buttonText}
+          >End Workout   </Text>
         </TouchableOpacity>
         <Modal visible={showAddExercise} transparent animationType="slide" onRequestClose={() => setShowAddExercise(false)}>
           <View style={styles.modalOverlay}>
@@ -331,24 +346,32 @@ const styles = StyleSheet.create({
     color: '#A9B1C2',
     marginBottom: 2,
   },
-  addButton: {
-    backgroundColor: '#4ECDC4',
-    paddingVertical: 14,
-    borderRadius: 12,
+  addButton:  {
     alignItems: 'center',
-    marginVertical: 16,
+    paddingVertical: normalizeHeight(12),
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
+    backgroundColor: '#2f4880',
+    borderRadius: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop:normalizeHeight(10)
   },
   addButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '700',
   },
-  endButton: {
-    backgroundColor: '#4ECDC4',
-    paddingVertical: 14,
-    borderRadius: 12,
+  endButton:  {
     alignItems: 'center',
-    marginVertical: 8,
+    paddingVertical: normalizeHeight(12),
+    borderWidth: normalize(1),
+    borderColor: '#dc6c72',
+    backgroundColor: '#ad2126',
+    borderRadius: normalize(12),
+    marginTop: normalize(12),
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   endButtonText: {
     color: '#fff',
@@ -489,5 +512,23 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '700',
+  },
+  startExerciseImage: {
+    height: normalizeHeight(12),
+    width: (112.0 / 115.0) * normalize(12),
+    aspectRatio: (115.0 / 112.0),
+    marginRight: normalizeWidth(6),
+  },
+  buttonText: {
+    fontSize: normalize(16),
+    fontWeight: '500',
+    lineHeight: normalize(20),
+    color: '#FFFFFF',
+  },
+  buttonImage: {
+    height: normalizeHeight(12),
+    width: (138.0 / 140.0) * normalize(12),
+    aspectRatio: (140.0 / 138.0),
+    marginRight: normalizeWidth(6),
   },
 });
