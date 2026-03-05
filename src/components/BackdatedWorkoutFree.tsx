@@ -246,8 +246,15 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
 
 
         {/* Render the current workout list */}
+        <View style={{
+          flex:1
+        }}>
         <CurrentWorkoutList workout={workoutRef.current} />
-
+        </View>
+        <View 
+        style={{marginBottom:
+          normalizeHeight(80)
+        }}>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Image
             source={white_plus}
@@ -266,6 +273,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
             style={styles.buttonText}
           >End Workout   </Text>
         </TouchableOpacity>
+        </View>
         <Modal visible={showAddExercise} transparent animationType="slide" onRequestClose={() => setShowAddExercise(false)}>
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
@@ -283,7 +291,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1c2238',
-    paddingHorizontal:normalizeWidth(16)
+    paddingHorizontal:normalizeWidth(16),
   },
   header: {
     width: '100%',
