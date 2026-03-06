@@ -41,6 +41,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
                     {
                         !!showNumberOfSetsInput && (
                             <SetsRepsSelector
+                                exerciseId = {selectedData.exerciseId}
                                 onClose={onClose}
                             />
                         )
