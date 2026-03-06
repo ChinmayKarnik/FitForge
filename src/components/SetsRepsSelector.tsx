@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 import cross_icon from '../images/cross-icon-white.png';
+import { databaseController } from '../data';
 
-const SetsRepsSelector = ({ onClose, exerciseId }) => {
+
+const SetsRepsSelector = ({ closeModal, exerciseId,
+    setWorkoutParameters
+ }) => {
 	const [numberOfSets, setNumberOfSets] = useState('');
-	const [restTime, setRestTime] = useState('');
-	const exerciseName = "Pull ups"
+	const [restTime, setRestTime] = useState('60');
+	const exercise = databaseController.getAllExercises().find(ex => ex.id === exerciseId);
+	const exerciseName = exercise?.name || 'Unknown Exercise';
+
+	const areInputsValid = !isNaN(Number(numberOfSets)) && numberOfSets.trim() !== '' && !isNaN(Number(restTime)) && restTime.trim() !== '';
+	const onConfirm = () => {
+		setWorkoutParameters({sets:numberOfSets,restTime:restTime})
+	}
 
 	return (
 		<View>
@@ -18,7 +28,7 @@ const SetsRepsSelector = ({ onClose, exerciseId }) => {
 			}}>
 				<Text style={styles.modalTitle}>Workout Parameters</Text>
 				<TouchableOpacity
-					onPress={onClose}
+					onPress={closeModal}
 					hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}>
 					<Image
 						source={cross_icon}
@@ -64,14 +74,16 @@ const SetsRepsSelector = ({ onClose, exerciseId }) => {
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity
 					style={styles.discardButton}
-					onPress={() => { }}>
+					onPress={closeModal}>
 					<Text style={styles.discardButtonText}>Discard</Text>
 				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.confirmButton}
-					onPress={() => { }}>
-					<Text style={styles.confirmButtonText}>Confirm</Text>
-				</TouchableOpacity>
+					<TouchableOpacity
+						style={[styles.confirmButton, !areInputsValid && { opacity: 0.5 }]}
+						onPress={onConfirm}
+						disabled={!areInputsValid}
+					>
+						<Text style={styles.confirmButtonText}>Confirm</Text>
+					</TouchableOpacity>
 			</View>
 		</View>
 	);

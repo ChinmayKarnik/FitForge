@@ -19,6 +19,17 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
     const onSelectExercise = (exercise)=>{
         setSelectedData({exerciseId: exercise.id, data: {}});
     }
+	const setWorkoutParamenters = (data) => {
+		const { sets, restTime } = data;
+		setSelectedData(prev => ({
+			...prev,
+			data: {
+				...prev.data,
+				sets,
+				restTime
+			}
+		}));
+	}
 	
     return (
 		<Modal
@@ -42,7 +53,8 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
                         !!showNumberOfSetsInput && (
                             <SetsRepsSelector
                                 exerciseId = {selectedData.exerciseId}
-                                onClose={onClose}
+                                closeModal={onClose}
+                                setWorkoutParameters ={setWorkoutParamenters}
                             />
                         )
                     }
