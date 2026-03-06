@@ -7,6 +7,7 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import CurrentWorkoutList from './CurrentWorkoutList';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
+import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
@@ -17,6 +18,9 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
   const [hour, setHour] = useState('');
   const [minute, setMinute] = useState('');
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
+  const [selectionData,setSelectionData ] = useState({
+    
+  })
 
   const workoutRef = useRef({})
 
@@ -274,14 +278,12 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
           >End Workout   </Text>
         </TouchableOpacity>
         </View>
-        <Modal visible={showAddExercise} transparent animationType="slide" onRequestClose={() => setShowAddExercise(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <AddExerciseModal onClose={() => setShowAddExercise(false)} 
-                addSetsForExercise = {addSetsForExercise}/>
-            </View>
-          </View>
-        </Modal>
+        {!!showAddExercise && (<ExercisePickerLoggerModal
+          visible={showAddExercise}
+          onSelectExercise={() => { }}
+          onClose={() => {setShowAddExercise(false) }}
+        />)
+        }
       </View>
     </>
   );

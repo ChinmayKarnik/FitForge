@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Alert, ScrollView } from 'react-native';
 import { databaseController } from '../data';
+import { ExercisePickerModal } from './ExercisePickerModal';
 
 const AddExerciseModal = ({ onClose, addSetsForExercise }) => {
   const exercises = databaseController.getAllExercises();
@@ -24,6 +25,13 @@ const AddExerciseModal = ({ onClose, addSetsForExercise }) => {
 console.log('exercises',exercises)
   // Step 1: Choose exercise
   if (step === 'choose') {
+
+    // return  (<ExercisePickerModal
+    //         visible={true}
+    //         exercises={exercises}
+    //         onSelectExercise={()=>{}}
+    //         onClose={() => {}}
+    //       />)
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Select Exercise</Text>
