@@ -21,7 +21,6 @@ const ExerciseFormMultiset = ({
     const exerciseName = exercise?.name || 'Exercise';
 
     const updateParameterWithValue = (parameterName, value) => {
-        console.log("ckck data here ",data.current,totalSets)
         data.current[currentSetNumber][parameterName] = value;
     }
 
@@ -52,7 +51,7 @@ const ExerciseFormMultiset = ({
                     letterSpacing: normalize(0.3),
                     color: '#F2F4F8',
                 }}>
-                    {exerciseName} [Set {currentSetNumber} of {totalSets}]
+                    {exerciseName} [Set {currentSetNumber+1} of {totalSets}]
                 </Text>
                 <TouchableOpacity
                     onPress={closeModal}
