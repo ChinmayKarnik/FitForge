@@ -75,7 +75,7 @@ const ExerciseFormMultiset = ({
                         return (
                             <RequiredParameterField
                                 parameter={parameter}
-                                key={parameter.name}
+                                key={`${parameter.name}-${currentSetNumber}`}
                                 showBottomSeparator={!isLast}
                                 updateParameterWithValue={updateParameterWithValue}
                             />
