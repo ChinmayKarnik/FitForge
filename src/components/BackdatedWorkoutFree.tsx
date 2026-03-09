@@ -8,10 +8,12 @@ import CurrentWorkoutList from './CurrentWorkoutList';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
 import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
+import DateSelectionModal from './DateSelectionModal.tsx';
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [showDateTimePicker, setShowDateTimePicker] = useState(true);
+  const [showDateModal, setShowDateModal] = useState(false);
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [year, setYear] = useState('');
@@ -208,22 +210,25 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
             marginBottom: normalizeHeight(8),
           }}>Date and time</Text>
           <View style={{ flexDirection: 'row' }}>
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: 'rgba(42, 50, 75, 1)',
-              borderRadius: normalizeHeight(12),
-              borderWidth: 1,
-              borderColor: 'rgba(68, 75, 95, 1)',
-              paddingVertical: normalizeHeight(10),
-              paddingHorizontal: normalizeWidth(16),
-              marginRight: normalizeWidth(8),
-            }}>
+            <TouchableOpacity
+              onPress={() => setShowDateModal(true)}
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(42, 50, 75, 1)',
+                borderRadius: normalizeHeight(12),
+                borderWidth: 1,
+                borderColor: 'rgba(68, 75, 95, 1)',
+                paddingVertical: normalizeHeight(10),
+                paddingHorizontal: normalizeWidth(16),
+                marginRight: normalizeWidth(8),
+              }}
+            >
               <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
                 March 5, 2026
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={{
               flex: 1,
               flexDirection: 'row',
@@ -285,6 +290,10 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         />)
         }
       </View>
+      <DateSelectionModal
+        visible={showDateModal}
+        onClose={() => setShowDateModal(false)}
+      />
     </>
   );
 };
