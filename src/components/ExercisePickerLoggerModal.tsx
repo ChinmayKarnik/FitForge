@@ -4,17 +4,19 @@ import { normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import SelectExerciseModalContent from './SelectExerciseModalContent';
 import SetsRepsSelector from './SetsRepsSelector';
+import ExerciseFormMultiset from './ExerciseFormMultiset';
 
 
 export const ExercisePickerLoggerModal = ({ visible, onClose,
+	addSetsForExercise
  }) => {
      
     const exercises = databaseController.getAllExercises();
 
     const [selectedData,setSelectedData]  = useState({exerciseId:null,data:{}});
-
     const isSelectionPending = !selectedData.exerciseId;
     const showNumberOfSetsInput = !!selectedData.exerciseId && !selectedData.data?.sets;
+    const showSetsInput = !isSelectionPending && !showNumberOfSetsInput;
 
     const onSelectExercise = (exercise)=>{
         setSelectedData({exerciseId: exercise.id, data: {}});
@@ -29,6 +31,9 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 				restTime
 			}
 		}));
+	}
+	const logExercisesForParent = (exercise, loggedData) => {
+		addSetsForExercise(exercise, {numberOfSets: selectedData.data.sets, restTimeBetweenSets: selectedData.data.restTime}, loggedData);
 	}
 	
     return (
@@ -58,6 +63,16 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
                             />
                         )
                     }
+					{
+						!!showSetsInput && (
+							<ExerciseFormMultiset 
+								exerciseId={selectedData.exerciseId}
+								closeModal={onClose}
+								totalSets={selectedData.data?.sets}
+								logExercisesForParent={logExercisesForParent}
+							/>
+						)
+					}
 				</View>
 			</View>
 		</Modal>

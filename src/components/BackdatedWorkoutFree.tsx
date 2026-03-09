@@ -280,7 +280,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         </View>
         {!!showAddExercise && (<ExercisePickerLoggerModal
           visible={showAddExercise}
-          onSelectExercise={() => { }}
+          addSetsForExercise={addSetsForExercise}
           onClose={() => {setShowAddExercise(false) }}
         />)
         }
