@@ -34,7 +34,7 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
 
         if (dateNumber < 1 || dateNumber > daysInMonth) {
           cells.push(
-            <View key={`blank-${row}-${col}`} style={styles.dateCell} />
+            <View key={`blank-${displayYear}-${displayMonth}-${row}-${col}`} style={styles.dateCell} />
           );
         } else {
           const thisDate = new Date(displayYear, displayMonth, dateNumber);
@@ -50,16 +50,18 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
             displayYear === today.getFullYear();
           cells.push(
             <TouchableOpacity
-              key={`date-${dateNumber}`}
+              key={`date-${displayYear}-${displayMonth}-${dateNumber}`}
               style={[
                 styles.dateCell,
                 isSelected && styles.selectedDateCell,
                 !isSelected && isToday && styles.todayDateCell,
               ]}
               onPress={() => {
-                setSelectedDate(new Date(displayYear, displayMonth, dateNumber));
+                if (!isFuture) {
+                  setSelectedDate(new Date(displayYear, displayMonth, dateNumber));
+                }
               }}
-              disabled={false}
+              disabled={isFuture}
             >
               <Text style={[
                 styles.dateText,
@@ -144,8 +146,8 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
 
             <View style={styles.calendarContainer}>
               <View style={styles.weekdayRow}>
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
-                  <Text key={day} style={styles.weekdayText}>{day}</Text>
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, idx) => (
+                  <Text key={`weekday-${displayYear}-${displayMonth}-${idx}`} style={styles.weekdayText}>{day}</Text>
                 ))}
               </View>
               {renderCalendarRows()}
@@ -285,7 +287,7 @@ const styles = StyleSheet.create({
   },
   selectedDateCell: {
     backgroundColor: '#FF5C2A', // orangish
-    borderRadius: normalize(19),
+    borderRadius: Math.max(normalizeWidth(38), normalizeHeight(38)) / 2,
     width: normalizeWidth(38),
     height: normalizeHeight(38),
     justifyContent: 'center',
@@ -299,7 +301,7 @@ const styles = StyleSheet.create({
   todayDateCell: {
     borderWidth: 2,
     borderColor: '#FF5C2A',
-    borderRadius: normalize(19),
+    borderRadius: Math.max(normalizeWidth(38), normalizeHeight(38)) / 2,
     width: normalizeWidth(38),
     height: normalizeHeight(38),
     justifyContent: 'center',
