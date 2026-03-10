@@ -23,6 +23,8 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
   const renderCalendarRows = () => {
     const rows = [];
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     for (let row = 0; row < numberOfRows; row++) {
       const cells = [];
 
@@ -35,15 +37,36 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
             <View key={`blank-${row}-${col}`} style={styles.dateCell} />
           );
         } else {
+          const thisDate = new Date(displayYear, displayMonth, dateNumber);
+          thisDate.setHours(0, 0, 0, 0);
+          const isFuture = thisDate > today;
+          const isSelected =
+            selectedDate.getDate() === dateNumber &&
+            selectedDate.getMonth() === displayMonth &&
+            selectedDate.getFullYear() === displayYear;
+          const isToday =
+            dateNumber === today.getDate() &&
+            displayMonth === today.getMonth() &&
+            displayYear === today.getFullYear();
           cells.push(
             <TouchableOpacity
               key={`date-${dateNumber}`}
-              style={styles.dateCell}
+              style={[
+                styles.dateCell,
+                isSelected && styles.selectedDateCell,
+                !isSelected && isToday && styles.todayDateCell,
+              ]}
               onPress={() => {
                 setSelectedDate(new Date(displayYear, displayMonth, dateNumber));
               }}
+              disabled={false}
             >
-              <Text style={styles.dateText}>{dateNumber}</Text>
+              <Text style={[
+                styles.dateText,
+                isFuture && { color: 'rgba(176, 183, 195, 0.4)' },
+                isSelected && styles.selectedDateText,
+                !isSelected && isToday && styles.todayDateText,
+              ]}>{dateNumber}</Text>
             </TouchableOpacity>
           );
         }
@@ -242,7 +265,7 @@ const styles = StyleSheet.create({
   weekdayText: {
     fontSize: normalize(14),
     fontWeight: '500',
-    color: '#B0B7C3',
+    color: '#FFFFFF',
     width: `${100 / 7}%`,
     textAlign: 'center',
   },
@@ -258,7 +281,35 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: normalize(16),
     fontWeight: '500',
-    color: '#B0B7C3',
+    color: '#FFFFFF',
+  },
+  selectedDateCell: {
+    backgroundColor: '#FF5C2A', // orangish
+    borderRadius: normalize(19),
+    width: normalizeWidth(38),
+    height: normalizeHeight(38),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  selectedDateText: {
+    color: '#FFF',
+    fontWeight: '700',
+  },
+  todayDateCell: {
+    borderWidth: 2,
+    borderColor: '#FF5C2A',
+    borderRadius: normalize(19),
+    width: normalizeWidth(38),
+    height: normalizeHeight(38),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+  },
+  todayDateText: {
+    color: '#FF5C2A',
+    fontWeight: '700',
   },
 });
 
