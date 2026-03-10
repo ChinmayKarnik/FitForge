@@ -14,6 +14,12 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
   const [displayMonth,setDisplayMonth] = React.useState(currentDateRef.current.getMonth());
   const [displayYear,setDisplayYear] = React.useState(currentDateRef.current.getFullYear());
 
+  // Calculate number of days in the displayed month
+  const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+  
+  // Calculate the weekday of the first day of the displayed month (0 = Sunday, 1 = Monday, etc.)
+  const firstDayWeekday = new Date(displayYear, displayMonth, 1).getDay();
+
   return (
     <Modal
       visible={visible}
@@ -42,12 +48,64 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
                 <Text style={styles.dropdownCaret}>▼</Text>
               </View>
               <View style={styles.navigationArrows}>
-                <TouchableOpacity style={styles.arrowButton}>
+                <TouchableOpacity
+                  style={styles.arrowButton}
+                  onPress={() => {
+                    if (displayMonth === 0) {
+                      setDisplayMonth(11);
+                      setDisplayYear(displayYear - 1);
+                    } else {
+                      setDisplayMonth(displayMonth - 1);
+                    }
+                  }}
+                >
                   <Text style={styles.arrowText}>‹</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.arrowButton}>
+                <TouchableOpacity
+                  style={styles.arrowButton}
+                  onPress={() => {
+                    if (displayMonth === 11) {
+                      setDisplayMonth(0);
+                      setDisplayYear(displayYear + 1);
+                    } else {
+                      setDisplayMonth(displayMonth + 1);
+                    }
+                  }}
+                >
                   <Text style={styles.arrowText}>›</Text>
                 </TouchableOpacity>
+              </View>
+            </View>
+            
+            {/* Calendar Grid */}
+            <View style={styles.calendarContainer}>
+              {/* Weekday headers */}
+              <View style={styles.weekdayRow}>
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+                  <Text key={day} style={styles.weekdayText}>{day}</Text>
+                ))}
+              </View>
+              
+              {/* Date cells */}
+              <View style={styles.datesGrid}>
+                {/* Blank cells before the first date */}
+                {Array.from({ length: firstDayWeekday }).map((_, index) => (
+                  <View key={`blank-${displayMonth}-${displayYear}-${index}`} style={styles.dateCell} />
+                ))}
+                
+                {/* Date cells */}
+                {Array.from({ length: daysInMonth }).map((_, index) => {
+                  const date = index + 1;
+                  return (
+                    <TouchableOpacity
+                      key={`date-${displayMonth}-${displayYear}-${date}`}
+                      style={styles.dateCell}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.dateText}>{date}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
           </View>
@@ -132,6 +190,39 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  calendarContainer: {
+   paddingHorizontal: normalizeWidth(16),
+    paddingVertical: normalizeHeight(12),
+    borderWidth:1,
+    borderColor:'red'
+  },
+  weekdayRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: normalizeHeight(8),
+  },
+  weekdayText: {
+    fontSize: normalize(14),
+    fontWeight: '500',
+    color: '#B0B7C3',
+    width: `${100 / 7}%`,
+    textAlign: 'center',
+  },
+  datesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  dateCell: {
+    width: `${100 / 7}%`,
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dateText: {
+    fontSize: normalize(16),
+    fontWeight: '500',
+    color: '#B0B7C3',
   },
 });
 
