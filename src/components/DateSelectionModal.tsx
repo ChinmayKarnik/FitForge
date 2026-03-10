@@ -32,6 +32,22 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
             {selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
           </Text>
           <View style={styles.separator} />
+          <View style={styles.monthNavigationRow}>
+            <View style={styles.monthYearSection}>
+              <Text style={styles.monthYearText}>
+                {new Date(displayYear, displayMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </Text>
+              <Text style={styles.dropdownCaret}>▼</Text>
+            </View>
+            <View style={styles.navigationArrows}>
+              <TouchableOpacity style={styles.arrowButton}>
+                <Text style={styles.arrowText}>‹</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.arrowButton}>
+                <Text style={styles.arrowText}>›</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     </Modal>
@@ -69,6 +85,40 @@ const styles = StyleSheet.create({
   separator: {
     height: normalizeHeight(1),
     backgroundColor: 'rgba(68, 75, 95, 0.5)',
+  },
+  monthNavigationRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: normalizeHeight(4),
+    paddingHorizontal: normalizeWidth(16),
+  },
+  monthYearSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  monthYearText: {
+    fontSize: normalize(14),
+    fontWeight: '500',
+    color: '#B0B7C3',
+    marginRight: normalizeWidth(6),
+  },
+  dropdownCaret: {
+    fontSize: normalize(12),
+    color: '#B0B7C3',
+  },
+  navigationArrows: {
+    flexDirection: 'row',
+    gap: normalizeWidth(12),
+  },
+  arrowButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  arrowText: {
+    fontSize: normalize(24),
+    color: '#B0B7C3',
+    fontWeight: '300',
   },
 });
 
