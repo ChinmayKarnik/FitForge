@@ -21,35 +21,38 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
       animationType="fade"
       onRequestClose={onClose}
     >
-      <TouchableOpacity
-        style={styles.overlay}
-        onPress={onClose}
-        activeOpacity={1}
-      >
-        <View style={styles.container}>
-          <Text style={styles.selectDateLabel}>Select date</Text>
-          <Text style={styles.dateDisplay}>
-            {selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-          </Text>
-          <View style={styles.separator} />
-          <View style={styles.monthNavigationRow}>
-            <View style={styles.monthYearSection}>
-              <Text style={styles.monthYearText}>
-                {new Date(displayYear, displayMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-              </Text>
-              <Text style={styles.dropdownCaret}>▼</Text>
-            </View>
-            <View style={styles.navigationArrows}>
-              <TouchableOpacity style={styles.arrowButton}>
-                <Text style={styles.arrowText}>‹</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.arrowButton}>
-                <Text style={styles.arrowText}>›</Text>
-              </TouchableOpacity>
+      <View style={styles.overlay}>
+        <TouchableOpacity
+          style={StyleSheet.absoluteFill}
+          onPress={onClose}
+          activeOpacity={1}
+        />
+        <View style={styles.centeredContent} pointerEvents="box-none">
+          <View style={styles.container}>
+            <Text style={styles.selectDateLabel}>Select date</Text>
+            <Text style={styles.dateDisplay}>
+              {selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </Text>
+            <View style={styles.separator} />
+            <View style={styles.monthNavigationRow}>
+              <View style={styles.monthYearSection}>
+                <Text style={styles.monthYearText}>
+                  {new Date(displayYear, displayMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                </Text>
+                <Text style={styles.dropdownCaret}>▼</Text>
+              </View>
+              <View style={styles.navigationArrows}>
+                <TouchableOpacity style={styles.arrowButton}>
+                  <Text style={styles.arrowText}>‹</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.arrowButton}>
+                  <Text style={styles.arrowText}>›</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   );
 }
@@ -119,6 +122,16 @@ const styles = StyleSheet.create({
     fontSize: normalize(24),
     color: '#B0B7C3',
     fontWeight: '300',
+  },
+  centeredContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 
