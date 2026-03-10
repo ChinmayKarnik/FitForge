@@ -12,19 +12,31 @@ import DateSelectionModal from './DateSelectionModal.tsx';
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
-  const [showDateTimePicker, setShowDateTimePicker] = useState(true);
   const [showDateModal, setShowDateModal] = useState(false);
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [year, setYear] = useState('');
-  const [hour, setHour] = useState('');
-  const [minute, setMinute] = useState('');
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
-  const [selectionData,setSelectionData ] = useState({
-    
-  })
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const workoutRef = useRef({})
+
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const selected = new Date(selectedDate);
+  selected.setHours(0, 0, 0, 0);
+  let selectedDateString = '';
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (selected.getTime() === now.getTime()) {
+    selectedDateString = 'Today';
+  } else if (selected.getTime() === yesterday.getTime()) {
+    selectedDateString = 'Yesterday';
+  } else if (selected.getFullYear() === now.getFullYear()) {
+    selectedDateString = selected.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  } else {
+    selectedDateString = selected.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  const onConfirmDate = (date)=>{
+   setSelectedDate(date);
+  }
 
   useEffect(()=>{
      workoutRef.current = {
@@ -51,50 +63,6 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         numberOfSets*(restTimeBetweenSets);
     }
 
-  const handleConfirmDateTime = () => {
-    if (!month || !day || !year || !hour || !minute) {
-      Alert.alert('Error', 'Please fill in all date and time fields.');
-      return;
-    }
-    const monthNum = parseInt(month);
-    const dayNum = parseInt(day);
-    const yearNum = parseInt(year);
-    const hourNum = parseInt(hour);
-    const minuteNum = parseInt(minute);
-    // Validate ranges
-    if (monthNum < 1 || monthNum > 12) {
-      Alert.alert('Error', 'Please enter a valid month (1-12).');
-      return;
-    }
-    if (dayNum < 1 || dayNum > 31) {
-      Alert.alert('Error', 'Please enter a valid day (1-31).');
-      return;
-    }
-    if (yearNum < 2020 || yearNum > new Date().getFullYear()) {
-      Alert.alert('Error', 'Please enter a valid year.');
-      return;
-    }
-    if (hourNum < 0 || hourNum > 23) {
-      Alert.alert('Error', 'Please enter a valid hour (0-23).');
-      return;
-    }
-    if (minuteNum < 0 || minuteNum > 59) {
-      Alert.alert('Error', 'Please enter a valid minute (0-59).');
-      return;
-    }
-    try {
-      const workoutDateTime = new Date(yearNum, monthNum - 1, dayNum, hourNum, minuteNum);
-      const now = new Date();
-      if (workoutDateTime > now) {
-        Alert.alert('Error', 'Workout date/time cannot be in the future.');
-        return;
-      }
-      setWorkoutDateTime(workoutDateTime.getTime());
-      setShowDateTimePicker(false);
-    } catch (error) {
-      Alert.alert('Error', 'Invalid date or time.');
-    }
-  };
 
   const handleAddExercise = () => setShowAddExercise(true);
   const handleEndWorkout = () => {
@@ -123,84 +91,6 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         </TouchableOpacity>
         <Text style={styles.headerText}>Log Workout</Text>
       </View>
-      {/* Date/Time Picker Modal */}
-      {/* <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
-        <View style={styles.dateTimeModalOverlay}>
-          <View style={styles.dateTimeModal}>
-            <Text style={styles.dateTimeModalTitle}>When did this workout happen?</Text>
-            <Text style={styles.sectionLabel}>Date</Text>
-            <View style={styles.dateInputRow}>
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabelSmall}>Month</Text>
-                <TextInput
-                  style={styles.smallInput}
-                  placeholder="MM"
-                  value={month}
-                  onChangeText={setMonth}
-                  keyboardType="numeric"
-                  maxLength={2}
-                  placeholderTextColor="#888"
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabelSmall}>Day</Text>
-                <TextInput
-                  style={styles.smallInput}
-                  placeholder="DD"
-                  value={day}
-                  onChangeText={setDay}
-                  keyboardType="numeric"
-                  maxLength={2}
-                  placeholderTextColor="#888"
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabelSmall}>Year</Text>
-                <TextInput
-                  style={styles.smallInput}
-                  placeholder="YYYY"
-                  value={year}
-                  onChangeText={setYear}
-                  keyboardType="numeric"
-                  maxLength={4}
-                  placeholderTextColor="#888"
-                />
-              </View>
-            </View>
-            <Text style={styles.sectionLabel}>Time (24-hour format)</Text>
-            <View style={styles.timeInputRow}>
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabelSmall}>Hour</Text>
-                <TextInput
-                  style={styles.smallInput}
-                  placeholder="HH"
-                  value={hour}
-                  onChangeText={setHour}
-                  keyboardType="numeric"
-                  maxLength={2}
-                  placeholderTextColor="#888"
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabelSmall}>Minute</Text>
-                <TextInput
-                  style={styles.smallInput}
-                  placeholder="MM"
-                  value={minute}
-                  onChangeText={setMinute}
-                  keyboardType="numeric"
-                  maxLength={2}
-                  placeholderTextColor="#888"
-                />
-              </View>
-            </View>
-            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmDateTime}>
-              <Text style={styles.confirmButtonText}>Start Logging Workout</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
-      {/* Main Workout Logging Interface */}
       <View style={styles.container}>
         <View style={{ marginTop: normalizeHeight(10) }}>
           <Text style={{
@@ -226,7 +116,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
               }}
             >
               <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
-                March 5, 2026
+                {selectedDateString}
               </Text>
             </TouchableOpacity>
             <View style={{
@@ -293,6 +183,8 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
       <DateSelectionModal
         visible={showDateModal}
         onClose={() => setShowDateModal(false)}
+        selectedDate ={selectedDate}
+        onConfirmDate={onConfirmDate}
       />
     </>
   );

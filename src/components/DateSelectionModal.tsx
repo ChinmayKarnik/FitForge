@@ -2,14 +2,12 @@ import React, { useRef } from 'react';
 import { View, Modal, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 
-interface DateSelectionModalProps {
-  visible: boolean;
-  onClose: () => void;
-}
 
-const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClose }) => {
+const DateSelectionModal = ({ visible, onClose,
+  selectedDate:selectedDateProps,onConfirmDate
+ }) => {
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState(selectedDateProps);
   const currentDateRef = useRef(new Date());
   const [displayMonth,setDisplayMonth] = React.useState(currentDateRef.current.getMonth());
   const [displayYear,setDisplayYear] = React.useState(currentDateRef.current.getFullYear());
@@ -19,6 +17,11 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
 
   const totalCells = firstDayWeekday + daysInMonth;
   const numberOfRows = Math.ceil(totalCells / 7);
+
+  const onPressOkay = ()=>{
+    onConfirmDate(selectedDate);
+    onClose();
+  }
 
   const renderCalendarRows = () => {
     const rows = [];
@@ -168,7 +171,7 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
                 <Text style={{ color: '#B0B0B0', fontSize: normalize(14), fontWeight: '500',
                 }}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => onClose()}>
+              <TouchableOpacity onPress={onPressOkay}>
                 <Text style={{ color: '#FF3B30', fontSize: normalize(15), fontWeight: '500' }}>OK</Text>
               </TouchableOpacity>
             </View>
