@@ -120,15 +120,32 @@ const DateSelectionModal: React.FC<DateSelectionModalProps> = ({ visible, onClos
             </View>
 
             <View style={styles.calendarContainer}>
-
               <View style={styles.weekdayRow}>
                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
                   <Text key={day} style={styles.weekdayText}>{day}</Text>
                 ))}
               </View>
-
               {renderCalendarRows()}
+            </View>
 
+             <View style={styles.separator} />
+
+            {/* Action Buttons at the bottom, mimic reference */}
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: normalizeHeight(12),
+                paddingHorizontal: normalizeWidth(40),
+              }}
+            >
+              <TouchableOpacity onPress={onClose}>
+                <Text style={{ color: '#B0B0B0', fontSize: normalize(14), fontWeight: '500',
+                }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => onClose()}>
+                <Text style={{ color: '#FF3B30', fontSize: normalize(15), fontWeight: '500' }}>OK</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -216,8 +233,6 @@ const styles = StyleSheet.create({
   calendarContainer: {
     paddingHorizontal: normalizeWidth(10),
     paddingTop: normalizeHeight(12),
-    borderWidth:1,
-    borderColor:'red'
   },
   weekdayRow: {
     flexDirection: 'row',
@@ -233,16 +248,12 @@ const styles = StyleSheet.create({
   },
   weekRow: {
     flexDirection: 'row',
-    borderWidth:1,
-    borderColor:'green'
   },
   dateCell: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: normalizeHeight(38),
-    borderWidth: 1,
-    borderColor: 'blue'
   },
   dateText: {
     fontSize: normalize(16),
