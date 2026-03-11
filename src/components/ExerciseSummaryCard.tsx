@@ -134,6 +134,7 @@ const ExerciseSummaryCard =  ({exercises}) => {
         setsList.map((obj,index)=>{
           const isLast = index === setsList.length - 1;
          return (<View
+         key={index}
          style={{
           marginLeft: normalizeWidth(36),
           marginBottom: isLast ? 0 : normalize(6),

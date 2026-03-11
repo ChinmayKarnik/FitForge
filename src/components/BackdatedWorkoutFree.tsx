@@ -10,11 +10,13 @@ import white_donut from '../images/white-donut.png'
 import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
+import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
-export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
+export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd: () => void; onBackPress?: () => void; navigation?: any }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
  
@@ -143,8 +145,16 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
 
   const handleAddExercise = () => setShowAddExercise(true);
   const handleEndWorkout = () => {
-    console.log('workout ending ',workoutRef.current);
-    onEnd();
+    // Calculate duration for the workout
+    const duration = workoutRef.current.endTime - workoutRef.current.startTime;
+    // Add duration to workout object and show end modal
+    workoutRef.current = {
+      ...workoutRef.current,
+      duration,
+      startTime: workoutDateTime, // Ensure startTime is set to the selected workout time
+    };
+    console.log('workout ending ', workoutRef.current);
+    setShowEndModal(true);
   };
   const handleBackPress = () => {
     if (onBackPress) {
@@ -270,6 +280,12 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         onClose={() => setShowTimeModal(false)}
         selectedTimeInit={selectedTime}
         onConfirmTime={onConfirmTime}
+      />
+      <EndActiveWorkoutModal
+        workout={workoutRef.current}
+        visible={showEndModal}
+        onClose={() => setShowEndModal(false)}
+        navigation={navigation}
       />
     </>
   );

@@ -51,14 +51,14 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
   // Backdated workout - Free
   if (workoutMode === 'backdated-free') {
     return (
-      <BackdatedWorkoutFree onEnd={() => setWorkoutMode('selection')} />
+      <BackdatedWorkoutFree onEnd={() => setWorkoutMode('selection')} navigation={navigation} />
     );
   }
 
   // Placeholder for backdated workout - Routine
   if (workoutMode === 'backdated-routine') {
     return (
-      <BackdatedWorkoutRoutine onEnd={() => setWorkoutMode('selection')} />
+      <BackdatedWorkoutRoutine onEnd={() => setWorkoutMode('selection')} navigation={navigation} />
     );
   }
 
