@@ -17,6 +17,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
+ 
   const workoutRef = useRef({})
 
   const now = new Date();
@@ -100,6 +101,27 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         exercises: []
      }
   },[workoutDateTime])
+
+  useEffect(()=>{
+    // Convert selectedTime (12-hour) to 24-hour
+    let hours24 = selectedTime.hours;
+    if (selectedTime.isAm && selectedTime.hours === 12) {
+      hours24 = 0;
+    } else if (!selectedTime.isAm && selectedTime.hours !== 12) {
+      hours24 = selectedTime.hours + 12;
+    }
+    // Build a timestamp in millis from selectedDate + selectedTime
+    const dt = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate(),
+      hours24,
+      selectedTime.minutes,
+      0,
+      0
+    );
+    setWorkoutDateTime(dt.getTime());
+  },[selectedDate, selectedTime])
   
     const addSetsForExercise = (exercise, params, loggedData) => {
         const workout = workoutRef.current;
