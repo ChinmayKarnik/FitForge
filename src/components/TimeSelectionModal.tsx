@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 
 interface TimeSelectionModalProps {
@@ -12,9 +12,9 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
  }) => {
     
     const [selectedTime, setSelectedTime] = useState(selectedTimeInit);
-    const [isHourSelected,setIsHourSelected] = useState(true);
+    const [isHourSelected, setIsHourSelected] = useState(true);
     const isMinuteSelected = !isHourSelected;
-    const isAM = selectedTime.getHours() < 12;
+    const isAM = selectedTime?.getHours() < 12;
 
   return (
     <Modal
@@ -31,7 +31,64 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
         />
         <View style={styles.centeredContent} pointerEvents="box-none">
           <View style={styles.container}>
-            {/* Time selection content will go here */}
+
+            {/* Title */}
+            <Text style={styles.title}>Enter time</Text>
+
+            {/* Hour : Minute + AM/PM row */}
+            <View style={styles.timeRow}>
+
+              {/* Hour box */}
+              <TouchableOpacity
+                style={[styles.timeBox, styles.timeBoxSelected]}
+                onPress={() => setIsHourSelected(true)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.timeBoxTextSelected}>11</Text>
+              </TouchableOpacity>
+
+              <Text style={styles.colon}>:</Text>
+
+              {/* Minute box */}
+              <TouchableOpacity
+                style={[styles.timeBox, styles.timeBoxUnselected]}
+                onPress={() => setIsHourSelected(false)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.timeBoxTextUnselected}>25</Text>
+              </TouchableOpacity>
+
+              {/* AM/PM toggle */}
+              <View style={styles.amPmContainer}>
+                <TouchableOpacity style={[styles.amPmButton, styles.amPmButtonSelected]} activeOpacity={0.8}>
+                  <Text style={styles.amPmTextSelected}>AM</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.amPmButton, styles.amPmButtonUnselected]} activeOpacity={0.8}>
+                  <Text style={styles.amPmTextUnselected}>PM</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+
+            {/* Hour / Minute labels */}
+            <View style={styles.labelsRow}>
+              <Text style={styles.fieldLabel}>Hour</Text>
+              <Text style={[styles.fieldLabel, styles.minuteLabel]}>Minute</Text>
+            </View>
+
+            {/* Separator */}
+            <View style={styles.separator} />
+
+            {/* Bottom row: Cancel + OK */}
+            <View style={styles.actionsRow}>
+              <TouchableOpacity onPress={onClose}>
+                <Text style={styles.actionButton}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onClose}>
+                <Text style={styles.actionButton}>OK</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
         </View>
       </View>
@@ -61,9 +118,112 @@ const styles = StyleSheet.create({
     borderRadius: normalize(16),
     width: '90%',
     maxWidth: normalizeWidth(400),
+    paddingHorizontal: normalizeWidth(16),
+    paddingTop: normalizeHeight(16),
+    paddingBottom: normalizeHeight(12),
+  },
+  title: {
+    fontSize: normalize(13),
+    fontWeight: '600',
+    color: '#B0B7C3',
+    marginBottom: normalizeHeight(12),
+  },
+  timeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  timeBox: {
+    borderRadius: normalize(8),
+    width: normalizeWidth(96),
+    height: normalizeHeight(72),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timeBoxSelected: {
+    backgroundColor: 'rgba(78, 104, 166, 0.5)',
+    borderWidth: 2,
+    borderColor: '#4e68a6',
+  },
+  timeBoxUnselected: {
+    backgroundColor: 'rgba(42, 50, 75, 1)',
     borderWidth: 1,
     borderColor: 'rgba(68, 75, 95, 1)',
-    minHeight: normalizeHeight(120),
+  },
+  timeBoxTextSelected: {
+    fontSize: normalize(40),
+    fontWeight: '500',
+    color: '#FFFFFF',
+  },
+  timeBoxTextUnselected: {
+    fontSize: normalize(40),
+    fontWeight: '500',
+    color: '#B0B7C3',
+  },
+  colon: {
+    fontSize: normalize(40),
+    fontWeight: '300',
+    color: '#FFFFFF',
+    marginHorizontal: normalizeWidth(8),
+    marginBottom: normalizeHeight(8),
+  },
+  amPmContainer: {
+    marginLeft: normalizeWidth(12),
+    borderRadius: normalize(8),
+    borderWidth: 1,
+    borderColor: 'rgba(68, 75, 95, 1)',
+    overflow: 'hidden',
+  },
+  amPmButton: {
+    width: normalizeWidth(52),
+    height: normalizeHeight(36),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  amPmButtonSelected: {
+    backgroundColor: 'rgba(78, 104, 166, 0.5)',
+  },
+  amPmButtonUnselected: {
+    backgroundColor: 'rgba(42, 50, 75, 1)',
+  },
+  amPmTextSelected: {
+    fontSize: normalize(14),
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  amPmTextUnselected: {
+    fontSize: normalize(14),
+    fontWeight: '400',
+    color: '#B0B7C3',
+  },
+  labelsRow: {
+    flexDirection: 'row',
+    marginTop: normalizeHeight(4),
+  },
+  fieldLabel: {
+    fontSize: normalize(13),
+    color: '#B0B7C3',
+    width: normalizeWidth(96),
+    textAlign: 'center',
+  },
+  minuteLabel: {
+    marginLeft: normalizeWidth(16),
+  },
+  separator: {
+    height: normalizeHeight(1),
+    backgroundColor: 'rgba(68, 75, 95, 0.5)',
+    marginTop: normalizeHeight(16),
+  },
+  actionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: normalizeWidth(24),
+    marginTop: normalizeHeight(12),
+  },
+  actionButton: {
+    fontSize: normalize(16),
+    fontWeight: '600',
+    //color: '#4e68a6',
+    color: 'rgba(255,255,255,0.7)'
   },
 });
 
