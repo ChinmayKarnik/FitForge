@@ -9,10 +9,12 @@ import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
 import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 import DateSelectionModal from './DateSelectionModal.tsx';
+import TimeSelectionModal from './TimeSelectionModal';
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void; onBackPress?: () => void }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
+  const [showTimeModal, setShowTimeModal] = useState(false);
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const workoutRef = useRef({})
@@ -119,26 +121,28 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
                 {selectedDateString}
               </Text>
             </TouchableOpacity>
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: 'rgba(42, 50, 75, 1)',
-              borderRadius: normalizeHeight(12),
-              borderWidth: 1,
-              borderColor: 'rgba(68, 75, 95, 1)',
-              paddingVertical: normalizeHeight(10),
-              paddingHorizontal: normalizeWidth(16),
-              marginLeft: normalizeWidth(8),
-              justifyContent: 'space-between',
-            }}>
+            <TouchableOpacity
+              onPress={() => setShowTimeModal(true)}
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(42, 50, 75, 1)',
+                borderRadius: normalizeHeight(12),
+                borderWidth: 1,
+                borderColor: 'rgba(68, 75, 95, 1)',
+                paddingVertical: normalizeHeight(10),
+                paddingHorizontal: normalizeWidth(16),
+                marginLeft: normalizeWidth(8),
+                justifyContent: 'space-between',
+              }}
+            >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
                 <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
                   11:05 AM
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
              
         </View>
@@ -185,6 +189,10 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
         onClose={() => setShowDateModal(false)}
         selectedDate ={selectedDate}
         onConfirmDate={onConfirmDate}
+      />
+      <TimeSelectionModal
+        visible={showTimeModal}
+        onClose={() => setShowTimeModal(false)}
       />
     </>
   );
