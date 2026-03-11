@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Modal, View, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 
 interface TimeSelectionModalProps {
@@ -7,16 +7,48 @@ interface TimeSelectionModalProps {
   onClose: () => void;
 }
 
+interface SelectedTime {
+  hours: number;
+  minutes: number;
+  isAm: boolean;
+}
+
 const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClose,
-    selectedTimeInit
+    selectedTimeInit,
+    onConfirmTime
  }) => {
     
-    const [selectedTime, setSelectedTime] = useState(selectedTimeInit);
+    const [selectedTime, setSelectedTime] = useState<SelectedTime>(selectedTimeInit);
     const [isHourSelected, setIsHourSelected] = useState(true);
-    const isMinuteSelected = !isHourSelected;
-    const isAM = selectedTime.isAm;
-    const hours = selectedTime.hours;
-    const minutes = selectedTime.minutes;
+
+    const handleHourChange = (text: string) => {
+        const numericValue = parseInt(text);
+        if(numericValue < 0 || numericValue > 12) return; // Ignore invalid hour values
+      setSelectedTime({ ...selectedTime, hours: text});
+    };
+
+    const handleMinuteChange = (text: string) => {
+      const numericValue = parseInt(text);
+      if(numericValue < 0 || numericValue > 59) return; // Ignore invalid minute values
+      setSelectedTime({ ...selectedTime, minutes: text});
+    };
+
+    const toggleAMPM = (isAm: boolean) => {
+      setSelectedTime({ ...selectedTime, isAm });
+    };
+
+    const onPressOkay = () => {
+      if (isTimeValid()) {
+        onConfirmTime(selectedTime);
+        onClose();
+      }
+    }
+
+    const isTimeValid = () => {
+      const hoursNum = parseInt(String(selectedTime.hours));
+      const minutesNum = parseInt(String(selectedTime.minutes));
+      return hoursNum >= 1 && hoursNum <= 12 && minutesNum >= 0 && minutesNum <= 59;
+    };
 
   return (
     <Modal
@@ -41,32 +73,46 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
             <View style={styles.timeRow}>
 
               {/* Hour box */}
-              <TouchableOpacity
-                style={[styles.timeBox, styles.timeBoxSelected]}
-                onPress={() => setIsHourSelected(true)}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.timeBoxTextSelected}>11</Text>
-              </TouchableOpacity>
+              <TextInput
+                style={[styles.timeBox, isHourSelected ? styles.timeBoxSelected : styles.timeBoxUnselected, styles.timeInput, { color: isHourSelected ? '#FFFFFF' : '#B0B7C3' }]}
+                value={String(selectedTime.hours)}
+                onChangeText={handleHourChange}
+                onFocus={() => setIsHourSelected(true)}
+                keyboardType="number-pad"
+                maxLength={2}
+                selectionColor="#4e68a6"
+                cursorColor="#6B8FDB"
+              />
 
               <Text style={styles.colon}>:</Text>
 
               {/* Minute box */}
-              <TouchableOpacity
-                style={[styles.timeBox, styles.timeBoxUnselected]}
-                onPress={() => setIsHourSelected(false)}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.timeBoxTextUnselected}>25</Text>
-              </TouchableOpacity>
+              <TextInput
+                style={[styles.timeBox, !isHourSelected ? styles.timeBoxSelected : styles.timeBoxUnselected, styles.timeInput, { color: !isHourSelected ? '#FFFFFF' : '#B0B7C3' }]}
+                value={String(selectedTime.minutes)}
+                onChangeText={handleMinuteChange}
+                onFocus={() => setIsHourSelected(false)}
+                keyboardType="number-pad"
+                maxLength={2}
+                selectionColor="#4e68a6"
+                cursorColor="#6B8FDB"
+              />
 
               {/* AM/PM toggle */}
               <View style={styles.amPmContainer}>
-                <TouchableOpacity style={[styles.amPmButton, styles.amPmButtonSelected]} activeOpacity={0.8}>
-                  <Text style={styles.amPmTextSelected}>AM</Text>
+                <TouchableOpacity 
+                  style={[styles.amPmButton, selectedTime.isAm ? styles.amPmButtonSelected : styles.amPmButtonUnselected]} 
+                  onPress={() => toggleAMPM(true)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={selectedTime.isAm ? styles.amPmTextSelected : styles.amPmTextUnselected}>AM</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.amPmButton, styles.amPmButtonUnselected]} activeOpacity={0.8}>
-                  <Text style={styles.amPmTextUnselected}>PM</Text>
+                <TouchableOpacity 
+                  style={[styles.amPmButton, !selectedTime.isAm ? styles.amPmButtonSelected : styles.amPmButtonUnselected]} 
+                  onPress={() => toggleAMPM(false)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={!selectedTime.isAm ? styles.amPmTextSelected : styles.amPmTextUnselected}>PM</Text>
                 </TouchableOpacity>
               </View>
 
@@ -86,8 +132,8 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
               <TouchableOpacity onPress={onClose}>
                 <Text style={styles.actionButton}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={onClose}>
-                <Text style={styles.actionButton}>OK</Text>
+              <TouchableOpacity onPress={onPressOkay} disabled={!isTimeValid()} activeOpacity={isTimeValid() ? 0.7 : 0.3}>
+                <Text style={[styles.actionButton, !isTimeValid() && styles.actionButtonDisabled]}>OK</Text>
               </TouchableOpacity>
             </View>
 
@@ -160,8 +206,15 @@ const styles = StyleSheet.create({
     fontSize: normalize(40),
     fontWeight: '500',
     color: '#B0B7C3',
-  },
-  colon: {
+  },  timeInput: {
+    fontSize: normalize(48),
+    fontWeight: '300',
+    textAlign: 'center',
+    padding: 0,
+    color: '#FFFFFF',
+    lineHeight: normalize(50),
+    height: normalizeHeight(72),
+  },  colon: {
     fontSize: normalize(40),
     fontWeight: '300',
     color: '#FFFFFF',
@@ -174,6 +227,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(68, 75, 95, 1)',
     overflow: 'hidden',
+    backgroundColor: 'rgba(42, 50, 75, 1)',
   },
   amPmButton: {
     width: normalizeWidth(52),
@@ -226,6 +280,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     //color: '#4e68a6',
     color: 'rgba(255,255,255,0.7)'
+  },
+  actionButtonDisabled: {
+    color: 'rgba(255,255,255,0.3)',
   },
 });
 

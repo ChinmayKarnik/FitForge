@@ -36,6 +36,59 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
     selectedDateString = selected.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }
 
+  const getCurrentTime = () => {
+    const currentTime = new Date();
+    const hours24 = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    const isAm = !!(hours24 < 12);
+    const hours12 = hours24 === 0 ? 12 : hours24 > 12 ? hours24 - 12 : hours24;
+    return { hours: hours12, minutes, isAm };
+  };
+
+  const [selectedTime,setSelectedTime] = useState(getCurrentTime());
+
+  const onConfirmTime = ({hours, minutes, isAm}) => {
+    // Convert to integers since they might be strings
+    const hoursInt = parseInt(String(hours));
+    const minutesInt = parseInt(String(minutes));
+    
+    // Convert 12-hour format to 24-hour format
+    let hours24 = hoursInt;
+    if (isAm && hoursInt === 12) {
+      hours24 = 0;
+    } else if (!isAm && hoursInt !== 12) {
+      hours24 = hoursInt + 12;
+    }
+    
+    // Check if selectedDate is today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = new Date(selectedDate);
+    selected.setHours(0, 0, 0, 0);
+    
+    const isToday = selected.getTime() === today.getTime();
+    
+    if (!isToday) {
+      // If not today, just accept the time
+      setSelectedTime({ hours: hoursInt, minutes: minutesInt, isAm });
+    } else {
+      // If it's today, compare with current time
+      const now = new Date();
+      const currentHour24 = now.getHours();
+      const currentMinute = now.getMinutes();
+      console.log('ckck tpl', hours24, minutesInt, currentHour24, currentMinute);
+      // Check if the selected time is not in the future
+      if (hours24 < currentHour24 || (hours24 === currentHour24 && minutesInt <= currentMinute)) {
+        setSelectedTime({ hours: hoursInt, minutes: minutesInt, isAm });
+      } else {
+        // Otherwise use the current time
+        setSelectedTime(getCurrentTime());
+      }
+    }
+  }
+
+  const selectedTimeString = `${selectedTime.hours}:${parseInt(String(selectedTime.minutes)) < 10 ? '0' : ''}${parseInt(String(selectedTime.minutes))} ${selectedTime.isAm ? 'AM' : 'PM'}`;
+
   const onConfirmDate = (date)=>{
    setSelectedDate(date);
   }
@@ -139,7 +192,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
-                  11:05 AM
+                  {selectedTimeString}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -193,7 +246,8 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
       <TimeSelectionModal
         visible={showTimeModal}
         onClose={() => setShowTimeModal(false)}
-        selectedTimeInit = {{hours: 11,minutes:5,isAm: true}}
+        selectedTimeInit={selectedTime}
+        onConfirmTime={onConfirmTime}
       />
     </>
   );
