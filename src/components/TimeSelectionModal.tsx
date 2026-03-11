@@ -14,7 +14,9 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
     const [selectedTime, setSelectedTime] = useState(selectedTimeInit);
     const [isHourSelected, setIsHourSelected] = useState(true);
     const isMinuteSelected = !isHourSelected;
-    const isAM = selectedTime?.getHours() < 12;
+    const isAM = selectedTime.isAm;
+    const hours = selectedTime.hours;
+    const minutes = selectedTime.minutes;
 
   return (
     <Modal

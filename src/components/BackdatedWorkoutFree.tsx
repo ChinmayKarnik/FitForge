@@ -193,6 +193,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress }: { onEnd: () => void
       <TimeSelectionModal
         visible={showTimeModal}
         onClose={() => setShowTimeModal(false)}
+        selectedTimeInit = {{hours: 11,minutes:5,isAm: true}}
       />
     </>
   );
