@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput, Image, BackHandler } from 'react-native';
 import AddExerciseModal from './AddExerciseModal';
 import { useWorkoutState } from '../hooks';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -157,10 +157,19 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
     setShowEndModal(true);
   };
   const handleBackPress = () => {
+    onEnd();
     if (onBackPress) {
       onBackPress();
     }
   };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      onEnd();
+      return true;
+    });
+    return () => backHandler.remove();
+  }, [onEnd]);
 
   return (
     <>
