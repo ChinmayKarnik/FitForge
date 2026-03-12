@@ -98,6 +98,38 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         }
     };
 
+    useEffect(()=>{
+        // Convert selectedTime (12-hour) to 24-hour
+        let hours24 = selectedTime.hours;
+        if (selectedTime.isAm && selectedTime.hours === 12) {
+          hours24 = 0;
+        } else if (!selectedTime.isAm && selectedTime.hours !== 12) {
+          hours24 = selectedTime.hours + 12;
+        }
+        // Build a timestamp in millis from selectedDate + selectedTime
+        const dt = new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate(),
+          hours24,
+          selectedTime.minutes,
+          0,
+          0
+        );
+        setWorkoutDateTime(dt.getTime());
+      },[selectedDate, selectedTime])
+
+    useEffect(() => {
+        workoutRef.current = {
+            startTime: workoutDateTime,
+            endTime: workoutDateTime,
+            exercises: []
+        }
+    }, [workoutDateTime])
+
+    
+    
+
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
             onEnd();
@@ -128,6 +160,16 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         workoutRef.current.routineId = selectedRoutineId;
         databaseController.addWorkout(workoutRef.current);
     }
+
+    useEffect(()=>{
+        if(selectedRoutineId){
+            // find the routine from routine id  
+            // for each exercise in the routine, create params {numberOfSets: x, restTimeBetweenSets: y} 
+            // and then call the addSetsForExercise function with these params and logged data as {} empty object.
+            // print the workoutRef.current at the end with ckck workouref log
+        }
+    },[selectedRoutineId])
+    
 
     const handleRoutineSelect = (id: string) => {
         setSelectedRoutineId(id);
