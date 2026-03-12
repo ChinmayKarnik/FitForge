@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert, Image, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert, Image, BackHandler, ScrollView } from 'react-native';
 import { routines } from '../data/dummy/routines';
 import { databaseController } from '../data/controllers';
 import { BackdatedWorkoutRoutineInput } from './BackdatedWorkoutRoutineInput';
@@ -172,6 +172,22 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         });
     };
 
+    const handleSetTap = (exerciseId: string, setIdx: number) => {
+        setSetInputs(prev => {
+            const updated = { ...prev };
+            const exerciseSets = updated[exerciseId] ? [...updated[exerciseId]] : [];
+            const setCopy = { ...exerciseSets[setIdx] };
+            
+            // Set hardcoded values: 3 reps, 2 kg weight
+            setCopy['Reps'] = '3';
+            setCopy['Weight'] = '2';
+            
+            exerciseSets[setIdx] = setCopy;
+            updated[exerciseId] = exerciseSets;
+            return updated;
+        });
+    };
+
     if (!selectedRoutineId) {
         return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEnd} />;
     }
@@ -268,6 +284,110 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         </Text>
                     </View>
                 </View>
+
+                Exercises Section
+                <View style={{ marginTop: normalizeHeight(20), flex: 1 }}>
+                    <Text style={{
+                        fontSize: normalize(15),
+                        fontWeight: '600',
+                        color: '#B0B7C3',
+                        marginBottom: normalizeHeight(8),
+                    }}>Exercises</Text>
+                    <ScrollView style={{ flex: 1 }}>
+                        {databaseController.getRoutineById(selectedRoutineId)?.exercises.map((exerciseInRoutine, exerciseIdx) => {
+                            const exercise = databaseController.getExerciseById(exerciseInRoutine.id);
+                            const allParams = [
+                                ...(exercise?.requiredParameters || []),
+                                ...(exercise?.optionalParameters || []),
+                            ];
+                            return (
+                                <View key={exerciseInRoutine.id} style={{ marginBottom: normalizeHeight(12) }}>
+                                    <View style={{
+                                        backgroundColor: 'rgba(42, 50, 75, 1)',
+                                        borderWidth: normalize(1),
+                                        borderColor: '#3c3c68',
+                                        borderRadius: normalize(12),
+                                        paddingHorizontal: normalizeWidth(12),
+                                        paddingVertical: normalizeHeight(8),
+                                    }}>
+                                        <Text style={{
+                                            color: "#d6d3de",
+                                            fontSize: normalizeHeight(14),
+                                            fontWeight: '600',
+                                            marginBottom: normalizeHeight(8),
+                                        }}>
+                                            {exercise?.name || 'Unknown Exercise'}
+                                        </Text>
+                                        {Array.from({ length: exerciseInRoutine.sets }).map((_, setIdx) => {
+                                            const setData = setInputs[exerciseInRoutine.id]?.[setIdx];
+                                            const hasData = setData && Object.values(setData).some(val => val);
+                                            const dataDisplay = hasData 
+                                                ? Object.entries(setData).map(([key, val]) => `${val}${key === 'Reps' ? ' reps' : ' kg'}`).join(', ')
+                                                : '';
+                                            
+                                            return (
+                                                <TouchableOpacity
+                                                    key={`${exerciseInRoutine.id}-${setIdx}`}
+                                                    onPress={() => handleSetTap(exerciseInRoutine.id, setIdx)}
+                                                    style={{
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-between',
+                                                        alignItems: 'center',
+                                                        paddingVertical: normalizeHeight(10),
+                                                        paddingHorizontal: normalizeWidth(8),
+                                                        marginBottom: setIdx < exerciseInRoutine.sets - 1 ? 0 : 0,
+                                                        borderTopWidth: setIdx > 0 ? normalize(1) : 0,
+                                                        borderTopColor: '#4d4d75',
+                                                    }}
+                                                >
+                                                    <Text style={{
+                                                        color: "#77778e",
+                                                        fontSize: normalizeHeight(12),
+                                                        fontWeight: '400',
+                                                    }}>
+                                                        Set {setIdx + 1}
+                                                    </Text>
+                                                    <Text style={{
+                                                        color: hasData ? "#4ECDC4" : "#77778e",
+                                                        fontSize: normalizeHeight(12),
+                                                        fontWeight: hasData ? '500' : '400',
+                                                        flex: 1,
+                                                        textAlign: 'center',
+                                                    }}>
+                                                        {dataDisplay}
+                                                    </Text>
+                                                    <Text style={{
+                                                        fontSize: normalizeHeight(14),
+                                                    }}>
+                                                        ✏️
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            );
+                                        })}
+                                    </View>
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
+                </View>
+
+                {/* Complete Workout Button */}
+                <TouchableOpacity style={{
+                    alignItems: 'center',
+                    paddingVertical: normalizeHeight(12),
+                    borderWidth: normalize(1),
+                    borderColor: '#4ECDC4',
+                    backgroundColor: '#1a3a3a',
+                    borderRadius: normalize(12),
+                    marginTop: normalizeHeight(12),
+                    marginBottom: normalizeHeight(20),
+                }} onPress={submitWorkout}>
+                    <Text style={{
+                        fontSize: normalize(16),
+                        fontWeight: '600',
+                        color: '#4ECDC4',
+                    }}>Complete Workout</Text>
+                </TouchableOpacity>
             </View>
             <DateSelectionModal
                 visible={showDateModal}
