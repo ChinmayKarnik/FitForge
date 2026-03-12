@@ -28,12 +28,6 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [showTimeModal, setShowTimeModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(getCurrentTime());
-    // Autofill for testing: 5/6/2022 15:34
-    const [month, setMonth] = useState('5');
-    const [day, setDay] = useState('6');
-    const [year, setYear] = useState('2022');
-    const [hour, setHour] = useState('15');
-    const [minute, setMinute] = useState('34');
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
     const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
     const [setInputs, setSetInputs] = useState<SetInputs>({});
@@ -284,8 +278,6 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         </Text>
                     </View>
                 </View>
-
-                Exercises Section
                 <View style={{ marginTop: normalizeHeight(20), flex: 1 }}>
                     <Text style={{
                         fontSize: normalize(15),
@@ -305,19 +297,29 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                     <View style={{
                                         backgroundColor: 'rgba(42, 50, 75, 1)',
                                         borderWidth: normalize(1),
-                                        borderColor: '#3c3c68',
+                                        borderColor: '#404359',
                                         borderRadius: normalize(12),
-                                        paddingHorizontal: normalizeWidth(12),
-                                        paddingVertical: normalizeHeight(8),
                                     }}>
+                                        <View style={{
+                                            backgroundColor: '#1b1f35',
+                                            borderTopLeftRadius: normalize(12),
+                                            borderTopRightRadius: normalize(12),
+                                            paddingTop: normalizeHeight(8),
+                                            paddingLeft: normalizeWidth(12),
+                                            paddingBottom:normalizeHeight(8),
+                                            borderBottomWidth: normalize(1),
+                                            borderBottomColor: '#44475d',
+                                        }}>
                                         <Text style={{
                                             color: "#d6d3de",
                                             fontSize: normalizeHeight(14),
                                             fontWeight: '600',
-                                            marginBottom: normalizeHeight(8),
                                         }}>
+                                           
                                             {exercise?.name || 'Unknown Exercise'}
                                         </Text>
+                                        
+                                      </View>
                                         {Array.from({ length: exerciseInRoutine.sets }).map((_, setIdx) => {
                                             const setData = setInputs[exerciseInRoutine.id]?.[setIdx];
                                             const hasData = setData && Object.values(setData).some(val => val);
@@ -331,36 +333,32 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                     onPress={() => handleSetTap(exerciseInRoutine.id, setIdx)}
                                                     style={{
                                                         flexDirection: 'row',
-                                                        justifyContent: 'space-between',
                                                         alignItems: 'center',
                                                         paddingVertical: normalizeHeight(10),
                                                         paddingHorizontal: normalizeWidth(8),
                                                         marginBottom: setIdx < exerciseInRoutine.sets - 1 ? 0 : 0,
                                                         borderTopWidth: setIdx > 0 ? normalize(1) : 0,
-                                                        borderTopColor: '#4d4d75',
+                                                        borderTopColor: '#404359',
                                                     }}
                                                 >
                                                     <Text style={{
-                                                        color: "#77778e",
-                                                        fontSize: normalizeHeight(12),
-                                                        fontWeight: '400',
+                                                        color: "#c6cbda",
+                                                        fontSize: normalize(14),
+                                                        fontWeight: '500',
                                                     }}>
                                                         Set {setIdx + 1}
                                                     </Text>
-                                                    <Text style={{
-                                                        color: hasData ? "#4ECDC4" : "#77778e",
-                                                        fontSize: normalizeHeight(12),
-                                                        fontWeight: hasData ? '500' : '400',
-                                                        flex: 1,
-                                                        textAlign: 'center',
-                                                    }}>
-                                                        {dataDisplay}
-                                                    </Text>
-                                                    <Text style={{
-                                                        fontSize: normalizeHeight(14),
-                                                    }}>
-                                                        ✏️
-                                                    </Text>
+                                                    <View style={{flex:1}} />
+                                                    <Image
+                                                        source={require('../images/white-right-arrow.png')}
+                                                        style={{
+                                                            width: normalizeWidth(12),
+                                                            height: normalizeWidth(12),
+                                                            resizeMode: 'contain',
+                                                            tintColor: '#c6cbda',
+                                                        }}
+                                                    />
+                                                     
                                                 </TouchableOpacity>
                                             );
                                         })}
@@ -371,7 +369,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     </ScrollView>
                 </View>
 
-                {/* Complete Workout Button */}
+                {/*
+                Complete Workout Button
                 <TouchableOpacity style={{
                     alignItems: 'center',
                     paddingVertical: normalizeHeight(12),
@@ -388,6 +387,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         color: '#4ECDC4',
                     }}>Complete Workout</Text>
                 </TouchableOpacity>
+                */}
             </View>
             <DateSelectionModal
                 visible={showDateModal}
