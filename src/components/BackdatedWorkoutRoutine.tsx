@@ -1,14 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert, Image, BackHandler } from 'react-native';
 import { routines } from '../data/dummy/routines';
 import { databaseController } from '../data/controllers';
 import { BackdatedWorkoutRoutineInput } from './BackdatedWorkoutRoutineInput';
+import DateSelectionModal from './DateSelectionModal.tsx';
+import TimeSelectionModal from './TimeSelectionModal';
+import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
+import white_left_arrow from '../images/white-left-arrow.png';
 
 type SetInput = { [key: string]: string };
 type SetInputs = { [exerciseId: string]: SetInput[] };
 
-export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
+// Helper function to get current time
+const getCurrentTime = () => {
+    const currentTime = new Date();
+    const hours24 = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    const isAm = !!(hours24 < 12);
+    const hours12 = hours24 === 0 ? 12 : hours24 > 12 ? hours24 - 12 : hours24;
+    return { hours: hours12, minutes, isAm };
+};
+
+export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { onEnd: () => void; onBackPress?: () => void; navigation?: any }) => {
     const [showDateTimePicker, setShowDateTimePicker] = useState(true);
+    const [showDateModal, setShowDateModal] = useState(false);
+    const [showTimeModal, setShowTimeModal] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(getCurrentTime());
     // Autofill for testing: 5/6/2022 15:34
     const [month, setMonth] = useState('5');
     const [day, setDay] = useState('6');
@@ -21,22 +39,86 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
 
     const workoutRef = useRef({})
 
-    useEffect(() => {
-        workoutRef.current = {
-            startTime: workoutDateTime,
-            endTime: workoutDateTime,
-            exercises: []
-        }
-    }, [workoutDateTime])
+    // Format selected date string
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const selected = new Date(selectedDate);
+    selected.setHours(0, 0, 0, 0);
+    let selectedDateString = '';
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (selected.getTime() === now.getTime()) {
+        selectedDateString = 'Today';
+    } else if (selected.getTime() === yesterday.getTime()) {
+        selectedDateString = 'Yesterday';
+    } else if (selected.getFullYear() === now.getFullYear()) {
+        selectedDateString = selected.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    } else {
+        selectedDateString = selected.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
 
-    const addSetsForExercise = (exercise, params, loggedData) => {
+    const selectedTimeString = `${selectedTime.hours}:${parseInt(String(selectedTime.minutes)) < 10 ? '0' : ''}${parseInt(String(selectedTime.minutes))} ${selectedTime.isAm ? 'AM' : 'PM'}`;
+
+    const onConfirmDate = (date) => {
+        setSelectedDate(date);
+    };
+
+    const onConfirmTime = ({ hours, minutes, isAm }) => {
+        const hoursInt = parseInt(String(hours));
+        const minutesInt = parseInt(String(minutes));
+        
+        let hours24 = hoursInt;
+        if (isAm && hoursInt === 12) {
+            hours24 = 0;
+        } else if (!isAm && hoursInt !== 12) {
+            hours24 = hoursInt + 12;
+        }
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const selectedDateOnly = new Date(selectedDate);
+        selectedDateOnly.setHours(0, 0, 0, 0);
+        
+        const isToday = selectedDateOnly.getTime() === today.getTime();
+        
+        if (!isToday) {
+            setSelectedTime({ hours: hoursInt, minutes: minutesInt, isAm });
+        } else {
+            const currentNow = new Date();
+            const currentHour24 = currentNow.getHours();
+            const currentMinute = currentNow.getMinutes();
+            
+            if (hours24 < currentHour24 || (hours24 === currentHour24 && minutesInt <= currentMinute)) {
+                setSelectedTime({ hours: hoursInt, minutes: minutesInt, isAm });
+            } else {
+                setSelectedTime(getCurrentTime());
+            }
+        }
+    };
+
+    const handleBackPress = () => {
+        onEnd();
+        if (onBackPress) {
+            onBackPress();
+        }
+    };
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            onEnd();
+            return true;
+        });
+        return () => backHandler.remove();
+    }, [onEnd]);
+
+    const addSetsForExercise = (exercise: any, params: any, loggedData: any) => {
         const workout = workoutRef.current;
         const firstSetStartTime = workout.endTime;
         const defaultSetTime = 60 * 1000;
         const numberOfSets = params.numberOfSets;
         const restTimeBetweenSets = params.restTimeBetweenSets;
         for (let i = 0; i < numberOfSets; i++) {
-            const setExercise = { id: exercise.id };
+            const setExercise: any = { exerciseId: exercise.id };
             setExercise.startTime = firstSetStartTime + defaultSetTime * (i) + restTimeBetweenSets * (i);
             setExercise.endTime = setExercise.startTime + defaultSetTime;
             setExercise.loggedData = loggedData[i];
@@ -47,54 +129,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
         console.log("ckck ref after adding sets ", workoutRef.current)
     }
 
-    const submitWorkout = ()=>{
+    const submitWorkout = () => {
         workoutRef.current.routineId = selectedRoutineId;
         databaseController.addWorkout(workoutRef.current);
     }
-
-    const handleConfirmDateTime = () => {
-        if (!month || !day || !year || !hour || !minute) {
-            Alert.alert('Error', 'Please fill in all date and time fields.');
-            return;
-        }
-        const monthNum = parseInt(month);
-        const dayNum = parseInt(day);
-        const yearNum = parseInt(year);
-        const hourNum = parseInt(hour);
-        const minuteNum = parseInt(minute);
-        if (monthNum < 1 || monthNum > 12) {
-            Alert.alert('Error', 'Please enter a valid month (1-12).');
-            return;
-        }
-        if (dayNum < 1 || dayNum > 31) {
-            Alert.alert('Error', 'Please enter a valid day (1-31).');
-            return;
-        }
-        if (yearNum < 2020 || yearNum > new Date().getFullYear()) {
-            Alert.alert('Error', 'Please enter a valid year.');
-            return;
-        }
-        if (hourNum < 0 || hourNum > 23) {
-            Alert.alert('Error', 'Please enter a valid hour (0-23).');
-            return;
-        }
-        if (minuteNum < 0 || minuteNum > 59) {
-            Alert.alert('Error', 'Please enter a valid minute (0-59).');
-            return;
-        }
-        try {
-            const workoutDateTime = new Date(yearNum, monthNum - 1, dayNum, hourNum, minuteNum);
-            const now = new Date();
-            if (workoutDateTime > now) {
-                Alert.alert('Error', 'Workout date/time cannot be in the future.');
-                return;
-            }
-            setWorkoutDateTime(workoutDateTime.getTime());
-            setShowDateTimePicker(false);
-        } catch (error) {
-            Alert.alert('Error', 'Invalid date or time.');
-        }
-    };
 
     const handleRoutineSelect = (id: string) => {
         setSelectedRoutineId(id);
@@ -133,92 +171,77 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
         });
     };
 
-
     return (
         <>
-            {/* Date/Time Picker Modal */}
-            <Modal visible={showDateTimePicker} animationType="slide" transparent={true}>
-                <View style={styles.dateTimeModalOverlay}>
-                    <View style={styles.dateTimeModal}>
-                        <Text style={styles.dateTimeModalTitle}>When did this workout happen?</Text>
-                        {/* Date Section */}
-                        <Text style={styles.sectionLabel}>Date</Text>
-                        <View style={styles.dateInputRow}>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.inputLabelSmall}>Month</Text>
-                                <TextInput
-                                    style={styles.smallInput}
-                                    placeholder="MM"
-                                    value={month}
-                                    onChangeText={setMonth}
-                                    keyboardType="numeric"
-                                    maxLength={2}
-                                    placeholderTextColor="#888"
-                                />
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={handleBackPress}
+                    hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                >
+                    <Image
+                        style={styles.backButtonImage}
+                        source={white_left_arrow}
+                    />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Log Workout</Text>
+            </View>
+            <View style={styles.container}>
+                <View style={{ marginTop: normalizeHeight(10) }}>
+                    <Text style={{
+                        fontSize: normalize(15),
+                        fontWeight: '600',
+                        color: '#B0B7C3',
+                        marginBottom: normalizeHeight(8),
+                    }}>Date and time</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity
+                            onPress={() => setShowDateModal(true)}
+                            style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(42, 50, 75, 1)',
+                                borderRadius: normalizeHeight(12),
+                                borderWidth: 1,
+                                borderColor: 'rgba(68, 75, 95, 1)',
+                                paddingVertical: normalizeHeight(10),
+                                paddingHorizontal: normalizeWidth(16),
+                                marginRight: normalizeWidth(8),
+                            }}
+                        >
+                            <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                                {selectedDateString}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => setShowTimeModal(true)}
+                            style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(42, 50, 75, 1)',
+                                borderRadius: normalizeHeight(12),
+                                borderWidth: 1,
+                                borderColor: 'rgba(68, 75, 95, 1)',
+                                paddingVertical: normalizeHeight(10),
+                                paddingHorizontal: normalizeWidth(16),
+                                marginLeft: normalizeWidth(8),
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                                    {selectedTimeString}
+                                </Text>
                             </View>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.inputLabelSmall}>Day</Text>
-                                <TextInput
-                                    style={styles.smallInput}
-                                    placeholder="DD"
-                                    value={day}
-                                    onChangeText={setDay}
-                                    keyboardType="numeric"
-                                    maxLength={2}
-                                    placeholderTextColor="#888"
-                                />
-                            </View>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.inputLabelSmall}>Year</Text>
-                                <TextInput
-                                    style={styles.smallInput}
-                                    placeholder="YYYY"
-                                    value={year}
-                                    onChangeText={setYear}
-                                    keyboardType="numeric"
-                                    maxLength={4}
-                                    placeholderTextColor="#888"
-                                />
-                            </View>
-                        </View>
-                        {/* Time Section */}
-                        <Text style={styles.sectionLabel}>Time (24-hour format)</Text>
-                        <View style={styles.timeInputRow}>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.inputLabelSmall}>Hour</Text>
-                                <TextInput
-                                    style={styles.smallInput}
-                                    placeholder="HH"
-                                    value={hour}
-                                    onChangeText={setHour}
-                                    keyboardType="numeric"
-                                    maxLength={2}
-                                    placeholderTextColor="#888"
-                                />
-                            </View>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.inputLabelSmall}>Minute</Text>
-                                <TextInput
-                                    style={styles.smallInput}
-                                    placeholder="MM"
-                                    value={minute}
-                                    onChangeText={setMinute}
-                                    keyboardType="numeric"
-                                    maxLength={2}
-                                    placeholderTextColor="#888"
-                                />
-                            </View>
-                        </View>
-                        <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmDateTime}>
-                            <Text style={styles.confirmButtonText}>Next</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </Modal>
-            {/* Routine selection step */}
-            {!showDateTimePicker && !selectedRoutineId && (
-                <View style={styles.container}>
-                    <Text style={styles.subtitle}>Workout start time: {workoutDateTime ? new Date(workoutDateTime).toLocaleString() : 'Not set'}</Text>
+
+                {/* Routine selection */}
+                <View style={{ marginTop: normalizeHeight(20) }}>
                     <Text style={styles.title}>Select a Routine</Text>
                     {routines.map(routine => (
                         <TouchableOpacity
@@ -230,19 +253,19 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
                         </TouchableOpacity>
                     ))}
                 </View>
-            )}
-            {/* Main Routine Workout Logging Interface */}
-            {!showDateTimePicker && selectedRoutineId && (
-                <BackdatedWorkoutRoutineInput
-                    selectedRoutineId={selectedRoutineId}
-                    setInputs={setInputs}
-                    handleSetInputChange={handleSetInputChange}
-                    addSetsForExercise={addSetsForExercise}
-                    submitWorkout = {submitWorkout}
-                    onDiscard={() => setSelectedRoutineId(null)}
-                    workoutDateTime={workoutDateTime}
-                />
-            )}
+            </View>
+            <DateSelectionModal
+                visible={showDateModal}
+                onClose={() => setShowDateModal(false)}
+                selectedDate={selectedDate}
+                onConfirmDate={onConfirmDate}
+            />
+            <TimeSelectionModal
+                visible={showTimeModal}
+                onClose={() => setShowTimeModal(false)}
+                selectedTimeInit={selectedTime}
+                onConfirmTime={onConfirmTime}
+            />
         </>
     );
 };
@@ -250,103 +273,59 @@ export const BackdatedWorkoutRoutine = ({ onEnd }: { onEnd: () => void }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#1c2238',
+        paddingHorizontal: normalizeWidth(16),
+    },
+    header: {
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'rgba(68, 75, 95)',
+        alignItems: 'center',
+        backgroundColor: 'rgba(36, 42, 65)',
+        paddingTop: normalizeHeight(40),
+        paddingBottom: normalizeHeight(12),
+    },
+    backButton: {
+        position: 'absolute',
+        top: normalizeHeight(46),
+        left: normalizeWidth(16),
+    },
+    backButtonImage: {
+        width: normalizeWidth(9),
+        height: normalizeWidth(9) * (86.0 / 51.0),
+        aspectRatio: 51.0 / 86.0,
+        resizeMode: 'stretch',
+    },
+    headerText: {
+        fontSize: 22,
+        letterSpacing: 1,
+        fontWeight: '700',
+        color: '#fefefe',
     },
     title: {
-        fontSize: 24,
-        fontWeight: '700',
-        marginBottom: 8,
-        textAlign: 'center',
-        color: '#1a1a1a',
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#666666',
-        textAlign: 'center',
-        marginBottom: 24,
-    },
-    dateTimeModalOverlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dateTimeModal: {
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        padding: 24,
-        width: '90%',
-        maxWidth: 400,
-    },
-    dateTimeModalTitle: {
-        fontSize: 24,
-        fontWeight: '700',
-        marginBottom: 24,
-        textAlign: 'center',
-        color: '#333',
-    },
-    sectionLabel: {
         fontSize: 18,
         fontWeight: '600',
         marginBottom: 12,
-        marginTop: 16,
-        color: '#333',
+        color: '#F2F4F8',
     },
-    dateInputRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 8,
-    },
-    timeInputRow: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 8,
-    },
-    inputGroup: {
-        alignItems: 'center',
-        flex: 1,
-        marginHorizontal: 4,
-    },
-    inputLabelSmall: {
-        fontSize: 14,
-        fontWeight: '500',
-        marginBottom: 4,
-        color: '#666',
-    },
-    smallInput: {
-        borderWidth: 1,
-        borderColor: '#d0d0d0',
-        borderRadius: 8,
-        padding: 10,
+    subtitle: {
         fontSize: 16,
-        backgroundColor: '#f9f9f9',
+        color: '#A9B1C2',
         textAlign: 'center',
-        width: '100%',
-        minWidth: 60,
-        color: '#333',
-    },
-    confirmButton: {
-        backgroundColor: '#007AFF',
-        paddingVertical: 16,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 8,
-    },
-    confirmButtonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: '700',
+        marginBottom: 24,
     },
     routineButton: {
-        backgroundColor: '#007AFF',
+        backgroundColor: '#2f4880',
         paddingVertical: 14,
         borderRadius: 12,
         alignItems: 'center',
         marginVertical: 8,
+        borderWidth: 1,
+        borderColor: '#4e68a6',
     },
     routineButtonText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: '700',
+        fontWeight: '600',
     },
 });
