@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert, Imag
 import { routines } from '../data/dummy/routines';
 import { databaseController } from '../data/controllers';
 import { BackdatedWorkoutRoutineInput } from './BackdatedWorkoutRoutineInput';
+import { SelectRoutineLive } from './SelectRoutineLive';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -171,6 +172,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         });
     };
 
+    if (!selectedRoutineId) {
+        return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEnd} />;
+    }
+
     return (
         <>
             {/* Header */}
@@ -240,18 +245,28 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     </View>
                 </View>
 
-                {/* Routine selection */}
+                {/* Selected Routine Section */}
                 <View style={{ marginTop: normalizeHeight(20) }}>
-                    <Text style={styles.title}>Select a Routine</Text>
-                    {routines.map(routine => (
-                        <TouchableOpacity
-                            key={routine.id}
-                            style={styles.routineButton}
-                            onPress={() => handleRoutineSelect(routine.id)}
-                        >
-                            <Text style={styles.routineButtonText}>{routine.name}</Text>
-                        </TouchableOpacity>
-                    ))}
+                    <Text style={{
+                        fontSize: normalize(15),
+                        fontWeight: '600',
+                        color: '#B0B7C3',
+                        marginBottom: normalizeHeight(8),
+                    }}>Routine</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(42, 50, 75, 1)',
+                        borderRadius: normalizeHeight(12),
+                        borderWidth: 1,
+                        borderColor: 'rgba(68, 75, 95, 1)',
+                        paddingVertical: normalizeHeight(12),
+                        paddingHorizontal: normalizeWidth(16),
+                    }}>
+                        <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                            {databaseController.getRoutineById(selectedRoutineId)?.name || 'Unknown Routine'}
+                        </Text>
+                    </View>
                 </View>
             </View>
             <DateSelectionModal
