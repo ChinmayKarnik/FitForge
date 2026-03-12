@@ -23,7 +23,6 @@ const getCurrentTime = () => {
 };
 
 export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { onEnd: () => void; onBackPress?: () => void; navigation?: any }) => {
-    const [showDateTimePicker, setShowDateTimePicker] = useState(true);
     const [showDateModal, setShowDateModal] = useState(false);
     const [showTimeModal, setShowTimeModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -163,66 +162,22 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
 
     useEffect(()=>{
         if(selectedRoutineId){
-            // find the routine from routine id  
-            // for each exercise in the routine, create params {numberOfSets: x, restTimeBetweenSets: y} 
-            // and then call the addSetsForExercise function with these params and logged data as {} empty object.
-            // print the workoutRef.current at the end with ckck workouref log
+            const routine = routines.find(r => r.id === selectedRoutineId);
+            if (routine) {
+                routine.exercises.forEach(ex => {
+                    // Assume restTimeBetweenSets is 0 if not present
+                    const params = {
+                        numberOfSets: ex.sets,
+                        restTimeBetweenSets: ex.rest
+                    };
+                    // Create empty loggedData array for each set
+                    const loggedData = Array(params.numberOfSets).fill({});
+                    addSetsForExercise(ex, params, loggedData);
+                });
+            }
         }
     },[selectedRoutineId])
     
-
-    const handleRoutineSelect = (id: string) => {
-        setSelectedRoutineId(id);
-        const routine = routines.find(r => r.id === id);
-        if (routine) {
-            const inputs: SetInputs = {};
-            routine.exercises.forEach(ex => {
-                const exercise = databaseController.getExerciseById(ex.id);
-                if (exercise) {
-                    const allParams = [
-                        ...(exercise.requiredParameters || []),
-                        ...(exercise.optionalParameters || []),
-                    ];
-                    inputs[ex.id] = [];
-                    for (let i = 0; i < ex.sets; i++) {
-                        const setInput: SetInput = {};
-                        allParams.forEach(param => {
-                            setInput[param.name] = '';
-                        });
-                        inputs[ex.id].push(setInput);
-                    }
-                }
-            });
-            setSetInputs(inputs);
-        }
-    };
-
-    const handleSetInputChange = (exerciseId: string, setIdx: number, field: keyof SetInput, value: string) => {
-        setSetInputs(prev => {
-            const updated = { ...prev };
-            const exerciseSets = updated[exerciseId] ? [...updated[exerciseId]] : [];
-            const setCopy = { ...exerciseSets[setIdx], [field]: value };
-            exerciseSets[setIdx] = setCopy;
-            updated[exerciseId] = exerciseSets;
-            return updated;
-        });
-    };
-
-    const handleSetTap = (exerciseId: string, setIdx: number) => {
-        setSetInputs(prev => {
-            const updated = { ...prev };
-            const exerciseSets = updated[exerciseId] ? [...updated[exerciseId]] : [];
-            const setCopy = { ...exerciseSets[setIdx] };
-            
-            // Set hardcoded values: 3 reps, 2 kg weight
-            setCopy['Reps'] = '3';
-            setCopy['Weight'] = '2';
-            
-            exerciseSets[setIdx] = setCopy;
-            updated[exerciseId] = exerciseSets;
-            return updated;
-        });
-    };
 
     if (!selectedRoutineId) {
         return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEnd} />;
@@ -372,7 +327,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                             return (
                                                 <TouchableOpacity
                                                     key={`${exerciseInRoutine.id}-${setIdx}`}
-                                                    onPress={() => handleSetTap(exerciseInRoutine.id, setIdx)}
+                                                    onPress={()=>{}}
                                                     style={{
                                                         flexDirection: 'row',
                                                         alignItems: 'center',
