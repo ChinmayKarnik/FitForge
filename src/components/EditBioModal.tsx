@@ -12,7 +12,7 @@ const Divider = () => {
     />)
 }
 
-const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
+const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -53,31 +53,31 @@ const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         letterSpacing: 0.7,
                         color: '#b9bfd4',
                         marginVertical: normalizeHeight(12)
-                    }}>Edit Name</Text>
+                    }}>Edit Bio</Text>
 
                     <Divider />
                     <View style={{ width: '100%' }}>
                         <TextInput
                             ref={inputRef}
-                            style={
-                                {
-                                    borderWidth: normalize(1),
-                                    borderColor: '#4472c4',
-                                    borderRadius: 8,
-                                    padding: normalizeHeight(12),
-                                    fontSize: normalize(18),
-                                    color: '#c1c1d0',
-                                    backgroundColor: '#23253A',
-                                    marginVertical: normalizeHeight(10),
-                                    marginHorizontal: normalizeWidth(16),
-
-                                }
-                            }
+                            style={{
+                                borderWidth: normalize(1),
+                                borderColor: '#4472c4',
+                                borderRadius: 8,
+                                padding: normalizeHeight(12),
+                                fontSize: normalize(15),
+                                color: '#c1c1d0',
+                                backgroundColor: '#23253A',
+                                marginVertical: normalizeHeight(10),
+                                marginHorizontal: normalizeWidth(16),
+                                minHeight: normalizeHeight(80),
+                                textAlignVertical: 'top',
+                            }}
                             value={value}
                             onChangeText={onChangeText}
-                            placeholder="Enter your name"
+                            placeholder="Enter your bio"
                             placeholderTextColor="#a5a7c1"
-                            returnKeyType="done"
+                            returnKeyType="default"
+                            multiline
                             autoFocus
                         />
                     </View>
@@ -86,17 +86,15 @@ const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={
-                            {
-                                marginRight: normalizeWidth(8),
-                                backgroundColor: '#2752b2',
-                                width: normalizeWidth(130),
-                                borderRadius: normalize(30),
-                                paddingVertical: normalizeHeight(6),
-                                alignItems: 'center',
-                                marginBottom: normalizeHeight(8),
-                            }
-                        } onPress={()=>{onSave(value)}}>
+                        <TouchableOpacity style={{
+                            marginRight: normalizeWidth(8),
+                            backgroundColor: '#2752b2',
+                            width: normalizeWidth(130),
+                            borderRadius: normalize(30),
+                            paddingVertical: normalizeHeight(6),
+                            alignItems: 'center',
+                            marginBottom: normalizeHeight(8),
+                        }} onPress={() => { onSave(value) }}>
                             <Text style={styles.saveText}>Save</Text>
                         </TouchableOpacity>
                     </View>
@@ -125,8 +123,6 @@ const styles = StyleSheet.create({
         paddingVertical: normalizeHeight(6),
         backgroundColor: 'transparent',
         alignItems: 'center',
-        // borderWidth:1,
-        // borderColor:'red',
         marginBottom: normalizeHeight(8),
     },
     cancelText: {
@@ -141,4 +137,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EditNameModal;
+export default EditBioModal;

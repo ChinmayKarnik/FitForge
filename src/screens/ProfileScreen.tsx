@@ -13,6 +13,7 @@ import routines_icon from '../images/notepad-with-ticks.png'
 
 import { databaseController } from '../data';
 import EditNameModal from '../components/EditNameModal';
+import EditBioModal from '../components/EditBioModal';
 
 const sections = [
   {
@@ -55,6 +56,9 @@ export const ProfileScreen = () => {
   const [editNameVisible, setEditNameVisible] = useState(false);
   const [editNameValue, setEditNameValue] = useState(name);
 
+  const [editBioVisible, setEditBioVisible] = useState(false);
+  const [editBioValue, setEditBioValue] = useState(bio);
+
   const profilePhotoHeight = normalizeHeight(150);
   const profilePhotoAspectRatio = 100.0/100.0;
   const profilePhotoWidth = profilePhotoHeight * profilePhotoAspectRatio;
@@ -76,6 +80,17 @@ export const ProfileScreen = () => {
       name});
       setEditNameValue(name);
       closeEditNameModal();
+  }
+
+  const openEditBioModal = () => setEditBioVisible(true);
+  const closeEditBioModal = () => setEditBioVisible(false);
+
+  const onSaveBio = (bio) => {
+    databaseController.updateUserInfo({
+      ...userInfo,
+      bio});
+    setEditBioValue(bio);
+    closeEditBioModal();
   }
 
   return (
@@ -150,6 +165,7 @@ export const ProfileScreen = () => {
       
     <TouchableOpacity
       key={"bio-section"}
+      onPress={openEditBioModal}
       style={{
         padding: normalize(12),
         borderWidth: normalize(1),
@@ -167,10 +183,11 @@ export const ProfileScreen = () => {
             fontWeight: '400',
             color: '#abb1cf',
             lineHeight: normalizeHeight(20),
+            paddingRight: normalizeWidth(30),
           }
         }
       >
-        {bio}
+        {editBioValue}
       </Text>
       <Image 
         style={{width:bluePencilWidth,height:bluePencilHeight,
@@ -196,6 +213,13 @@ export const ProfileScreen = () => {
       onChangeText={setEditNameValue}
       onCancel={closeEditNameModal}
       onSave={onSave}
+    />
+    <EditBioModal
+      visible={editBioVisible}
+      value={editBioValue}
+      onChangeText={setEditBioValue}
+      onCancel={closeEditBioModal}
+      onSave={onSaveBio}
     />
     </View>
   );
