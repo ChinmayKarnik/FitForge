@@ -292,7 +292,9 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         color: '#B0B7C3',
                         marginBottom: normalizeHeight(8),
                     }}>Exercises</Text>
-                    <ScrollView style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1 }}
+                    showsVerticalScrollIndicator={false}
+                    >
                         {databaseController.getRoutineById(selectedRoutineId)?.exercises.map((exerciseInRoutine, exerciseIdx) => {
                             const exercise = databaseController.getExerciseById(exerciseInRoutine.id);
                             const allParams = [
@@ -390,6 +392,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 </View>
                             );
                         })}
+                        <View style={{height:normalizeHeight(200)}}></View>
                     </ScrollView>
                 </View>
 
