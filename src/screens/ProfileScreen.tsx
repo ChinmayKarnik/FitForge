@@ -14,6 +14,7 @@ import routines_icon from '../images/notepad-with-ticks.png'
 import { databaseController } from '../data';
 import EditNameModal from '../components/EditNameModal';
 import EditBioModal from '../components/EditBioModal';
+import ProfileImageCircular from '../components/ProfileImageCircular';
 
 const sections = [
   {
@@ -58,6 +59,12 @@ export const ProfileScreen = () => {
 
   const [editBioVisible, setEditBioVisible] = useState(false);
   const [editBioValue, setEditBioValue] = useState(bio);
+
+  const imageCrop = {
+    x: 0.2,
+    y: 0.15,
+    size: 0.5,
+  };
 
   const profilePhotoHeight = normalizeHeight(150);
   const profilePhotoAspectRatio = 100.0/100.0;
@@ -115,10 +122,12 @@ export const ProfileScreen = () => {
       marginTop:normalizeHeight(20),
      }}
      >
-        <Image
-        style={{width:profilePhotoWidth,height:profilePhotoHeight}}
-        source={profile_photo_default}
-         />
+        <ProfileImageCircular
+          imageSource={profile_photo_default}
+          width={profilePhotoWidth}
+          aspectRatio={profilePhotoAspectRatio}
+          crop={imageCrop}
+        />
       <TouchableOpacity style={{
         position: 'absolute',
         bottom: normalizeHeight(10),
