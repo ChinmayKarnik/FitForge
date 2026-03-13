@@ -8,8 +8,10 @@ import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import white_donut from '../images/white-donut.png';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import ExerciseLoggedDataInline from './ExerciseLoggedDataInline.tsx';
+import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
 // Helper function to get current time
 const getCurrentTime = () => {
@@ -24,6 +26,7 @@ const getCurrentTime = () => {
 export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { onEnd: () => void; onBackPress?: () => void; navigation?: any }) => {
     const [showDateModal, setShowDateModal] = useState(false);
     const [showTimeModal, setShowTimeModal] = useState(false);
+    const [showEndModal, setShowEndModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(getCurrentTime());
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
@@ -107,6 +110,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         }
     };
 
+    const handleEndWorkout = () => {
+        setShowEndModal(true);
+    };
+
     useEffect(()=>{
         // Convert selectedTime (12-hour) to 24-hour
         let hours24 = selectedTime.hours;
@@ -162,12 +169,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         }
         workoutRef.current.endTime = firstSetStartTime + numberOfSets * (defaultSetTime) +
             numberOfSets * (restTimeBetweenSets);
+        workoutRef.current.duration = workoutRef.current.endTime - workoutRef.current.startTime;
         console.log("ckck ref after adding sets ", workoutRef.current)
-    }
-
-    const submitWorkout = () => {
-        workoutRef.current.routineId = selectedRoutineId;
-        databaseController.addWorkout(workoutRef.current);
     }
 
     useEffect(()=>{
@@ -392,10 +395,20 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 </View>
                             );
                         })}
-                        <View style={{height:normalizeHeight(200)}}></View>
+                        <View style={{height:normalizeHeight(100)}}></View>
                     </ScrollView>
                 </View>
 
+                {/* End Workout Button */}
+                <View style={{ marginBottom: normalizeHeight(80), marginTop: normalizeHeight(12) }}>
+                    <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
+                        <Image
+                            source={white_donut}
+                            style={styles.buttonImage}
+                        />
+                        <Text style={styles.buttonText}>End Workout</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <DateSelectionModal
                 visible={showDateModal}
@@ -420,6 +433,12 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     />
                 )
             }
+            <EndActiveWorkoutModal
+                workout={workoutRef.current}
+                visible={showEndModal}
+                onClose={() => setShowEndModal(false)}
+                navigation={navigation}
+            />
         </>
     );
 };
@@ -481,5 +500,28 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '600',
+    },
+    endButton: {
+        alignItems: 'center',
+        paddingVertical: normalizeHeight(12),
+        borderWidth: normalize(1),
+        borderColor: '#dc6c72',
+        backgroundColor: '#ad2126',
+        borderRadius: normalize(12),
+        marginTop: normalize(12),
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    buttonImage: {
+        height: normalizeHeight(12),
+        width: (138.0 / 140.0) * normalize(12),
+        aspectRatio: (140.0 / 138.0),
+        marginRight: normalizeWidth(6),
+    },
+    buttonText: {
+        fontSize: normalize(16),
+        fontWeight: '500',
+        lineHeight: normalize(20),
+        color: '#FFFFFF',
     },
 });
