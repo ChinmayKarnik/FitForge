@@ -8,9 +8,8 @@ import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
-
-type SetInput = { [key: string]: string };
-type SetInputs = { [exerciseId: string]: SetInput[] };
+import { LogSetsModal } from './LogSetsModal.tsx';
+import ExerciseLoggedDataInline from './ExerciseLoggedDataInline.tsx';
 
 // Helper function to get current time
 const getCurrentTime = () => {
@@ -29,9 +28,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [selectedTime, setSelectedTime] = useState(getCurrentTime());
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
     const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
-    const [setInputs, setSetInputs] = useState<SetInputs>({});
-
+    const [logSetModalState,setLogSetModalState] = useState({visible:false})
     const workoutRef = useRef({})
+
+    // State variable to force re-render
+    const [_, setForceRerender] = useState(0);
 
     // Format selected date string
     const now = new Date();
@@ -89,6 +90,15 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
             }
         }
     };
+
+    const onLogData = (setIdx, exerciseId, loggedData)=>{
+        const exercisesWithId = workoutRef.current.exercises.filter(ex => ex.exerciseId === exerciseId);
+        if (exercisesWithId && exercisesWithId[setIdx]) {
+            exercisesWithId[setIdx].loggedData = loggedData;
+        }
+        console.log('ckck onLogData workout ref', workoutRef.current);
+        setForceRerender(x => x + 1);
+    }
 
     const handleBackPress = () => {
         onEnd();
@@ -318,16 +328,26 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                         
                                       </View>
                                         {Array.from({ length: exerciseInRoutine.sets }).map((_, setIdx) => {
-                                            const setData = setInputs[exerciseInRoutine.id]?.[setIdx];
-                                            const hasData = setData && Object.values(setData).some(val => val);
-                                            const dataDisplay = hasData 
-                                                ? Object.entries(setData).map(([key, val]) => `${val}${key === 'Reps' ? ' reps' : ' kg'}`).join(', ')
-                                                : '';
-                                            
+                                           const loggedDataForSet = (() => {
+                                               const exercisesWithId = workoutRef.current.exercises.filter(ex => ex.exerciseId === exerciseInRoutine.id);
+                                               const loggedData = exercisesWithId[setIdx]?.loggedData;
+                                               console.log('ckck this function running ',loggedData)
+                                               // Check if loggedData is an empty object
+                                               if (loggedData && Object.keys(loggedData).length === 0) {
+                                                   return null;
+                                               }
+                                               return loggedData || null;
+                                           })();
                                             return (
                                                 <TouchableOpacity
                                                     key={`${exerciseInRoutine.id}-${setIdx}`}
-                                                    onPress={()=>{}}
+                                                    onPress={()=>{
+                                                        setLogSetModalState({
+                                                            visible: true,
+                                                            exerciseId: exerciseInRoutine.id,
+                                                            setIdx
+                                                        })
+                                                    }}
                                                     style={{
                                                         flexDirection: 'row',
                                                         alignItems: 'center',
@@ -345,7 +365,14 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                     }}>
                                                         Set {setIdx + 1}
                                                     </Text>
-                                                    <View style={{flex:1}} />
+                                                    <View style={{flex:1,
+                                                        //paddingLeft:normalizeWidth(30)
+                                                        flexDirection:'row',
+                                                        justifyContent:'center',
+                                                    }}>
+                                                        <ExerciseLoggedDataInline loggedData={loggedDataForSet} 
+                                                        params={allParams}/>
+                                                    </View>
                                                     <Image
                                                         source={require('../images/white-right-arrow.png')}
                                                         style={{
@@ -366,25 +393,6 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     </ScrollView>
                 </View>
 
-                {/*
-                Complete Workout Button
-                <TouchableOpacity style={{
-                    alignItems: 'center',
-                    paddingVertical: normalizeHeight(12),
-                    borderWidth: normalize(1),
-                    borderColor: '#4ECDC4',
-                    backgroundColor: '#1a3a3a',
-                    borderRadius: normalize(12),
-                    marginTop: normalizeHeight(12),
-                    marginBottom: normalizeHeight(20),
-                }} onPress={submitWorkout}>
-                    <Text style={{
-                        fontSize: normalize(16),
-                        fontWeight: '600',
-                        color: '#4ECDC4',
-                    }}>Complete Workout</Text>
-                </TouchableOpacity>
-                */}
             </View>
             <DateSelectionModal
                 visible={showDateModal}
@@ -398,6 +406,17 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                 selectedTimeInit={selectedTime}
                 onConfirmTime={onConfirmTime}
             />
+            {
+                logSetModalState.visible && (
+                    <LogSetsModal exerciseId={
+                        logSetModalState.exerciseId
+                    } 
+                    setIdx={logSetModalState.setIdx}
+                    onClose={() => setLogSetModalState(prev => ({ ...prev, visible: false }))}
+                    onSave={onLogData}
+                    />
+                )
+            }
         </>
     );
 };

@@ -13,7 +13,9 @@ const ExerciseForm: React.FC = ({
     onFormDataChange,
     formData,
     onSave,
-    onDiscard
+    onDiscard,
+    setNumber,
+    removeHorizontalMargin
 }) => {
     const exercise = databaseController.getExerciseById(exerciseId);
     const requiredParameters = exercise?.requiredParameters;
@@ -28,7 +30,7 @@ const ExerciseForm: React.FC = ({
   }
   
   return (
-   <View style={{backgroundColor:'#232441',
+   <View style={[{backgroundColor:'#232441',
                borderWidth:normalize(1),
                borderRadius: normalize(10),
                borderColor: '#5a5a74',
@@ -36,7 +38,10 @@ const ExerciseForm: React.FC = ({
                paddingHorizontal: normalizeWidth(12),
                paddingBottom: normalizeHeight(10),
                paddingTop: normalizeHeight(18),
-               }}>
+               },
+               removeHorizontalMargin && {marginHorizontal: 0} 
+               
+               ]}>
                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
                   }}>
                    <Text
@@ -47,7 +52,7 @@ const ExerciseForm: React.FC = ({
                        letterSpacing: normalize(0.3),
                        color: '#F2F4F8',
                      }}
-                   >Log sets for {exerciseName}</Text>
+                   >{setNumber ? `${exerciseName} - Set ${setNumber}` : `Log sets for ${exerciseName}`}</Text>
                    <TouchableOpacity
                      onPress={onCloseForm}
                      hitSlop={{ top: 20, left: 20, right: 20, bottom: 10 }}
