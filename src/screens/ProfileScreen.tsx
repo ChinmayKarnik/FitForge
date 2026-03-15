@@ -62,10 +62,11 @@ export const ProfileScreen = () => {
   const [editBioValue, setEditBioValue] = useState(bio);
 
   const [profilePhotoModalVisible, setProfilePhotoModalVisible] = useState(false);
+  const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo.profilePhotoPath || null);
 
   const imageCrop = {
-    x: 0.2,
-    y: 0.15,
+    x: 0.25,
+    y: 0.25,
     size: 0.5,
   };
 
@@ -126,7 +127,7 @@ export const ProfileScreen = () => {
      }}
      >
         <ProfileImageCircular
-          imageSource={profile_photo_default}
+          imageSource={profilePhotoPath ? { uri: profilePhotoPath } : profile_photo_default}
           width={profilePhotoWidth}
           aspectRatio={profilePhotoAspectRatio}
           crop={imageCrop}
@@ -237,6 +238,10 @@ export const ProfileScreen = () => {
       <UpdateProfilePhotoModal
         visible={profilePhotoModalVisible}
         onClose={() => setProfilePhotoModalVisible(false)}
+        onPhotoTaken={(path) => {
+          setProfilePhotoPath(path);
+          setProfilePhotoModalVisible(false);
+        }}
       />
     </View>
   );
