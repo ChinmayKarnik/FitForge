@@ -63,6 +63,7 @@ export const ProfileScreen = () => {
 
   const [profilePhotoModalVisible, setProfilePhotoModalVisible] = useState(false);
   const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo.profilePhotoPath || null);
+  const [photoTimestamp, setPhotoTimestamp] = useState<number>(Date.now());
 
   const imageCrop = {
     x: 0.25,
@@ -127,7 +128,8 @@ export const ProfileScreen = () => {
      }}
      >
         <ProfileImageCircular
-          imageSource={profilePhotoPath ? { uri: profilePhotoPath } : profile_photo_default}
+          key={profilePhotoPath || 'default'}
+          imageSource={profilePhotoPath ? { uri: `${profilePhotoPath}?t=${photoTimestamp}` } : profile_photo_default}
           width={profilePhotoWidth}
           aspectRatio={profilePhotoAspectRatio}
           crop={imageCrop}
@@ -240,6 +242,7 @@ export const ProfileScreen = () => {
         onClose={() => setProfilePhotoModalVisible(false)}
         onPhotoTaken={(path) => {
           setProfilePhotoPath(path);
+          setPhotoTimestamp(Date.now());
           setProfilePhotoModalVisible(false);
         }}
       />
