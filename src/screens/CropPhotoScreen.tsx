@@ -4,7 +4,8 @@ import {
     Dimensions,
     Text,
     Image,
-    Animated
+    Animated,
+    PanResponder
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight } from '../utils/normalize';
@@ -22,9 +23,20 @@ export default function CropPhotoScreen() {
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
 
     // Animated values for image transform
-    const translateX = useRef(new Animated.Value(0)).current;
-    const translateY = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(1)).current;
+
+    const pan = useRef(new Animated.ValueXY()).current;
+
+    // PanResponder for dragging
+    const panResponder = useRef(
+        PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
+            onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
+            onPanResponderRelease: () => {
+                pan.extractOffset();
+            },
+        })
+    ).current;
 
     useEffect(() => {
         if (imageUri) {
@@ -77,15 +89,18 @@ export default function CropPhotoScreen() {
                 >Adjust Photo</Text>
             </View>
 
-            <View style={{
-                width:'100%',
-                height:containerHeight,
-                marginTop:normalizeHeight(120),
-                backgroundColor: 'black',
-                overflow:'hidden',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}>
+            <View 
+                style={{
+                    width:'100%',
+                    height:containerHeight,
+                    marginTop:normalizeHeight(120),
+                    backgroundColor: 'black',
+                    overflow:'hidden',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+                {...panResponder.panHandlers}
+            >
                 {imgDimensions && (
                     <Animated.Image
                         source={{ uri: imageUri }}
@@ -93,8 +108,8 @@ export default function CropPhotoScreen() {
                             width: imgWidth,
                             height: imgHeight,
                             transform: [
-                                { translateX },
-                                { translateY },
+                                { translateX: pan.x },
+                                { translateY: pan.y },
                                 { scale }
                             ]
                         }}
