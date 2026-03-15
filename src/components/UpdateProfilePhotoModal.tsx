@@ -53,6 +53,9 @@ const UpdateProfilePhotoModal: React.FC<UpdateProfilePhotoModalProps> = ({ visib
             <Image source={white_arrow_right} style={styles.arrowIcon} />
           </TouchableOpacity>
 
+          {/* Divider between options and cancel */}
+          <View style={styles.divider} />
+
           {/* Cancel Button */}
           <TouchableOpacity 
             style={styles.cancelButton}
@@ -81,7 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: normalize(20),
     width: '88%',
     maxWidth: normalizeWidth(380),
-    paddingHorizontal: normalizeWidth(20),
     paddingTop: normalizeHeight(20),
     paddingBottom: normalizeHeight(20),
   },
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalizeWidth(16),
     paddingVertical: normalizeHeight(16),
     marginBottom: normalizeHeight(12),
+    marginHorizontal: normalizeWidth(20),
   },
   icon: {
     width: normalizeWidth(30),
@@ -130,12 +133,16 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     alignItems: 'center',
-    paddingVertical: normalizeHeight(12),
-    marginTop: normalizeHeight(8),
+    paddingVertical: normalizeHeight(4),
   },
   cancelText: {
     fontSize: normalize(16),
     fontWeight: '500',
-    color: '#b0b8d3',
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  divider: {
+    height: normalizeHeight(1),
+    backgroundColor: 'rgba(68, 75, 95, 0.5)',
+    marginVertical: normalizeHeight(8),
   },
 });
