@@ -80,8 +80,6 @@ export default function CropPhotoScreen() {
             <View style={{
                 width:'100%',
                 height:containerHeight,
-                borderWidth:1,
-                borderColor:'red',
                 marginTop:normalizeHeight(120),
                 backgroundColor: 'black',
                 overflow:'hidden',
@@ -103,6 +101,16 @@ export default function CropPhotoScreen() {
                         resizeMode="contain"
                     />
                 )}
+                <View style={{
+                    position: 'absolute',
+                    width: CIRCLE_SIZE,
+                    height: CIRCLE_SIZE,
+                    borderRadius: CIRCLE_SIZE / 2,
+                    borderWidth: 2,
+                    borderColor: '#fff',
+                    backgroundColor: 'transparent'
+                }}>
+                </View>
             </View>
 
         </View>
