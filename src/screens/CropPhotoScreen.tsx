@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View, StyleSheet,
     Dimensions,
@@ -17,6 +17,30 @@ export default function CropPhotoScreen() {
     const navigation = useNavigation<any>();
     const route = useRoute<any>();
     const { imageUri } = route.params;
+
+    const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
+
+    useEffect(() => {
+        if (imageUri) {
+            Image.getSize(imageUri, (width, height) => {
+                setImgDimensions({ width, height });
+            });
+        }
+    }, [imageUri]);
+
+    // Fixed container height
+    const containerHeight = normalizeHeight(300);
+    // Calculate image dimensions maintaining aspect ratio
+    let imgWidth = SCREEN.width;
+    let imgHeight = containerHeight;
+    if (imgDimensions) {
+        const aspectRatio = imgDimensions.width / imgDimensions.height;
+        imgHeight = imgWidth / aspectRatio;
+        if (imgHeight > containerHeight) {
+            imgHeight = containerHeight;
+            imgWidth = imgHeight * aspectRatio;
+        }
+    }
 
 
 
@@ -49,17 +73,22 @@ export default function CropPhotoScreen() {
 
             <View style={{
                 width:'100%',
-                height:normalizeHeight(300),
+                height:containerHeight,
                 borderWidth:1,
                 borderColor:'red',
                 marginTop:normalizeHeight(150),
-                overflow:'hidden'
+                backgroundColor: 'black',
+                overflow:'hidden',
+                alignItems: 'center',
+                justifyContent: 'center'
             }}>
-                <Image
-                    source={{ uri: imageUri }}
-                    style={{ width: '100%', height: '100%' }}
-                    resizeMode="cover"
-                />
+                {imgDimensions && (
+                    <Image
+                        source={{ uri: imageUri }}
+                        style={{ width: imgWidth, height: imgHeight }}
+                        resizeMode="contain"
+                    />
+                )}
             </View>
 
         </View>
