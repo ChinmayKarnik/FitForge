@@ -15,6 +15,7 @@ import { databaseController } from '../data';
 import EditNameModal from '../components/EditNameModal';
 import EditBioModal from '../components/EditBioModal';
 import ProfileImageCircular from '../components/ProfileImageCircular';
+import UpdateProfilePhotoModal from '../components/UpdateProfilePhotoModal';
 
 const sections = [
   {
@@ -59,6 +60,8 @@ export const ProfileScreen = () => {
 
   const [editBioVisible, setEditBioVisible] = useState(false);
   const [editBioValue, setEditBioValue] = useState(bio);
+
+  const [profilePhotoModalVisible, setProfilePhotoModalVisible] = useState(false);
 
   const imageCrop = {
     x: 0.2,
@@ -132,11 +135,12 @@ export const ProfileScreen = () => {
         position: 'absolute',
         bottom: normalizeHeight(10),
         right: normalizeHeight(105),
-      }}>
+      }}
+      onPress={() => setProfilePhotoModalVisible(true)}
+      >
         <Image
           style={{
             width: cameraIconWidth, height: cameraIconHeight,
-
           }}
           source={camera}
         />
@@ -230,6 +234,10 @@ export const ProfileScreen = () => {
       onCancel={closeEditBioModal}
       onSave={onSaveBio}
     />
+      <UpdateProfilePhotoModal
+        visible={profilePhotoModalVisible}
+        onClose={() => setProfilePhotoModalVisible(false)}
+      />
     </View>
   );
 };
