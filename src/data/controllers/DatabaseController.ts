@@ -41,6 +41,13 @@ class DatabaseController {
     return this.userInfo;
   }
 
+  async saveProfilePhoto(path: string, crop: { x: number; y: number; size: number }) {
+    const base = this.userInfo ?? {};
+    this.userInfo = { ...base, profilePhotoPath: path, profilePhotoCrop: crop } as any;
+    await this.syncUserInfoWithAsyncStorage();
+    return this.userInfo;
+  }
+
   async getUserInfoFromAsyncStorage() {
     try {
       const data = await AsyncStorage.getItem('@FitForge:userInfo');

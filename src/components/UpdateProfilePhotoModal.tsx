@@ -1,97 +1,51 @@
 import React from 'react';
-import { Modal, View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { Modal, View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_arrow_right from '../images/white-right-arrow.png';
 import camera from '../images/camera.png';
 import gallery from '../images/gallery.png';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
-import { databaseController } from '../data';
+import { useNavigation } from '@react-navigation/native';
 
 interface UpdateProfilePhotoModalProps {
   visible: boolean;
   onClose: () => void;
-  onPhotoTaken?: (path: string) => void;
 }
 
-const UpdateProfilePhotoModal: React.FC<UpdateProfilePhotoModalProps> = ({ visible, onClose, onPhotoTaken }) => {
+const UpdateProfilePhotoModal: React.FC<UpdateProfilePhotoModalProps> = ({ visible, onClose }) => {
+  const navigation = useNavigation<any>();
+
   const onTakePhoto = async () => {
-    // 1. Close the modal first
     onClose();
 
-    // 2. Launch the camera
     const response = await launchCamera({
       mediaType: 'photo',
       cameraType: 'back',
       quality: 0.8,
     });
 
-    if (response.didCancel || response.errorCode) {
-      return;
-    }
+    if (response.didCancel || response.errorCode) return;
 
     const asset = response.assets?.[0];
-    if (!asset?.uri) {
-      return;
-    }
+    if (!asset?.uri) return;
 
-    // 3. Copy image to permanent app storage
-    const destPath = RNFS.DocumentDirectoryPath + '/profile.jpg';
-    const srcUri = asset.uri.startsWith('file://') ? asset.uri.replace('file://', '') : asset.uri;
-    try {
-      await RNFS.copyFile(srcUri, destPath);
-    } catch (err) {
-      console.error('Error copying profile photo:', err);
-      Alert.alert('Error', 'Could not save photo. Please try again.');
-      return;
-    }
-
-    const fileUri = 'file://' + destPath;
-
-    // 4. Save path in the database controller userInfo
-    await databaseController.saveProfilePhotoPath(fileUri);
-
-    // 5. Notify parent to update the UI
-    onPhotoTaken?.(fileUri);
+    navigation.navigate('CropPhoto', { imageUri: asset.uri });
   };
 
   const onChooseFromGallery = async () => {
-    // 1. Close the modal first
     onClose();
 
-    // 2. Launch the image library
     const response = await launchImageLibrary({
       mediaType: 'photo',
       quality: 0.8,
     });
 
-    if (response.didCancel || response.errorCode) {
-      return;
-    }
+    if (response.didCancel || response.errorCode) return;
 
     const asset = response.assets?.[0];
-    if (!asset?.uri) {
-      return;
-    }
+    if (!asset?.uri) return;
 
-    // 3. Copy image to permanent app storage
-    const destPath = RNFS.DocumentDirectoryPath + '/profile.jpg';
-    const srcUri = asset.uri.startsWith('file://') ? asset.uri.replace('file://', '') : asset.uri;
-    try {
-      await RNFS.copyFile(srcUri, destPath);
-    } catch (err) {
-      console.error('Error copying profile photo:', err);
-      Alert.alert('Error', 'Could not save photo. Please try again.');
-      return;
-    }
-
-    const fileUri = 'file://' + destPath;
-
-    // 4. Save path in the database controller userInfo
-    await databaseController.saveProfilePhotoPath(fileUri);
-
-    // 5. Notify parent to update the UI
-    onPhotoTaken?.(fileUri);
+    navigation.navigate('CropPhoto', { imageUri: asset.uri });
   };
 
   return (

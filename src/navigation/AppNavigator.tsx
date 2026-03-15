@@ -8,6 +8,7 @@ import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 import AddRoutineScreen from '../screens/AddRoutineScreen';
 import EditRoutineScreen from '../screens/EditRoutineScreen';
+import CropPhotoScreen from '../screens/CropPhotoScreen';
 
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
@@ -184,6 +185,7 @@ export const AppNavigator = () => {
         <RootStack.Screen name="Exercises" component={ExercisesScreen} />
         <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
         <RootStack.Screen name="EditExercise" component={require('../screens/EditExerciseScreen').default} />
+        <RootStack.Screen name="CropPhoto" component={CropPhotoScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

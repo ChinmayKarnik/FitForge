@@ -1,4 +1,5 @@
-import React, { Activity, useState } from 'react';
+import React, { Activity, useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import ProfilePageSection from '../components/ProfilePageSection';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -64,12 +65,23 @@ export const ProfileScreen = () => {
   const [profilePhotoModalVisible, setProfilePhotoModalVisible] = useState(false);
   const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo.profilePhotoPath || null);
   const [photoTimestamp, setPhotoTimestamp] = useState<number>(Date.now());
+  const [imageCrop, setImageCrop] = useState(
+    userInfo.profilePhotoCrop || { x: 0.25, y: 0.25, size: 0.5 }
+  );
 
-  const imageCrop = {
-    x: 0.25,
-    y: 0.25,
-    size: 0.5,
-  };
+  // Refresh photo + crop whenever the screen comes back into focus (e.g. after CropPhotoScreen)
+  useFocusEffect(
+    useCallback(() => {
+      const info = databaseController.getUserInfo();
+      if (info?.profilePhotoPath) {
+        setProfilePhotoPath(info.profilePhotoPath);
+        setPhotoTimestamp(Date.now());
+      }
+      if (info?.profilePhotoCrop) {
+        setImageCrop(info.profilePhotoCrop);
+      }
+    }, [])
+  );
 
   const profilePhotoHeight = normalizeHeight(150);
   const profilePhotoAspectRatio = 100.0/100.0;
@@ -240,11 +252,6 @@ export const ProfileScreen = () => {
       <UpdateProfilePhotoModal
         visible={profilePhotoModalVisible}
         onClose={() => setProfilePhotoModalVisible(false)}
-        onPhotoTaken={(path) => {
-          setProfilePhotoPath(path);
-          setPhotoTimestamp(Date.now());
-          setProfilePhotoModalVisible(false);
-        }}
       />
     </View>
   );
