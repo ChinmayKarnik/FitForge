@@ -38,13 +38,57 @@ export default function CropPhotoScreen() {
     };
 
     const onConfirm = async () => {
-                        // Save image as profile pic
-                        // Example: databaseController.saveProfilePhoto(imageUri);
-                        if (typeof databaseController?.saveProfilePhoto === 'function') {
-                            await databaseController.saveProfilePhoto(imageUri);
-                        }
-                        navigation.goBack();
-                    }
+        // Calculate crop values based on pan, scale, and circle position
+        if (!imgDimensions) return;
+
+        // Get current pan values (using stopAnimation to extract current value)
+        let panXVal = 0, panYVal = 0;
+        pan.x.stopAnimation((x) => { panXVal = x; });
+        pan.y.stopAnimation((y) => { panYVal = y; });
+
+        const scalVal = scaleValue.current;
+        const containerSize = SCREEN.width;
+
+        // Circle position and size in container
+        const circleCenterX = containerSize / 2;
+        const circleCenterY = containerSize / 2;
+        const circleRadius = CIRCLE_SIZE / 2;
+
+        // Circle bounding box in container coordinates
+        const circleLeft = circleCenterX - circleRadius;
+        const circleTop = circleCenterY - circleRadius;
+        const circleRight = circleCenterX + circleRadius;
+        const circleBottom = circleCenterY + circleRadius;
+
+        // Convert to original image coordinates
+        // Reverse the transform: (container - pan) / scale
+        const cropLeft = (circleLeft - panXVal) / scalVal;
+        const cropTop = (circleTop - panYVal) / scalVal;
+        const cropRight = (circleRight - panXVal) / scalVal;
+        const cropBottom = (circleBottom - panYVal) / scalVal;
+
+        // Normalize to 0-1 range based on original image dimensions
+        const { width: origWidth, height: origHeight } = imgDimensions;
+        const normalizedX = Math.max(0, Math.min(1, cropLeft / origWidth));
+        const normalizedY = Math.max(0, Math.min(1, cropTop / origHeight));
+        const normalizedWidth = (cropRight - cropLeft) / origWidth;
+        const normalizedHeight = (cropBottom - cropTop) / origHeight;
+        const normalizedSize = Math.min(normalizedWidth, normalizedHeight);
+
+        // Save image with crop data
+        const crop = {
+            x: normalizedX,
+            y: normalizedY,
+            size: normalizedSize
+        };
+
+        console.log('ckck saving crop as ',crop)
+
+        if (typeof databaseController?.saveProfilePhoto === 'function') {
+            await databaseController.saveProfilePhoto(imageUri, crop);
+        }
+        navigation.goBack();
+    }
 
     // PanResponder for dragging + pinch zoom
     const panResponder = useRef(

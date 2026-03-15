@@ -66,8 +66,9 @@ export const ProfileScreen = () => {
   const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo.profilePhotoPath || null);
   const [photoTimestamp, setPhotoTimestamp] = useState<number>(Date.now());
   const [imageCrop, setImageCrop] = useState(
-    userInfo.profilePhotoCrop || { x: 0.25, y: 0.25, size: 0.5 }
+    userInfo.profilePhotoCrop || { x: 0, y: 0, size: 1 }
   );
+  console.log('ckck imageCrop here is ',imageCrop)
 
   // Refresh photo + crop whenever the screen comes back into focus (e.g. after CropPhotoScreen)
   useFocusEffect(
