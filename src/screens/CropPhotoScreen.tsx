@@ -24,16 +24,62 @@ export default function CropPhotoScreen() {
 
     // Animated values for image transform
     const scale = useRef(new Animated.Value(1)).current;
+    const scaleValue = useRef(1); // tracks committed scale between gestures
+    const initialDistance = useRef<number | null>(null);
+    const prevTouchesLength = useRef(0);
 
     const pan = useRef(new Animated.ValueXY()).current;
 
-    // PanResponder for dragging
+    const getDistance = (touches: any[]) => {
+        const dx = touches[0].pageX - touches[1].pageX;
+        const dy = touches[0].pageY - touches[1].pageY;
+        return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    // PanResponder for dragging + pinch zoom
     const panResponder = useRef(
         PanResponder.create({
             onStartShouldSetPanResponder: () => true,
-            onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
-            onPanResponderRelease: () => {
-                pan.extractOffset();
+            onMoveShouldSetPanResponder: () => true,
+            onPanResponderGrant: (evt) => {
+                if (evt.nativeEvent.touches.length === 2) {
+                    const dist = getDistance(evt.nativeEvent.touches);
+                    initialDistance.current = dist;
+                }
+            },
+            onPanResponderMove: (evt, gestureState) => {
+                const touches = evt.nativeEvent.touches;
+                if (touches.length >= 2) {
+                    // Initialize distance when first detecting 2 touches
+                    if (prevTouchesLength.current < 2 || initialDistance.current === null) {
+                        const dist = getDistance(touches);
+                        initialDistance.current = dist;
+                    }
+                    // Pinch zoom
+                    if (initialDistance.current !== null) {
+                        const currentDistance = getDistance(touches);
+                        const newScale = Math.max(0.5, Math.min(MAX_SCALE,
+                            scaleValue.current * (currentDistance / initialDistance.current)
+                        ));
+                        scale.setValue(newScale);
+                    }
+                } else if (touches.length === 1) {
+                    // Pan drag
+                    pan.x.setValue(gestureState.dx);
+                    pan.y.setValue(gestureState.dy);
+                }
+                prevTouchesLength.current = touches.length;
+            },
+            onPanResponderRelease: (evt) => {
+                if (evt.nativeEvent.touches.length === 0) {
+                    // Commit scale
+                    scale.stopAnimation((val) => { 
+                        scaleValue.current = val; 
+                    });
+                    pan.extractOffset();
+                    initialDistance.current = null;
+                    prevTouchesLength.current = 0;
+                }
             },
         })
     ).current;
