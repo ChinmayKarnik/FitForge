@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View, StyleSheet,
     Dimensions,
     Text,
-    Image
+    Image,
+    Animated
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight } from '../utils/normalize';
@@ -19,6 +20,11 @@ export default function CropPhotoScreen() {
     const { imageUri } = route.params;
 
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
+
+    // Animated values for image transform
+    const translateX = useRef(new Animated.Value(0)).current;
+    const translateY = useRef(new Animated.Value(0)).current;
+    const scale = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
         if (imageUri) {
@@ -83,9 +89,17 @@ export default function CropPhotoScreen() {
                 justifyContent: 'center'
             }}>
                 {imgDimensions && (
-                    <Image
+                    <Animated.Image
                         source={{ uri: imageUri }}
-                        style={{ width: imgWidth, height: imgHeight }}
+                        style={{
+                            width: imgWidth,
+                            height: imgHeight,
+                            transform: [
+                                { translateX },
+                                { translateY },
+                                { scale }
+                            ]
+                        }}
                         resizeMode="contain"
                     />
                 )}
