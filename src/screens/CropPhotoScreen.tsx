@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight } from '../utils/normalize';
+import { databaseController } from '../data';
 
 const SCREEN = Dimensions.get('window');
 
@@ -35,6 +36,15 @@ export default function CropPhotoScreen() {
         const dy = touches[0].pageY - touches[1].pageY;
         return Math.sqrt(dx * dx + dy * dy);
     };
+
+    const onConfirm = async () => {
+                        // Save image as profile pic
+                        // Example: databaseController.saveProfilePhoto(imageUri);
+                        if (typeof databaseController?.saveProfilePhoto === 'function') {
+                            await databaseController.saveProfilePhoto(imageUri);
+                        }
+                        navigation.goBack();
+                    }
 
     // PanResponder for dragging + pinch zoom
     const panResponder = useRef(
@@ -174,6 +184,32 @@ export default function CropPhotoScreen() {
                 </View>
             </View>
 
+            {/* Okay button at the bottom */}
+            <View style={{
+                width: '100%',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                padding: 24,
+                alignItems: 'center',
+                backgroundColor: 'rgba(36, 42, 65, 0.95)'
+            }}>
+                <Text
+                    onPress={onConfirm}
+                    style={{
+                        backgroundColor: '#c62230',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        fontSize: 18,
+                        paddingVertical: 12,
+                        paddingHorizontal: 40,
+                        borderRadius: 24,
+                        overflow: 'hidden',
+                        textAlign: 'center',
+                        marginTop: 8
+                    }}
+                >Okay</Text>
+            </View>
         </View>
     );
 }
