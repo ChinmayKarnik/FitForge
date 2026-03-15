@@ -34,8 +34,8 @@ export default function CropPhotoScreen() {
         }
     }, [imageUri]);
 
-    // Fixed container height
-    const containerHeight = normalizeHeight(300);
+    // Fixed container - square (width = height = screen width)
+    const containerHeight = SCREEN.width;
     // Calculate image dimensions maintaining aspect ratio
     let imgWidth = SCREEN.width;
     let imgHeight = containerHeight;
@@ -82,7 +82,7 @@ export default function CropPhotoScreen() {
                 height:containerHeight,
                 borderWidth:1,
                 borderColor:'red',
-                marginTop:normalizeHeight(150),
+                marginTop:normalizeHeight(120),
                 backgroundColor: 'black',
                 overflow:'hidden',
                 alignItems: 'center',
