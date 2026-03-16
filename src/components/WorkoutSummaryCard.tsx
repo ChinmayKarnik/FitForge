@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
 import { getDayOfWeek } from '../utils/dateTimeUtils';
@@ -23,9 +23,10 @@ type Workout = {
 
 type Props = {
   workout: Workout;
+  onPress?: () => void;
 };
 
-export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
+export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress }) => {
   // Calculate duration in minutes and seconds
   const durationMs = workout.endTime - workout.startTime;
   const durationMin = Math.floor(durationMs / 60000);
@@ -45,14 +46,15 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
   const routineName =  routine?.name || 'Free Workout'
 
   return (
-    <View style={{flex:1,
-      minHeight: 70,
-      marginHorizontal: normalizeWidth(16),
-    backgroundColor:'#292f46',
-    borderRadius:normalizeHeight(10),
-    borderWidth: normalize(1),
-    borderColor: '#383e55'
-    }}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+      <View style={{flex:1,
+        minHeight: 70,
+        marginHorizontal: normalizeWidth(16),
+      backgroundColor:'#292f46',
+      borderRadius:normalizeHeight(10),
+      borderWidth: normalize(1),
+      borderColor: '#383e55'
+      }}>
       <View style={{paddingLeft: normalizeWidth(14),
         paddingVertical:normalizeHeight(12),
         borderBottomWidth: normalize(1),
@@ -93,7 +95,8 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout }) => {
         }
       </View>
 
-    </View>
+      </View>
+    </TouchableOpacity>
   )
 
   

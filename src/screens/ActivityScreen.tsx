@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
 import { normalizeHeight } from '../utils/normalize';
 
 export const ActivityScreen = () => {
+  const navigation = useNavigation<any>();
   const [workouts, setWorkouts] = useState<any[]>([]);
 
   useEffect(() => {
@@ -16,7 +18,7 @@ export const ActivityScreen = () => {
     loadWorkouts();
   }, []);
   console.log("ckck workotus are ",workouts)
-  const renderWorkout = ({ item }: { item: any }) => <WorkoutSummaryCard workout={item} />;
+  const renderWorkout = ({ item }: { item: any }) => <WorkoutSummaryCard workout={item} onPress={() => navigation.navigate('WorkoutDetails', { workout: item })} />;
 
   return (
     <View style={styles.bg}>
