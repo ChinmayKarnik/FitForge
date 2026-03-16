@@ -21,10 +21,10 @@ export default function CropPhotoScreen() {
     const route = useRoute<any>();
     const { imageUri } = route.params;
 
-    const [crop,setCrop] = useState({});
 
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
-
+    
+    const isHorizontalImage = imgDimensions ? imgDimensions.width >= imgDimensions.height : true;
     // Animated values for image transform
     const scale = useRef(new Animated.Value(1)).current;
     const scaleValue = useRef(1); // tracks committed scale between gestures
@@ -52,8 +52,7 @@ export default function CropPhotoScreen() {
         const scalVal = scaleValue.current
 
         const crop = getCrop(panXVal,panYVal,scalVal);
-        console.log('ckck saving crop as ',crop)
-        setCrop(crop);
+
         if (typeof databaseController?.saveProfilePhoto === 'function') {
             await databaseController.saveProfilePhoto(imageUri, crop);
         }
@@ -131,10 +130,8 @@ export default function CropPhotoScreen() {
         }
     }
 
-    const testImageWidthContainer = normalizeWidth(200);
-    const testImageHeight = testImageWidthContainer/(aspectRatio*1.0);
-
     const getCrop = (panXVal, panYVal, scaleVal)=>{
+        if(isHorizontalImage){
         const imageTopSpace = (containerHeight-(imgHeight*scaleVal))/2.0
         const circleTopSpace = (containerHeight-CIRCLE_SIZE)/2.0 
         const Ycoord = -(imageTopSpace-circleTopSpace)
@@ -146,6 +143,19 @@ export default function CropPhotoScreen() {
             x: xcropVal,
             y: ycropVal,
             size: scaleval/scaleVal
+        }}else {
+            const imageLeftSpace = (containerHeight - (imgWidth * scaleVal)) / 2.0
+            const circleLeftSpace = (containerHeight - CIRCLE_SIZE) / 2.0
+            const Xcoord = -(imageLeftSpace - circleLeftSpace)
+            const xcropVal = (Xcoord - panXVal) / (scaleVal * imgWidth * 1.0);
+            const circleSpaceTop = (containerHeight * scaleVal - CIRCLE_SIZE) / 2.0;
+            const ycropVal = (circleSpaceTop - panYVal) / (scaleVal * imgHeight * 1.0);
+            const scaleval = CIRCLE_SIZE / (containerHeight * 1.0);
+            return {
+                x: xcropVal,
+                y: ycropVal,
+                size: scaleval / scaleVal
+            }
         }
     }
 

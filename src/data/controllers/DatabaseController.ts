@@ -43,7 +43,10 @@ class DatabaseController {
 
   async saveProfilePhoto(path: string, crop?: { x: number; y: number; size: number }) {
     const base = this.userInfo ?? {};
-    if (crop) {
+    if (crop) { 
+      //  x is x co-ordiante as a fraction of overall width 
+      //  y is y co-ordinate as a fraction of overall height
+      // size (if width >height then fraction of overall width else fraction of overall height)
       this.userInfo = { ...base, profilePhotoPath: path, profilePhotoCrop: crop } as any;
     } else {
       this.userInfo = { ...base, profilePhotoPath: path } as any;

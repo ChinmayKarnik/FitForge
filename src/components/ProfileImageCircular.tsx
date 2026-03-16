@@ -22,10 +22,19 @@ const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
  
   const AVATAR_SIZE = width;
   const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
-  
-  const imageWidth = AVATAR_SIZE / crop.size;
 
-  const imageHeight = imageWidth / imageAspectRatio; 
+  const isImageHorizontal = imageAspectRatio >= 1.0
+  
+  let imageWidth,imageHeight;
+  if (isImageHorizontal) {
+    imageWidth = AVATAR_SIZE / crop.size;
+
+    imageHeight = imageWidth / imageAspectRatio;
+  } else {
+    imageHeight = AVATAR_SIZE/crop.size;
+    imageWidth = (imageHeight*1.0) * imageAspectRatio
+  }
+  
 
   
   useEffect(() => {
