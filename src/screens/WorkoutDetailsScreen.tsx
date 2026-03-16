@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock.png';
+import calendarWithBorder from '../images/calendar-with-border.png';
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
@@ -79,17 +80,19 @@ export default function WorkoutDetailsScreen() {
           alignItems: 'center',
           marginBottom: normalizeHeight(12),
         }}>
-          {/* Calendar Icon Placeholder */}
-          <View style={{
-            width: normalizeWidth(18),
-            height: normalizeHeight(18),
-            backgroundColor: 'rgba(100, 100, 120, 0.8)',
-            borderRadius: normalizeWidth(3),
-            marginRight: normalizeWidth(12),
-          }} />
+          {/* Calendar Icon */}
+          <Image
+            source={calendarWithBorder}
+            style={{
+              width: normalizeWidth(15),
+              aspectRatio: (538.0/496.0),
+              marginRight: normalizeWidth(8),
+              resizeMode: 'contain',
+            }}
+          />
           <Text style={{
-            fontSize: normalizeHeight(14),
-            color: '#8a8c9c',
+            fontSize: normalizeHeight(13),
+            color: '#bebdd1',
             fontWeight: '400',
           }}>
             {'Jan 30'} • {'3:08 PM'}
@@ -101,16 +104,17 @@ export default function WorkoutDetailsScreen() {
           <Image
             source={clock}
             style={{
-              width: normalizeWidth(15),
-              marginRight: normalizeWidth(8),
+              width: normalizeWidth(13),
+              marginRight: normalizeWidth(6),
               marginLeft: normalizeWidth(8),
               aspectRatio: (357.0/346.0),
               resizeMode: 'contain',
+              tintColor: '#bebdd1',
             }}
           />
           <Text style={{
-            fontSize: normalizeHeight(14),
-            color: '#8a8c9c',
+            fontSize: normalizeHeight(13),
+            color: '#bebdd1',
             fontWeight: '400',
           }}>
             {'28'} min
@@ -121,7 +125,7 @@ export default function WorkoutDetailsScreen() {
        
         {/* Divider */}
         <View style={{
-          height: normalizeHeight(1),
+          height: normalizeHeight(2),
           backgroundColor: 'rgba(68, 75, 95, 0.5)',
           marginBottom: normalizeHeight(24),
         }} />
