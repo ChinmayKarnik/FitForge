@@ -11,6 +11,25 @@ export default function WorkoutDetailsScreen() {
   const route = useRoute<any>();
   const workout = route.params?.workout;
 
+  // Format duration from ms to human readable string
+  let durationText = '';
+  const durationMs = workout?.duration;
+  if (typeof durationMs === 'number' && !isNaN(durationMs)) {
+    const totalMinutes = Math.floor(durationMs / 60000);
+    if (totalMinutes < 1) {
+      durationText = '1 min';
+    } else if (totalMinutes < 60) {
+      durationText = `${totalMinutes} min`;
+    } else {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      durationText = `${hours} hour${hours === 1 ? '' : 's'}`;
+      if (minutes > 0) {
+        durationText += ` ${minutes} min`;
+      }
+    }
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -117,7 +136,7 @@ export default function WorkoutDetailsScreen() {
             color: '#bebdd1',
             fontWeight: '400',
           }}>
-            {'28'} min
+            {durationText}
           </Text>
         </View>
 
