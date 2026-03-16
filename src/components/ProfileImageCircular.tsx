@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image } from 'react-native';
 
 interface CropConfig {
@@ -17,11 +17,24 @@ interface ProfileImageCircularProps {
 const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
   imageSource,
   width,
-  aspectRatio,
   crop,
 }) => {
-  const height = width * aspectRatio;
+ 
   const AVATAR_SIZE = width;
+  const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
+  
+  const imageWidth = AVATAR_SIZE / crop.size;
+
+  const imageHeight = imageWidth / imageAspectRatio; 
+
+  
+  useEffect(() => {
+    if (imageSource?.uri) {
+      Image.getSize(imageSource.uri, (width, height) => {
+        setImageAspectRatio(width / height);
+      });
+    }
+  }, [imageSource?.uri]);
 
   return (
     <View
@@ -37,10 +50,10 @@ const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
         source={imageSource}
         style={{
           position: 'absolute',
-          width: AVATAR_SIZE / crop.size,
-          height: height/crop.size,
-          left: -crop.x * (AVATAR_SIZE / crop.size),
-          top: -crop.y * (AVATAR_SIZE / crop.size),
+          width:imageWidth,
+          height: imageHeight,
+          left: -crop.x * (imageWidth),
+          top: -crop.y * (imageHeight),
         }}
       />
     </View>
