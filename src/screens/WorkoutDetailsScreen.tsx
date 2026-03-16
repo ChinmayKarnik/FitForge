@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const workout = route.params?.workout;
 
   return (
     <View style={{
@@ -53,6 +55,74 @@ export default function WorkoutDetailsScreen() {
             color: "#fefefe"
           }}
         >Workout Details</Text>
+      </View>
+
+      {/* Body Container */}
+      <View style={{
+        flex: 1,
+        padding: normalizeWidth(16),
+      }}>
+        {/* Workout Title */}
+        <Text style={{
+          fontSize: normalizeHeight(24),
+          fontWeight: '500',
+          color: '#fefefe',
+          marginBottom: normalizeHeight(12),
+        }}>
+          {workout?.name}
+        </Text>
+
+        
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: normalizeHeight(12),
+        }}>
+          {/* Calendar Icon Placeholder */}
+          <View style={{
+            width: normalizeWidth(18),
+            height: normalizeHeight(18),
+            backgroundColor: 'rgba(100, 100, 120, 0.8)',
+            borderRadius: normalizeWidth(3),
+            marginRight: normalizeWidth(12),
+          }} />
+          <Text style={{
+            fontSize: normalizeHeight(14),
+            color: '#8a8c9c',
+            fontWeight: '400',
+          }}>
+            {'Jan 30'} • {'3:08 PM'}
+          </Text>
+           <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+          {/* Clock Icon Placeholder */}
+          <View style={{
+            width: normalizeWidth(18),
+            height: normalizeHeight(18),
+            backgroundColor: 'rgba(100, 100, 120, 0.8)',
+            borderRadius: normalizeWidth(3),
+            marginRight: normalizeWidth(12),
+            marginLeft: normalizeWidth(8),
+          }} />
+          <Text style={{
+            fontSize: normalizeHeight(14),
+            color: '#8a8c9c',
+            fontWeight: '400',
+          }}>
+            { '28'} min
+          </Text>
+        </View>
+
+        </View>
+       
+        {/* Divider */}
+        <View style={{
+          height: normalizeHeight(1),
+          backgroundColor: 'rgba(68, 75, 95, 0.5)',
+          marginBottom: normalizeHeight(24),
+        }} />
       </View>
     </View>
   );
