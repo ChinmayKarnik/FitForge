@@ -39,6 +39,7 @@ export default function CropPhotoScreen() {
         return Math.sqrt(dx * dx + dy * dy);
     };
 
+    
     const onConfirm = async () => {
         // Calculate crop values based on pan, scale, and circle position
         if (!imgDimensions) return;
@@ -78,14 +79,14 @@ export default function CropPhotoScreen() {
         const normalizedSize = Math.min(normalizedWidth, normalizedHeight);
 
         // Save image with crop data
-        const crop = {
-            x: normalizedX,
-            y: normalizedY,
-            size: normalizedSize
-        };
-
+        // const crop = {
+        //     x: normalizedX,
+        //     y: normalizedY,
+        //     size: normalizedSize
+        // };
+        const crop = getCrop();
         console.log('ckck saving crop as ',crop)
-        setCrop(crop);
+        setCrop(getCrop());
         // if (typeof databaseController?.saveProfilePhoto === 'function') {
         //     await databaseController.saveProfilePhoto(imageUri, crop);
         // }
@@ -165,6 +166,23 @@ export default function CropPhotoScreen() {
 
     const testImageWidthContainer = normalizeWidth(200);
     const testImageHeight = testImageWidthContainer/(aspectRatio*1.0);
+
+    const getCrop = ()=>{
+        const circleRadius = CIRCLE_SIZE/2.0;
+        const imageTopSpace = (containerHeight-imgHeight)/2.0
+        const circleTopSpace = (containerHeight-CIRCLE_SIZE)/2.0 
+        const Ycoord = -(imageTopSpace-circleTopSpace)
+        const ycropVal = Ycoord/(imgHeight*1.0);
+        const circleSpaceLeft = (containerHeight - CIRCLE_SIZE)/2.0;
+        const xcropVal = circleSpaceLeft/(imgWidth*1.0); 
+        const scaleval = CIRCLE_SIZE/(containerHeight*1.0);
+        return {
+            x: xcropVal,
+            y: ycropVal,
+            size: scaleval
+        }
+    }
+
 
 
     return (
@@ -250,8 +268,8 @@ export default function CropPhotoScreen() {
                  />
                  <View
                  style={{position:'absolute',
-                    top:(crop.x)*testImageHeight,
-                    left: (crop.y)*testImageWidthContainer,
+                    top:(crop.y)*testImageHeight,
+                    left: (crop.x)*testImageWidthContainer,
                     width:crop.size*testImageWidthContainer,
                     height:crop.size*testImageWidthContainer,
                     borderWidth:1,
