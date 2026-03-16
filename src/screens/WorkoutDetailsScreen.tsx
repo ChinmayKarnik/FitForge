@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
-import clock from '../images/clock.png';
+import clock from '../images/clock-thick.png';
 import calendarWithBorder from '../images/calendar-with-border.png';
 
 export default function WorkoutDetailsScreen() {
