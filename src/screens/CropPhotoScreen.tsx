@@ -9,13 +9,13 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
 
 const SCREEN = Dimensions.get('window');
 
-const CIRCLE_SIZE = 280;
+const CIRCLE_SIZE = normalize(300);
 const MAX_SCALE = 5;
 
 export default function CropPhotoScreen() {
