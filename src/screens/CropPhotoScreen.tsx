@@ -5,11 +5,13 @@ import {
     Text,
     Image,
     Animated,
-    PanResponder
+    PanResponder,
+    TouchableOpacity
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
+import white_left_arrow from '../images/white-left-arrow.png';
 
 const SCREEN = Dimensions.get('window');
 
@@ -168,6 +170,7 @@ export default function CropPhotoScreen() {
             height: '100%',
             backgroundColor: '#1c2238',
         }}>
+
             {/* Basic header */}
             <View style={{
                 width: '100%',
@@ -178,6 +181,27 @@ export default function CropPhotoScreen() {
                 paddingTop: normalizeHeight(40),
                 paddingBottom: normalizeHeight(12)
             }}>
+                 <TouchableOpacity 
+                        style={{ position: 'absolute',
+                           top: normalizeHeight(46), left: normalizeWidth(16),
+                          
+                        }
+                        }
+                        hitSlop={{top:20,bottom:20,left:20,right:20}}
+                        onPress={()=>{
+                          navigation.goBack()
+                        }}>
+                        <Image style={{
+                         
+                             width:normalizeWidth(9),
+                             height:normalizeWidth(9)*(86.0/51.0),
+                          aspectRatio: (51.0/86.0),
+                          resizeMode:'stretch'
+                        }}
+                          source ={white_left_arrow}   
+                        />
+                
+                        </TouchableOpacity>
                 <Text
                     style={{
                         fontSize: 22,
@@ -235,7 +259,6 @@ export default function CropPhotoScreen() {
                 left: 0,
                 padding: 24,
                 alignItems: 'center',
-                backgroundColor: 'rgba(36, 42, 65, 0.95)'
             }}>
                 <Text
                     onPress={onConfirm}
@@ -243,15 +266,15 @@ export default function CropPhotoScreen() {
                         backgroundColor: '#c62230',
                         color: '#fff',
                         fontWeight: 'bold',
-                        fontSize: 18,
-                        paddingVertical: 12,
-                        paddingHorizontal: 40,
-                        borderRadius: 24,
+                        fontSize: normalizeWidth(16),
+                        paddingVertical: normalizeHeight(12),
+                        paddingHorizontal: normalizeWidth(60),
+                        borderRadius: normalizeWidth(24),
                         overflow: 'hidden',
                         textAlign: 'center',
-                        marginTop: 8
+                        marginTop: normalizeHeight(8)
                     }}
-                >Okay</Text>
+                >Use Photo</Text>
             </View>
         </View>
     );
