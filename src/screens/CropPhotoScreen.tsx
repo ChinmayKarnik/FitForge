@@ -267,6 +267,28 @@ export default function CropPhotoScreen() {
                 </View>
             </View>
 
+            <View style={{
+                width: '100%',
+                paddingHorizontal: normalizeWidth(16),
+                paddingVertical: normalizeHeight(16),
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(36, 42, 65, 0.8)',
+                borderTopWidth: 1,
+                borderBottomWidth: 1,
+                borderColor: 'rgba(68, 75, 95, 0.5)'
+            }}>
+                <Text style={{
+                    color: '#ffffff',
+                    fontSize: normalizeWidth(14),
+                    fontWeight: '500',
+                    textAlign: 'center',
+                    letterSpacing: 0.5
+                }}>
+                    Drag to position  •  Pinch to zoom
+                </Text>
+            </View>
+
             {/* Okay button at the bottom */}
             <View style={{
                 width: '100%',
