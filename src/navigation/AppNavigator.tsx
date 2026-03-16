@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen, ExercisesScreen, AddExerciseScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import ProfilePhotoView from '../screens/ProfilePhotoView';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 import AddRoutineScreen from '../screens/AddRoutineScreen';
@@ -186,6 +187,7 @@ export const AppNavigator = () => {
         <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
         <RootStack.Screen name="EditExercise" component={require('../screens/EditExerciseScreen').default} />
         <RootStack.Screen name="CropPhoto" component={CropPhotoScreen} />
+        <RootStack.Screen name="ProfilePhotoView" component={ProfilePhotoView} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

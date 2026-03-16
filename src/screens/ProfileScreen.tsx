@@ -1,5 +1,5 @@
 import React, { Activity, useState, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ProfilePageSection from '../components/ProfilePageSection';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -52,6 +52,7 @@ const sections = [
 ];
 
 export const ProfileScreen = () => {
+  const navigation = useNavigation<any>();
   const userInfo = databaseController.getUserInfo() || { name: 'John Doe', bio: 'Fitness enthusiast. Working hard every day to improve myself and reach new goals.' };
   const name = userInfo.name;
   const bio = userInfo.bio;
@@ -139,12 +140,12 @@ export const ProfileScreen = () => {
      style={{alignItems:'center',
       marginTop:normalizeHeight(20),
      }}
+     onPress={() => navigation.navigate('ProfilePhotoView')}
      >
         <ProfileImageCircular
           key={profilePhotoPath || 'default'}
           imageSource={profilePhotoPath ? { uri: `${profilePhotoPath}?t=${photoTimestamp}` } : profile_photo_default}
           width={profilePhotoWidth}
-          aspectRatio={profilePhotoAspectRatio}
           crop={imageCrop}
         />
       <TouchableOpacity style={{
