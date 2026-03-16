@@ -168,19 +168,17 @@ export default function CropPhotoScreen() {
     const testImageHeight = testImageWidthContainer/(aspectRatio*1.0);
 
     const getCrop = (panXVal, panYVal, scaleVal)=>{
-        console.log('ckck panvals',panXVal, panYVal, 'scaleval is ',scaleVal)
-        const circleRadius = CIRCLE_SIZE/2.0;
-        const imageTopSpace = (containerHeight-imgHeight)/2.0
+        const imageTopSpace = (containerHeight-(imgHeight*scaleVal))/2.0
         const circleTopSpace = (containerHeight-CIRCLE_SIZE)/2.0 
         const Ycoord = -(imageTopSpace-circleTopSpace)
-        const ycropVal = (Ycoord-panYVal)/(imgHeight*1.0);
-        const circleSpaceLeft = (containerHeight - CIRCLE_SIZE)/2.0;
-        const xcropVal = (circleSpaceLeft-panXVal)/(imgWidth*1.0); 
+        const ycropVal = (Ycoord-panYVal)/(scaleVal* imgHeight*1.0);
+        const circleSpaceLeft = (containerHeight*scaleVal - CIRCLE_SIZE)/2.0;
+        const xcropVal = (circleSpaceLeft-panXVal)/(scaleVal*imgWidth*1.0); 
         const scaleval = CIRCLE_SIZE/(containerHeight*1.0);
         return {
             x: xcropVal,
             y: ycropVal,
-            size: scaleval
+            size: scaleval/scaleVal
         }
     }
 
