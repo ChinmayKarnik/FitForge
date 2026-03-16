@@ -84,9 +84,9 @@ export default function CropPhotoScreen() {
         //     y: normalizedY,
         //     size: normalizedSize
         // };
-        const crop = getCrop();
+        const crop = getCrop(panXVal,panYVal,scalVal);
         console.log('ckck saving crop as ',crop)
-        setCrop(getCrop());
+        setCrop(crop);
         // if (typeof databaseController?.saveProfilePhoto === 'function') {
         //     await databaseController.saveProfilePhoto(imageUri, crop);
         // }
@@ -167,14 +167,15 @@ export default function CropPhotoScreen() {
     const testImageWidthContainer = normalizeWidth(200);
     const testImageHeight = testImageWidthContainer/(aspectRatio*1.0);
 
-    const getCrop = ()=>{
+    const getCrop = (panXVal, panYVal, scaleVal)=>{
+        console.log('ckck panvals',panXVal, panYVal, 'scaleval is ',scaleVal)
         const circleRadius = CIRCLE_SIZE/2.0;
         const imageTopSpace = (containerHeight-imgHeight)/2.0
         const circleTopSpace = (containerHeight-CIRCLE_SIZE)/2.0 
         const Ycoord = -(imageTopSpace-circleTopSpace)
-        const ycropVal = Ycoord/(imgHeight*1.0);
+        const ycropVal = (Ycoord-panYVal)/(imgHeight*1.0);
         const circleSpaceLeft = (containerHeight - CIRCLE_SIZE)/2.0;
-        const xcropVal = circleSpaceLeft/(imgWidth*1.0); 
+        const xcropVal = (circleSpaceLeft-panXVal)/(imgWidth*1.0); 
         const scaleval = CIRCLE_SIZE/(containerHeight*1.0);
         return {
             x: xcropVal,
