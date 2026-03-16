@@ -248,6 +248,22 @@ export default function CropPhotoScreen() {
                     borderColor: '#fff',
                     backgroundColor: 'transparent'
                 }}>
+                    {/* Vertical line */}
+                    <View style={{
+                        position: 'absolute',
+                        width: 1,
+                        height: CIRCLE_SIZE,
+                        backgroundColor: '#fff',
+                        left: CIRCLE_SIZE / 2 - 0.5
+                    }} />
+                    {/* Horizontal line */}
+                    <View style={{
+                        position: 'absolute',
+                        width: CIRCLE_SIZE,
+                        height: 1,
+                        backgroundColor: '#fff',
+                        top: CIRCLE_SIZE / 2 - 0.5
+                    }} />
                 </View>
             </View>
 
