@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import clock from '../images/clock.png';
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
@@ -97,21 +98,22 @@ export default function WorkoutDetailsScreen() {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-          {/* Clock Icon Placeholder */}
-          <View style={{
-            width: normalizeWidth(18),
-            height: normalizeHeight(18),
-            backgroundColor: 'rgba(100, 100, 120, 0.8)',
-            borderRadius: normalizeWidth(3),
-            marginRight: normalizeWidth(12),
-            marginLeft: normalizeWidth(8),
-          }} />
+          <Image
+            source={clock}
+            style={{
+              width: normalizeWidth(15),
+              marginRight: normalizeWidth(8),
+              marginLeft: normalizeWidth(8),
+              aspectRatio: (357.0/346.0),
+              resizeMode: 'contain',
+            }}
+          />
           <Text style={{
             fontSize: normalizeHeight(14),
             color: '#8a8c9c',
             fontWeight: '400',
           }}>
-            { '28'} min
+            {'28'} min
           </Text>
         </View>
 
