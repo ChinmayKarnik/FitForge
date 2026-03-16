@@ -30,6 +30,7 @@ const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
         height: AVATAR_SIZE,
         borderRadius: AVATAR_SIZE / 2,
         overflow: 'hidden',
+        backgroundColor:'black'
       }}
     >
       <Image
@@ -37,7 +38,7 @@ const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
         style={{
           position: 'absolute',
           width: AVATAR_SIZE / crop.size,
-          height: AVATAR_SIZE / crop.size,
+          height: height/crop.size,
           left: -crop.x * (AVATAR_SIZE / crop.size),
           top: -crop.y * (AVATAR_SIZE / crop.size),
         }}

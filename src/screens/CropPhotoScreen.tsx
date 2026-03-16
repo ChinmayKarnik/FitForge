@@ -8,7 +8,7 @@ import {
     PanResponder
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { normalizeHeight } from '../utils/normalize';
+import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 
 const SCREEN = Dimensions.get('window');
@@ -20,6 +20,8 @@ export default function CropPhotoScreen() {
     const navigation = useNavigation<any>();
     const route = useRoute<any>();
     const { imageUri } = route.params;
+
+    const [crop,setCrop] = useState({});
 
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
 
@@ -83,11 +85,11 @@ export default function CropPhotoScreen() {
         };
 
         console.log('ckck saving crop as ',crop)
-
-        if (typeof databaseController?.saveProfilePhoto === 'function') {
-            await databaseController.saveProfilePhoto(imageUri, crop);
-        }
-        navigation.goBack();
+        setCrop(crop);
+        // if (typeof databaseController?.saveProfilePhoto === 'function') {
+        //     await databaseController.saveProfilePhoto(imageUri, crop);
+        // }
+        // navigation.goBack();
     }
 
     // PanResponder for dragging + pinch zoom
@@ -151,6 +153,7 @@ export default function CropPhotoScreen() {
     // Calculate image dimensions maintaining aspect ratio
     let imgWidth = SCREEN.width;
     let imgHeight = containerHeight;
+    const aspectRatio = imgDimensions ? imgDimensions.width / imgDimensions.height : 1;
     if (imgDimensions) {
         const aspectRatio = imgDimensions.width / imgDimensions.height;
         imgHeight = imgWidth / aspectRatio;
@@ -160,6 +163,8 @@ export default function CropPhotoScreen() {
         }
     }
 
+    const testImageWidthContainer = normalizeWidth(200);
+    const testImageHeight = testImageWidthContainer/(aspectRatio*1.0);
 
 
     return (
@@ -193,7 +198,7 @@ export default function CropPhotoScreen() {
                 style={{
                     width:'100%',
                     height:containerHeight,
-                    marginTop:normalizeHeight(120),
+                    marginTop:normalizeHeight(0),
                     backgroundColor: 'black',
                     overflow:'hidden',
                     alignItems: 'center',
@@ -227,6 +232,33 @@ export default function CropPhotoScreen() {
                 }}>
                 </View>
             </View>
+
+            <View style={{width:testImageWidthContainer,
+                height:testImageWidthContainer,
+                borderWidth:1,
+                marginTop:10,
+               }}>
+                <Image
+                style={{
+                    position:'absolute',
+                    left:0,
+                    top:0,
+                    width:'100%',
+                    aspectRatio: aspectRatio
+                }}
+                source={{uri:imageUri}}
+                 />
+                 <View
+                 style={{position:'absolute',
+                    top:(crop.x)*testImageHeight,
+                    left: (crop.y)*testImageWidthContainer,
+                    width:crop.size*testImageWidthContainer,
+                    height:crop.size*testImageWidthContainer,
+                    borderWidth:1,
+                    borderColor:'red'
+                 }}
+                 ></View>
+               </View>
 
             {/* Okay button at the bottom */}
             <View style={{
