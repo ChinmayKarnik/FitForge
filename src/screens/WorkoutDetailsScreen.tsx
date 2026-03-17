@@ -30,6 +30,38 @@ export default function WorkoutDetailsScreen() {
     }
   }
 
+  // Format date from workout.start timestamp
+  let dateText = '';
+  const startTimestamp = workout?.startTime;
+  if (typeof startTimestamp === 'number' && !isNaN(startTimestamp)) {
+    const startDate = new Date(startTimestamp);
+    const now = new Date();
+    // Get midnight for today and yesterday
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    if (startMidnight.getTime() === today.getTime()) {
+      dateText = 'Today';
+    } else if (startMidnight.getTime() === yesterday.getTime()) {
+      dateText = 'Yesterday';
+    } else {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      dateText = `${startDate.getDate()} ${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
+    }
+  }
+
+  // Format time from workout.startTime timestamp
+  let timeText = '';
+  if (typeof startTimestamp === 'number' && !isNaN(startTimestamp)) {
+    const startDate = new Date(startTimestamp);
+    let hours = startDate.getHours();
+    const minutes = startDate.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+    timeText = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -114,7 +146,7 @@ export default function WorkoutDetailsScreen() {
             color: '#bebdd1',
             fontWeight: '400',
           }}>
-            {'Jan 30'} • {'3:08 PM'}
+            {dateText} • {timeText}
           </Text>
            <View style={{
           flexDirection: 'row',
