@@ -143,6 +143,15 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         }
     }, [workoutDateTime])
 
+    useEffect(()=>{
+        if(selectedRoutineId){
+            workoutRef.current = {
+                ...workoutRef.current,
+                routineId: selectedRoutineId,
+            };
+        }
+    }, [selectedRoutineId]);
+
     
     
 

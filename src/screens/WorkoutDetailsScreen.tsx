@@ -5,12 +5,16 @@ import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock-thick.png';
 import calendarWithBorder from '../images/calendar-with-border.png';
+import { databaseController } from '../data/controllers';
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const workout = route.params?.workout;
+  console.log("ckck workout here is ",workout)
 
+  const routineId = workout?.routineId;
+  const routineName = routineId ? databaseController.getRoutineById(routineId)?.name || 'Unknown Routine' : '';
   // Format duration from ms to human readable string
   let durationText = '';
   const durationMs = workout?.duration;
@@ -180,6 +184,35 @@ export default function WorkoutDetailsScreen() {
           backgroundColor: 'rgba(68, 75, 95, 0.5)',
           marginBottom: normalizeHeight(24),
         }} />
+
+        {/* Routine Section */}
+        {routineId && (
+          <>
+            <Text style={{
+              fontSize: normalizeHeight(13),
+              color: '#8a8c9c',
+              fontWeight: '400',
+              marginBottom: normalizeHeight(8),
+            }}>
+              Routine
+            </Text>
+            <Text style={{
+              fontSize: normalizeHeight(16),
+              fontWeight: '600',
+              color: '#fefefe',
+              marginBottom: normalizeHeight(24),
+            }}>
+              {routineName}
+            </Text>
+
+            {/* Divider */}
+            <View style={{
+              height: normalizeHeight(2),
+              backgroundColor: 'rgba(68, 75, 95, 0.5)',
+              marginBottom: normalizeHeight(24),
+            }} />
+          </>
+        )}
       </View>
     </View>
   );
