@@ -12,24 +12,27 @@ const DotSeparator = () => (
 
 const DisplayForParam = ({ paramName, value }) => {
     if(paramName ==='Reps'){
-        const repLabel = value === 1 ? 'rep' : 'reps';
+        const displayValue = value || value === 0 ? value : 0;
+        const repLabel = displayValue === 1 ? 'rep' : 'reps';
         return <Text style={{ color: '#c6cbda', fontSize: normalize(14),
             fontWeight:'500'
-         }}>{value} {repLabel}</Text>;
+         }}>{displayValue} {repLabel}</Text>;
     }
     if(paramName ==='Weight'){
+        const displayValue = value || value === 0 ? value : 0;
         return <Text style={{ color: '#c6cbda', fontSize: normalize(14),
              fontWeight:'500'
-         }}>{value} kg</Text>;
+         }}>{displayValue} kg</Text>;
     }
     if(paramName ==='Time'){
         // Assume value is in seconds, format as mm:ss
-        if (typeof value === 'number' && !isNaN(value)) {
-            const minutes = Math.floor(value / 60);
-            const seconds = value % 60;
+        const displayValue = value || value === 0 ? value : 0;
+        if (typeof displayValue === 'number' && !isNaN(displayValue)) {
+            const minutes = Math.floor(displayValue / 60);
+            const seconds = displayValue % 60;
             return <Text style={{ color: '#c6cbda', fontSize: normalize(14) }}>{minutes}:{seconds.toString().padStart(2, '0')}</Text>;
         }
-        return <Text style={{ color: '#c6cbda', fontSize: normalize(14) }}>{value}</Text>;
+        return <Text style={{ color: '#c6cbda', fontSize: normalize(14) }}>{displayValue}</Text>;
     }
     return null;
 }

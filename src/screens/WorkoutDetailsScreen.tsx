@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock-thick.png';
 import calendarWithBorder from '../images/calendar-with-border.png';
 import { databaseController } from '../data/controllers';
+import ExerciseLoggedDataInline from '../components/ExerciseLoggedDataInline';
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
@@ -213,6 +214,131 @@ export default function WorkoutDetailsScreen() {
             }} />
           </>
         )}
+
+        {/* Exercises Section */}
+        {workout?.exercises && workout.exercises.length > 0 && (
+          <>
+            <Text style={{
+              fontSize: normalize(15),
+              fontWeight: '600',
+              color: '#B0B7C3',
+              marginBottom: normalizeHeight(12),
+            }}>
+              Exercises
+            </Text>
+            <View style={{ marginBottom: normalizeHeight(24) }}>
+              {(() => {
+                // Group exercises by exerciseId
+                const groupedExercises: { [key: string]: any[] } = {};
+                workout.exercises.forEach((ex: any) => {
+                  if (!groupedExercises[ex.exerciseId]) {
+                    groupedExercises[ex.exerciseId] = [];
+                  }
+                  groupedExercises[ex.exerciseId].push(ex);
+                });
+
+                return Object.entries(groupedExercises).map(([exerciseId, sets]) => {
+                  const exercise = databaseController.getExerciseById(exerciseId);
+                  const allParams = [
+                    ...(exercise?.requiredParameters || []),
+                    ...(exercise?.optionalParameters || []),
+                  ];
+
+                  // Calculate total duration for the exercise
+                  const totalDurationMs = sets.reduce((sum: number, set: any) => {
+                    const setDuration = (set.endTime || 0) - (set.startTime || 0);
+                    return sum + setDuration;
+                  }, 0);
+
+                  // Format duration
+                  const totalMinutes = Math.floor(totalDurationMs / 60000);
+                  let exerciseDurationText = '';
+                  if (totalMinutes < 60) {
+                    exerciseDurationText = `${totalMinutes} min`;
+                  } else {
+                    const hours = Math.floor(totalMinutes / 60);
+                    const minutes = totalMinutes % 60;
+                    exerciseDurationText = `${hours}h ${minutes}m`;
+                  }
+
+                  return (
+                    <View key={exerciseId} style={{ marginBottom: normalizeHeight(12) }}>
+                      <View style={{
+                        backgroundColor: 'rgba(42, 50, 75, 1)',
+                        borderWidth: normalize(1),
+                        borderColor: '#404359',
+                        borderRadius: normalize(12),
+                        overflow: 'hidden',
+                      }}>
+                        <View style={{
+                          backgroundColor: '#1b1f35',
+                          borderTopLeftRadius: normalize(12),
+                          borderTopRightRadius: normalize(12),
+                          paddingTop: normalizeHeight(8),
+                          paddingLeft: normalizeWidth(12),
+                          paddingRight: normalizeWidth(12),
+                          paddingBottom: normalizeHeight(8),
+                          borderBottomWidth: normalize(1),
+                          borderBottomColor: '#44475d',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                          <Text style={{
+                            color: '#d6d3de',
+                            fontSize: normalizeHeight(14),
+                            fontWeight: '600',
+                          }}>
+                            {exercise?.name || 'Unknown Exercise'}
+                          </Text>
+                          <Text style={{
+                            color: '#bebdd1',
+                            fontSize: normalizeHeight(14),
+                            fontWeight: '500',
+                          }}>
+                            {exerciseDurationText}
+                          </Text>
+                        </View>
+                        {sets.map((set: any, setIdx: number) => (
+                          <View
+                            key={`${exerciseId}-${setIdx}`}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              paddingVertical: normalizeHeight(10),
+                              paddingHorizontal: normalizeWidth(8),
+                              borderTopWidth: setIdx > 0 ? normalize(1) : 0,
+                              borderTopColor: '#404359',
+                            }}
+                          >
+                            <Text style={{
+                              color: '#c6cbda',
+                              fontSize: normalize(14),
+                              fontWeight: '500',
+                            }}>
+                              Set {setIdx + 1}
+                            </Text>
+                            <View style={{
+                              flex: 1,
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                            }}>
+                              <ExerciseLoggedDataInline
+                                loggedData={set.loggedData || null}
+                                params={allParams}
+                              />
+                            </View>
+                          </View>
+                        ))}
+                      </View>
+                    </View>
+                  );
+                });
+              })()}
+            </View>
+          </>
+        )}
+           
       </View>
     </View>
   );
