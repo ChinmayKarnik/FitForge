@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, Image } from 'react-native';
 import white_left_arrow from '../images/white-left-arrow.png';
+import flame from '../images/flame.png';
+import calendar2 from '../images/calendar-2.png';
+import clock2 from '../images/clock-2.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+
+
 
 export const CalendarScreen = () => {
   const navigation = useNavigation();
@@ -25,25 +30,24 @@ export const CalendarScreen = () => {
       </View>
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Stats Section - Top Cards */}
         <View style={styles.statsContainer}>
           {/* Current Streak Card */}
           <View style={styles.statCard}>
-            <View style={styles.iconPlaceholder} />
+            <Image source={flame} style={styles.flameIcon} />
             <Text style={styles.statLabel}>Current Streak</Text>
             <Text style={styles.statValue}>15 Days</Text>
           </View>
 
           {/* This Week Card */}
           <View style={styles.statCard}>
-            <View style={styles.iconPlaceholder} />
+            <Image source={calendar2} style={styles.calendarIcon} />
             <Text style={styles.statLabel}>This Week</Text>
             <Text style={styles.statValue}>4 Workouts</Text>
           </View>
 
           {/* Average Duration Card */}
           <View style={styles.statCard}>
-            <View style={styles.iconPlaceholder} />
+            <Image source={clock2} style={styles.clockIcon} />
             <Text style={styles.statLabel}>Avg Duration</Text>
             <Text style={styles.statValue}>55 Min</Text>
           </View>
@@ -106,12 +110,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconPlaceholder: {
+  iconImage: {
     width: normalizeWidth(50),
     height: normalizeHeight(50),
-    borderRadius: normalizeWidth(8),
-    backgroundColor: 'rgba(254, 254, 254, 0.1)',
     marginBottom: normalizeHeight(12),
+    resizeMode: 'contain',
+  },
+  flameIcon: {
+    height: normalizeHeight(40),
+    aspectRatio: (506.0)/(656.0),
+    marginBottom: normalizeHeight(12),
+    resizeMode: 'contain',
+  },
+  calendarIcon: {
+    height: normalizeHeight(40),
+    aspectRatio: (337.0/365.0),
+    marginBottom: normalizeHeight(12),
+    resizeMode: 'contain',
+  },
+  clockIcon: {
+    height: normalizeHeight(40),
+    aspectRatio: (304.0)/(351.0),
+    marginBottom: normalizeHeight(12),
+    resizeMode: 'contain',
   },
   statLabel: {
     fontSize: normalize(12),
