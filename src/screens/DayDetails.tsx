@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock2 from '../images/clock-2.png';
+import slant_dumbbell from '../images/slant-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 export const DayDetails = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const date = route.params?.date;
+  const numberOfWorkouts = 1;
+  const totalDurationMins = 120;
 
   return (
     <View style={styles.bg}>
@@ -33,10 +36,10 @@ export const DayDetails = () => {
         {/* Stats Card */}
         <View style={styles.statsCard}>
           <View style={styles.statItem}>
-            <View style={styles.iconPlaceholder} />
+            <Image source={slant_dumbbell} style={styles.dumbbellIcon} />
             <View style={styles.statContent}>
-              <Text style={styles.statValue}>2</Text>
-              <Text style={styles.statLabel}>Workouts</Text>
+              <Text style={styles.statValue}>{numberOfWorkouts}</Text>
+              <Text style={styles.statLabel}>{numberOfWorkouts === 1 ? 'Workout' : 'Workouts'}</Text>
             </View>
           </View>
 
@@ -44,7 +47,7 @@ export const DayDetails = () => {
           <View style={styles.statItem}>
             <Image source={clock2} style={styles.clockIcon} />
             <View style={styles.statContent}>
-              <Text style={styles.statValue}>120 Min</Text>
+              <Text style={styles.statValue}>{totalDurationMins} Min</Text>
               <Text style={styles.statLabel}>Total</Text>
             </View>
           </View>
@@ -131,8 +134,8 @@ const styles = StyleSheet.create({
     marginBottom: normalizeHeight(4),
   },
   statLabel: {
-    fontSize: normalize(14),
-    color: 'rgba(254, 254, 254, 0.7)',
+    fontSize: normalize(15),
+    color: '#d0d0db',
     fontWeight: '500',
   },
   statDivider: {
@@ -147,4 +150,10 @@ const styles = StyleSheet.create({
     width : normalizeHeight(45) * (304.0 / 351.0),
     resizeMode: 'contain',
   },
+  dumbbellIcon: {
+    height: normalizeHeight(45),
+    aspectRatio: (660.0 / 592.0),
+    width : normalizeHeight(45) * (660.0 / 592.0),
+    resizeMode: 'contain',
+  }
 });
