@@ -1,15 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { TimeRange } from '../enums/enums';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
+import StatsGrid from '../components/StatsGrid';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
 
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
+  const StatsCards = [
+    {
+      type: "Total Workouts",
+      value: 10
+    },
+    {
+      type: "Maximum Streak",
+      value: 8
+    },
+    {
+      type: "Average Sets",
+      value: 8.6
+    },
+    {
+      type: "Average Weekly Sessions",
+      value: 4.2
+    },
+     {
+      type: "Favourite Exercise",
+      value: "Push-ups"
+    },
+    {
+      type: "Busiest Day",
+      value: "Wednesday"
+    },
+  ]
 
   return (
     <View style={styles.bg}>
@@ -29,7 +56,18 @@ export const StatisticsScreen = () => {
         selectedTimeRange={selectedTimeRange}
         onSelectTimeRange={setSelectedTimeRange}
       />
-      {/* ...future stats content... */}
+      <View style={{
+        marginLeft: normalizeWidth(16),
+      }}>
+        <Text style={{
+          color: 'rgba(255,255,255,0.9)',
+          fontWeight: '600',
+          fontSize: normalize(16),
+          marginBottom: normalizeHeight(8),
+        }}>Your Stats</Text>
+      </View>
+
+     <StatsGrid data ={StatsCards}/>
     </View>
   );
 };
