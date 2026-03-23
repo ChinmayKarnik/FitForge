@@ -27,6 +27,7 @@ export const CalendarScreen = () => {
   const daysInMonth = getDaysInMonth(currentMonth);
   const firstDay = getFirstDayOfMonth(currentMonth);
   const days = [];
+  const numberOfRows = 5;
 
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
@@ -42,6 +43,8 @@ export const CalendarScreen = () => {
   const handleNextMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
   };
+
+
 
   return (
     <View style={styles.bg}>
@@ -145,7 +148,15 @@ export const CalendarScreen = () => {
             ))}
           </View>
 
-          
+          <View>
+            {Array.from({ length: numberOfRows }).map((_,rowIndex)=>{
+              const isFirstRow = rowIndex === 0;
+              const isLastRow = rowIndex === numberOfRows - 1;
+              
+              return <></>
+            })
+            }
+          </View>
         </View>
 
 
