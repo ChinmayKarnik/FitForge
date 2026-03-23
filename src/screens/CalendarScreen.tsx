@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, Image } from 'react-native';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -7,6 +7,7 @@ import white_right_arrow from '../images/white-right-arrow.png';
 import flame from '../images/flame.png';
 import calendar2 from '../images/calendar-2.png';
 import clock2 from '../images/clock-2.png';
+import dumbbell from '../images/orange-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 
@@ -15,7 +16,7 @@ export const CalendarScreen = () => {
   const navigation = useNavigation();
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  
+
   const monthYearString = selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
@@ -24,7 +25,7 @@ export const CalendarScreen = () => {
   const totalCells = firstDay + daysInMonth;
   const numberOfRows = Math.ceil(totalCells / 7);
 
-  
+
   const handlePrevMonth = () => {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
   };
@@ -91,8 +92,8 @@ export const CalendarScreen = () => {
 
         <View>
           <View style={{
-            backgroundColor:'#282d4b',
-            height:normalizeHeight(50),
+            backgroundColor: '#282d4b',
+            height: normalizeHeight(50),
             borderTopWidth: normalize(1),
             borderTopColor: '#3d4868',
             borderLeftColor: '#3d4868',
@@ -101,9 +102,9 @@ export const CalendarScreen = () => {
             borderTopRightRadius: normalize(8),
             borderLeftWidth: normalize(1),
             borderRightWidth: normalize(1),
-            flexDirection:'row',
+            flexDirection: 'row',
             alignItems: 'center',
-            }}>
+          }}>
             <TouchableOpacity
               onPress={handlePrevMonth}
               hitSlop={{ top: normalizeHeight(16), bottom: normalizeHeight(16), left: normalizeWidth(16), right: normalizeWidth(16) }}
@@ -126,7 +127,7 @@ export const CalendarScreen = () => {
               <Image source={white_right_arrow} style={styles.inlineRightArrow} />
             </TouchableOpacity>
           </View>
-          
+
           <View style={{
             flexDirection: 'row',
             backgroundColor: 'transparent',
@@ -134,7 +135,7 @@ export const CalendarScreen = () => {
             borderBottomColor: '#353c58',
             paddingVertical: normalizeHeight(8),
             borderRightWidth: normalize(1),
-            borderLeftWidth:normalize(1),
+            borderLeftWidth: normalize(1),
             borderLeftColor: '#1f2639',
             borderRightColor: '#1f2639',
             borderTopWidth: normalize(1),
@@ -162,22 +163,22 @@ export const CalendarScreen = () => {
           </View>
 
           <View>
-            {Array.from({ length: numberOfRows }).map((_,rowIndex)=>{
+            {Array.from({ length: numberOfRows }).map((_, rowIndex) => {
               const isFirstRow = rowIndex === 0;
               const isLastRow = rowIndex === numberOfRows - 1;
-             
+
               return (
                 <View key={rowIndex} style={{ flexDirection: 'row' }}>
                   {Array.from({ length: 7 }).map((_, colIndex) => {
-                     const dateNumber = getDateNumberFromRowCol(rowIndex, colIndex);
+                    const dateNumber = getDateNumberFromRowCol(rowIndex, colIndex);
                     const isFirstCell = colIndex === 0;
                     const isLastCell = colIndex === 6;
-                    const hasWorkout = dateNumber%2===0;
+                    const hasWorkout = dateNumber % 2 === 0;
                     return (<View
                       key={colIndex}
                       style={[{
                         flex: 1,
-                        height:normalizeHeight(50),
+                        height: normalizeHeight(50),
                         borderWidth: normalize(1),
                         borderColor: '#30374c',
 
@@ -188,19 +189,36 @@ export const CalendarScreen = () => {
                       isLastRow && { borderBottomWidth: normalize(2) },
                       ]}
                     >
-                     
-                      {hasWorkout ? (<View style={{
+
+                      {hasWorkout ?
+                        (<View style={{
                           flex: 1,
                           alignItems: 'center',
-                          paddingTop: normalizeHeight(8),
+                          margin: normalize(2),
+                          borderWidth:normalize(1),
+                          borderColor: '#6e414c',
+                          borderRadius: normalize(4),
+                          paddingTop: normalizeHeight(6),
+                          backgroundColor:'rgba(234, 48, 4, 0.3)',
+
                         }}>
                           <Text style={{
                             color: 'white',
                             fontSize: normalize(14),
                             fontWeight: '400',
                           }}>{dateNumber}</Text>
-                        </View>)
-                        : (<View style={{
+                          <Image 
+                            source={dumbbell}
+                            style={{
+                              aspectRatio: (333.0/198.0),
+                              height: normalizeHeight(9),
+                              marginTop: normalizeHeight(3),
+                            }}
+                          />
+                        </View>
+                        )
+                        :
+                        (<View style={{
                           flex: 1,
                           alignItems: 'center',
                           paddingTop: normalizeHeight(8),
@@ -212,8 +230,8 @@ export const CalendarScreen = () => {
                           }}>{dateNumber}</Text>
                         </View>)
                       }
-                      </View>
-                      )
+                    </View>
+                    )
                   }
                   )}
                 </View>
@@ -304,19 +322,19 @@ const styles = StyleSheet.create({
   },
   flameIcon: {
     height: normalizeHeight(40),
-    aspectRatio: (506.0)/(656.0),
+    aspectRatio: (506.0) / (656.0),
     marginBottom: normalizeHeight(12),
     resizeMode: 'contain',
   },
   calendarIcon: {
     height: normalizeHeight(40),
-    aspectRatio: (337.0/365.0),
+    aspectRatio: (337.0 / 365.0),
     marginBottom: normalizeHeight(12),
     resizeMode: 'contain',
   },
   clockIcon: {
     height: normalizeHeight(40),
-    aspectRatio: (304.0)/(351.0),
+    aspectRatio: (304.0) / (351.0),
     marginBottom: normalizeHeight(12),
     resizeMode: 'contain',
   },
