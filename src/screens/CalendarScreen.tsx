@@ -3,6 +3,7 @@ import { View, Text, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, Image } from 'react-native';
 import white_left_arrow from '../images/white-left-arrow.png';
+import white_right_arrow from '../images/white-right-arrow.png';
 import flame from '../images/flame.png';
 import calendar2 from '../images/calendar-2.png';
 import clock2 from '../images/clock-2.png';
@@ -98,17 +99,20 @@ export const CalendarScreen = () => {
             flexDirection:'row',
             alignItems: 'center',
             }}>
-              <Image source={white_left_arrow} style={styles.inlineLeftArrow} />
-            <View style={{flex:1, alignItems:'center'}}>
+            <Image source={white_left_arrow} style={styles.inlineLeftArrow} />
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
-              style={{
-                color:'#e7ebf5',
-                fontWeight: '500',
-                fontSize: normalize(16),
-              }}
+                style={{
+                  color: '#e7ebf5',
+                  fontWeight: '500',
+                  fontSize: normalize(16),
+                }}
               >October 2023</Text>
             </View>
+            <Image source={white_right_arrow} style={styles.inlineRightArrow} />
           </View>
+
+          
         </View>
 
 
@@ -155,6 +159,13 @@ const styles = StyleSheet.create({
     aspectRatio: 51.0 / 86.0,
     resizeMode: 'contain',
     marginLeft: normalizeWidth(15),
+  },
+  inlineRightArrow: {
+    width: normalizeWidth(9),
+    height: normalizeWidth(9) * (86.0 / 51.0),
+    aspectRatio: 51.0 / 86.0,
+    resizeMode: 'contain',
+    marginRight: normalizeWidth(15),
   },
   container: {
     flex: 1,
