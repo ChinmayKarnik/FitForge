@@ -8,7 +8,7 @@ import { LiveWorkoutRoutine } from '../components/LiveWorkoutRoutine';
 import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
 import { BackdatedWorkoutSelection } from '../components/BackdatedWorkoutSelection';
 import { databaseController } from '../data';
-import { normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import TrackWorkoutCard from '../components/TrackWorkoutCard';
 
@@ -100,12 +100,11 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
         </TouchableOpacity>
         <Text
-          style={{
-            fontSize: 22,
-            letterSpacing: 1,
-            fontWeight: '700',
-            color: "#fefefe"
-          }}
+          style={{fontSize:normalize(18),
+                      letterSpacing: 1,
+                      fontWeight: '700',
+                      color:"#fefefe"
+                    }}
         >Track Workout</Text>
 
 

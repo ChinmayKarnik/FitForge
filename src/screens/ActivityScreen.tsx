@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
-import { normalizeHeight } from '../utils/normalize';
+import { normalize, normalizeHeight } from '../utils/normalize';
 
 export const ActivityScreen = () => {
   const navigation = useNavigation<any>();
@@ -30,7 +30,7 @@ export const ActivityScreen = () => {
           paddingBottom:normalizeHeight(12)
         }}>
           <Text
-          style={{fontSize:22,
+          style={{fontSize:normalize(18),
             letterSpacing: 1,
             fontWeight: '700',
             color:"#fefefe"

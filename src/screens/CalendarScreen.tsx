@@ -203,7 +203,7 @@ export const CalendarScreen = () => {
                     );
                     return (<TouchableOpacity
                       key={colIndex}
-                      disabled={!dateNumber}
+                      disabled={!dateNumber || !hasWorkout}
                       onPress={()=>{onPressCell(dateNumber)}}
                       style={[{
                         flex: 1,
@@ -296,10 +296,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   headerTitle: {
-    fontSize: normalizeWidth(22),
+    fontSize: normalize(18),
     letterSpacing: 1,
     fontWeight: '700',
-    color: '#fefefe',
+    color: "#fefefe"
   },
   backButton: {
     position: 'absolute',

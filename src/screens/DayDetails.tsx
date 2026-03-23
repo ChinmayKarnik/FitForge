@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
+import clock2 from '../images/clock-2.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 export const DayDetails = () => {
@@ -26,7 +27,28 @@ export const DayDetails = () => {
       </View>
 
       <View style={styles.container}>
-        {/* Empty screen */}
+        {/* Date Display */}
+        <Text style={styles.dateText}>Friday, March 13, 2026</Text>
+
+        {/* Stats Card */}
+        <View style={styles.statsCard}>
+          <View style={styles.statItem}>
+            <View style={styles.iconPlaceholder} />
+            <View style={styles.statContent}>
+              <Text style={styles.statValue}>2</Text>
+              <Text style={styles.statLabel}>Workouts</Text>
+            </View>
+          </View>
+
+
+          <View style={styles.statItem}>
+            <Image source={clock2} style={styles.clockIcon} />
+            <View style={styles.statContent}>
+              <Text style={styles.statValue}>120 Min</Text>
+              <Text style={styles.statLabel}>Total</Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -47,12 +69,12 @@ const styles = StyleSheet.create({
     paddingBottom: normalizeHeight(12),
     position: 'relative',
   },
-  headerTitle: {
-    fontSize: normalizeWidth(22),
-    letterSpacing: 1,
-    fontWeight: '700',
-    color: '#fefefe',
-  },
+    headerTitle: {
+        fontSize: normalize(18),
+        letterSpacing: 1,
+        fontWeight: '700',
+        color: "#fefefe"
+    },
   backButton: {
     position: 'absolute',
     top: normalizeHeight(46),
@@ -68,5 +90,61 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: normalizeWidth(16),
     paddingTop: normalizeHeight(20),
+  },
+  dateText: {
+    fontSize: normalize(24),
+    fontWeight: '700',
+    color: '#fefefe',
+    textAlign: 'center',
+    marginBottom: normalizeHeight(24),
+  },
+  statsCard: {
+    backgroundColor: '#2b2c41',
+    borderRadius: normalize(12),
+    borderWidth: normalize(2),
+    borderColor: '#556179',
+    paddingVertical: normalizeHeight(20),
+    paddingHorizontal: normalizeWidth(16),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statItem: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: normalizeWidth(12),
+  },
+  iconPlaceholder: {
+    width: normalizeWidth(40),
+    height: normalizeWidth(40),
+    backgroundColor: '#353c58',
+    borderRadius: normalize(8),
+  },
+  statContent: {
+    flex: 1,
+  },
+  statValue: {
+    fontSize: normalize(18),
+    fontWeight: '700',
+    color: '#d1514c',
+    marginBottom: normalizeHeight(4),
+  },
+  statLabel: {
+    fontSize: normalize(14),
+    color: 'rgba(254, 254, 254, 0.7)',
+    fontWeight: '500',
+  },
+  statDivider: {
+    width: normalize(1),
+    height: normalizeHeight(50),
+    backgroundColor: '#353c58',
+    marginHorizontal: normalizeWidth(16),
+  },
+  clockIcon: {
+    height: normalizeHeight(45),
+    aspectRatio: (304.0 / 351.0),
+    width : normalizeHeight(45) * (304.0 / 351.0),
+    resizeMode: 'contain',
   },
 });
