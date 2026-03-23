@@ -122,3 +122,15 @@ export function getAverageWorkoutDurationCurrentWeekMins() {
 
 	return Math.round(totalDuration / workoutsThisWeek.length);
 }
+
+export const getWorkoutsForADay = (date: Date) => {
+	const allWorkouts = databaseController.getAllWorkouts();
+	return allWorkouts.filter(workout => {
+		const workoutDate = new Date(workout.startTime);
+		return (
+			workoutDate.getFullYear() === date.getFullYear() &&
+			workoutDate.getMonth() === date.getMonth() &&
+			workoutDate.getDate() === date.getDate()
+		);
+	});
+}

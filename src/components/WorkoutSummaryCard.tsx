@@ -24,9 +24,10 @@ type Workout = {
 type Props = {
   workout: Workout;
   onPress?: () => void;
+  disableHorizontalMargin?: boolean;
 };
 
-export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress }) => {
+export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableHorizontalMargin = false }) => {
   // Calculate duration in minutes and seconds
   const durationMs = workout.endTime - workout.startTime;
   const durationMin = Math.floor(durationMs / 60000);
@@ -47,13 +48,14 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress }) => {
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-      <View style={{flex:1,
+      <View style={{
+        flex: 1,
         minHeight: 70,
-        marginHorizontal: normalizeWidth(16),
-      backgroundColor:'#292f46',
-      borderRadius:normalizeHeight(10),
-      borderWidth: normalize(1),
-      borderColor: '#383e55'
+        marginHorizontal: disableHorizontalMargin ? 0 : normalizeWidth(16),
+        backgroundColor: '#292f46',
+        borderRadius: normalizeHeight(10),
+        borderWidth: normalize(1),
+        borderColor: '#383e55'
       }}>
       <View style={{paddingLeft: normalizeWidth(14),
         paddingVertical:normalizeHeight(12),
