@@ -86,7 +86,6 @@ export const CalendarScreen = () => {
         <View>
           <View style={{
             backgroundColor:'#282d4b',
-            marginHorizontal:2,
             height:normalizeHeight(50),
             borderTopWidth: normalize(1),
             borderTopColor: '#3d4868',
@@ -110,6 +109,40 @@ export const CalendarScreen = () => {
               >October 2023</Text>
             </View>
             <Image source={white_right_arrow} style={styles.inlineRightArrow} />
+          </View>
+          
+          <View style={{
+            flexDirection: 'row',
+            backgroundColor: 'transparent',
+            borderBottomWidth: normalize(1),
+            borderBottomColor: '#353c58',
+            paddingVertical: normalizeHeight(8),
+            borderRightWidth: normalize(1),
+            borderLeftWidth:normalize(1),
+            borderLeftColor: '#1f2639',
+            borderRightColor: '#1f2639',
+            borderTopWidth: normalize(1),
+            borderTopColor: '#2e3754',
+          }}>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, idx) => (
+              <View
+                key={day}
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#e7ebf5',
+                    fontWeight: '500',
+                    fontSize: normalize(13),
+                    opacity: 0.8,
+                  }}
+                >{day}</Text>
+              </View>
+            ))}
           </View>
 
           
