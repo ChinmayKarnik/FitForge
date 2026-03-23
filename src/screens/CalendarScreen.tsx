@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, Image } from 'react-native';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -12,6 +12,35 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 export const CalendarScreen = () => {
   const navigation = useNavigation();
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const getDaysInMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const monthName = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
+  const daysInMonth = getDaysInMonth(currentMonth);
+  const firstDay = getFirstDayOfMonth(currentMonth);
+  const days = [];
+
+  for (let i = 0; i < firstDay; i++) {
+    days.push(null);
+  }
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(i);
+  }
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
 
   return (
     <View style={styles.bg}>
@@ -29,7 +58,7 @@ export const CalendarScreen = () => {
         <Text style={styles.headerTitle}>Calendar</Text>
       </View>
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
         <View style={styles.statsContainer}>
           {/* Current Streak Card */}
           <View style={styles.statCard}>
@@ -52,7 +81,38 @@ export const CalendarScreen = () => {
             <Text style={styles.statValue}>55 Min</Text>
           </View>
         </View>
-      </ScrollView>
+
+        <View>
+          <View style={{
+            backgroundColor:'#282d4b',
+            marginHorizontal:2,
+            height:normalizeHeight(50),
+            borderTopWidth: normalize(1),
+            borderTopColor: '#3d4868',
+            borderLeftColor: '#3d4868',
+            borderRightColor: '#3d4868',
+            borderTopLeftRadius: normalize(8),
+            borderTopRightRadius: normalize(8),
+            borderLeftWidth: normalize(1),
+            borderRightWidth: normalize(1),
+            flexDirection:'row',
+            alignItems: 'center',
+            }}>
+              <Image source={white_left_arrow} style={styles.inlineLeftArrow} />
+            <View style={{flex:1, alignItems:'center'}}>
+              <Text
+              style={{
+                color:'#e7ebf5',
+                fontWeight: '500',
+                fontSize: normalize(16),
+              }}
+              >October 2023</Text>
+            </View>
+          </View>
+        </View>
+
+
+      </View>
     </View>
   );
 };
@@ -88,6 +148,13 @@ const styles = StyleSheet.create({
     height: normalizeWidth(9) * (86.0 / 51.0),
     aspectRatio: 51.0 / 86.0,
     resizeMode: 'stretch',
+  },
+  inlineLeftArrow: {
+    width: normalizeWidth(9),
+    height: normalizeWidth(9) * (86.0 / 51.0),
+    aspectRatio: 51.0 / 86.0,
+    resizeMode: 'contain',
+    marginLeft: normalizeWidth(15),
   },
   container: {
     flex: 1,
@@ -146,5 +213,55 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#fefefe',
     textAlign: 'center',
+  },
+  calendarSection: {
+    marginTop: normalizeHeight(24),
+  },
+  monthNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: normalizeHeight(20),
+    paddingHorizontal: normalizeWidth(16),
+  },
+  monthName: {
+    fontSize: normalizeWidth(18),
+    fontWeight: '600',
+    color: '#fefefe',
+  },
+  navButton: {
+    fontSize: normalizeWidth(24),
+    fontWeight: '600',
+    color: '#fefefe',
+    paddingHorizontal: normalizeWidth(16),
+  },
+  weekdayRow: {
+    flexDirection: 'row',
+    paddingHorizontal: normalizeWidth(16),
+    marginBottom: normalizeHeight(12),
+  },
+  weekdayText: {
+    flex: 1,
+    textAlign: 'center',
+    color: 'rgba(254, 254, 254, 0.6)',
+    fontWeight: '500',
+    fontSize: normalizeWidth(12),
+  },
+  calendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: normalizeWidth(16),
+  },
+  dayCell: {
+    width: '14.285%',
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: normalizeHeight(8),
+  },
+  dayText: {
+    fontSize: normalizeWidth(14),
+    color: '#fefefe',
+    fontWeight: '500',
   },
 });
