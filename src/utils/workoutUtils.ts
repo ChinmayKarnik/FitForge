@@ -37,5 +37,88 @@ export function getExercisesListFromWorkout(workout: any) {
 	});
 }
 
+export const doesDayHaveWorkout = (date: Date) => {
+  // Get all workouts from the singleton DatabaseController instance
+  // (Assuming a singleton instance is exported elsewhere, otherwise create one here)
+  console.log('ckck date here',date.getDate(),date.getMonth(),date.getFullYear());
+  const allWorkouts = databaseController.getAllWorkouts();
+  // Compare only year, month, and day
+  return allWorkouts.some(workout => {
+    const workoutDate = new Date(workout.startTime);
+    return (
+      workoutDate.getFullYear() === date.getFullYear() &&
+      workoutDate.getMonth() === date.getMonth() &&
+      workoutDate.getDate() === date.getDate()
+    );
+  });
+};
 
+export function getStreakForDate(date: Date) {
+  let streak = 0;
+  let currentDate = new Date(date);
+  
+  // Work backwards from the given date, counting consecutive days with workouts
+  while (doesDayHaveWorkout(currentDate)) {
+    streak++;
+    // Move to the previous day
+    currentDate.setDate(currentDate.getDate() - 1);
+  }
+  
+  return streak;
+}
 
+export function getCurrentWeekWorkoutCount() {
+	const allWorkouts = databaseController.getAllWorkouts();
+	const today = new Date(); 
+	// Get the start of the week (Sunday)
+	const startOfWeek = new Date(today);
+	startOfWeek.setDate(today.getDate() - today.getDay());
+	startOfWeek.setHours(0, 0, 0, 0);
+
+	// End of today
+	const endOfToday = new Date(today);
+	endOfToday.setHours(23, 59, 59, 999);
+
+	// For testing: collect and print all workout days in the week
+	const workoutDaySet = new Set<string>();
+	const count = allWorkouts.filter(workout => {
+		const workoutDate = new Date(workout.startTime);
+		const inWeek = workoutDate >= startOfWeek && workoutDate <= endOfToday;
+		if (inWeek) {
+			workoutDaySet.add(workoutDate.toDateString());
+		}
+		return inWeek;
+	}).length;
+	console.log('Workout days this week:', Array.from(workoutDaySet));
+	return workoutDaySet.size;
+}
+
+export function getAverageWorkoutDurationCurrentWeekMins() {
+	const allWorkouts = databaseController.getAllWorkouts();
+	const today = new Date(); 
+	// Get the start of the week (Sunday)
+	const startOfWeek = new Date(today);
+	startOfWeek.setDate(today.getDate() - today.getDay());
+	startOfWeek.setHours(0, 0, 0, 0);
+
+	// End of today
+	const endOfToday = new Date(today);
+	endOfToday.setHours(23, 59, 59, 999);
+
+	// Filter workouts in the current week
+	const workoutsThisWeek = allWorkouts.filter(workout => {
+		const workoutDate = new Date(workout.startTime);
+		return workoutDate >= startOfWeek && workoutDate <= endOfToday;
+	});
+
+	if (workoutsThisWeek.length === 0) return 0;
+
+	// If workout.duration is in milliseconds, convert to minutes
+	// This function returns the average duration in MINUTES.
+	const totalDuration = workoutsThisWeek.reduce((sum, workout) => {
+		// Convert ms to min
+		return sum + ((workout.duration || 0) / 60000);
+	}, 0);
+
+	return Math.round(totalDuration / workoutsThisWeek.length);
+}

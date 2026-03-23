@@ -10,7 +10,8 @@ import clock2 from '../images/clock-2.png';
 import dumbbell from '../images/orange-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
-import { doesDayHaveWorkout } from '../utils/dateTimeUtils';
+import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate } from '../utils/workoutUtils';
+import { getSectionKeys } from 'react-native/types_generated/Libraries/ReactNative/AppRegistryImpl';
 
 
 
@@ -26,8 +27,12 @@ export const CalendarScreen = () => {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const totalCells = firstDay + daysInMonth;
   const numberOfRows = Math.ceil(totalCells / 7);
-
-
+  const currentStreak = getStreakForDate(new Date()); 
+  const numberOfWorkoutsThisWeek = getCurrentWeekWorkoutCount();
+  const workoutsText = numberOfWorkoutsThisWeek === 1 ? "1 Workout" : `${numberOfWorkoutsThisWeek} Workouts`;
+  const streakText = currentStreak === 1 ? "1 Day" : `${currentStreak} Days`;
+  const avrDurationThisWeekMins = getAverageWorkoutDurationCurrentWeekMins();
+  
   const handlePrevMonth = () => {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
   };
@@ -81,21 +86,21 @@ export const CalendarScreen = () => {
           <View style={styles.statCard}>
             <Image source={flame} style={styles.flameIcon} />
             <Text style={styles.statLabel}>Current Streak</Text>
-            <Text style={styles.statValue}>15 Days</Text>
+            <Text style={styles.statValue}>{streakText}</Text>
           </View>
 
           {/* This Week Card */}
           <View style={styles.statCard}>
             <Image source={calendar2} style={styles.calendarIcon} />
             <Text style={styles.statLabel}>This Week</Text>
-            <Text style={styles.statValue}>4 Workouts</Text>
+            <Text style={styles.statValue}>{workoutsText}</Text>
           </View>
 
           {/* Average Duration Card */}
           <View style={styles.statCard}>
             <Image source={clock2} style={styles.clockIcon} />
             <Text style={styles.statLabel}>Avg Duration</Text>
-            <Text style={styles.statValue}>55 Min</Text>
+            <Text style={styles.statValue}>{avrDurationThisWeekMins} Min</Text>
           </View>
         </View>
 
