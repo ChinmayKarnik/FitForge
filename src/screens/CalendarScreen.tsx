@@ -9,6 +9,8 @@ import calendar2 from '../images/calendar-2.png';
 import clock2 from '../images/clock-2.png';
 import dumbbell from '../images/orange-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
+import { doesDayHaveWorkout } from '../utils/dateTimeUtils';
 
 
 
@@ -48,6 +50,13 @@ export const CalendarScreen = () => {
       return null;
     }
     return dateNumber;
+  }
+  
+  const getIfDateHasWorkout = (dateNumber: number | null) => {
+    if (!dateNumber) return false;
+    // Use the current calendar's year and month, and the given dateNumber
+    const date = new Date(year, month, dateNumber);
+    return doesDayHaveWorkout(date);
   }
 
   return (
@@ -134,10 +143,10 @@ export const CalendarScreen = () => {
             borderBottomWidth: normalize(1),
             borderBottomColor: '#353c58',
             paddingVertical: normalizeHeight(8),
-            borderRightWidth: normalize(1),
-            borderLeftWidth: normalize(1),
-            borderLeftColor: '#1f2639',
-            borderRightColor: '#1f2639',
+            borderRightWidth: normalize(2),
+            borderLeftWidth: normalize(2),
+            borderLeftColor:  '#2e3754' ,
+            borderRightColor:'#2e3754' ,
             borderTopWidth: normalize(1),
             borderTopColor: '#2e3754',
           }}>
@@ -173,7 +182,9 @@ export const CalendarScreen = () => {
                     const dateNumber = getDateNumberFromRowCol(rowIndex, colIndex);
                     const isFirstCell = colIndex === 0;
                     const isLastCell = colIndex === 6;
-                    const hasWorkout = dateNumber % 2 === 0;
+                    const isBottomLeftCell = isLastRow && isFirstCell;
+                    const isBottomRightCell = isLastRow && isLastCell;
+                    const hasWorkout = getIfDateHasWorkout(dateNumber);
                     const today = new Date();
                     const isToday = (
                       dateNumber === today.getDate() &&
@@ -193,6 +204,8 @@ export const CalendarScreen = () => {
                       isFirstCell && { borderLeftWidth: normalize(2) },
                       isLastCell && { borderRightWidth: normalize(2) },
                       isLastRow && { borderBottomWidth: normalize(2) },
+                      isBottomLeftCell && { borderBottomLeftRadius: normalize(8) },
+                      isBottomRightCell && { borderBottomRightRadius: normalize(8) },
                       ]}
                     >
 
