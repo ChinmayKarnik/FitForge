@@ -283,7 +283,7 @@ export const CalendarScreen = () => {
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
-    backgroundColor: 'rgba(36, 42, 65)',
+    backgroundColor: '#1c2238',
   },
   header: {
     width: '100%',

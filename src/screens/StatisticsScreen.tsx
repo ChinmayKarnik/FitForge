@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import { TimeRange } from '../enums/enums';
+import { TimeRangeSelector } from '../components/TimeRangeSelector';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
+
+  const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
+
   return (
     <View style={styles.bg}>
       <View style={styles.header}>
@@ -20,6 +25,10 @@ export const StatisticsScreen = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Statistics</Text>
       </View>
+      <TimeRangeSelector
+        selectedTimeRange={selectedTimeRange}
+        onSelectTimeRange={setSelectedTimeRange}
+      />
       {/* ...future stats content... */}
     </View>
   );
@@ -28,7 +37,7 @@ export const StatisticsScreen = () => {
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
-    backgroundColor: 'rgba(36, 42, 65)',
+    backgroundColor: '#1c2238',
   },
   header: {
     width: '100%',
