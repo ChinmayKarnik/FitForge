@@ -17,9 +17,22 @@ export const CalendarScreen = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   
   const monthYearString = selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-  const numberOfRows = 6;
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalCells = firstDay + daysInMonth;
+  const numberOfRows = Math.ceil(totalCells / 7);
 
   
+  const handlePrevMonth = () => {
+    setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
+  };
+
   const getDateNumberFromRowCol = (rowIndex: number, colIndex: number) => {
     // Get the first day of the month (0=Sun, 1=Mon, ...)
     const year = selectedDate.getFullYear();
@@ -91,7 +104,12 @@ export const CalendarScreen = () => {
             flexDirection:'row',
             alignItems: 'center',
             }}>
-            <Image source={white_left_arrow} style={styles.inlineLeftArrow} />
+            <TouchableOpacity
+              onPress={handlePrevMonth}
+              hitSlop={{ top: normalizeHeight(16), bottom: normalizeHeight(16), left: normalizeWidth(16), right: normalizeWidth(16) }}
+            >
+              <Image source={white_left_arrow} style={styles.inlineLeftArrow} />
+            </TouchableOpacity>
             <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
                 style={{
@@ -101,7 +119,12 @@ export const CalendarScreen = () => {
                 }}
               >{monthYearString}</Text>
             </View>
-            <Image source={white_right_arrow} style={styles.inlineRightArrow} />
+            <TouchableOpacity
+              onPress={handleNextMonth}
+              hitSlop={{ top: normalizeHeight(16), bottom: normalizeHeight(16), left: normalizeWidth(16), right: normalizeWidth(16) }}
+            >
+              <Image source={white_right_arrow} style={styles.inlineRightArrow} />
+            </TouchableOpacity>
           </View>
           
           <View style={{
@@ -149,6 +172,7 @@ export const CalendarScreen = () => {
                      const dateNumber = getDateNumberFromRowCol(rowIndex, colIndex);
                     const isFirstCell = colIndex === 0;
                     const isLastCell = colIndex === 6;
+                    const hasWorkout = dateNumber%2===0;
                     return (<View
                       key={colIndex}
                       style={[{
@@ -156,8 +180,6 @@ export const CalendarScreen = () => {
                         height:normalizeHeight(50),
                         borderWidth: normalize(1),
                         borderColor: '#30374c',
-                        alignItems: 'center',
-                        justifyContent: 'center',
 
                       },
                       isFirstRow && { borderTopWidth: normalize(0) },
@@ -166,7 +188,30 @@ export const CalendarScreen = () => {
                       isLastRow && { borderBottomWidth: normalize(2) },
                       ]}
                     >
-                      <Text style={{color:'white'}}>{dateNumber}</Text>
+                     
+                      {hasWorkout ? (<View style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          paddingTop: normalizeHeight(8),
+                        }}>
+                          <Text style={{
+                            color: 'white',
+                            fontSize: normalize(14),
+                            fontWeight: '400',
+                          }}>{dateNumber}</Text>
+                        </View>)
+                        : (<View style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          paddingTop: normalizeHeight(8),
+                        }}>
+                          <Text style={{
+                            color: 'white',
+                            fontSize: normalize(14),
+                            fontWeight: '400',
+                          }}>{dateNumber}</Text>
+                        </View>)
+                      }
                       </View>
                       )
                   }
