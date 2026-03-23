@@ -15,15 +15,14 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
   const timeRanges = Object.values(TimeRange) as string[];
 
   return (
-    <View style={styles.container}>
       <View
-      
-        style={{
+       style={{
           flexDirection: 'row',
-          flex:1,
           justifyContent: 'space-between',
           backgroundColor: '#404153',
           borderRadius: normalize(20),
+          marginHorizontal: normalizeWidth(16),
+         marginVertical: normalizeHeight(16),
           padding: normalizeWidth(4)
         }}
       >
@@ -42,7 +41,6 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
                                   borderRadius: normalize(20),
                                   backgroundColor:'#2e2f42',
                                   justifyContent:'center',
-                                  height:200
                               },
 
                               isSelected && {
@@ -62,7 +60,7 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
                                     color:'#b1b0b7',
                                     textAlign:'center',
                                     fontSize:normalize(15),
-                                   // marginVertical:normalizeHeight(8),
+                                   marginVertical:normalizeHeight(4),
                                   },
                                   isSelected && {
                                    color: '#ffd6d9'
@@ -74,15 +72,8 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
               }
               )}
       </View>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: normalizeHeight(16),
-    marginHorizontal: normalizeWidth(16),
-    backgroundColor:'blue'
-  },
-
 });
