@@ -13,38 +13,28 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 export const CalendarScreen = () => {
   const navigation = useNavigation();
-  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const getDaysInMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  
+  const monthYearString = selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+  const numberOfRows = 6;
 
-  const getFirstDayOfMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-  };
-
-  const monthName = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
-  const daysInMonth = getDaysInMonth(currentMonth);
-  const firstDay = getFirstDayOfMonth(currentMonth);
-  const days = [];
-  const numberOfRows = 5;
-
-  for (let i = 0; i < firstDay; i++) {
-    days.push(null);
+  
+  const getDateNumberFromRowCol = (rowIndex: number, colIndex: number) => {
+    // Get the first day of the month (0=Sun, 1=Mon, ...)
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // Calculate the cell's index in the grid (0-based)
+    const cellIndex = rowIndex * 7 + colIndex;
+    // The first date appears at index = firstDay
+    const dateNumber = cellIndex - firstDay + 1;
+    if (dateNumber < 1 || dateNumber > daysInMonth) {
+      return null;
+    }
+    return dateNumber;
   }
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i);
-  }
-
-  const handlePrevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
-  };
-
-
 
   return (
     <View style={styles.bg}>
@@ -109,7 +99,7 @@ export const CalendarScreen = () => {
                   fontWeight: '500',
                   fontSize: normalize(16),
                 }}
-              >October 2023</Text>
+              >{monthYearString}</Text>
             </View>
             <Image source={white_right_arrow} style={styles.inlineRightArrow} />
           </View>
@@ -152,17 +142,18 @@ export const CalendarScreen = () => {
             {Array.from({ length: numberOfRows }).map((_,rowIndex)=>{
               const isFirstRow = rowIndex === 0;
               const isLastRow = rowIndex === numberOfRows - 1;
-              
+             
               return (
                 <View key={rowIndex} style={{ flexDirection: 'row' }}>
                   {Array.from({ length: 7 }).map((_, colIndex) => {
+                     const dateNumber = getDateNumberFromRowCol(rowIndex, colIndex);
                     const isFirstCell = colIndex === 0;
                     const isLastCell = colIndex === 6;
                     return (<View
                       key={colIndex}
                       style={[{
                         flex: 1,
-                        aspectRatio: 1,
+                        height:normalizeHeight(50),
                         borderWidth: normalize(1),
                         borderColor: '#30374c',
                         alignItems: 'center',
@@ -174,7 +165,10 @@ export const CalendarScreen = () => {
                       isLastCell && { borderRightWidth: normalize(2) },
                       isLastRow && { borderBottomWidth: normalize(2) },
                       ]}
-                    />)
+                    >
+                      <Text style={{color:'white'}}>{dateNumber}</Text>
+                      </View>
+                      )
                   }
                   )}
                 </View>
