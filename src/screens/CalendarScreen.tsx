@@ -153,7 +153,32 @@ export const CalendarScreen = () => {
               const isFirstRow = rowIndex === 0;
               const isLastRow = rowIndex === numberOfRows - 1;
               
-              return <></>
+              return (
+                <View key={rowIndex} style={{ flexDirection: 'row' }}>
+                  {Array.from({ length: 7 }).map((_, colIndex) => {
+                    const isFirstCell = colIndex === 0;
+                    const isLastCell = colIndex === 6;
+                    return (<View
+                      key={colIndex}
+                      style={[{
+                        flex: 1,
+                        aspectRatio: 1,
+                        borderWidth: normalize(1),
+                        borderColor: '#30374c',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+
+                      },
+                      isFirstRow && { borderTopWidth: normalize(0) },
+                      isFirstCell && { borderLeftWidth: normalize(2) },
+                      isLastCell && { borderRightWidth: normalize(2) },
+                      isLastRow && { borderBottomWidth: normalize(2) },
+                      ]}
+                    />)
+                  }
+                  )}
+                </View>
+              );
             })
             }
           </View>
