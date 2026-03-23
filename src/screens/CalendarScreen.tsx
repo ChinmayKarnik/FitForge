@@ -64,6 +64,11 @@ export const CalendarScreen = () => {
     return doesDayHaveWorkout(date);
   }
 
+  const onPressCell = (dateNumber) => {
+    const date = new Date(year, month, dateNumber);
+    navigation.navigate('DayDetails', { date });
+  }
+
   return (
     <View style={styles.bg}>
       <View style={styles.header}>
@@ -196,8 +201,10 @@ export const CalendarScreen = () => {
                       month === today.getMonth() &&
                       year === today.getFullYear()
                     );
-                    return (<View
+                    return (<TouchableOpacity
                       key={colIndex}
+                      disabled={!dateNumber}
+                      onPress={()=>{onPressCell(dateNumber)}}
                       style={[{
                         flex: 1,
                         height: normalizeHeight(50),
@@ -256,7 +263,7 @@ export const CalendarScreen = () => {
                           }}>{dateNumber}</Text>
                         </View>)
                       }
-                    </View>
+                    </TouchableOpacity>
                     )
                   }
                   )}
