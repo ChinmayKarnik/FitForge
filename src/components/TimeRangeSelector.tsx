@@ -38,13 +38,17 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
                               {
                                   flex: 1,
                                   borderWidth:normalize(1),
-                                  borderColor:'#3b3e4e',
-                                  //borderRadius: normalize(20),
+                                  borderColor:'#5b5e6f',
+                                  borderRadius: normalize(20),
                                   backgroundColor:'#2e2f42',
                                   justifyContent:'center',
-                                  alignItems:'center'
+                                  height:200
                               },
-                              isSelected && {},
+
+                              isSelected && {
+                                borderColor: '#b05157',
+                                backgroundColor:'#91273b'
+                              },
                               !isLast && {
                                 marginRight: normalizeWidth(4),
                               }
@@ -55,11 +59,16 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
                           <Text
                               style={[
                                   {fontWeight:'500',
-                                    color:'white',
-                                    fontSize:normalize(14)
+                                    color:'#b1b0b7',
+                                    textAlign:'center',
+                                    fontSize:normalize(15),
+                                   // marginVertical:normalizeHeight(8),
                                   },
+                                  isSelected && {
+                                   color: '#ffd6d9'
+                                  }
                               ]}
-                          >All</Text>
+                          >{timeRange}</Text>
                       </TouchableOpacity>
                   )
               }
@@ -71,8 +80,9 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: normalizeHeight(16),
-    paddingHorizontal: normalizeWidth(16),
+    marginVertical: normalizeHeight(16),
+    marginHorizontal: normalizeWidth(16),
+    backgroundColor:'blue'
   },
 
 });
