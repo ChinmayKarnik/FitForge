@@ -174,6 +174,12 @@ export const CalendarScreen = () => {
                     const isFirstCell = colIndex === 0;
                     const isLastCell = colIndex === 6;
                     const hasWorkout = dateNumber % 2 === 0;
+                    const today = new Date();
+                    const isToday = (
+                      dateNumber === today.getDate() &&
+                      month === today.getMonth() &&
+                      year === today.getFullYear()
+                    );
                     return (<View
                       key={colIndex}
                       style={[{
@@ -190,7 +196,7 @@ export const CalendarScreen = () => {
                       ]}
                     >
 
-                      {hasWorkout ?
+                      {(hasWorkout && !isToday) ?
                         (<View style={{
                           flex: 1,
                           alignItems: 'center',
@@ -218,11 +224,13 @@ export const CalendarScreen = () => {
                         </View>
                         )
                         :
-                        (<View style={{
+                        (<View style={[{
                           flex: 1,
                           alignItems: 'center',
                           paddingTop: normalizeHeight(8),
-                        }}>
+                        },
+                        isToday && {backgroundColor:'rgba(234, 48, 4)'}
+                        ]}>
                           <Text style={{
                             color: 'white',
                             fontSize: normalize(14),
