@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 export const DayDetails = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const date = route.params?.date;
 
   return (
     <View style={styles.bg}>
