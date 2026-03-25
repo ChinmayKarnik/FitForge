@@ -189,19 +189,20 @@ export const getStatsForTimeRange = (startTime, endTime) => {
 	if (workoutsInRange.length > 0) {
 		const totalSets = workoutsInRange.reduce((sum, workout) => {
 			const setsInWorkout = (workout.exercises || []).reduce((s: number, ex: any) => {
-				return s + (Array.isArray(ex.sets) ? ex.sets.length : 0);
+				const setCount = Array.isArray(ex.sets) ? ex.sets.length : 1;
+				return s + setCount;
 			}, 0);
 			return sum + setsInWorkout;
 		}, 0);
-		averageSets = Math.round((totalSets / workoutsInRange.length) * 10) / 10;
+		averageSets = totalSets > 0 ? Math.round((totalSets / workoutsInRange.length) * 10) / 10 : 0;
 	}
 
 	// 4. Average weekly sessions
 	let averageWeeklySessions: number | null = null;
 	const rangeMs = endTime - startTime;
 	const rangeWeeks = rangeMs / (1000 * 60 * 60 * 24 * 7);
-	if (workoutsInRange.length > 0 && rangeWeeks >= 1) {
-		averageWeeklySessions = Math.round((workoutsInRange.length / rangeWeeks) * 10) / 10;
+	if (rangeWeeks > 0) {
+		averageWeeklySessions = workoutsInRange.length > 0 ? Math.round((workoutsInRange.length / rangeWeeks) * 100) / 100 : 0;
 	}
 
 	// 5. Favourite exercise (most performed by number of sets)
