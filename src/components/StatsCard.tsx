@@ -3,10 +3,10 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { normalize, normalizeWidth } from '../utils/normalize';
 
-const flameImg = require('../images/flame.png');
 
-
-const StatsCard = ({ title, text, isLeftCard,isLastRow }) => {
+const StatsCard = ({ title, text, isLeftCard,isLastRow,
+    icon, iconStyle
+ }) => {
    
  
   return (
@@ -28,14 +28,11 @@ const StatsCard = ({ title, text, isLeftCard,isLastRow }) => {
               alignItems: 'center',
           }}>
               <Image
-                source={flameImg}
-                style={{
-                  width: normalize(60),
-                  height: normalize(60),
-                  resizeMode: 'contain',
+                source={icon}
+                style={[iconStyle, {
                   marginRight: normalizeWidth(8),
                   marginLeft: normalizeWidth(8)
-                }}
+                }]}
               />
               <Text
               style={{

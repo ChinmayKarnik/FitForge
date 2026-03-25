@@ -6,6 +6,12 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import { TimeRange } from '../enums/enums';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
 import StatsGrid from '../components/StatsGrid';
+import flame from '../images/flame.png';
+import calendar_marked from '../images/calendar-marked.png';
+import dumbbell from '../images/dumbbell-horizontal.png';
+import plates_stack from '../images/plates-stack.png';
+import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
+import bar_graph from '../images/bar-graph.png';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
@@ -13,28 +19,40 @@ export const StatisticsScreen = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const StatsCards = [
     {
-      type: "Total Workouts",
-      value: 10
+      title: "Total\nWorkouts",
+      value: 10,
+      icon: dumbbell,
+      style:styles.dumbbellIcon
     },
     {
-      type: "Maximum Streak",
-      value: 8
+      title: "Maximum\nStreak",
+      value: 8,
+      icon: flame,
+      style:styles.flameIcon
     },
     {
-      type: "Average Sets",
-      value: 8.6
+      title: "Average\nSets",
+      value: 8.6,
+      icon: plates_stack,
+      style:styles.platesStackIcon
     },
     {
-      type: "Average Weekly Sessions",
-      value: 4.2
+      title: "Average\nWeekly\nSessions",
+      value: 4.2,
+      icon: calendar_marked,
+      style:styles.calendarIcon
     },
      {
-      type: "Favourite Exercise",
-      value: "Push-ups"
+      title: "Favourite\nExercise",
+      value: "Push-ups",
+      icon: dumbbell_with_heart,
+      style:styles.dumbbellWithHeartIcon
     },
     {
-      type: "Busiest Day",
-      value: "Wednesday"
+      title: "Busiest\nDay",
+      value: "Wednesday",
+      icon: bar_graph,
+      style:styles.barGraphIcon
     },
   ]
 
@@ -103,5 +121,29 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: '700',
     color: '#fefefe',
+  },
+  flameIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
+  },
+  dumbbellIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
+  },
+  calendarIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
+  },
+  platesStackIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
+  },
+  dumbbellWithHeartIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
+  },
+  barGraphIcon: {
+    width:normalize(60),
+    aspectRatio: (506.0/656.0)
   },
 });

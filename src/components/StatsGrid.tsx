@@ -5,16 +5,6 @@ import { normalizeWidth } from '../utils/normalize';
 import StatsCard from './StatsCard';
 
 const StatsGrid = ({ data }) => {
-
-  const renderCardForTypeValue = (type, value,isLeft,isLastRow) => {
-    return (
-      <StatsCard title={type} text={value}
-      isLeftCard={isLeft}
-      isLastRow={isLastRow}
-       />
-    );
-  } 
-
   const numberOfRows = Math.ceil(data.length / 2);
   return (
     <>
@@ -26,8 +16,22 @@ const StatsGrid = ({ data }) => {
           marginTop:10,
           paddingHorizontal:normalizeWidth(16),
         }}>
-           {renderCardForTypeValue("Maximum\nStreak",32,true,isLastRow)}
-           {renderCardForTypeValue("Maximum\nStreak",32,false,isLastRow)}
+          <StatsCard
+            title={data[idx * 2].title}
+            text={data[idx * 2].value}
+            isLeftCard={true}
+            isLastRow={isLastRow}
+            icon = {data[idx * 2].icon}
+            iconStyle = {data[idx * 2].style}
+          />
+          <StatsCard
+            title={data[idx * 2 + 1]?.title}
+            text={data[idx * 2 + 1]?.value}
+            icon = {data[idx * 2 + 1]?.icon}
+            iconStyle = {data[idx * 2 + 1]?.style}
+            isLeftCard={false}
+            isLastRow={isLastRow}
+          />
         </View>
       )
     }
