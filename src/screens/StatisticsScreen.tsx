@@ -21,43 +21,43 @@ export const StatisticsScreen = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
   const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
-  console.log('statsdata ',statsData)
+  
   const StatsCards = [
     {
-      title: "Total\nworkouts",
-      value: 10,
+      title: "Total\nWorkouts",
+      value: statsData.totalWorkouts ?? '-',
       icon: dumbbell,
-      style:styles.dumbbellIcon
+      style: styles.dumbbellIcon
     },
     {
       title: "Maximum\nStreak",
-      value: 8,
+      value: statsData.maximumStreak ?? '-',
       icon: flame,
-      style:styles.flameIcon
+      style: styles.flameIcon
     },
     {
-      title: "Average\nsets per\nworkout",
-      value: 8.6,
+      title: "Average\nSets",
+      value: statsData.averageSets ?? '-',
       icon: plates_stack,
-      style:styles.platesStackIcon
+      style: styles.platesStackIcon
     },
     {
-      title: "Average\nweekly\nsessions",
-      value: 4.2,
+      title: "Average\nWeekly\nSessions",
+      value: statsData.averageWeeklySessions ?? '-',
       icon: calendar_marked,
-      style:styles.calendarIcon
+      style: styles.calendarIcon
     },
-     {
+    {
       title: "Favourite\nExercise",
-      value: "Weighted Push-ups",
+      value: statsData.favouriteExercise ?? '-',
       icon: dumbbell_with_heart,
-      style:styles.dumbbellWithHeartIcon
+      style: styles.dumbbellWithHeartIcon
     },
     {
       title: "Busiest\nDay",
-      value: "Wednesday",
+      value: statsData.busiestDay ?? '-',
       icon: bar_graph,
-      style:styles.barGraphIcon
+      style: styles.barGraphIcon
     },
   ]
 
