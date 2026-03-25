@@ -12,11 +12,16 @@ import dumbbell from '../images/dumbbell-horizontal.png';
 import plates_stack from '../images/plates-stack.png';
 import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
 import bar_graph from '../images/bar-graph.png';
+import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
+import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
 
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
+  const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
+  const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
+  console.log('statsdata ',statsData)
   const StatsCards = [
     {
       title: "Total\nworkouts",
@@ -44,7 +49,7 @@ export const StatisticsScreen = () => {
     },
      {
       title: "Favourite\nExercise",
-      value: "Push-ups",
+      value: "Weighted Push-ups",
       icon: dumbbell_with_heart,
       style:styles.dumbbellWithHeartIcon
     },
