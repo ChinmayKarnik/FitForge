@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   dumbbellIcon: {
     width:normalize(60),
-    aspectRatio: (506.0/656.0)
+    aspectRatio: (895.0/392.0)
   },
   calendarIcon: {
     width:normalize(60),
