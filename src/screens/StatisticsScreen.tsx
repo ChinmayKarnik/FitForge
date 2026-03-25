@@ -19,7 +19,7 @@ export const StatisticsScreen = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const StatsCards = [
     {
-      title: "Total\nWorkouts",
+      title: "Total\nworkouts",
       value: 10,
       icon: dumbbell,
       style:styles.dumbbellIcon
@@ -31,13 +31,13 @@ export const StatisticsScreen = () => {
       style:styles.flameIcon
     },
     {
-      title: "Average\nSets",
+      title: "Average\nsets per\nworkout",
       value: 8.6,
       icon: plates_stack,
       style:styles.platesStackIcon
     },
     {
-      title: "Average\nWeekly\nSessions",
+      title: "Average\nweekly\nsessions",
       value: 4.2,
       icon: calendar_marked,
       style:styles.calendarIcon
@@ -123,27 +123,27 @@ const styles = StyleSheet.create({
     color: '#fefefe',
   },
   flameIcon: {
-    width:normalize(60),
+    width:normalize(45),
     aspectRatio: (506.0/656.0)
   },
   dumbbellIcon: {
-    width:normalize(60),
+    width:normalize(45),
     aspectRatio: (895.0/392.0)
   },
   calendarIcon: {
-    width:normalize(60),
-    aspectRatio: (506.0/656.0)
+    width:normalize(45),
+    aspectRatio: (648.0/652.0)
   },
   platesStackIcon: {
-    width:normalize(60),
-    aspectRatio: (506.0/656.0)
+    width:normalize(45),
+    aspectRatio: (624.0/595.0)
   },
   dumbbellWithHeartIcon: {
-    width:normalize(60),
-    aspectRatio: (506.0/656.0)
+    width:normalize(45),
+    aspectRatio: (644.0/508.0)
   },
   barGraphIcon: {
-    width:normalize(60),
-    aspectRatio: (506.0/656.0)
+    width:normalize(45),
+    aspectRatio: (735.0/628.0)
   },
 });

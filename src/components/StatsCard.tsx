@@ -23,7 +23,7 @@ const StatsCard = ({ title, text, isLeftCard,isLastRow,
       }}
       >
           <View style={{
-              marginTop: normalize(10),
+              marginTop: normalize(20),
               flexDirection: 'row',
               alignItems: 'center',
           }}>
@@ -31,13 +31,14 @@ const StatsCard = ({ title, text, isLeftCard,isLastRow,
                 source={icon}
                 style={[iconStyle, {
                   marginRight: normalizeWidth(8),
-                  marginLeft: normalizeWidth(8)
+                  marginLeft: normalizeWidth(16)
                 }]}
               />
               <Text
               style={{
                 color: '#9797a4',
-                fontSize: normalize(14),
+                fontSize: normalize(16),
+                fontWeight: '400',
               }}
               >{title}</Text>
           </View>
