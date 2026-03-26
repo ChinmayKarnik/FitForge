@@ -14,6 +14,7 @@ import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
 import bar_graph from '../images/bar-graph.png';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
+import { stat } from 'react-native-fs';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
@@ -36,7 +37,7 @@ export const StatisticsScreen = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
   const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
-  
+  const isEmptyStats = true || statsData.totalWorkouts === 0;
   const StatsCards = [
     {
       title: "Total\nworkouts",
@@ -94,18 +95,45 @@ export const StatisticsScreen = () => {
         selectedTimeRange={selectedTimeRange}
         onSelectTimeRange={setSelectedTimeRange}
       />
-      <View style={{
-        marginLeft: normalizeWidth(16),
-      }}>
-        <Text style={{
-          color: 'rgba(255,255,255,0.9)',
-          fontWeight: '600',
-          fontSize: normalize(16),
-          marginBottom: normalizeHeight(8),
-        }}>Your Stats</Text>
-      </View>
-
-     <StatsGrid data ={StatsCards}/>
+      {!isEmptyStats ? (
+        <>
+          <View style={{
+            marginLeft: normalizeWidth(16),
+          }}>
+            <Text style={{
+              color: 'rgba(255,255,255,0.9)',
+              fontWeight: '600',
+              fontSize: normalize(16),
+              marginBottom: normalizeHeight(8),
+            }}>Your Stats</Text>
+          </View>
+          <StatsGrid data ={StatsCards}/>
+        </>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: normalizeWidth(32),
+          }}
+        >
+          <Text style={{
+            color: 'rgba(255,255,255,0.95)',
+            fontSize: normalize(28),
+            fontWeight: '700',
+            marginBottom: normalizeHeight(10),
+            textAlign: 'center',
+          }}>No workouts here</Text>
+          <Text style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: normalize(15),
+            fontWeight: '400',
+            textAlign: 'center',
+            letterSpacing: 0.3,
+          }}>No workouts in the selected time range. Your stats will build as you track sessions</Text>
+        </View>
+      )}
     </View>
   );
 };
