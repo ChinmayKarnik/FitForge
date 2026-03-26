@@ -18,32 +18,47 @@ import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/worko
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
 
+  const formatStreak = (streak: number | null) => {
+    if (streak === null) return '-';
+    return `${streak} ${streak === 1 ? 'day' : 'days'}`;
+  };
+
+  const formatAverageSets = (sets: number | null) => {
+    if (sets === null) return '-';
+    return `${sets} ${sets === 1 ? 'set' : 'sets'}`;
+  };
+
+  const formatWeeklySessions = (sessions: number | null) => {
+    if (sessions === null || sessions === 0) return '-';
+    return `${sessions} ${sessions === 1 ? 'session' : 'sessions'}`;
+  };
+
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
   const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
   
   const StatsCards = [
     {
-      title: "Total\nWorkouts",
+      title: "Total\nworkouts",
       value: statsData.totalWorkouts ?? '-',
       icon: dumbbell,
       style: styles.dumbbellIcon
     },
     {
-      title: "Maximum\nStreak",
-      value: statsData.maximumStreak ?? '-',
+      title: "Maximum\nstreak",
+      value: formatStreak(statsData.maximumStreak),
       icon: flame,
       style: styles.flameIcon
     },
     {
-      title: "Average\nSets",
-      value: statsData.averageSets ?? '-',
+      title: "Average\nsets per\nworkout",
+      value: formatAverageSets(statsData.averageSets),
       icon: plates_stack,
       style: styles.platesStackIcon
     },
     {
       title: "Average\nWeekly\nSessions",
-      value: statsData.averageWeeklySessions ?? '-',
+      value: formatWeeklySessions(statsData.averageWeeklySessions),
       icon: calendar_marked,
       style: styles.calendarIcon
     },
