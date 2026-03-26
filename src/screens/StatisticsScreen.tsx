@@ -12,8 +12,8 @@ import dumbbell from '../images/dumbbell-horizontal.png';
 import plates_stack from '../images/plates-stack.png';
 import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
 import bar_graph from '../images/bar-graph.png';
-import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
+import sad_dumbbell from '../images/sweat-sad-dumbbell.png';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
@@ -36,7 +36,7 @@ export const StatisticsScreen = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
   const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
-  const isEmptyStats = true || statsData.totalWorkouts === 0;
+  const isEmptyStats = statsData.totalWorkouts === 0;
   const StatsCards = [
     {
       title: "Total\nworkouts",
@@ -112,11 +112,20 @@ export const StatisticsScreen = () => {
         <View
           style={{
             flex: 1,
-            justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: normalizeWidth(32),
+            marginTop: normalizeHeight(120)
           }}
         >
+          <Image 
+          source={sad_dumbbell}
+          style={{
+            width: normalizeWidth(80),
+            aspectRatio:(818.0/604.0),
+            height : (818.0/604.0)* normalizeWidth(80),
+            marginBottom: normalizeHeight(20),
+          }}
+           />
           <Text style={{
             color: 'rgba(255,255,255,0.95)',
             fontSize: normalize(28),
