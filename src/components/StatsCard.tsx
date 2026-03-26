@@ -37,7 +37,7 @@ const StatsCard = ({ title, text, isLeftCard,isLastRow,
               <Text
               style={{
                 color: '#9797a4',
-                fontSize: normalize(16),
+                fontSize: normalize(17),
                 fontWeight: '400',
               }}
               >{title}</Text>
