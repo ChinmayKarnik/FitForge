@@ -14,7 +14,6 @@ import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
 import bar_graph from '../images/bar-graph.png';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
-import { stat } from 'react-native-fs';
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
