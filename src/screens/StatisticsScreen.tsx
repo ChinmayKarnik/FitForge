@@ -57,19 +57,19 @@ export const StatisticsScreen = () => {
       style: styles.platesStackIcon
     },
     {
-      title: "Average\nWeekly\nSessions",
+      title: "Average\nweekly\nsessions",
       value: formatWeeklySessions(statsData.averageWeeklySessions),
       icon: calendar_marked,
       style: styles.calendarIcon
     },
     {
-      title: "Favourite\nExercise",
+      title: "Favourite\nexercise",
       value: statsData.favouriteExercise ?? '-',
       icon: dumbbell_with_heart,
       style: styles.dumbbellWithHeartIcon
     },
     {
-      title: "Busiest\nDay",
+      title: "Busiest\nday",
       value: statsData.busiestDay ?? '-',
       icon: bar_graph,
       style: styles.barGraphIcon
