@@ -47,7 +47,36 @@ Key decisions include modular screen and component architecture for maintainabil
 
 ## Screenshots
 
-*Screenshots to be added*
+<table>
+  <tr>
+    <td align="center">
+      <img src="src/design/screenshots/track-workout-ss.png" width="200" />
+      <p>Track Workout</p>
+    </td>
+    <td align="center">
+      <img src="src/design/screenshots/live-workout-ss.png" width="200" />
+      <p>Live Workout</p>
+    </td>
+    <td align="center">
+      <img src="src/design/screenshots/routines-list-ss.png" width="200" />
+      <p>Routines</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="src/design/screenshots/statistics-ss.png" width="200" />
+      <p>Statistics</p>
+    </td>
+    <td align="center">
+      <img src="src/design/screenshots/calendar-ss.png" width="200" />
+      <p>Calendar</p>
+    </td>
+    <td align="center">
+      <img src="src/design/screenshots/profile-ss.png" width="200" />
+      <p>Profile</p>
+    </td>
+  </tr>
+</table>
 
 ## Getting Started
 
