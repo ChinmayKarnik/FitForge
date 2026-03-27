@@ -201,6 +201,11 @@ export const CalendarScreen = () => {
                       month === today.getMonth() &&
                       year === today.getFullYear()
                     );
+                    const isAfterToday = dateNumber && (
+                      year > today.getFullYear() ||
+                      (year === today.getFullYear() && month > today.getMonth()) ||
+                      (year === today.getFullYear() && month === today.getMonth() && dateNumber > today.getDate())
+                    );
                     return (<TouchableOpacity
                       key={colIndex}
                       disabled={!dateNumber || !hasWorkout}
@@ -260,6 +265,7 @@ export const CalendarScreen = () => {
                             color: 'white',
                             fontSize: normalize(14),
                             fontWeight: '400',
+                            opacity: isAfterToday ? 0.4 : 1,
                           }}>{dateNumber}</Text>
                         </View>)
                       }
