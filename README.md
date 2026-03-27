@@ -1,4 +1,8 @@
-# <img src="ios/FitForge/Images.xcassets/AppIcon.appiconset/1024.png" width="60" /> FitForge
+<p align="center"> 
+  <img src="ios/FitForge/Images.xcassets/AppIcon.appiconset/1024.png" width="120" />
+</p>
+
+# FitForge
 
 **Strava for strength training.** A mobile app to log, track, and analyze your weight training workouts. Built with a focus on capturing the nuance of strength training that existing apps miss.
 
