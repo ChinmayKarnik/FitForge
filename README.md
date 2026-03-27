@@ -50,29 +50,29 @@ Key decisions include modular screen and component architecture for maintainabil
 <table>
   <tr>
     <td align="center">
-      <img src="src/design/screenshots/track-workout-ss.png" width="200" />
+      <img src="src/design/screenshots/track-workout-ss.png" width="240" />
       <p>Track Workout</p>
     </td>
     <td align="center">
-      <img src="src/design/screenshots/live-workout-ss.png" width="200" />
+      <img src="src/design/screenshots/live-workout-ss.png" width="240" />
       <p>Live Workout</p>
     </td>
     <td align="center">
-      <img src="src/design/screenshots/routines-list-ss.png" width="200" />
+      <img src="src/design/screenshots/routines-list-ss.png" width="240" />
       <p>Routines</p>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="src/design/screenshots/statistics-ss.png" width="200" />
+      <img src="src/design/screenshots/statistics-ss.png" width="240" />
       <p>Statistics</p>
     </td>
     <td align="center">
-      <img src="src/design/screenshots/calendar-ss.png" width="200" />
+      <img src="src/design/screenshots/calendar-ss.png" width="240" />
       <p>Calendar</p>
     </td>
     <td align="center">
-      <img src="src/design/screenshots/profile-ss.png" width="200" />
+      <img src="src/design/screenshots/profile-ss.png" width="240" />
       <p>Profile</p>
     </td>
   </tr>
