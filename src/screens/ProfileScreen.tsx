@@ -11,6 +11,7 @@ import blue_pencil from '../images/blue-pencil.png';
 import calendar from '../images/calendar-tab-selected.png';
 import stats_icon from '../images/stats-tab-unselected.png';
 import routines_icon from '../images/notepad-with-ticks.png'
+import white_left_arrow from '../images/white-left-arrow.png';
 
 import { databaseController } from '../data';
 import EditNameModal from '../components/EditNameModal';
@@ -128,6 +129,21 @@ export const ProfileScreen = () => {
               paddingTop:normalizeHeight(40),
               paddingBottom:normalizeHeight(12)
             }}>
+              <TouchableOpacity
+                style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                onPress={() => navigation.goBack()}
+              >
+                <Image
+                  style={{
+                    width: normalizeWidth(9),
+                    height: normalizeWidth(9) * (86.0 / 51.0),
+                    aspectRatio: (51.0 / 86.0),
+                    resizeMode: 'stretch',
+                  }}
+                  source={white_left_arrow}
+                />
+              </TouchableOpacity>
               <Text
               style={{fontSize:22,
                 letterSpacing: 1,

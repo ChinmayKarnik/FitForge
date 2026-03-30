@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
+import white_left_arrow from '../images/white-left-arrow.png';
 
 
 const AddExerciseScreen = ({ navigation }: any) => {
@@ -73,6 +74,21 @@ const AddExerciseScreen = ({ navigation }: any) => {
                 paddingTop: normalizeHeight(40),
                 paddingBottom: normalizeHeight(12)
             }}>
+                <TouchableOpacity
+                    style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                    hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Image
+                        style={{
+                            width: normalizeWidth(9),
+                            height: normalizeWidth(9) * (86.0 / 51.0),
+                            aspectRatio: (51.0 / 86.0),
+                            resizeMode: 'stretch',
+                        }}
+                        source={white_left_arrow}
+                    />
+                </TouchableOpacity>
                 <Text
                     style={{
                         fontSize: 22,

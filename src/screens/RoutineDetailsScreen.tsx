@@ -4,6 +4,7 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import purple_dumbbell from '../images/purple-dumbbell.png';
 import clock from '../images/clock.png'
 import pencil from '../images/pencil-slant.png'
+import white_left_arrow from '../images/white-left-arrow.png';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
 
 const ShortDivider = ()=>{
@@ -159,6 +160,21 @@ const RoutineDetailsScreen = (props) => {
                 paddingTop: normalizeHeight(40),
                 paddingBottom: normalizeHeight(12)
             }}>
+                <TouchableOpacity
+                    style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                    hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Image
+                        style={{
+                            width: normalizeWidth(9),
+                            height: normalizeWidth(9) * (86.0 / 51.0),
+                            aspectRatio: (51.0 / 86.0),
+                            resizeMode: 'stretch',
+                        }}
+                        source={white_left_arrow}
+                    />
+                </TouchableOpacity>
                 <Text
                     style={{
                         fontSize: 22,
