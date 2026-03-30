@@ -17,36 +17,45 @@ export const ActivityScreen = () => {
     };
     loadWorkouts();
   }, []);
-  console.log("ckck workotus are ",workouts)
-  const renderWorkout = ({ item }: { item: any }) => <WorkoutSummaryCard workout={item} onPress={() => navigation.navigate('WorkoutDetails', { workout: item })} />;
+
+  const renderWorkout = ({ item }: { item: any }) => (
+    <WorkoutSummaryCard
+      workout={item}
+      onPress={() => navigation.navigate('WorkoutDetails', { workout: item })}
+    />
+  );
 
   return (
     <View style={styles.bg}>
-        <View style={{width:'100%',borderWidth:1,
+      <View style={{
+        width: '100%',
+        borderWidth: 1,
         borderColor: 'rgba(68, 75, 95)',
-          alignItems:'center',
-          backgroundColor: 'rgba(36, 42, 65)',
-          paddingTop:normalizeHeight(40),
-          paddingBottom:normalizeHeight(12)
-        }}>
-          <Text
-          style={{fontSize:normalize(18),
-            letterSpacing: 1,
-            fontWeight: '700',
-            color:"#fefefe"
-          }}
-          >Activity</Text>
-        </View>
-        <FlatList
-          data={workouts}
-          renderItem={renderWorkout}
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={<ActivityListEmpty />}
-          ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(12) }} />}
-          contentContainerStyle={{ marginTop:normalizeHeight(12),
-            marginVertical:normalizeHeight(40)
-           }}
-        />
+        alignItems: 'center',
+        backgroundColor: 'rgba(36, 42, 65)',
+        paddingTop: normalizeHeight(40),
+        paddingBottom: normalizeHeight(12),
+      }}>
+        <Text style={{
+          fontSize: normalize(18),
+          letterSpacing: 1,
+          fontWeight: '700',
+          color: '#fefefe',
+        }}>Activity</Text>
+      </View>
+      <FlatList
+        style={{ flex: 1 }}
+        data={workouts}
+        renderItem={renderWorkout}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={<ActivityListEmpty />}
+        ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(12) }} />}
+        contentContainerStyle={{
+          paddingTop: normalizeHeight(12),
+          paddingBottom: normalizeHeight(90),
+        }}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -54,8 +63,6 @@ export const ActivityScreen = () => {
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     backgroundColor: '#1c2238',
   },
   container: {
