@@ -107,7 +107,19 @@ android {
     }
 }
 
+configurations {
+    all {
+        // Exclude old support library that conflicts with androidx (pulled in by react-native-splash-screen)
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+}
+
 dependencies {
+    // Splash screen (Android 6+ including Android 12+)
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
