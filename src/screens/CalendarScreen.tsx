@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ToastAndroid, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Image } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_right_arrow from '../images/white-right-arrow.png';
 import flame from '../images/flame.png';
@@ -9,14 +10,18 @@ import calendar2 from '../images/calendar-2.png';
 import clock2 from '../images/clock-2.png';
 import dumbbell from '../images/orange-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate } from '../utils/workoutUtils';
-import { getSectionKeys } from 'react-native/types_generated/Libraries/ReactNative/AppRegistryImpl';
 
 
+
+type RootStackParamList = {
+  DayDetails: { date: Date };
+  // ... add other routes if needed, or use any
+};
 
 export const CalendarScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const toastLock = useRef(false);
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -64,7 +69,24 @@ export const CalendarScreen = () => {
     return doesDayHaveWorkout(date);
   }
 
-  const onPressCell = (dateNumber) => {
+  const onPressCell = (dateNumber: number | null, hasWorkout: boolean) => {
+    if (!dateNumber || toastLock.current) return;
+
+    if (!hasWorkout) {
+      if(toastLock.current == true) return;
+      toastLock.current = true;
+      const message = "No workout on this day";
+      if (Platform.OS === 'android') {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+        setTimeout(() => {
+          toastLock.current = false;
+        }, 2000); // 2 seconds cooldown for ToastAndroid.SHORT
+      } else {
+        // Fallback for iOS using Alert with a callback to release the lock
+        Alert.alert("", message, [{ text: "OK", onPress: () => { toastLock.current = false; } }]);
+      }
+      return;
+    }
     const date = new Date(year, month, dateNumber);
     navigation.navigate('DayDetails', { date });
   }
@@ -208,8 +230,8 @@ export const CalendarScreen = () => {
                     );
                     return (<TouchableOpacity
                       key={colIndex}
-                      disabled={!dateNumber || !hasWorkout}
-                      onPress={()=>{onPressCell(dateNumber)}}
+                  //    disabled={!dateNumber || !hasWorkout}
+                      onPress={()=>{onPressCell(dateNumber,hasWorkout)}}
                       style={[{
                         flex: 1,
                         height: normalizeHeight(50),
