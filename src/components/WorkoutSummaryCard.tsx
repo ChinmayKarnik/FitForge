@@ -1,10 +1,12 @@
 // @ts-nocheck
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
 import { getDayOfWeek } from '../utils/dateTimeUtils';
 import { formatDateTimeString } from './dateTimeUtils';
+import clock from '../images/clock-thick.png'
+import calendarWithBorder from '../images/calendar-with-border.png';
 
 
 type Exercise = {
@@ -45,14 +47,14 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
   }
   const routine = databaseController.getRoutineById(workout.routineId);
   const routineName =  routine?.name || 'Free Workout'
-
+  
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <View style={{
         flex: 1,
         minHeight: 70,
         marginHorizontal: disableHorizontalMargin ? 0 : normalizeWidth(16),
-        backgroundColor: '#292f46',
+        backgroundColor:'#292f46',
         borderRadius: normalizeHeight(10),
         borderWidth: normalize(1),
         borderColor: '#383e55'
@@ -63,7 +65,8 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
         borderBottomColor: '#484d63'
       }}>
          <Text style={{color: '#fcfbfc',
-          fontWeight: '600'
+          fontWeight: '600',
+          fontSize: normalize(15)
          }}>{dayOfTheWeek} - {routineName}</Text>
       </View>
 
@@ -73,15 +76,41 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
         borderBottomWidth: normalize(1),
         borderBottomColor: '#484d63'
       }}>
-        <View style={{flexDirection:'row'}}>
-          <View><Text style={{color:"#fafafb"}}>{formatDateTimeString(workout.startTime)}</Text></View>
-          <View style={{flex:1, flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-             <View style={{width:normalizeWidth(1),height:normalizeHeight(10),
-              backgroundColor:'#30374c'
-             }}></View>
+          <View style={{ flexDirection: 'row' ,
+            alignItems:'center'
+          }}>
+            <Image
+            source={calendarWithBorder}
+            style={{
+              width: normalizeWidth(15),
+              aspectRatio: (538.0/496.0),
+              marginRight: normalizeWidth(8),
+              resizeMode: 'contain',
+            }}
+          />
+            <View><Text style={{ color: "#AEB3D1",
+                }}>{formatDateTimeString(workout.startTime)}</Text></View>
+              <View style={{
+                width: normalizeWidth(1.5), height: normalizeHeight(12),
+                backgroundColor:  'rgba(255,255,255,0.17)',
+                marginHorizontal:normalizeWidth(8)
+              }}></View>
+              
+            <Image
+                        source={clock}
+                        style={{
+                          width: normalizeWidth(13),
+                          marginRight:normalizeWidth(5),
+                          marginTop:normalizeHeight(1),
+                          aspectRatio: (357.0/346.0),
+                          resizeMode: 'contain',
+                          tintColor: '#bebdd1',
+                        }}
+                      />
+                     
+            <View><Text style={{ color:
+              "#AEB3D1", }}>Duration : {durationMin} min</Text></View>
           </View>
-          <View><Text style={{color:"#fafafb"}}>Duration : {durationMin} min</Text></View>
-        </View>
       </View>
 
       <View style={{paddingTop:normalizeHeight(8),
@@ -90,8 +119,16 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
       }}>
         {
           exerciseNames.map((exName, index)=>{
-           return (<View key={exName}>
-            <Text style={{color:'#f8f8f9'}}>{exName}</Text>
+            const isLast = index==exerciseNames.length - 1;
+           return (<View key={exName}
+            style={[
+              !isLast && {marginBottom:normalizeHeight(5)}
+            ]}
+           >
+            <Text style={{
+              color: '#F4F2FF' || '#f8f8f9',
+              fontSize: normalize(13)
+              }}>{exName}</Text>
             </View>)
           })
         }
@@ -134,9 +171,8 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#A89B7C',
     fontSize: 15,
-    fontFamily: 'System',
+   fontWeight: '600',
     marginBottom: 6,
-    fontWeight: '600',
   },
   badgeRow: {
     flexDirection: 'row',
@@ -151,17 +187,15 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   badgeText: {
-    fontWeight: 'bold',
     fontSize: 16,
     color: '#7C6F57',
-    fontFamily: 'System',
+    fontFamily: 'Inter-Bold',
     letterSpacing: 0.2,
   },
   durationText: {
     color: '#C6A15B',
-    fontWeight: 'bold',
     fontSize: 18,
-    fontFamily: 'System',
+    fontWeight: 'bold',
     alignSelf: 'flex-start',
     marginLeft: 12,
   },
@@ -183,8 +217,7 @@ const styles = StyleSheet.create({
   exerciseName: {
     color: '#7C6F57',
     fontSize: 15,
-    fontFamily: 'System',
-    fontWeight: '500',
+    fontWeight:'500'
   },
   divider: {
     height: 1,
