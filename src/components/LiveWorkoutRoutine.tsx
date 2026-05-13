@@ -1,7 +1,9 @@
 
 
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import white_left_arrow from '../images/white-left-arrow.png';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
 import { TimerComponent } from './TimerComponent';
@@ -12,6 +14,20 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
 export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout: () => void; navigation?: any }) => {
+  const handleBackPress = useCallback(() => {
+    onEndWorkout();
+    return true;
+  }, [onEndWorkout]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const unsubscribe = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => {
+        unsubscribe.remove();
+      };
+    }, [handleBackPress])
+  );
+
    const [showFinishModal, setShowFinishModal] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
   const [exerciseParams, setExerciseParams] = useState<Record<string, any>>({});
@@ -25,6 +41,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const [isExerciseInProgress,setIsExerciseInProgress] = useState(false);
   const nextExerciseRef = useRef(null);
   const nextExerciseTime = useRef(null);
+  const initialLoadingDone = useRef(null);
   const workout = useRef({
     startTime: startTimeRef.current,
     endTime: startTimeRef.current,
@@ -49,6 +66,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
         console.log("ckck routine is ",routine)
         nextExerciseRef.current = routine.exercises[0];
         nextExerciseTime.current = startTimeRef.current;
+        initialLoadingDone.current = true;
       }
   },[selectedRoutineId]);
 
@@ -137,6 +155,16 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={handleBackPress}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
+          <Image
+            style={styles.backButtonImage}
+            source={white_left_arrow}
+          />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Live Workout</Text>
       </View>
 
@@ -151,11 +179,11 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
               <Text style={styles.middleSetNumber}>Set {workout.current.exercises.length + 1}</Text>
             </View>
           )
-        ) : (
+        ) : initialLoadingDone.current ? (
           <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
             <Text style={styles.finishedText}>Your workout has finished.</Text>
           </View>
-        )
+        ) : null
       )}
       {isExerciseInProgress && activeExercise && (
         <View style={styles.exerciseInfoContainer}>
@@ -253,6 +281,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(36, 42, 65)',
     paddingTop: normalizeHeight(40),
     paddingBottom: normalizeHeight(12),
+  },
+  backButton: {
+    position: 'absolute',
+    top: normalizeHeight(46),
+    left: normalizeWidth(16),
+  },
+  backButtonImage: {
+    width: normalizeWidth(9),
+    height: normalizeWidth(9) * (86.0 / 51.0),
+    aspectRatio: 51.0 / 86.0,
+    resizeMode: 'stretch',
   },
   headerText: {
     fontSize: 22,

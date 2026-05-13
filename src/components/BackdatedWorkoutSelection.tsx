@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_right_arrow from '../images/white-right-arrow.png';
@@ -14,13 +15,23 @@ type Props = {
 };
 
 export const BackdatedWorkoutSelection = ({ onSelectMode, onBackPress }: Props) => {
-  const handleBackPress = () => {
+  const handleBackPress = useCallback(() => {
     if (onBackPress) {
       onBackPress();
     } else {
       onSelectMode('selection');
     }
-  };
+    return true;
+  }, [onBackPress, onSelectMode]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const unsubscribe = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => {
+        unsubscribe.remove();
+      };
+    }, [handleBackPress])
+  );
 
   return (
     <View style={styles.container}>
