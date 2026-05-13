@@ -1,8 +1,9 @@
 import React, { Activity, useState, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ProfilePageSection from '../components/ProfilePageSection';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable, ScrollView } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { version } from '../../package.json';
 import profile_photo_default from '../images/profile-photo-default.png';
 import camera from '../images/camera-blue-white.png'
 import activity_image from '../images/activity-tab-selected.png'
@@ -247,12 +248,34 @@ export const ProfileScreen = () => {
         source={blue_pencil}
       />
     </TouchableOpacity>
-    
-    <View style={{marginTop:normalizeHeight(20)}}>
-      {sections.map((section, idx) => (
-        <ProfilePageSection key={section.route} section = {section}/>
-      ))}
-    </View>
+
+    <ScrollView
+      scrollEnabled={true}
+      contentContainerStyle={{ paddingBottom: normalizeHeight(40) }}
+      showsVerticalScrollIndicator ={false}
+    >
+      <View style={{marginTop:normalizeHeight(20)}}>
+        {sections.map((section) => (
+          <ProfilePageSection key={section.route} section = {section}/>
+        ))}
+      </View>
+
+        <View style={{
+          marginTop: normalizeHeight(30),
+          alignItems: 'center',
+          paddingHorizontal: normalizeWidth(20),
+          paddingBottom: normalizeHeight(20),
+          marginBottom: normalizeHeight(20)
+        }}>
+          <Text style={{
+            fontSize: normalize(13),
+             color: '#7a7f98',
+              fontWeight: '500',
+               letterSpacing: 0.3}}>
+            FitForge v{version}
+          </Text>
+        </View>
+    </ScrollView>
     <EditNameModal
       visible={editNameVisible}
       value={editNameValue}
