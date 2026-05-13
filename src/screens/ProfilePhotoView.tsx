@@ -1,14 +1,68 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import profile_photo_default from '../images/profile-photo-default.png';
 import { databaseController } from '../data';
+
+
+const SCREEN = Dimensions.get('window');
 
 export default function ProfilePhotoView() {
   const navigation = useNavigation<any>();
-  const userInfo = databaseController.getUserInfo();
-  const profilePhotoPath = userInfo?.profilePhotoPath;
+
+  const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(null);
+  
+
+  const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
+      
+  const isHorizontalImage = imgDimensions ? imgDimensions.width >= imgDimensions.height : true;
+
+  const [imageAspectRatio, setImageAspectRatio] = useState(1);
+  const SQUARE_SIZE = Dimensions.get('window').width;
+
+  const containerHeight = SCREEN.width;
+    // Calculate image dimensions maintaining aspect ratio
+    let imgWidth = SCREEN.width;
+    let imgHeight = containerHeight;
+    const aspectRatio = imgDimensions ? imgDimensions.width / imgDimensions.height : 1;
+    if (imgDimensions) {
+        const aspectRatio = imgDimensions.width / imgDimensions.height;
+        imgHeight = imgWidth / aspectRatio;
+        if (imgHeight > containerHeight) {
+            imgHeight = containerHeight;
+            imgWidth = imgHeight * aspectRatio;
+        }
+    }
+
+  useFocusEffect(
+    useCallback(() => {
+      const userInfo = databaseController.getUserInfo();
+      console.log('ckck userinfo ',userInfo)
+      if (userInfo?.profilePhotoPath) {
+        setProfilePhotoPath(userInfo.profilePhotoPath);
+      }
+    }, [])
+  );
+
+  useEffect(() => {
+    if (profilePhotoPath) {
+      console.log('ckck profile photo path here is ',profilePhotoPath)
+      Image.getSize(profilePhotoPath, (width, height) => {
+        setImgDimensions({width,height})
+        setImageAspectRatio(width / height);
+      });
+    }else {
+      console.log('ckck no profile photo ')
+      // Image.getSize(profile_photo_default,(width,height)=>{
+      //    setImgDimensions({width,height})
+      //    setImageAspectRatio(width / height);
+      // })
+    }
+  }, [profilePhotoPath]);
+
+  
 
   return (
     <View style={{
@@ -59,20 +113,29 @@ export default function ProfilePhotoView() {
       </View>
 
       {/* Image display area */}
-      <View style={{
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        {profilePhotoPath && (
+      <View
+        style={{
+          width: '100%',
+          height: containerHeight,
+          marginTop: normalizeHeight(110),
+          backgroundColor: 'black',
+          overflow: 'hidden',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {imgDimensions && (
           <Image
-            source={{ uri: profilePhotoPath }}
+            source={
+              profilePhotoPath ? { uri: profilePhotoPath }
+            : 
+            profile_photo_default
+          }
             style={{
-              width: '100%',
-              height: '100%',
-              resizeMode: 'contain'
+              width: imgWidth,
+              height: imgHeight,
             }}
+            resizeMode="contain"
           />
         )}
       </View>
