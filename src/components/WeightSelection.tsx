@@ -5,6 +5,7 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 const WeightSelection = ({ value,setValue}) => {
 
   const [inputText,setInputText] = useState(String(value || 0))
+  const [isFocused, setIsFocused] = useState(false)
 
 
 
@@ -27,6 +28,9 @@ const WeightSelection = ({ value,setValue}) => {
           placeholderTextColor="#F2F4F8"
           selectionColor="#F2F4F8"
           textAlign="center"
+          caretHidden={!isFocused}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
       </View>
       <View style={styles.unitContainer}>
