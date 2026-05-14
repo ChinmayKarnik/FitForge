@@ -11,9 +11,21 @@ import stopwatch from '../images/stopwatch-white.png'
 
 const NthSetUI = ({ setNumber}) => {
   return (
-    <View style={{borderWidth:1}}>
-      <Text style={{ color: 'white' }}>
-        Set {setNumber}
+    <View style={{
+      borderWidth: normalize(1),
+      borderColor: '#5a7bb3',
+      borderRadius: normalize(8),
+      backgroundColor: '#1f243b',
+      paddingHorizontal: normalizeWidth(12),
+      paddingVertical: normalizeHeight(6),
+    }}>
+      <Text style={{
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(13),
+        fontWeight: '600',
+        letterSpacing: 0.5
+      }}>
+        SET {setNumber}
       </Text>
     </View>
   );
