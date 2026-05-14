@@ -4,21 +4,26 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const WeightSelection = ({ value,setValue}) => {
 
+  const [inputText,setInputText] = useState(String(value || 0))
+
+
+
   const handleChange = (text) => {
+    setInputText(text)
     // Allow only numbers and decimal point
     const cleaned = text.replace(/[^0-9.]/g, '');
-    setValue(cleaned);
+    setValue(Number(cleaned));
   };
-
+ 
   return (
     <View style={styles.container}>
       <View style={styles.valueContainer}>
         <TextInput
           style={styles.valueText}
-          value={value}
+          value={inputText}
           onChangeText={handleChange}
           keyboardType="numeric"
-          placeholder={String(value?.toFixed?.(1) || 0)}
+          //placeholder={String(value?.toFixed?.(1) || 0)}
           placeholderTextColor="#F2F4F8"
           selectionColor="#F2F4F8"
           textAlign="center"
@@ -40,6 +45,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#22274c',
     alignItems: 'center',
+    minHeight:normalizeHeight(40)
   },
   valueContainer: {
     justifyContent: 'center',
