@@ -16,12 +16,12 @@ const NthSetUI = ({ setNumber}) => {
       borderColor: '#5a7bb3',
       borderRadius: normalize(6),
       backgroundColor:'#232843' || '#1f243b',
-      paddingHorizontal: normalizeWidth(6),
+      paddingHorizontal: normalizeWidth(9),
       paddingVertical: normalizeHeight(5),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(12),
+        fontSize: normalizeHeight(13),
         fontWeight: '600',
         letterSpacing: 0.3
       }}>
@@ -41,11 +41,11 @@ const NSetsUI = ({ numSets }) => {
       paddingHorizontal: normalizeWidth(8),
       paddingVertical: normalizeHeight(3),
       alignSelf: 'flex-start',
-      marginBottom: normalizeHeight(6),
+      marginBottom: normalizeHeight(4),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(12),
+        fontSize: normalizeHeight(13),
         fontWeight: '700',
         letterSpacing: 0.3
       }}>
@@ -96,7 +96,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(13),
+        fontSize: normalizeHeight(14),
         fontWeight: '600',
         letterSpacing: 0.3
       }}>
@@ -113,7 +113,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
           }} />
           <Text style={{
             color: '#7fb3ff',
-            fontSize: normalizeHeight(13),
+            fontSize: normalizeHeight(15),
             fontWeight: '600',
             letterSpacing: 0.3
           }}>
@@ -238,7 +238,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
               color: "#d6d3de",
               fontSize: normalizeHeight(17),
               fontWeight: '500',
-              marginBottom: normalizeHeight(6)
+              marginBottom: normalizeHeight(7)
             }}
           >{exerciseName}</Text>
 
@@ -264,8 +264,8 @@ const ExerciseSummaryCard = ({ exercises }) => {
                   width:'100%',
                   height: normalize(2),
                   backgroundColor:'rgba(255,255,255,0.1)',
-                  marginBottom: normalizeHeight(6),
-                  marginTop:normalizeHeight(2)
+                  marginBottom: normalizeHeight(10),
+                  marginTop:normalizeHeight(7)
                 }}
                 ></View>
                 <IndividualSetEntry
