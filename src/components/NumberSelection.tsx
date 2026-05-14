@@ -34,7 +34,7 @@ const PlusIcon = ({size= normalize(12)})=>{
 }
 
 
-const NumberSelection = ({ value, setValue }) => {
+const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) => {
 	return (
 		<View
 			style={{
@@ -48,7 +48,12 @@ const NumberSelection = ({ value, setValue }) => {
 			}}
 		>
 			<TouchableOpacity
-				onPress={() => setValue(value - 1)}
+				onPress={() => {
+					const newValue = value - 1;
+					if (areNegativeNumbersAllowed || newValue >= 0) {
+						setValue(newValue);
+					}
+				}}
 			style={{
 			  borderTopLeftRadius: normalize(8),
 			  borderBottomLeftRadius: normalize(8),
@@ -69,14 +74,17 @@ const NumberSelection = ({ value, setValue }) => {
 			>
 				<TextInput
 					style={{ color: '#F2F4F8', fontSize: normalize(20), fontWeight: '600',
-				
+
 						paddingVertical:normalize(8),
 						paddingHorizontal: normalizeWidth(10),
 						lineHeight:normalize(18),
-						 textAlign: 'center', 
+						 textAlign: 'center',
 					}}
 					onChange={(event)=>{
-						setValue(Number(event.nativeEvent.text) || 0)
+						const newValue = Number(event.nativeEvent.text) || 0;
+						if (areNegativeNumbersAllowed || newValue >= 0) {
+							setValue(newValue);
+						}
 					}}
 					value={String(value)}
 					editable={true}

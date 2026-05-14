@@ -10,7 +10,7 @@ const ParameterValueSelection = ({ value, setValue, parameter }) => {
     return <YesNoSelection value={value} onChange={setValue} />;
   }
   if (parameter.type === 'reps') {
-    return <NumberSelection value={value} setValue={setValue} />;
+    return <NumberSelection value={value} setValue={setValue} areNegativeNumbersAllowed={false} />;
   }
   if (parameter.type === 'weight') {
     return <WeightSelection value={value} setValue={setValue} />;
