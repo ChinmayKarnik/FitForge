@@ -14,16 +14,16 @@ const NthSetUI = ({ setNumber}) => {
     <View style={{
       borderWidth: normalize(1),
       borderColor: '#5a7bb3',
-      borderRadius: normalize(8),
-      backgroundColor: '#1f243b',
-      paddingHorizontal: normalizeWidth(12),
-      paddingVertical: normalizeHeight(6),
+      borderRadius: normalize(6),
+      backgroundColor:'#232843' || '#1f243b',
+      paddingHorizontal: normalizeWidth(6),
+      paddingVertical: normalizeHeight(5),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(13),
+        fontSize: normalizeHeight(12),
         fontWeight: '600',
-        letterSpacing: 0.5
+        letterSpacing: 0.3
       }}>
         SET {setNumber}
       </Text>
@@ -36,17 +36,18 @@ const NSetsUI = ({ numSets }) => {
     <View style={{
       borderWidth: normalize(1),
       borderColor: '#5a7bb3',
-      borderRadius: normalize(8),
+      borderRadius: normalize(6),
       backgroundColor: '#1f243b',
-      paddingHorizontal: normalizeWidth(12),
-      paddingVertical: normalizeHeight(6),
+      paddingHorizontal: normalizeWidth(8),
+      paddingVertical: normalizeHeight(3),
       alignSelf: 'flex-start',
+      marginBottom: normalizeHeight(6),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(13),
-        fontWeight: '600',
-        letterSpacing: 0.5
+        fontSize: normalizeHeight(12),
+        fontWeight: '700',
+        letterSpacing: 0.3
       }}>
         {numSets} SETS
       </Text>
@@ -62,14 +63,15 @@ const SingularSetEntry = ({ reps, weight }) => {
   );
 };
 
-const Divider = () => {
+const Divider = ({height = normalizeHeight(14),marginLeft,marginRight}) => {
   return (
     <View
       style={{
         width: 1,
-        height: '100%',
+        height,
         backgroundColor: 'rgba(255,255,255,0.2)',
-        marginHorizontal: 8,
+        marginLeft,
+        marginRight
       }}
     />
   );
@@ -80,15 +82,19 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
   return (
   <View style={{
     flexDirection:'row',
-   alignItems:'center'
+   alignItems:'center',
+   marginBottom: normalizeHeight(4)
   }}>
     <NthSetUI setNumber={setNumber}/>
-    <Divider />
+    <Divider 
+    marginLeft={normalizeWidth(15)}
+    marginRight={normalizeWidth(20)}
+    />
     <Text style={{
       color: '#7fb3ff',
       fontSize: normalizeHeight(13),
       fontWeight: '600',
-      letterSpacing: 0.5
+      letterSpacing: 0.3
     }}>
       {reps} REPS {weight ? `• ${weight} KG` : ''}
     </Text>
@@ -211,9 +217,9 @@ const ExerciseSummaryCard = ({ exercises }) => {
           <Text
             style={{
               color: "#d6d3de",
-              fontSize: normalizeHeight(15),
+              fontSize: normalizeHeight(17),
               fontWeight: '500',
-              marginBottom: normalizeHeight(10)
+              marginBottom: normalizeHeight(6)
             }}
           >{exerciseName}</Text>
 
@@ -237,10 +243,10 @@ const ExerciseSummaryCard = ({ exercises }) => {
                 <View
                 style={{
                   width:'100%',
-                  height: normalize(1),
+                  height: normalize(2),
                   backgroundColor:'rgba(255,255,255,0.1)',
-                  marginBottom: normalizeHeight(4),
-                  marginTop:normalizeHeight(4)
+                  marginBottom: normalizeHeight(6),
+                  marginTop:normalizeHeight(2)
                 }}
                 ></View>
                 <IndividualSetEntry
@@ -248,30 +254,6 @@ const ExerciseSummaryCard = ({ exercises }) => {
                   reps={obj.reps}
                   weight={obj.weight}
                 />
-              </View>)
-              return (<View
-                key={index}
-                style={{
-                  marginLeft: normalizeWidth(36),
-                  marginBottom: isLast ? 0 : normalize(6),
-                  flexDirection: 'row',
-                  alignItems: 'center'
-                }}>
-                <Image
-                  style={{
-                    width: normalizeWidth(15),
-                    aspectRatio: (479.0 / 478.0),
-                    marginRight: normalizeWidth(6),
-                  }}
-                  source={tick_purple_bg}
-                />
-                <Text
-                  style={{
-                    color: "#77778e",
-                    fontSize: normalizeHeight(12),
-                    fontWeight: '400'
-                  }}
-                >Set {index + 1} : {obj.reps} reps</Text>
               </View>)
             })
           }
