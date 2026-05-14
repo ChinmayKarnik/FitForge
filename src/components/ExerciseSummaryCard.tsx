@@ -31,6 +31,29 @@ const NthSetUI = ({ setNumber}) => {
   );
 };
 
+const NSetsUI = ({ numSets }) => {
+  return (
+    <View style={{
+      borderWidth: normalize(1),
+      borderColor: '#5a7bb3',
+      borderRadius: normalize(8),
+      backgroundColor: '#1f243b',
+      paddingHorizontal: normalizeWidth(12),
+      paddingVertical: normalizeHeight(6),
+      alignSelf: 'flex-start',
+    }}>
+      <Text style={{
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(13),
+        fontWeight: '600',
+        letterSpacing: 0.5
+      }}>
+        {numSets} SETS
+      </Text>
+    </View>
+  );
+}
+
 const SingularSetEntry = ({ reps, weight }) => {
   return (
     <Text style={{ color: 'white' }}>
@@ -190,7 +213,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
               color: "#d6d3de",
               fontSize: normalizeHeight(15),
               fontWeight: '500',
-              marginBottom: normalizeHeight(4)
+              marginBottom: normalizeHeight(10)
             }}
           >{exerciseName}</Text>
 
@@ -204,7 +227,13 @@ const ExerciseSummaryCard = ({ exercises }) => {
                 />
               }
               const isLast = index === setsList.length - 1;
+              const isFirst = (index === 0)
               return (<View key={index}>
+                {
+                  (!!isFirst) && (
+                    <NSetsUI numSets={setsList.length}/>
+                  )
+                }
                 <View
                 style={{
                   width:'100%',
