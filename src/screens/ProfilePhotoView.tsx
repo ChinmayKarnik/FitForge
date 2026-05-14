@@ -53,12 +53,11 @@ export default function ProfilePhotoView() {
         setImgDimensions({width,height})
         setImageAspectRatio(width / height);
       });
-    }else {
+    } else {
       console.log('ckck no profile photo ')
-      // Image.getSize(profile_photo_default,(width,height)=>{
-      //    setImgDimensions({width,height})
-      //    setImageAspectRatio(width / height);
-      // })
+      const source = Image.resolveAssetSource(profile_photo_default);
+      setImgDimensions({width: source.width, height: source.height})
+      setImageAspectRatio(source.width / source.height);
     }
   }, [profilePhotoPath]);
 
