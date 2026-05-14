@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_cross from '../images/cross-icon-white.png'
 import { databaseController } from '../data';
@@ -30,18 +30,20 @@ const ExerciseForm: React.FC = ({
   }
   
   return (
-   <View style={[{backgroundColor:'#232441',
-               borderWidth:normalize(1),
-               borderRadius: normalize(10),
-               borderColor: '#5a5a74',
-               marginHorizontal: normalizeWidth(16),
-               paddingHorizontal: normalizeWidth(12),
-               paddingBottom: normalizeHeight(10),
-               paddingTop: normalizeHeight(18),
-               },
-               removeHorizontalMargin && {marginHorizontal: 0} 
-               
-               ]}>
+   <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} scrollEnabled={false}>
+       <View style={[{backgroundColor:'#232441',
+                   borderWidth:normalize(1),
+                   borderRadius: normalize(10),
+                   borderColor: '#5a5a74',
+                   marginHorizontal: normalizeWidth(16),
+                   paddingHorizontal: normalizeWidth(12),
+                   paddingBottom: normalizeHeight(10),
+                   paddingTop: normalizeHeight(18),
+                   },
+                   removeHorizontalMargin && {marginHorizontal: 0}
+
+                   ]}>
                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
                   }}>
                    <Text
@@ -123,6 +125,8 @@ const ExerciseForm: React.FC = ({
                  </View>
    
                </View>
+     </ScrollView>
+   </KeyboardAvoidingView>
   );
 };
 
