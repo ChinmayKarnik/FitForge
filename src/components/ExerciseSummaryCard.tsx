@@ -61,6 +61,14 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
   }}>
     <NthSetUI setNumber={setNumber}/>
     <Divider />
+    <Text style={{
+      color: '#7fb3ff',
+      fontSize: normalizeHeight(13),
+      fontWeight: '600',
+      letterSpacing: 0.5
+    }}>
+      {reps} REPS {weight ? `• ${weight} KG` : ''}
+    </Text>
   </View>)
   return (
     <Text style={{ color: 'white' }}>
