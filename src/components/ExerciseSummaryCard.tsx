@@ -9,10 +9,26 @@ import { databaseController } from '../data';
 import clock from '../images/clock-thick-white.png'
 import stopwatch from '../images/stopwatch-white.png'
 
+const SingularSetEntry = ({ reps, weight }) => {
+  return (
+    <Text style={{ color: 'white' }}>
+      {reps} reps • {weight} kg
+    </Text>
+  );
+};
+
+const IndividualSetEntry = ({ setNumber, reps, weight }) => {
+  return (
+    <Text style={{ color: 'white' }}>
+      Set {setNumber}: {reps} reps • {weight} kg
+    </Text>
+  );
+};
+
 
 const ExerciseSummaryCard = ({ exercises }) => {
   const imageAspectRatio = (598.0 / 494.0);
-  const imageHeight = normalize(23);
+  const imageHeight = normalize(30);
   const imageWidth = imageAspectRatio * imageHeight;
 
   const exerciseFromDb = databaseController.getExerciseById(exercises[0].exerciseId)
@@ -71,7 +87,15 @@ const ExerciseSummaryCard = ({ exercises }) => {
   }, [exercises])
 
   const setsList = exercises.map((ex) => ({
-    reps: ex.loggedData && typeof ex.loggedData['Reps'] !== 'undefined' ? ex.loggedData['Reps'] : 0
+    reps:
+      ex.loggedData && typeof ex.loggedData['Reps'] !== 'undefined'
+        ? ex.loggedData['Reps']
+        : 0,
+
+    weight:
+      ex.loggedData && typeof ex.loggedData['Weight'] !== 'undefined'
+        ? ex.loggedData['Weight']
+        : 0,
   }));
 
   return (
@@ -81,30 +105,57 @@ const ExerciseSummaryCard = ({ exercises }) => {
       borderColor: '#3c3c68',
       borderRadius: normalize(12),
       paddingHorizontal: normalizeWidth(16),
+      paddingTop: normalizeHeight(10)
 
     }}>
       <View style={{ flexDirection: 'row' }}>
-        <Image style={{
-          height: imageHeight,
-          width: imageWidth,
-          aspectRatio: imageAspectRatio,
-          marginTop: normalizeHeight(8),
-          marginRight: normalizeWidth(8)
-        }}
-          source={blue_dumbbell}
-        />
-        <View style={{ marginTop: normalizeHeight(10) }}>
+        <View style={{
+          backgroundColor:'#1f243b' || '#2a3d5c',
+          borderRadius: normalize(10),
+          padding: normalize(10),
+          marginRight: normalizeWidth(8),
+          borderWidth:normalize(1),
+          borderColor: 'rgba(255,255,255,0.3)',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Image style={{
+            height: imageHeight,
+            width: imageWidth,
+            aspectRatio: imageAspectRatio,
+          }}
+            source={blue_dumbbell}
+          />
+        </View>
+        <View style={{ 
+           marginLeft: normalizeWidth(10)
+          }}>
           <Text
             style={{
               color: "#d6d3de",
               fontSize: normalizeHeight(15),
-              fontWeight: '500'
+              fontWeight: '500',
+              marginBottom: normalizeHeight(4)
             }}
           >{exerciseName}</Text>
 
           {
             setsList.map((obj, index) => {
+
+              if(setsList.length ==1){
+                return <SingularSetEntry 
+                reps = {obj.reps}
+                weight={obj.weight}
+                />
+              }
               const isLast = index === setsList.length - 1;
+              return (<View key={index}>
+                <IndividualSetEntry
+                  setNumber={index + 1}
+                  reps={obj.reps}
+                  weight={obj.weight}
+                />
+              </View>)
               return (<View
                 key={index}
                 style={{
