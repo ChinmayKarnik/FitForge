@@ -9,6 +9,16 @@ import { databaseController } from '../data';
 import clock from '../images/clock-thick-white.png'
 import stopwatch from '../images/stopwatch-white.png'
 
+const NthSetUI = ({ setNumber}) => {
+  return (
+    <View style={{borderWidth:1}}>
+      <Text style={{ color: 'white' }}>
+        Set {setNumber}
+      </Text>
+    </View>
+  );
+};
+
 const SingularSetEntry = ({ reps, weight }) => {
   return (
     <Text style={{ color: 'white' }}>
@@ -17,7 +27,29 @@ const SingularSetEntry = ({ reps, weight }) => {
   );
 };
 
+const Divider = () => {
+  return (
+    <View
+      style={{
+        width: 1,
+        height: '100%',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        marginHorizontal: 8,
+      }}
+    />
+  );
+};
+
 const IndividualSetEntry = ({ setNumber, reps, weight }) => {
+
+  return (
+  <View style={{
+    flexDirection:'row',
+   alignItems:'center'
+  }}>
+    <NthSetUI setNumber={setNumber}/>
+    <Divider />
+  </View>)
   return (
     <Text style={{ color: 'white' }}>
       Set {setNumber}: {reps} reps • {weight} kg
@@ -109,26 +141,29 @@ const ExerciseSummaryCard = ({ exercises }) => {
 
     }}>
       <View style={{ flexDirection: 'row' }}>
-        <View style={{
-          backgroundColor:'#1f243b' || '#2a3d5c',
-          borderRadius: normalize(10),
-          padding: normalize(10),
-          marginRight: normalizeWidth(8),
-          borderWidth:normalize(1),
-          borderColor: 'rgba(255,255,255,0.3)',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Image style={{
-            height: imageHeight,
-            width: imageWidth,
-            aspectRatio: imageAspectRatio,
-          }}
-            source={blue_dumbbell}
-          />
+        <View>
+          <View style={{
+            backgroundColor: '#1f243b',
+            borderRadius: normalize(10),
+            padding: normalize(10),
+            marginRight: normalizeWidth(8),
+            borderWidth: normalize(1),
+            borderColor: 'rgba(255,255,255,0.3)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Image style={{
+              height: imageHeight,
+              width: imageWidth,
+              aspectRatio: imageAspectRatio,
+            }}
+              source={blue_dumbbell}
+            />
+          </View>
         </View>
         <View style={{ 
-           marginLeft: normalizeWidth(10)
+           marginLeft: normalizeWidth(10),
+           width:'100%'
           }}>
           <Text
             style={{
@@ -150,6 +185,15 @@ const ExerciseSummaryCard = ({ exercises }) => {
               }
               const isLast = index === setsList.length - 1;
               return (<View key={index}>
+                <View
+                style={{
+                  width:'100%',
+                  height: normalize(1),
+                  backgroundColor:'rgba(255,255,255,0.1)',
+                  marginBottom: normalizeHeight(4),
+                  marginTop:normalizeHeight(4)
+                }}
+                ></View>
                 <IndividualSetEntry
                   setNumber={index + 1}
                   reps={obj.reps}
