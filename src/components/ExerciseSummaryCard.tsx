@@ -161,9 +161,9 @@ const ExerciseSummaryCard = ({ exercises }) => {
             />
           </View>
         </View>
-        <View style={{ 
+        <View style={{
            marginLeft: normalizeWidth(10),
-           width:'100%'
+           flex: 1
           }}>
           <Text
             style={{
