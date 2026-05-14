@@ -86,24 +86,43 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
    marginBottom: normalizeHeight(4)
   }}>
     <NthSetUI setNumber={setNumber}/>
-    <Divider 
+    <Divider
     marginLeft={normalizeWidth(15)}
     marginRight={normalizeWidth(20)}
     />
-    <Text style={{
-      color: '#7fb3ff',
-      fontSize: normalizeHeight(13),
-      fontWeight: '600',
-      letterSpacing: 0.3
+    <View style={{
+      flexDirection: 'row',
+      alignItems: 'center'
     }}>
-      {reps} REPS {weight ? `• ${weight} KG` : ''}
-    </Text>
+      <Text style={{
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(13),
+        fontWeight: '600',
+        letterSpacing: 0.3
+      }}>
+        {reps} REPS
+      </Text>
+      {weight ? (
+        <>
+          <View style={{
+            width: normalizeWidth(3.5),
+            height: normalizeHeight(3.5),
+            backgroundColor: '#77778e',
+            borderRadius: normalize(6),
+            marginHorizontal: normalizeWidth(12)
+          }} />
+          <Text style={{
+            color: '#7fb3ff',
+            fontSize: normalizeHeight(13),
+            fontWeight: '600',
+            letterSpacing: 0.3
+          }}>
+            {weight} KG
+          </Text>
+        </>
+      ) : null}
+    </View>
   </View>)
-  return (
-    <Text style={{ color: 'white' }}>
-      Set {setNumber}: {reps} reps • {weight} kg
-    </Text>
-  );
 };
 
 
