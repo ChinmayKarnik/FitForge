@@ -356,7 +356,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
           style={{
             width: normalizeWidthF(23,2),
             aspectRatio: (346.0 / 395.0),
-            marginRight: normalizeWidth(6),
+            marginRight: normalizeWidth(8),
             tintColor: 'rgba(255,255,255,0.5)'
           }
           } />
