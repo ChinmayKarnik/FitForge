@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { normalize, normalizeHeight, normalizeHeightF, normalizeWidth, normalizeWidthF } from '../utils/normalize';
+import { normalize, normalizeF, normalizeHeight, normalizeHeightF, normalizeWidth, normalizeWidthF } from '../utils/normalize';
 import dumbell_image from '../images/dumbell-purple.png'
 import blue_dumbbell from '../images/blue-dumbbell.png'
 import tick_purple_bg from '../images/tick-purple-bg.png'
@@ -15,7 +15,7 @@ const NthSetUI = ({ setNumber}) => {
       borderWidth: normalize(1),
       borderColor: '#5a7bb3',
       borderRadius: normalize(4),
-      backgroundColor:'#232843' || '#1f243b',
+      backgroundColor:'#2A314E',
       paddingHorizontal: normalizeWidthF(13,2),
       paddingVertical: normalizeHeight(3),
     }}>
@@ -247,11 +247,11 @@ const ExerciseSummaryCard = ({ exercises }) => {
       <View style={{ flexDirection: 'row' }}>
         <View>
           <View style={{
-            backgroundColor: '#1f243b',
+            backgroundColor: '#212841',
             borderRadius: normalize(10),
             padding: normalize(10),
             borderWidth: normalize(1),
-            borderColor: 'rgba(255,255,255,0.3)',
+            borderColor: '#3C465A' || 'rgba(255,255,255,0.3)',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -335,18 +335,18 @@ const ExerciseSummaryCard = ({ exercises }) => {
             aspectRatio: (453.0 / 448.0),
             marginRight: normalizeWidth(10),
             marginLeft: normalizeWidth(5),
-            tintColor : '#8c91ad'
+            tintColor : 'rgba(255,255,255,0.5)'
           }
           } />
         <Text style={{
-          color: "#77778e",
+          color: 'rgba(255,255,255,0.5)',
           fontSize: normalizeHeight(12),
           fontWeight: '500'
         }}>{timeText}</Text>
         <View style={{
           width: normalizeWidthF(7,2),
           height: normalizeHeightF(7,2),
-          backgroundColor: '#77778e',
+          backgroundColor: 'rgba(255,255,255,0.5)',
           borderRadius: normalize(12),
           marginLeft: normalizeWidth(15),
           marginRight: normalizeWidth(17)
@@ -356,11 +356,11 @@ const ExerciseSummaryCard = ({ exercises }) => {
             width: normalizeWidthF(23,2),
             aspectRatio: (346.0 / 395.0),
             marginRight: normalizeWidth(6),
-            tintColor: '#8c91ad'
+            tintColor: 'rgba(255,255,255,0.5)'
           }
           } />
         <Text style={{
-          color: "#77778e",
+          color: 'rgba(255,255,255,0.5)',
           fontSize: normalizeHeight(12),
           fontWeight: '500'
         }} >{durationText}</Text>
