@@ -128,14 +128,16 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
       flexDirection: 'row',
       alignItems: 'center'
     }}>
-      <Text style={{
-        color: '#7fb3ff',
-        fontSize: normalizeHeight(12),
-        fontWeight: '600',
-        letterSpacing: 0.3
-      }}>
-        {reps} REPS
-      </Text>
+      <View style={{ width: normalizeWidth(50) }}>
+        <Text style={{
+          color: '#7fb3ff',
+          fontSize: normalizeHeight(12),
+          fontWeight: '600',
+          letterSpacing: 0.3
+        }}>
+          {reps} REPS
+        </Text>
+      </View>
       {weight ? (
         <>
           <View style={{
