@@ -318,7 +318,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
         backgroundColor: "#4d4d75",
         height: normalizeHeight(1),
         width: '100%',
-        marginTop: normalizeHeight(7)
+        marginTop: normalizeHeight(9)
       }} />
 
       <View style={{
@@ -329,29 +329,29 @@ const ExerciseSummaryCard = ({ exercises }) => {
       }}>
         <Image source={clock}
           style={{
-            width: normalizeWidth(13),
+            width: normalizeWidth(14),
             aspectRatio: (453.0 / 448.0),
-            marginRight: normalizeWidth(6),
+            marginRight: normalizeWidth(10),
             marginLeft: normalizeWidth(5),
             tintColor : '#8c91ad'
           }
           } />
         <Text style={{
           color: "#77778e",
-          fontSize: normalizeHeight(13),
+          fontSize: normalizeHeight(12),
           fontWeight: '500'
         }}>{timeText}</Text>
         <View style={{
-          width: normalizeWidth(4),
-          height: normalizeHeight(4),
+          width: normalizeWidthF(7,2),
+          height: normalizeHeightF(7,2),
           backgroundColor: '#77778e',
           borderRadius: normalize(12),
-          marginLeft: normalizeWidth(10),
-          marginRight: normalizeWidth(10)
+          marginLeft: normalizeWidth(15),
+          marginRight: normalizeWidth(17)
         }} />
         <Image source={stopwatch}
           style={{
-            width: normalizeWidth(12),
+            width: normalizeWidthF(23,2),
             aspectRatio: (346.0 / 395.0),
             marginRight: normalizeWidth(6),
             tintColor: '#8c91ad'
@@ -359,7 +359,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
           } />
         <Text style={{
           color: "#77778e",
-          fontSize: normalizeHeight(13),
+          fontSize: normalizeHeight(12),
           fontWeight: '500'
         }} >{durationText}</Text>
       </View>
