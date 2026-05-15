@@ -190,13 +190,16 @@ const ExerciseSummaryCard = ({ exercises }) => {
     if (start && end) {
       const startStr = formatTime(start);
       const endStr = formatTime(end);
-      // If both times are in the same AM/PM, show as '5:30 - 5:37 PM', else '11:55 AM - 12:05 PM'
-      const startAMPM = startStr.split(' ')[1];
-      const endAMPM = endStr.split(' ')[1];
-      if (startAMPM === endAMPM) {
-        timeText = `${startStr.split(' ')[0]} - ${endStr}`;
+      if (startStr === endStr) {
+        timeText = startStr;
       } else {
-        timeText = `${startStr} - ${endStr}`;
+        const startAMPM = startStr.split(' ')[1];
+        const endAMPM = endStr.split(' ')[1];
+        if (startAMPM === endAMPM) {
+          timeText = `${startStr.split(' ')[0]} - ${endStr}`;
+        } else {
+          timeText = `${startStr} - ${endStr}`;
+        }
       }
     }
   }
@@ -284,7 +287,8 @@ const ExerciseSummaryCard = ({ exercises }) => {
             setsList.map((obj, index) => {
 
               if(setsList.length ==1){
-                return <SingularSetEntry 
+                return <SingularSetEntry
+                key={index}
                 reps = {obj.reps}
                 weight={obj.weight}
                 />
