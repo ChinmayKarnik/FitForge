@@ -128,7 +128,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
       flexDirection: 'row',
       alignItems: 'center'
     }}>
-      <View style={{ width: normalizeWidth(50) }}>
+      <View style={{ width: normalizeWidth(60) }}>
         <Text style={{
           color: '#7fb3ff',
           fontSize: normalizeHeight(12),
@@ -145,7 +145,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
             height: normalizeHeight(3.5),
             backgroundColor: '#77778e',
             borderRadius: normalize(6),
-            marginHorizontal: normalizeWidth(12)
+            marginRight: normalizeWidth(12)
           }} />
           <Text style={{
             color: '#7fb3ff',
@@ -248,7 +248,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
         <View>
           <View style={{
             backgroundColor: '#212841',
-            borderRadius: normalize(10),
+            borderRadius: normalize(6),
             padding: normalize(10),
             borderWidth: normalize(1),
             borderColor: '#3C465A' || 'rgba(255,255,255,0.3)',
@@ -259,6 +259,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
               height: imageHeight,
               width: imageWidth,
               aspectRatio: imageAspectRatio,
+              tintColor:'#7FAFFF'
             }}
               source={blue_dumbbell}
             />
