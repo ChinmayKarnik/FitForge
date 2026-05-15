@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeHeight, normalizeHeightF, normalizeWidth, normalizeWidthF } from '../utils/normalize';
 import dumbell_image from '../images/dumbell-purple.png'
 import blue_dumbbell from '../images/blue-dumbbell.png'
 import tick_purple_bg from '../images/tick-purple-bg.png'
@@ -14,14 +14,14 @@ const NthSetUI = ({ setNumber}) => {
     <View style={{
       borderWidth: normalize(1),
       borderColor: '#5a7bb3',
-      borderRadius: normalize(6),
+      borderRadius: normalize(4),
       backgroundColor:'#232843' || '#1f243b',
-      paddingHorizontal: normalizeWidth(9),
-      paddingVertical: normalizeHeight(5),
+      paddingHorizontal: normalizeWidthF(13,2),
+      paddingVertical: normalizeHeight(3),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(13),
+        fontSize: normalizeHeight(11),
         fontWeight: '600',
         letterSpacing: 0.3
       }}>
@@ -36,17 +36,16 @@ const NSetsUI = ({ numSets }) => {
     <View style={{
       borderWidth: normalize(1),
       borderColor: '#5a7bb3',
-      borderRadius: normalize(6),
+      borderRadius: normalize(4),
       backgroundColor: '#1f243b',
-      paddingHorizontal: normalizeWidth(8),
+      paddingHorizontal: normalizeWidth(7),
       paddingVertical: normalizeHeight(3),
       alignSelf: 'flex-start',
-      marginBottom: normalizeHeight(4),
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(13),
-        fontWeight: '700',
+        fontSize: normalizeHeight(10),
+        fontWeight: '600',
         letterSpacing: 0.3
       }}>
         {numSets} SETS
@@ -68,9 +67,8 @@ const SingularSetEntry = ({ reps, weight }) => {
       />
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(14),
+        fontSize: normalizeHeight(11),
         fontWeight: '600',
-        letterSpacing: 0.3
       }}>
         {reps} REPS
       </Text>
@@ -85,9 +83,9 @@ const SingularSetEntry = ({ reps, weight }) => {
           }} />
           <Text style={{
             color: '#7fb3ff',
-            fontSize: normalizeHeight(15),
+            fontSize: normalizeHeight(11),
             fontWeight: '600',
-            letterSpacing: 0.3
+
           }}>
             {weight} KG
           </Text>
@@ -97,11 +95,13 @@ const SingularSetEntry = ({ reps, weight }) => {
   );
 };
 
-const Divider = ({height = normalizeHeight(14),marginLeft,marginRight}) => {
+const Divider = ({height = normalizeHeight(14),marginLeft,marginRight,
+  width = normalizeWidth(1)
+}) => {
   return (
     <View
       style={{
-        width: 1,
+        width,
         height,
         backgroundColor: 'rgba(255,255,255,0.2)',
         marginLeft,
@@ -117,12 +117,12 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
   <View style={{
     flexDirection:'row',
    alignItems:'center',
-   marginBottom: normalizeHeight(4)
   }}>
     <NthSetUI setNumber={setNumber}/>
     <Divider
-    marginLeft={normalizeWidth(15)}
-    marginRight={normalizeWidth(20)}
+    marginLeft={normalizeWidth(12)}
+    marginRight={normalizeWidth(17)}
+    width={normalizeWidthF(3,2)}
     />
     <View style={{
       flexDirection: 'row',
@@ -130,7 +130,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
     }}>
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(14),
+        fontSize: normalizeHeight(12),
         fontWeight: '600',
         letterSpacing: 0.3
       }}>
@@ -147,7 +147,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
           }} />
           <Text style={{
             color: '#7fb3ff',
-            fontSize: normalizeHeight(15),
+            fontSize: normalizeHeight(12),
             fontWeight: '600',
             letterSpacing: 0.3
           }}>
@@ -162,7 +162,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
 
 const ExerciseSummaryCard = ({ exercises }) => {
   const imageAspectRatio = (598.0 / 494.0);
-  const imageHeight = normalize(30);
+  const imageHeight = normalize(20);
   const imageWidth = imageAspectRatio * imageHeight;
 
   const exerciseFromDb = databaseController.getExerciseById(exercises[0].exerciseId)
@@ -248,7 +248,6 @@ const ExerciseSummaryCard = ({ exercises }) => {
             backgroundColor: '#1f243b',
             borderRadius: normalize(10),
             padding: normalize(10),
-            marginRight: normalizeWidth(8),
             borderWidth: normalize(1),
             borderColor: 'rgba(255,255,255,0.3)',
             justifyContent: 'center',
@@ -289,17 +288,18 @@ const ExerciseSummaryCard = ({ exercises }) => {
               const isFirst = (index === 0)
               return (<View key={index}>
                 {
-                  (!!isFirst) && (
+                  (!!isFirst) && (<>
                     <NSetsUI numSets={setsList.length}/>
+                    <View style={{height:normalizeHeight(2)}}></View>
+                    </>
                   )
                 }
                 <View
                 style={{
                   width:'100%',
-                  height: normalize(2),
+                  height: normalizeHeightF(3,2),
                   backgroundColor:'rgba(255,255,255,0.1)',
-                  marginBottom: normalizeHeight(10),
-                  marginTop:normalizeHeight(7)
+                  marginVertical:normalizeHeight(7)
                 }}
                 ></View>
                 <IndividualSetEntry

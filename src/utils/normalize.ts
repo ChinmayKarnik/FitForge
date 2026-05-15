@@ -25,3 +25,15 @@ export function normalizeHeight(size: number): number {
 }
 
 export const normalize = normalizeHeight;
+
+export const normalizeHeightF = (x,y)=>{
+  return normalizeHeight(x)*(1.0/y);
+}
+
+export const normalizeWidthF = (x,y)=> {
+  return normalizeWidth(x)*(1.0/y);
+}
+
+export const normalizeF = (x,y)=>{
+  return normalize(x)*(1.0/y)
+}
