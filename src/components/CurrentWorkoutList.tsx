@@ -13,7 +13,7 @@ const CurrentWorkoutList = (
 ) => {
     const exercises = workout?.exercises || [];
     // Group exercises by exerciseId
-    const separatedExercises = Object.values(
+    const separatedExercisesReverse = Object.values(
         exercises.reduce((acc, exercise) => {
             const id = exercise.exerciseId;
             if (!id) return acc;
@@ -23,10 +23,10 @@ const CurrentWorkoutList = (
             acc[id].push(exercise);
             return acc;
         }, {})
-    );
+    )?.reverse();
      console.log("ckck exercieses sep exercieses",
         exercises,
-        separatedExercises)
+        separatedExercisesReverse)
     const isNoExercises = !exercises.length;
 
     const renderItem = ({item}) => {
@@ -96,7 +96,7 @@ const CurrentWorkoutList = (
             </View>
             
                         <FlatList
-                                data={separatedExercises}
+                                data={separatedExercisesReverse}
                                 contentContainerStyle ={{
                                     paddingBottom: normalizeHeight(100)
                                 }}

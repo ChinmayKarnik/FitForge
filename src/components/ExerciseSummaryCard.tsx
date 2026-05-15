@@ -57,9 +57,43 @@ const NSetsUI = ({ numSets }) => {
 
 const SingularSetEntry = ({ reps, weight }) => {
   return (
-    <Text style={{ color: 'white' }}>
-      {reps} reps • {weight} kg
-    </Text>
+    <View style={{
+      flexDirection: 'row',
+      alignItems: 'center'
+    }}>
+      <NSetsUI numSets={1} />
+      <Divider
+        marginLeft={normalizeWidth(15)}
+        marginRight={normalizeWidth(20)}
+      />
+      <Text style={{
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(14),
+        fontWeight: '600',
+        letterSpacing: 0.3
+      }}>
+        {reps} REPS
+      </Text>
+      {weight ? (
+        <>
+          <View style={{
+            width: normalizeWidth(3.5),
+            height: normalizeHeight(3.5),
+            backgroundColor: '#77778e',
+            borderRadius: normalize(6),
+            marginHorizontal: normalizeWidth(12)
+          }} />
+          <Text style={{
+            color: '#7fb3ff',
+            fontSize: normalizeHeight(15),
+            fontWeight: '600',
+            letterSpacing: 0.3
+          }}>
+            {weight} KG
+          </Text>
+        </>
+      ) : null}
+    </View>
   );
 };
 
