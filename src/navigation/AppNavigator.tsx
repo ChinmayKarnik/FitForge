@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RNExitApp from 'react-native-exit-app';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen, ExercisesScreen, AddExerciseScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import ProfilePhotoView from '../screens/ProfilePhotoView';
@@ -13,9 +12,11 @@ import AddRoutineScreen from '../screens/AddRoutineScreen';
 import EditRoutineScreen from '../screens/EditRoutineScreen';
 import CropPhotoScreen from '../screens/CropPhotoScreen';
 import { DayDetails } from '../screens/DayDetails';
+import ExitAppModal from '../components/ExitAppModal';
 
-import { View, Text, TouchableOpacity, Image, Modal, BackHandler } from 'react-native';
+import { View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
+import { normalizeHeight } from '../utils/normalize';
 
 import activity_icon_unselected from '../images/activity-tab-unselected.png';
 import activity_icon_selected from '../images/activity-tab-selected.png';
@@ -28,7 +29,6 @@ import stats_icon_unselected from '../images/stats-tab-unselected.png';
 import profile_icon_selected from '../images/profile-tab-selected.png';
 import profile_icon_unselected from '../images/profile-tab-unselected.png';
 
-import { normalize, normalizeHeight } from '../utils/normalize';
 
 
 // Color palette for tab icons
@@ -214,91 +214,10 @@ export const AppNavigator = () => {
         </RootStack.Navigator>
       </NavigationContainer>
 
-      <Modal
+      <ExitAppModal
         visible={showExitModal}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowExitModal(false)}
-      >
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.4)'
-        }}>
-          <View style={{ width: '100%', paddingHorizontal: normalize(16) }}>
-            <View style={{
-              backgroundColor: '#262745',
-              borderRadius: normalize(12),
-              borderWidth: normalize(1),
-              borderColor: '#37384b',
-              paddingHorizontal: normalize(16),
-              paddingVertical: normalizeHeight(16)
-            }}>
-              <Text style={{
-                color: '#F2F4F8',
-                fontSize: normalize(18),
-                fontWeight: '500'
-              }}>Exit App?</Text>
-              <Text style={{
-                color: '#acadba',
-                fontSize: normalize(14),
-                fontWeight: '400',
-                marginTop: normalizeHeight(8)
-              }}>Are you sure you want to exit?</Text>
-
-              <View style={{
-                marginTop: normalizeHeight(16),
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-              }}>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#313967',
-                    borderRadius: normalize(8),
-                    paddingVertical: normalize(10),
-                    marginRight: normalize(4),
-                    alignItems: 'center',
-                    borderWidth: normalize(1),
-                    borderColor: '#536196'
-                  }}
-                  onPress={() => setShowExitModal(false)}
-                  activeOpacity={0.8}
-                >
-                  <Text style={{
-                    color: '#e4e5ee',
-                    fontWeight: '500',
-                    fontSize: normalize(15),
-                    letterSpacing: 0.5
-                  }}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#6c1e29',
-                    borderRadius: normalize(8),
-                    paddingVertical: normalize(10),
-                    marginLeft: normalize(4),
-                    alignItems: 'center',
-                    borderWidth: normalize(1),
-                    borderColor: '#a6353f'
-                  }}
-                  onPress={() => RNExitApp.exitApp()}
-                  activeOpacity={0.8}
-                >
-                  <Text style={{
-                    color: '#F2F4F8',
-                    fontWeight: '500',
-                    fontSize: normalize(15),
-                    letterSpacing: 0.5
-                  }}>Exit</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        onClose={() => setShowExitModal(false)}
+      />
     </>
   );
 };
