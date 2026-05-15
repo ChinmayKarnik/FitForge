@@ -38,7 +38,7 @@ const NSetsUI = ({ numSets }) => {
       borderColor: '#5a7bb3',
       borderRadius: normalize(4),
       backgroundColor: '#1f243b',
-      paddingHorizontal: normalizeWidth(7),
+      paddingHorizontal: normalizeWidthF(13,2),
       paddingVertical: normalizeHeight(3),
       alignSelf: 'flex-start',
     }}>
@@ -48,7 +48,7 @@ const NSetsUI = ({ numSets }) => {
         fontWeight: '600',
         letterSpacing: 0.3
       }}>
-        {numSets} SETS
+        {numSets} {numSets === 1 ? 'SET' : 'SETS'}
       </Text>
     </View>
   );
@@ -62,15 +62,17 @@ const SingularSetEntry = ({ reps, weight }) => {
     }}>
       <NSetsUI numSets={1} />
       <Divider
-        marginLeft={normalizeWidth(15)}
-        marginRight={normalizeWidth(20)}
+        marginLeft={normalizeWidth(12)}
+    marginRight={normalizeWidth(17)}
+    width={normalizeWidthF(3,2)}
       />
       <Text style={{
         color: '#7fb3ff',
-        fontSize: normalizeHeight(11),
+        fontSize: normalizeHeight(12),
+        width:normalizeWidth(60),
         fontWeight: '600',
       }}>
-        {reps} REPS
+        {reps} {reps === 1 ? 'REP' : 'REPS'}
       </Text>
       {weight ? (
         <>
@@ -79,11 +81,11 @@ const SingularSetEntry = ({ reps, weight }) => {
             height: normalizeHeight(3.5),
             backgroundColor: '#77778e',
             borderRadius: normalize(6),
-            marginHorizontal: normalizeWidth(12)
+            marginRight: normalizeWidth(12)
           }} />
           <Text style={{
             color: '#7fb3ff',
-            fontSize: normalizeHeight(11),
+            fontSize: normalizeHeight(12),
             fontWeight: '600',
 
           }}>
@@ -135,7 +137,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
           fontWeight: '600',
           letterSpacing: 0.3
         }}>
-          {reps} REPS
+          {reps} {reps === 1 ? 'REP' : 'REPS'}
         </Text>
       </View>
       {weight ? (
