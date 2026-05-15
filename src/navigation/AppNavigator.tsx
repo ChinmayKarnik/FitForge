@@ -1,7 +1,8 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import RNExitApp from 'react-native-exit-app';
 import { ActivityScreen, TrackWorkoutScreen, StatisticsScreen, CalendarScreen, ExercisesScreen, AddExerciseScreen } from '../screens';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import ProfilePhotoView from '../screens/ProfilePhotoView';
@@ -13,7 +14,7 @@ import EditRoutineScreen from '../screens/EditRoutineScreen';
 import CropPhotoScreen from '../screens/CropPhotoScreen';
 import { DayDetails } from '../screens/DayDetails';
 
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Modal, BackHandler } from 'react-native';
 import { stylesTabBar } from './stylesTabBar';
 
 import activity_icon_unselected from '../images/activity-tab-unselected.png';
@@ -177,22 +178,127 @@ const MainTabs = () => (
 );
 
 export const AppNavigator = () => {
+  const navigationRef = useRef<NavigationContainerRef<any>>(null);
+  const [showExitModal, setShowExitModal] = useState(false);
+
+  const handleBackPress = useCallback(() => {
+    console.log("ckck back button pressed");
+    if (navigationRef.current && !navigationRef.current.canGoBack()) {
+      setShowExitModal(true);
+      return true;
+    }
+    return false;
+  }, []);
+
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => sub.remove();
+  }, [handleBackPress]);
+
   return (
-    <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        <RootStack.Screen name="MainTabs" component={MainTabs} />
-        <RootStack.Screen name="Routines" component={RoutinesScreen} />
-        <RootStack.Screen name="RoutineDetails" component={RoutineDetailsScreen} />
-        <RootStack.Screen name="AddRoutine" component={AddRoutineScreen} />
-        <RootStack.Screen name="EditRoutine" component={EditRoutineScreen} />
-        <RootStack.Screen name="Exercises" component={ExercisesScreen} />
-        <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
-        <RootStack.Screen name="EditExercise" component={require('../screens/EditExerciseScreen').default} />
-        <RootStack.Screen name="CropPhoto" component={CropPhotoScreen} />
-        <RootStack.Screen name="ProfilePhotoView" component={ProfilePhotoView} />
-        <RootStack.Screen name="WorkoutDetails" component={WorkoutDetailsScreen} />
-        <RootStack.Screen name="DayDetails" component={DayDetails} />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer ref={navigationRef}>
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="MainTabs" component={MainTabs} />
+          <RootStack.Screen name="Routines" component={RoutinesScreen} />
+          <RootStack.Screen name="RoutineDetails" component={RoutineDetailsScreen} />
+          <RootStack.Screen name="AddRoutine" component={AddRoutineScreen} />
+          <RootStack.Screen name="EditRoutine" component={EditRoutineScreen} />
+          <RootStack.Screen name="Exercises" component={ExercisesScreen} />
+          <RootStack.Screen name="AddExercise" component={AddExerciseScreen} />
+          <RootStack.Screen name="EditExercise" component={require('../screens/EditExerciseScreen').default} />
+          <RootStack.Screen name="CropPhoto" component={CropPhotoScreen} />
+          <RootStack.Screen name="ProfilePhotoView" component={ProfilePhotoView} />
+          <RootStack.Screen name="WorkoutDetails" component={WorkoutDetailsScreen} />
+          <RootStack.Screen name="DayDetails" component={DayDetails} />
+        </RootStack.Navigator>
+      </NavigationContainer>
+
+      <Modal
+        visible={showExitModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowExitModal(false)}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.4)'
+        }}>
+          <View style={{ width: '100%', paddingHorizontal: normalize(16) }}>
+            <View style={{
+              backgroundColor: '#262745',
+              borderRadius: normalize(12),
+              borderWidth: normalize(1),
+              borderColor: '#37384b',
+              paddingHorizontal: normalize(16),
+              paddingVertical: normalizeHeight(16)
+            }}>
+              <Text style={{
+                color: '#F2F4F8',
+                fontSize: normalize(18),
+                fontWeight: '500'
+              }}>Exit App?</Text>
+              <Text style={{
+                color: '#acadba',
+                fontSize: normalize(14),
+                fontWeight: '400',
+                marginTop: normalizeHeight(8)
+              }}>Are you sure you want to exit?</Text>
+
+              <View style={{
+                marginTop: normalizeHeight(16),
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#313967',
+                    borderRadius: normalize(8),
+                    paddingVertical: normalize(10),
+                    marginRight: normalize(4),
+                    alignItems: 'center',
+                    borderWidth: normalize(1),
+                    borderColor: '#536196'
+                  }}
+                  onPress={() => setShowExitModal(false)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={{
+                    color: '#e4e5ee',
+                    fontWeight: '500',
+                    fontSize: normalize(15),
+                    letterSpacing: 0.5
+                  }}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#6c1e29',
+                    borderRadius: normalize(8),
+                    paddingVertical: normalize(10),
+                    marginLeft: normalize(4),
+                    alignItems: 'center',
+                    borderWidth: normalize(1),
+                    borderColor: '#a6353f'
+                  }}
+                  onPress={() => RNExitApp.exitApp()}
+                  activeOpacity={0.8}
+                >
+                  <Text style={{
+                    color: '#F2F4F8',
+                    fontWeight: '500',
+                    fontSize: normalize(15),
+                    letterSpacing: 0.5
+                  }}>Exit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
