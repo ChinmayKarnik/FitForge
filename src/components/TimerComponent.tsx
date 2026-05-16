@@ -5,9 +5,10 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 type TimerComponentProps = {
   formatTime: (time: number) => string;
   elapsedTime: number;
+  showLive?: boolean;
 };
 
-export const TimerComponent: React.FC<TimerComponentProps> = ({ formatTime, elapsedTime }) => {
+export const TimerComponent: React.FC<TimerComponentProps> = ({ formatTime, elapsedTime, showLive = true }) => {
   return (
     <View style={{
       borderWidth: normalize(2),
@@ -23,36 +24,38 @@ export const TimerComponent: React.FC<TimerComponentProps> = ({ formatTime, elap
         width: '100%',
         alignItems: 'center'
       }}>
-        <View style={{
-          position: 'absolute',
-          right: normalizeWidth(15),
-          top: normalizeHeight(18),
-          paddingHorizontal: normalizeWidth(5),
-          paddingVertical: normalizeHeight(4),
-          backgroundColor: '#4ba15c',
-          borderRadius: normalize(8),
-          borderWidth: normalize(1),
-          borderColor: '#b0dbb5'
-        }}>
+        {showLive && (
           <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
+            position: 'absolute',
+            right: normalizeWidth(15),
+            top: normalizeHeight(18),
+            paddingHorizontal: normalizeWidth(5),
+            paddingVertical: normalizeHeight(4),
+            backgroundColor: '#4ba15c',
+            borderRadius: normalize(8),
+            borderWidth: normalize(1),
+            borderColor: '#b0dbb5'
           }}>
             <View style={{
-              backgroundColor: 'white',
-              width: normalizeWidth(5),
-              height: normalizeHeight(5),
-              borderRadius: normalize(20),
-            }}></View>
-            <Text style={{
-              marginLeft: normalizeWidth(4),
-              fontSize: normalize(10),
-              fontWeight: '600',
-              letterSpacing: normalize(0.5),
-              color: '#FFFFFF',
-            }}>LIVE</Text>
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+              <View style={{
+                backgroundColor: 'white',
+                width: normalizeWidth(5),
+                height: normalizeHeight(5),
+                borderRadius: normalize(20),
+              }}></View>
+              <Text style={{
+                marginLeft: normalizeWidth(4),
+                fontSize: normalize(10),
+                fontWeight: '600',
+                letterSpacing: normalize(0.5),
+                color: '#FFFFFF',
+              }}>LIVE</Text>
+            </View>
           </View>
-        </View>
+        )}
         <Text style={{
           paddingTop: normalizeHeight(12),
           fontSize: normalize(30),

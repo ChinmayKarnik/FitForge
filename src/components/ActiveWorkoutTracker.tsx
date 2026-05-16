@@ -131,7 +131,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
 
       </View>
       {activeExercise ? (<>
-        <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} />
+        <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} showLive={isTimerStarted} />
         <View style={styles.exerciseInfoContainer}>
           <Text
             style={styles.currentlyPerformingText}
@@ -185,7 +185,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
       </>) :
         (
           <>
-            <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} />
+            <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} showLive={isTimerStarted} />
             {isTimerStarted ? (
               <>
                 <View style={styles.noActiveExerciseContainer}>
