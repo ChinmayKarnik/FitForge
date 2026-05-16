@@ -15,17 +15,28 @@ export interface ExerciseLog {
   endTime?: number;
 }
 
-export const useWorkoutTimer = () => {
-  const startTime = useRef(Date.now());
+export const useWorkoutTimer = (isTimerActive: boolean) => {
+  const startTime = useRef<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
+    if (!isTimerActive) {
+      return;
+    }
+
+    // Set startTime when timer becomes active for the first time
+    if (startTime.current === null) {
+      startTime.current = Date.now();
+    }
+
     const interval = setInterval(() => {
-      setElapsedTime(Date.now() - startTime.current);
+      if (startTime.current !== null) {
+        setElapsedTime(Date.now() - startTime.current);
+      }
     }, 100);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isTimerActive]);
 
   const formatTime = (milliseconds: number): string => {
     const totalSeconds = Math.floor(milliseconds / 1000);

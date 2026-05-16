@@ -16,14 +16,40 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import CurrentWorkoutList from './CurrentWorkoutList';
 
+const PreStartWorkoutUI = ({ onStartWorkout }: any) => {
+  return (
+    <View style={styles.preStartContainer}>
+      <View style={styles.preStartMainIcon} />
+      <Text style={styles.preStartTitle}>
+        Ready to Forge Your Strength?
+      </Text>
+      <Text style={styles.preStartSubtitle}>
+        Prepare to begin your session and achieve your goals.
+      </Text>
+      <TouchableOpacity
+        style={styles.preStartButton}
+        onPress={onStartWorkout}
+      >
+        <Text style={styles.preStartButtonText}>Start Workout</Text>
+        <View style={styles.preStartButtonIcon} />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 type Props = {
   onEndWorkout: () => void;
 };
 
 export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) => {
 
-  const { startTime, elapsedTime, formatTime } = useWorkoutTimer();
-  const { workout, addExercise, endWorkout } = useWorkoutState(startTime);
+  const [showExercisePicker, setShowExercisePicker] = useState(false);
+  const [showExerciseForm, setShowExerciseForm] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
+  const [isTimerStarted, setIsTimerStarted] = useState(false);
+
+  const { startTime, elapsedTime, formatTime } = useWorkoutTimer(isTimerStarted);
+  const { workout, addExercise, endWorkout } = useWorkoutState(startTime || 0);
   const {
     activeExercise,
     formData,
@@ -32,10 +58,6 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
     saveExercise,
     discardExercise,
   } = useActiveExercise(addExercise);
-
-  const [showExercisePicker, setShowExercisePicker] = useState(false);
-  const [showExerciseForm, setShowExerciseForm] = useState(false);
-  const [showEndModal, setShowEndModal] = useState(false);
 
   const exercises = databaseController.getAllExercises();;
 
@@ -156,34 +178,40 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         (
           <>
             <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} />
-            <View style={styles.noActiveExerciseContainer}>
-              <TouchableOpacity style={styles.startExerciseButton}
-                onPress={() => setShowExercisePicker(true)}
-              >
-                <Image
-                  source={white_plus}
-                  style={styles.startExerciseImage}
-                />
-                <Text
-                  style={styles.buttonText}
-                >Start Exercise</Text>
-              </TouchableOpacity>
+            {isTimerStarted ? (
+              <>
+                <View style={styles.noActiveExerciseContainer}>
+                  <TouchableOpacity style={styles.startExerciseButton}
+                    onPress={() => setShowExercisePicker(true)}
+                  >
+                    <Image
+                      source={white_plus}
+                      style={styles.startExerciseImage}
+                    />
+                    <Text
+                      style={styles.buttonText}
+                    >Start Exercise</Text>
+                  </TouchableOpacity>
 
-              <TouchableOpacity style={styles.endWorkoutButton}
-                onPress={handleEndWorkout}
-              >
-                <Image
-                  source={white_donut}
-                  style={styles.buttonImage}
-                />
-                <Text
-                  style={styles.buttonText}
-                >End Workout </Text>
-              </TouchableOpacity>
-            </View>
-            {
-              <CurrentWorkoutList workout={workout}/> 
-            }
+                  <TouchableOpacity style={styles.endWorkoutButton}
+                    onPress={handleEndWorkout}
+                  >
+                    <Image
+                      source={white_donut}
+                      style={styles.buttonImage}
+                    />
+                    <Text
+                      style={styles.buttonText}
+                    >End Workout </Text>
+                  </TouchableOpacity>
+                </View>
+                {
+                  <CurrentWorkoutList workout={workout}/>
+                }
+              </>
+            ) : (
+              <PreStartWorkoutUI onStartWorkout={() => setIsTimerStarted(true)} />
+            )}
           </>
         )}
       
@@ -341,5 +369,69 @@ const styles = StyleSheet.create({
     width: (112.0 / 115.0) * normalize(12),
     aspectRatio: (115.0 / 112.0),
     marginRight: normalizeWidth(6),
+  },
+  preStartContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: normalizeWidth(16),
+    paddingTop: normalizeHeight(-60),
+  },
+  preStartText: {
+    fontSize: normalize(18),
+    fontWeight: '600',
+    color: '#F2F4F8',
+    textAlign: 'center',
+  },
+  preStartMainIcon: {
+    width: normalizeWidth(80),
+    height: normalizeHeight(80),
+    backgroundColor: '#FFFFFF',
+    borderRadius: normalize(12),
+    marginBottom: normalizeHeight(32),
+  },
+  preStartTitle: {
+    fontSize: normalize(40),
+    fontWeight: '700',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    lineHeight: normalize(48),
+    marginBottom: normalizeHeight(16),
+    letterSpacing: normalize(-0.5),
+  },
+  preStartSubtitle: {
+    fontSize: normalize(16),
+    fontWeight: '500',
+    color: '#D1D5DB',
+    textAlign: 'center',
+    lineHeight: normalize(24),
+    marginHorizontal: normalizeWidth(16),
+    marginBottom: normalizeHeight(40),
+    letterSpacing: normalize(0.1),
+  },
+  preStartButton: {
+    alignItems: 'center',
+    paddingVertical: normalizeHeight(16),
+    paddingHorizontal: normalizeWidth(24),
+    marginHorizontal: normalizeWidth(12),
+    borderWidth: normalize(2),
+    borderColor: '#d1666d',
+    backgroundColor: '#c1464e',
+    borderRadius: normalize(20),
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  preStartButtonText: {
+    fontSize: normalize(18),
+    fontWeight: '600',
+    color: '#FFFFFF',
+    letterSpacing: normalize(0.3),
+  },
+  preStartButtonIcon: {
+    width: normalizeWidth(18),
+    height: normalizeHeight(18),
+    backgroundColor: '#FFFFFF',
+    borderRadius: normalize(3),
+    marginLeft: normalizeWidth(12),
   },
 });
