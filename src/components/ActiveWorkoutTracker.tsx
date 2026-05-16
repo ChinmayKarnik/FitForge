@@ -12,6 +12,8 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
 import white_cross from '../images/cross-icon-white.png'
+import weight_with_lightning from '../images/weight-with-lightning.png';
+import circular_play_icon from '../images/circular-play-icon.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import CurrentWorkoutList from './CurrentWorkoutList';
@@ -19,9 +21,12 @@ import CurrentWorkoutList from './CurrentWorkoutList';
 const PreStartWorkoutUI = ({ onStartWorkout }: any) => {
   return (
     <View style={styles.preStartContainer}>
-      <View style={styles.preStartMainIcon} />
+      <Image
+        source={weight_with_lightning}
+        style={styles.preStartMainIcon}
+      />
       <Text style={styles.preStartTitle}>
-        Ready to Forge Your Strength?
+        Ready to Forge your Strength?
       </Text>
       <Text style={styles.preStartSubtitle}>
         Prepare to begin your session and achieve your goals.
@@ -31,7 +36,10 @@ const PreStartWorkoutUI = ({ onStartWorkout }: any) => {
         onPress={onStartWorkout}
       >
         <Text style={styles.preStartButtonText}>Start Workout</Text>
-        <View style={styles.preStartButtonIcon} />
+        <Image
+          source={circular_play_icon}
+          style={styles.preStartButtonIcon}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -372,10 +380,9 @@ const styles = StyleSheet.create({
   },
   preStartContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: normalizeWidth(16),
-    paddingTop: normalizeHeight(-60),
+    paddingTop:normalizeHeight(70)
   },
   preStartText: {
     fontSize: normalize(18),
@@ -384,24 +391,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   preStartMainIcon: {
-    width: normalizeWidth(80),
-    height: normalizeHeight(80),
-    backgroundColor: '#FFFFFF',
-    borderRadius: normalize(12),
+    width: normalizeWidth(100),
+    height: normalizeWidth(100),
+    aspectRatio: (618.0) / (618.0),
     marginBottom: normalizeHeight(32),
+    resizeMode: 'contain',
   },
   preStartTitle: {
-    fontSize: normalize(40),
-    fontWeight: '700',
+    fontSize: normalize(28),
+    fontWeight: '600',
     color: '#FFFFFF',
     textAlign: 'center',
-    lineHeight: normalize(48),
-    marginBottom: normalizeHeight(16),
+    marginBottom: normalizeHeight(10),
     letterSpacing: normalize(-0.5),
   },
   preStartSubtitle: {
     fontSize: normalize(16),
-    fontWeight: '500',
+    fontWeight: '400',
     color: '#D1D5DB',
     textAlign: 'center',
     lineHeight: normalize(24),
@@ -411,13 +417,13 @@ const styles = StyleSheet.create({
   },
   preStartButton: {
     alignItems: 'center',
-    paddingVertical: normalizeHeight(16),
-    paddingHorizontal: normalizeWidth(24),
+    paddingVertical: normalizeHeight(10),
+    paddingHorizontal: normalizeWidth(70),
     marginHorizontal: normalizeWidth(12),
     borderWidth: normalize(2),
-    borderColor: '#d1666d',
-    backgroundColor: '#c1464e',
-    borderRadius: normalize(20),
+    borderColor: '#ffffff',
+    backgroundColor: '#ab2a2f',
+    borderRadius: normalize(14),
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -428,10 +434,10 @@ const styles = StyleSheet.create({
     letterSpacing: normalize(0.3),
   },
   preStartButtonIcon: {
-    width: normalizeWidth(18),
-    height: normalizeHeight(18),
-    backgroundColor: '#FFFFFF',
-    borderRadius: normalize(3),
-    marginLeft: normalizeWidth(12),
+    width: normalizeWidth(20),
+    aspectRatio: (537.0) / (535.0),
+    marginLeft: normalizeWidth(8),
+    marginTop:normalizeHeight(3),
+    resizeMode: 'contain',
   },
 });
