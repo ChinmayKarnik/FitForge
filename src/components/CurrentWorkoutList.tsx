@@ -35,10 +35,10 @@ const CurrentWorkoutList = (
 
     if (isNoExercises) {
         return (
-            <View 
+            <View
             style={{
                 alignItems:'center',
-                marginTop:normalizeHeight(40)
+                marginTop:normalizeHeight(70)
             }}
             >
             <Image 
