@@ -18,6 +18,7 @@ import push_person from '../images/push-person.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import CurrentWorkoutList from './CurrentWorkoutList';
+import AreYouSureModal from './AreYouSureModal';
 
 const ActiveExerciseInfo = ({ exerciseName, exerciseStartTime, workoutStartTime, elapsedTime }: any) => {
   const exerciseElapsed = elapsedTime - ((exerciseStartTime || 0) - (workoutStartTime || 0));
@@ -105,6 +106,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
   const [showExerciseForm, setShowExerciseForm] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
   const [isTimerStarted, setIsTimerStarted] = useState(false);
+  const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer(isTimerStarted);
   const { workout, addExercise, endWorkout } = useWorkoutState(startTime || 0);
@@ -237,7 +239,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         {!showExerciseForm && (
           <TouchableOpacity
             style={styles.discardExerciseLink}
-            onPress={handleDiscardExercise}
+            onPress={() => setShowDiscardConfirm(true)}
             hitSlop={{ top: 12, bottom: 12, left: 20, right: 20 }}
           >
             <Text style={styles.discardExerciseLinkText}>
@@ -302,6 +304,18 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         visible={showEndModal}
         onClose={() => setShowEndModal(false)}
         navigation={navigation}
+      />
+
+      <AreYouSureModal
+        visible={showDiscardConfirm}
+        onClose={() => setShowDiscardConfirm(false)}
+        title="Discard Exercise?"
+        description="Your progress for this exercise will be lost."
+        primaryLabel="Discard"
+        onPrimary={() => { setShowDiscardConfirm(false); handleDiscardExercise(); }}
+        primaryVariant="destructive"
+        secondaryLabel="Cancel"
+        onSecondary={() => setShowDiscardConfirm(false)}
       />
 
     </View>
