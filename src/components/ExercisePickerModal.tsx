@@ -16,6 +16,7 @@ type Props = {
 export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onClose,
   startButtonText = "Start"
  }: Props) => {
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const isExerciseSelected = !!selectedExercise
@@ -38,6 +39,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
     setSearchQuery('');
     onSelectExercise(exercise);
   };
+
 
   return (
     <Modal
@@ -91,11 +93,12 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
             data={filteredExercises}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               const isSelected = selectedExercise?.id === item.id;
+              const isLast = index === filteredExercises.length - 1;
               return (
                 <TouchableOpacity
-                  style={styles.exerciseItem}
+                  style={[styles.exerciseItem, isLast && { borderBottomWidth: 0 }]}
                   onPress={() => {
                     setSelectedExercise(isSelected ? null : item)}}
                 >
@@ -200,9 +203,9 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
           <FlatList
             data={filteredExercises}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
-                style={styles.exerciseItem}
+                style={[styles.exerciseItem, index === filteredExercises.length - 1 && { borderBottomWidth: 0 }]}
                 onPress={() => handleSelectExercise(item)}
               >
                 <Text style={styles.exerciseItemText}>{item.name}</Text>
