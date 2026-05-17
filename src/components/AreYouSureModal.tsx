@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native';
+import crossIcon from '../images/cross-icon-white.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const AreYouSureModal = ({
@@ -38,16 +39,29 @@ const AreYouSureModal = ({
             borderRadius: normalize(14),
             borderWidth: normalize(1),
             borderColor: '#37384b',
-            paddingTop: normalizeHeight(24),
+            paddingTop: normalizeHeight(20),
             paddingBottom: normalizeHeight(24),
             paddingHorizontal: normalizeWidth(20),
             alignItems: 'center',
           }}>
 
+            {/* Close button row */}
+            <TouchableOpacity
+              onPress={onClose}
+              activeOpacity={0.7}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              style={{ alignSelf: 'flex-end', marginBottom: normalizeHeight(8) }}
+            >
+              <Image
+                source={crossIcon}
+                style={{ width: normalizeWidth(14), height: normalizeWidth(14) * (120.0 / 122.0), tintColor: '#cecfd5' }}
+              />
+            </TouchableOpacity>
+
             {/* Icon */}
             <Image
               source={require('../images/warning-circle-border.png')}
-              style={{ width: normalizeWidth(56), height: normalizeWidth(56) * (585/606), marginBottom: normalizeHeight(16) }}
+              style={{ width: normalizeWidth(56), height: normalizeWidth(56) * (585/606), marginBottom: normalizeHeight(12) }}
             />
 
             {/* Title */}
@@ -62,10 +76,10 @@ const AreYouSureModal = ({
             {/* Description */}
             <Text style={{
               color: '#acadba',
-              fontSize: normalize(13),
+              fontSize: normalize(14),
               fontWeight: '400',
               textAlign: 'center',
-              lineHeight: normalize(19),
+              lineHeight: normalize(20),
               marginBottom: normalizeHeight(24),
             }}>{description}</Text>
 
