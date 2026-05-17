@@ -35,23 +35,29 @@ const ActiveExerciseInfo = ({ exerciseName, exerciseStartTime, workoutStartTime,
   return (
     <View style={styles.exerciseInfoCard}>
 
-      <View style={styles.exerciseIconPlaceholder} />
+      <View style={styles.iconWithLinesRow}>
+        <View style={styles.iconFlankLine} />
+        <View style={styles.exerciseIconPlaceholder} />
+        <View style={styles.iconFlankLine} />
+      </View>
+
       <View style={styles.currentExercisePill}>
         <Text style={styles.currentExercisePillText}>CURRENT EXERCISE</Text>
       </View>
 
-      
-
       <Text style={styles.exerciseNameText}>{exerciseName}</Text>
 
-      <View style={styles.exerciseTimerRow}>
-        <Text style={styles.exerciseTimerLabel}>THIS EXERCISE</Text>
-        <Text style={styles.exerciseTimerValue}>{formatExerciseTime(exerciseElapsed)}</Text>
-      </View>
+      <View style={styles.nameDivider} />
 
       <Text style={styles.instructionText}>
         Go smash that set! Come back here and tap Finish Exercise when done.
       </Text>
+
+      <View style={styles.exerciseTimerBox}>
+        <Text style={styles.exerciseTimerLabel}>THIS EXERCISE</Text>
+        <Text style={styles.exerciseTimerValue}>{formatExerciseTime(exerciseElapsed)}</Text>
+      </View>
+
     </View>
   );
 };
@@ -511,14 +517,41 @@ const styles = StyleSheet.create({
     backgroundColor: '#1c2550',
     marginBottom: normalizeHeight(10),
   },
-  exerciseTimerRow: {
-    marginTop: normalizeHeight(10),
-    borderTopWidth: normalize(1),
-    borderTopColor: '#485172',
-    paddingTop: normalizeHeight(10),
-    alignSelf: 'stretch',
+  iconWithLinesRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: normalizeHeight(2),
+    alignSelf: 'stretch',
+    marginBottom: normalizeHeight(10),
+  },
+  iconFlankLine: {
+    flex: 1,
+    height: normalize(1),
+    backgroundColor: '#485172',
+  },
+  nameDivider: {
+    alignSelf: 'stretch',
+    height: normalize(1),
+    backgroundColor: '#485172',
+    marginTop: normalizeHeight(10),
+    marginBottom: normalizeHeight(10),
+  },
+  instructionText: {
+    fontSize: normalize(13),
+    fontWeight: '400',
+    color: '#A9B1C2',
+    textAlign: 'center',
+    lineHeight: normalize(18),
+    paddingHorizontal: normalizeWidth(8),
+    marginBottom: normalizeHeight(12),
+  },
+  exerciseTimerBox: {
+    alignSelf: 'stretch',
+    backgroundColor: '#1c2238',
+    borderWidth: normalize(1),
+    borderColor: '#485172',
+    borderRadius: normalize(10),
+    paddingVertical: normalizeHeight(10),
+    alignItems: 'center',
   },
   exerciseTimerLabel: {
     color: '#7b92c4',
@@ -532,15 +565,6 @@ const styles = StyleSheet.create({
     fontSize: normalize(22),
     fontWeight: '700',
     letterSpacing: normalize(1),
-  },
-  instructionText: {
-    fontSize: normalize(13),
-    fontWeight: '400',
-    color: '#A9B1C2',
-    textAlign: 'center',
-    lineHeight: normalize(18),
-    marginTop: normalizeHeight(8),
-    paddingHorizontal: normalizeWidth(8),
   },
   discardExerciseLink: {
     alignSelf: 'center',
