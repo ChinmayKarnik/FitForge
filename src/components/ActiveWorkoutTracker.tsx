@@ -330,11 +330,11 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         visible={showBackConfirm}
         onClose={() => setShowBackConfirm(false)}
         title="Leave Workout?"
-        description={"Your workout is still in progress.\nGoing back will discard your session and all recorded data."}
+        description={"Your progress will be lost if you leave now."}
         primaryLabel="Leave"
         onPrimary={() => { setShowBackConfirm(false); onBackPress?.(); }}
         primaryVariant="destructive"
-        secondaryLabel="Keep Going"
+        secondaryLabel="Stay"
         onSecondary={() => setShowBackConfirm(false)}
       />
 
