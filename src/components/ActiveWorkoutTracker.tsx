@@ -450,8 +450,9 @@ const styles = StyleSheet.create({
   preStartContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: normalizeWidth(16),
-    paddingTop:normalizeHeight(70)
+    paddingBottom: normalizeHeight(20),
   },
   preStartText: {
     fontSize: normalize(18),
@@ -460,10 +461,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   preStartMainIcon: {
-    width: normalizeWidth(100),
-    height: normalizeWidth(100),
+    width: normalizeWidth(84),
+    height: normalizeWidth(84),
     aspectRatio: (618.0) / (618.0),
-    marginBottom: normalizeHeight(32),
+    marginBottom: normalizeHeight(24),
     resizeMode: 'contain',
   },
   preStartTitle: {
@@ -481,7 +482,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: normalize(24),
     marginHorizontal: normalizeWidth(16),
-    marginBottom: normalizeHeight(40),
+    marginBottom: normalizeHeight(28),
     letterSpacing: normalize(0.1),
   },
   preStartButton: {
