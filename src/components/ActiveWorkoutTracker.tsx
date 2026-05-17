@@ -14,6 +14,7 @@ import white_donut from '../images/white-donut.png'
 import white_cross from '../images/cross-icon-white.png'
 import weight_with_lightning from '../images/weight-with-lightning.png';
 import circular_play_icon from '../images/circular-play-icon.png';
+import push_person from '../images/push-person.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import CurrentWorkoutList from './CurrentWorkoutList';
@@ -37,7 +38,12 @@ const ActiveExerciseInfo = ({ exerciseName, exerciseStartTime, workoutStartTime,
 
       <View style={styles.iconWithLinesRow}>
         <View style={styles.iconFlankLine} />
-        <View style={styles.exerciseIconPlaceholder} />
+        <View style={styles.exerciseIconCircle}>
+          <Image
+            source={push_person}
+            style={styles.exerciseIconImage}
+          />
+        </View>
         <View style={styles.iconFlankLine} />
       </View>
 
@@ -510,18 +516,28 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 1.5,
   },
-  exerciseIconPlaceholder: {
-    width: normalizeWidth(44),
-    height: normalizeWidth(44),
-    borderRadius: normalizeWidth(22),
+  exerciseIconCircle: {
+    width: normalizeWidth(48),
+    height: normalizeWidth(48),
+    borderRadius: normalizeWidth(24),
     backgroundColor: '#1c2550',
-    marginBottom: normalizeHeight(10),
+    borderWidth: normalize(1),
+    borderColor: '#485172',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: normalizeWidth(12),
+  },
+  exerciseIconImage: {
+    width: normalizeWidth(30),
+    height: normalizeWidth(30) * (287.0 / 332.0),
+    aspectRatio: (332.0) / (287.0),
+    resizeMode: 'contain',
   },
   iconWithLinesRow: {
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'stretch',
-    marginBottom: normalizeHeight(10),
+    marginBottom: normalizeHeight(12),
   },
   iconFlankLine: {
     flex: 1,
@@ -529,7 +545,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#485172',
   },
   nameDivider: {
-    alignSelf: 'stretch',
+    width: '35%',
+    alignSelf: 'center',
     height: normalize(1),
     backgroundColor: '#485172',
     marginTop: normalizeHeight(10),
