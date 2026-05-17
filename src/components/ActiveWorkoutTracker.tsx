@@ -56,7 +56,7 @@ const ActiveExerciseInfo = ({ exerciseName, exerciseStartTime, workoutStartTime,
       <View style={styles.nameDivider} />
 
       <Text style={styles.instructionText}>
-        Go smash that set! Come back here and tap Finish Exercise when done.
+       {"Go smash that set!\n Tap finish exercise when done."}
       </Text>
 
       <View style={styles.exerciseTimerBox}>
@@ -502,19 +502,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   currentExercisePill: {
-    backgroundColor: '#1a2340',
+    backgroundColor:'transparent',
     borderRadius: normalize(20),
-    borderWidth: normalize(1),
-    borderColor: '#3d5280',
+    borderWidth: normalizeF(3,2),
+    borderColor: 'rgba(255,255,255,0.1)',
     paddingHorizontal: normalizeWidth(12),
     paddingVertical: normalizeHeight(4),
     marginBottom: normalizeHeight(12),
   },
   currentExercisePillText: {
-    color: '#7b92c4',
-    fontSize: normalize(11),
-    fontWeight: '700',
-    letterSpacing: 1.5,
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: normalize(12),
+    fontWeight: '400',
+    letterSpacing: normalize(1),
   },
   exerciseIconCircle: {
     width: normalizeWidth(55),
@@ -546,12 +546,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#485172',
   },
   nameDivider: {
-    width: '35%',
+    width: '24%',
     alignSelf: 'center',
-    height: normalize(1),
+    height: normalizeF(3.2,2),
     backgroundColor: '#485172',
-    marginTop: normalizeHeight(10),
-    marginBottom: normalizeHeight(10),
+    marginTop: normalizeHeight(15),
+    marginBottom: normalizeHeight(15),
   },
   instructionText: {
     fontSize: normalize(13),
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: normalize(18),
     paddingHorizontal: normalizeWidth(8),
-    marginBottom: normalizeHeight(12),
+    marginBottom: normalizeHeight(20),
   },
   exerciseTimerBox: {
     alignSelf: 'stretch',
