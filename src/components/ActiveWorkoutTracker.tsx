@@ -310,6 +310,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         workout={workout}
         visible={showEndModal}
         onClose={() => setShowEndModal(false)}
+        onEndWorkout={onEndWorkout}
         navigation={navigation}
       />
 

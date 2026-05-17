@@ -6,7 +6,7 @@ import { getExercisesListFromWorkout } from '../utils/workoutUtils';
 import notepad_with_exclam from '../images/notepad-with-exclaim.png'
 import { databaseController } from '../data';
 
-const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
+const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWorkout }) => {
 
     const dayOfTheWeek = new Date().toLocaleDateString('en-US', { weekday: 'long' });
 
@@ -34,15 +34,11 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation }) => {
     }
 
     const onSaveWorkout = () => {
-        console.log('Saving workout ', workout,navigation);
-        databaseController.addWorkout({...workout,
-            name: workoutName,
-        });
+        databaseController.addWorkout({...workout, name: workoutName});
+        onClose();
+        onEndWorkout?.();
         if (navigation) {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Activity' }],
-            });
+            navigation.navigate('Activity');
         }
     }
    
