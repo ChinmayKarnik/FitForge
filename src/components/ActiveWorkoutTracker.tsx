@@ -107,6 +107,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
   const [showEndModal, setShowEndModal] = useState(false);
   const [isTimerStarted, setIsTimerStarted] = useState(false);
   const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
+  const [showBackConfirm, setShowBackConfirm] = useState(false);
 
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer(isTimerStarted);
   const { workout, addExercise, endWorkout } = useWorkoutState(startTime || 0);
@@ -149,16 +150,21 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
     setShowEndModal(true);
   };
 
+  const handleBackPress = () => {
+    if (isTimerStarted) {
+      setShowBackConfirm(true);
+    } else {
+      onBackPress?.();
+    }
+  };
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (onBackPress) {
-        onBackPress();
-        return true; // Prevent other back handlers from running
-      }
+      handleBackPress();
       return true;
     });
     return () => backHandler.remove();
-  }, [onBackPress]);
+  }, [isTimerStarted, onBackPress]);
 
   return (
     <View style={styles.container}>
@@ -166,7 +172,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={onBackPress}
+          onPress={handleBackPress}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <Image style={styles.backButtonImage}
@@ -316,6 +322,18 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         primaryVariant="destructive"
         secondaryLabel="Cancel"
         onSecondary={() => setShowDiscardConfirm(false)}
+      />
+
+      <AreYouSureModal
+        visible={showBackConfirm}
+        onClose={() => setShowBackConfirm(false)}
+        title="Leave Workout?"
+        description={"Your workout is still in progress.\nGoing back will discard your session and all recorded data."}
+        primaryLabel="Leave"
+        onPrimary={() => { setShowBackConfirm(false); onBackPress?.(); }}
+        primaryVariant="destructive"
+        secondaryLabel="Keep Going"
+        onSecondary={() => setShowBackConfirm(false)}
       />
 
     </View>
