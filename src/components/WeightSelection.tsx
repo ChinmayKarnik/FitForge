@@ -6,6 +6,7 @@ const WeightSelection = ({ value,setValue}) => {
 
   const [inputText,setInputText] = useState(String(value || 0))
   const [isFocused, setIsFocused] = useState(false)
+  const [snapCursorToEnd, setSnapCursorToEnd] = useState(false)
 
 
 
@@ -29,7 +30,12 @@ const WeightSelection = ({ value,setValue}) => {
           selectionColor="#F2F4F8"
           textAlign="center"
           caretHidden={!isFocused}
-          onFocus={() => setIsFocused(true)}
+          selection={snapCursorToEnd ? { start: inputText.length, end: inputText.length } : undefined}
+          onFocus={() => {
+            setIsFocused(true);
+            setSnapCursorToEnd(true);
+            setTimeout(() => setSnapCursorToEnd(false), 0);
+          }}
           onBlur={() => setIsFocused(false)}
         />
       </View>
