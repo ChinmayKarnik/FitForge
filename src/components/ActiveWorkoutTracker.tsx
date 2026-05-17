@@ -18,6 +18,44 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import CurrentWorkoutList from './CurrentWorkoutList';
 
+const ActiveExerciseInfo = ({ exerciseName, exerciseStartTime, workoutStartTime, elapsedTime }: any) => {
+  const exerciseElapsed = elapsedTime - ((exerciseStartTime || 0) - (workoutStartTime || 0));
+
+  const formatExerciseTime = (ms: number) => {
+    const totalSeconds = Math.floor(Math.max(0, ms) / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    if (hours > 0) {
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+
+  return (
+    <View style={styles.exerciseInfoCard}>
+
+      <View style={styles.exerciseIconPlaceholder} />
+      <View style={styles.currentExercisePill}>
+        <Text style={styles.currentExercisePillText}>CURRENT EXERCISE</Text>
+      </View>
+
+      
+
+      <Text style={styles.exerciseNameText}>{exerciseName}</Text>
+
+      <View style={styles.exerciseTimerRow}>
+        <Text style={styles.exerciseTimerLabel}>THIS EXERCISE</Text>
+        <Text style={styles.exerciseTimerValue}>{formatExerciseTime(exerciseElapsed)}</Text>
+      </View>
+
+      <Text style={styles.instructionText}>
+        Go smash that set! Come back here and tap Finish Exercise when done.
+      </Text>
+    </View>
+  );
+};
+
 const PreStartWorkoutUI = ({ onStartWorkout }: any) => {
   return (
     <View style={styles.preStartContainer}>
@@ -132,14 +170,12 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
       </View>
       {activeExercise ? (<>
         <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} showLive={isTimerStarted} />
-        <View style={styles.exerciseInfoContainer}>
-          <Text
-            style={styles.currentlyPerformingText}
-          >{"Currently Performing:"}</Text>
-          <Text
-            style={styles.exerciseNameText}
-          >{activeExercise.name}</Text>
-        </View>
+        <ActiveExerciseInfo
+          exerciseName={activeExercise.name}
+          exerciseStartTime={activeExercise.startTime}
+          workoutStartTime={startTime}
+          elapsedTime={elapsedTime}
+        />
 
         {
           showExerciseForm ? (<>
@@ -181,6 +217,16 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
             style={styles.buttonText}
           >End Workout   </Text>
         </TouchableOpacity>
+
+        {!showExerciseForm && (
+          <TouchableOpacity
+            style={styles.discardExerciseLink}
+            onPress={handleDiscardExercise}
+            hitSlop={{ top: 12, bottom: 12, left: 20, right: 20 }}
+          >
+            <Text style={styles.discardExerciseLinkText}>Wrong exercise? Discard</Text>
+          </TouchableOpacity>
+        )}
 
       </>) :
         (
@@ -231,16 +277,6 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         onSelectExercise={handleSelectExercise}
         onClose={() => setShowExercisePicker(false)}
       />
-
-      {/* <ExerciseFormModal
-        visible={showExerciseForm}
-        exercise={activeExercise}
-        formData={formData}
-        onFormDataChange={setFormData}
-        onSave={handleSaveExercise}
-        onDiscard={handleDiscardExercise}
-        onClose={() => setShowExerciseForm(false)}
-      /> */}
 
       <EndActiveWorkoutModal
         workout={workout}
@@ -299,12 +335,12 @@ const styles = StyleSheet.create({
     color: '#A9B1C2',
   },
   exerciseNameText: {
-    fontSize: normalize(28),
-    fontWeight: '600',
-    lineHeight: normalize(34),
-    letterSpacing: normalize(0.3),
+    fontSize: normalize(26),
+    fontWeight: '700',
+    lineHeight: normalize(32),
+    letterSpacing: normalize(0.2),
     color: '#F2F4F8',
-    marginTop: normalizeHeight(10),
+    textAlign: 'center',
   },
   finishExerciseButton: {
     alignItems: 'center',
@@ -439,5 +475,81 @@ const styles = StyleSheet.create({
     marginLeft: normalizeWidth(8),
     marginTop:normalizeHeight(3),
     resizeMode: 'contain',
+  },
+  exerciseInfoCard: {
+    marginTop: normalizeHeight(12),
+    marginBottom: normalizeHeight(16),
+    marginHorizontal: normalizeWidth(16),
+    backgroundColor: '#262d51',
+    borderWidth: normalize(1),
+    borderColor: '#485172',
+    borderRadius: normalize(16),
+    paddingHorizontal: normalizeWidth(20),
+    paddingTop: normalizeHeight(12),
+    paddingBottom: normalizeHeight(14),
+    alignItems: 'center',
+  },
+  currentExercisePill: {
+    backgroundColor: '#1a2340',
+    borderRadius: normalize(20),
+    borderWidth: normalize(1),
+    borderColor: '#3d5280',
+    paddingHorizontal: normalizeWidth(12),
+    paddingVertical: normalizeHeight(4),
+    marginBottom: normalizeHeight(12),
+  },
+  currentExercisePillText: {
+    color: '#7b92c4',
+    fontSize: normalize(11),
+    fontWeight: '700',
+    letterSpacing: 1.5,
+  },
+  exerciseIconPlaceholder: {
+    width: normalizeWidth(44),
+    height: normalizeWidth(44),
+    borderRadius: normalizeWidth(22),
+    backgroundColor: '#1c2550',
+    marginBottom: normalizeHeight(10),
+  },
+  exerciseTimerRow: {
+    marginTop: normalizeHeight(10),
+    borderTopWidth: normalize(1),
+    borderTopColor: '#485172',
+    paddingTop: normalizeHeight(10),
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    marginBottom: normalizeHeight(2),
+  },
+  exerciseTimerLabel: {
+    color: '#7b92c4',
+    fontSize: normalize(11),
+    fontWeight: '600',
+    letterSpacing: 1.2,
+    marginBottom: normalizeHeight(2),
+  },
+  exerciseTimerValue: {
+    color: '#F2F4F8',
+    fontSize: normalize(22),
+    fontWeight: '700',
+    letterSpacing: normalize(1),
+  },
+  instructionText: {
+    fontSize: normalize(13),
+    fontWeight: '400',
+    color: '#A9B1C2',
+    textAlign: 'center',
+    lineHeight: normalize(18),
+    marginTop: normalizeHeight(8),
+    paddingHorizontal: normalizeWidth(8),
+  },
+  discardExerciseLink: {
+    alignSelf: 'center',
+    marginTop: normalizeHeight(18),
+  },
+  discardExerciseLinkText: {
+    color: 'rgba(255,255,255,0.35)',
+    fontSize: normalize(13),
+    fontWeight: '400',
+    textAlign: 'center',
   },
 });
