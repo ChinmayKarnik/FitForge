@@ -54,11 +54,19 @@ export const useWorkoutTimer = (isTimerActive: boolean) => {
   };
 };
 
-export const useWorkoutState = (startTime: number) => {
+export const useWorkoutState = (isStarted: boolean) => {
   const [workout, setWorkout] = useState<WorkoutState>({
-    startTime,
+    startTime: 0,
     exercises: [],
   });
+  const initialized = useRef(false);
+
+  useEffect(() => {
+    if (isStarted && !initialized.current) {
+      initialized.current = true;
+      setWorkout({ startTime: Date.now(), exercises: [] });
+    }
+  }, [isStarted]);
 
   const addExercise = (exercise: ExerciseLog) => {
     setWorkout((prev) => ({
@@ -72,7 +80,7 @@ export const useWorkoutState = (startTime: number) => {
     const finalWorkout: WorkoutState = {
       ...workout,
       endTime,
-      duration: endTime - startTime,
+      duration: endTime - workout.startTime,
     };
     setWorkout(finalWorkout);
     return finalWorkout;

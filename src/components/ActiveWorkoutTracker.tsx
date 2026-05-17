@@ -110,7 +110,8 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
   const [showBackConfirm, setShowBackConfirm] = useState(false);
 
   const { startTime, elapsedTime, formatTime } = useWorkoutTimer(isTimerStarted);
-  const { workout, addExercise, endWorkout } = useWorkoutState(startTime || 0);
+  
+  const { workout, addExercise, endWorkout } = useWorkoutState(isTimerStarted);
   const {
     activeExercise,
     formData,
