@@ -182,23 +182,27 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
       </View>
       {activeExercise ? (<>
         <TimerComponent formatTime={formatTime} elapsedTime={elapsedTime} showLive={isTimerStarted} />
-        <ActiveExerciseInfo
-          exerciseName={activeExercise.name}
-          exerciseStartTime={activeExercise.startTime}
-          workoutStartTime={startTime}
-          elapsedTime={elapsedTime}
-        />
+        {!showExerciseForm && (
+          <ActiveExerciseInfo
+            exerciseName={activeExercise.name}
+            exerciseStartTime={activeExercise.startTime}
+            workoutStartTime={startTime}
+            elapsedTime={elapsedTime}
+          />
+        )}
 
         {
           showExerciseForm ? (<>
-            <ExerciseForm 
-            exerciseName ={activeExercise.name}
-            onCloseForm = {onCloseExerciseForm}
-            exerciseId = {activeExercise.id}
-            onFormDataChange = {setFormData}
-            onSave ={handleSaveExercise}
-            onDiscard = {handleDiscardExercise}
-            />
+            <View style={styles.exerciseFormWrapper}>
+              <ExerciseForm
+              exerciseName ={activeExercise.name}
+              onCloseForm = {onCloseExerciseForm}
+              exerciseId = {activeExercise.id}
+              onFormDataChange = {setFormData}
+              onSave ={handleSaveExercise}
+              onDiscard = {handleDiscardExercise}
+              />
+            </View>
           </>) : (
             <>
               <TouchableOpacity style={styles.finishExerciseButton}
@@ -236,7 +240,10 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
             onPress={handleDiscardExercise}
             hitSlop={{ top: 12, bottom: 12, left: 20, right: 20 }}
           >
-            <Text style={styles.discardExerciseLinkText}>Wrong exercise? Discard</Text>
+            <Text style={styles.discardExerciseLinkText}>
+              {'Wrong exercise? '}
+              <Text style={styles.discardExerciseLinkUnderline}>Discard</Text>
+            </Text>
           </TouchableOpacity>
         )}
 
@@ -586,12 +593,22 @@ const styles = StyleSheet.create({
   },
   discardExerciseLink: {
     alignSelf: 'center',
-    marginTop: normalizeHeight(18),
+    marginTop: normalizeHeight(10),
   },
   discardExerciseLinkText: {
     color: 'rgba(255,255,255,0.35)',
     fontSize: normalize(13),
     fontWeight: '400',
     textAlign: 'center',
+  },
+  discardExerciseLinkUnderline: {
+    color: 'rgba(255,255,255,0.35)',
+    fontSize: normalize(13),
+    fontWeight: '400',
+    textDecorationLine: 'underline',
+  },
+  exerciseFormWrapper: {
+    marginTop: normalizeHeight(16),
+    width: '100%',
   },
 });
