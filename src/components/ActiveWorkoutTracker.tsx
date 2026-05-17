@@ -7,7 +7,7 @@ import { ExercisePickerModal } from './ExercisePickerModal';
 import { ExerciseFormModal } from './ExerciseFormModal';
 import { TimerComponent } from './TimerComponent';
 import { Exercise } from '../data/types';
-import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeF, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
@@ -491,12 +491,12 @@ const styles = StyleSheet.create({
   exerciseInfoCard: {
     marginTop: normalizeHeight(12),
     marginBottom: normalizeHeight(16),
-    marginHorizontal: normalizeWidth(16),
-    backgroundColor: '#262d51',
-    borderWidth: normalize(1),
+    marginHorizontal: normalizeWidth(30),
+    backgroundColor: '#20273d',
+    borderWidth: normalizeF(3,2),
     borderColor: '#485172',
     borderRadius: normalize(16),
-    paddingHorizontal: normalizeWidth(20),
+    paddingHorizontal: normalizeWidth(30),
     paddingTop: normalizeHeight(12),
     paddingBottom: normalizeHeight(14),
     alignItems: 'center',
@@ -517,20 +517,21 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
   },
   exerciseIconCircle: {
-    width: normalizeWidth(48),
-    height: normalizeWidth(48),
-    borderRadius: normalizeWidth(24),
-    backgroundColor: '#1c2550',
-    borderWidth: normalize(1),
+    width: normalizeWidth(55),
+    height: normalizeWidth(55),
+    borderRadius: normalizeWidth(30),
+    backgroundColor: 'transparent',
+    borderWidth: normalizeF(3,2),
     borderColor: '#485172',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: normalizeWidth(12),
   },
   exerciseIconImage: {
-    width: normalizeWidth(30),
-    height: normalizeWidth(30) * (287.0 / 332.0),
+    width: normalizeWidth(25),
+    height: normalizeWidth(25) * (287.0 / 332.0),
     aspectRatio: (332.0) / (287.0),
+    tintColor: 'rgba(255,255,255,0.65)',
     resizeMode: 'contain',
   },
   iconWithLinesRow: {
@@ -541,7 +542,7 @@ const styles = StyleSheet.create({
   },
   iconFlankLine: {
     flex: 1,
-    height: normalize(1),
+    height: normalizeF(3,2),
     backgroundColor: '#485172',
   },
   nameDivider: {
