@@ -152,11 +152,11 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
             <TouchableOpacity
               style={{
                 flex: 1,
-                backgroundColor: isExerciseSelected ? '#404d7c':'#1f2239',
+                backgroundColor: isExerciseSelected ? '#404d7c' : '#252a42',
                 paddingVertical: normalize(14),
                 borderRadius: normalize(12),
                 borderWidth: normalize(1),
-                borderColor: isExerciseSelected ? '#7a94cd': '#2f334a',
+                borderColor: isExerciseSelected ? '#7a94cd' : '#323650',
                 marginLeft: normalizeWidth(2),
                 alignItems: 'center',
               }}
@@ -169,7 +169,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
               }}
             >
               <Text style={{
-                color: isExerciseSelected ? '#fefeff': '#dbdde4',
+                color: isExerciseSelected ? '#fefeff' : '#6b6d82',
                 fontSize: normalize(16),
                 fontWeight: '600'
               }}>{startButtonText}</Text>
