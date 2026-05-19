@@ -70,11 +70,15 @@ const RestTimeUI = ({
   nextExerciseTimestamp,
   totalRestSeconds,
   routineName,
+  nextSetNumber,
+  totalSets,
 }: {
   nextExercise: any;
   nextExerciseTimestamp: number;
   totalRestSeconds: number;
   routineName: string;
+  nextSetNumber: number;
+  totalSets: number;
 }) => {
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
@@ -92,7 +96,7 @@ const RestTimeUI = ({
   const isRestOver = remainingMs <= 0;
   const fillFraction = totalRestSeconds > 0 ? Math.max(0, remainingMs) / (totalRestSeconds * 1000) : 0;
   const ringSize = normalizeWidth(110);
-  const strokeWidth = normalizeWidth(11);
+  const strokeWidth = normalizeWidth(6);
 
   const formatCountdown = (secs: number) => {
     const m = Math.floor(secs / 60).toString().padStart(2, '0');
@@ -129,6 +133,9 @@ const RestTimeUI = ({
         <View style={restStyles.infoColumn}>
           <Text style={restStyles.upNextLabel}>UP NEXT</Text>
           <Text style={restStyles.exerciseNameText} numberOfLines={2}>{nextExercise?.name ?? '—'}</Text>
+          <View style={restStyles.setPill}>
+            <Text style={restStyles.setPillText}>Set {nextSetNumber} of {totalSets}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -306,6 +313,8 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
               nextExerciseTimestamp={nextExerciseTime.current ?? 0}
               totalRestSeconds={restDurationRef.current}
               routineName={routine?.name ?? ''}
+              nextSetNumber={workout.current.exercises.filter((e: any) => e.exerciseId === (nextExerciseRef.current as any)?.id).length + 1}
+              totalSets={(nextExerciseRef.current as any)?.sets ?? 1}
             />
           ) : (<><Text>before first </Text></>)
         ) : initialLoadingDone.current ? (
@@ -470,6 +479,22 @@ const restStyles = StyleSheet.create({
     fontWeight: '700',
     color: '#F2F4F8',
     lineHeight: normalize(28),
+  },
+  setPill: {
+    alignSelf: 'flex-start',
+    marginTop: normalizeHeight(6),
+    paddingHorizontal: normalizeWidth(10),
+    paddingVertical: normalizeHeight(3),
+    borderRadius: normalize(20),
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.07)',
+  },
+  setPillText: {
+    fontSize: normalize(11),
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.6)',
+    letterSpacing: normalize(0.5),
   },
 });
 
