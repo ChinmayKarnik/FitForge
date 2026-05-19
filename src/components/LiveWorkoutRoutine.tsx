@@ -14,6 +14,48 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
 
+const RestTimeUI = ({
+  nextExercise,
+  nextExerciseTimestamp,
+}: {
+  nextExercise: any;
+  nextExerciseTimestamp: number;
+}) => {
+  const remainingMs = nextExerciseTimestamp - Date.now();
+  const remainingSeconds = Math.max(0, Math.floor(remainingMs / 1000));
+  const isRestOver = remainingMs <= 0;
+
+  const formatCountdown = (secs: number) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
+
+  return (
+    <View style={restStyles.card}>
+      <View style={restStyles.pillRow}>
+        <View style={restStyles.pill}>
+          <Text style={restStyles.pillText}>{isRestOver ? 'REST OVER' : 'REST TIME'}</Text>
+        </View>
+      </View>
+
+      <Text style={restStyles.upNextLabel}>UP NEXT</Text>
+      <Text style={restStyles.exerciseName}>{nextExercise?.name ?? '—'}</Text>
+
+      <View style={restStyles.divider} />
+
+      <View style={restStyles.countdownBox}>
+        <Text style={restStyles.countdownLabel}>
+          {isRestOver ? 'Ready to go!' : 'Starting in'}
+        </Text>
+        {!isRestOver && (
+          <Text style={restStyles.countdownValue}>{formatCountdown(remainingSeconds)}</Text>
+        )}
+      </View>
+    </View>
+  );
+};
+
 export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout: () => void; navigation?: any }) => {
   const handleBackPress = useCallback(() => {
     onEndWorkout();
@@ -48,6 +90,9 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     endTime: startTimeRef.current,
     exercises: []
   });
+
+  const isInRestTime = !isExerciseInProgress && workout.current.exercises.length > 0 && !!nextExerciseRef.current;
+  const isInitialWaitTime = !isExerciseInProgress && workout.current.exercises.length === 0 && !!nextExerciseRef.current;
 
   const getNthExerciseInRoutine = ( n: number) => {
     const arr = [...routine.exercises];
@@ -173,13 +218,12 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
 
       { !isExerciseInProgress && (
         nextExerciseRef.current ? (
-          nextExerciseMessage && (
-            <View style={styles.middleSectionContainer}>
-              <Text style={styles.nextExerciseText}>{nextExerciseMessage}</Text>
-              <Text style={styles.middleExerciseName}>{nextExerciseRef.current.name}</Text>
-              <Text style={styles.middleSetNumber}>Set {workout.current.exercises.length + 1}</Text>
-            </View>
-          )
+          isInRestTime ? (
+            <RestTimeUI
+              nextExercise={nextExerciseRef.current}
+              nextExerciseTimestamp={nextExerciseTime.current ?? 0}
+            />
+          ) : (<><Text>before first </Text></>)
         ) : initialLoadingDone.current ? (
           <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
             <Text style={styles.finishedText}>Your workout has finished.</Text>
@@ -249,6 +293,76 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     </View>
   );
 };
+
+const restStyles = StyleSheet.create({
+  card: {
+    marginTop: normalizeHeight(12),
+    marginBottom: normalizeHeight(16),
+    marginHorizontal: normalizeWidth(30),
+    backgroundColor: '#20273d',
+    borderWidth: 2,
+    borderColor: '#485172',
+    borderRadius: normalize(16),
+    paddingHorizontal: normalizeWidth(24),
+    paddingTop: normalizeHeight(16),
+    paddingBottom: normalizeHeight(18),
+    alignItems: 'center',
+  },
+  pillRow: {
+    marginBottom: normalizeHeight(14),
+  },
+  pill: {
+    backgroundColor: 'transparent',
+    borderRadius: normalize(20),
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,255,255,0.12)',
+    paddingHorizontal: normalizeWidth(14),
+    paddingVertical: normalizeHeight(4),
+  },
+  pillText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: normalize(11),
+    fontWeight: '500',
+    letterSpacing: normalize(1.5),
+  },
+  upNextLabel: {
+    fontSize: normalize(11),
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.45)',
+    letterSpacing: normalize(1.5),
+    marginBottom: normalizeHeight(4),
+  },
+  exerciseName: {
+    fontSize: normalize(24),
+    fontWeight: '700',
+    color: '#F2F4F8',
+    textAlign: 'center',
+    letterSpacing: normalize(0.2),
+  },
+  divider: {
+    width: '24%',
+    height: 2,
+    backgroundColor: '#485172',
+    marginTop: normalizeHeight(14),
+    marginBottom: normalizeHeight(14),
+  },
+  countdownBox: {
+    alignItems: 'center',
+  },
+  countdownLabel: {
+    fontSize: normalize(12),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.5)',
+    letterSpacing: normalize(1),
+    marginBottom: normalizeHeight(4),
+  },
+  countdownValue: {
+    fontSize: normalize(36),
+    fontWeight: '700',
+    color: '#4ECDC4',
+    letterSpacing: normalize(1),
+  },
+});
 
 const styles = StyleSheet.create({
     middleSectionContainer: {
