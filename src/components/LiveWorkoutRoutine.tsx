@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, BackHandler } from 'react-native';
+import Svg, { Circle } from 'react-native-svg';
 import { useFocusEffect } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { SelectRoutineLive } from './SelectRoutineLive';
@@ -29,29 +30,30 @@ const CircularRing = ({
   innerBgColor: string;
   children?: React.ReactNode;
 }) => {
-  const halfSize = size / 2;
   const clamped = Math.min(1, Math.max(0, fillFraction));
-  const rightRotation = clamped >= 0.5 ? 0 : (0.5 - clamped) * 360;
-  const leftRotation = clamped > 0.5 ? -180 + (clamped - 0.5) * 360 : -180;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const dashOffset = circumference * (1 - clamped);
+  const center = size / 2;
   const innerSize = size - strokeWidth * 2;
 
   return (
     <View style={{ width: size, height: size }}>
-      <View style={{ position: 'absolute', width: size, height: size, borderRadius: halfSize, backgroundColor: '#2a3050' }} />
-      <View style={{ position: 'absolute', left: halfSize, width: halfSize, height: size, overflow: 'hidden' }}>
-        <View style={{
-          position: 'absolute', left: -halfSize, width: size, height: size,
-          borderRadius: halfSize, backgroundColor: progressColor,
-          transform: [{ rotate: `${rightRotation}deg` }],
-        }} />
-      </View>
-      <View style={{ position: 'absolute', left: 0, width: halfSize, height: size, overflow: 'hidden' }}>
-        <View style={{
-          position: 'absolute', left: 0, width: size, height: size,
-          borderRadius: halfSize, backgroundColor: progressColor,
-          transform: [{ rotate: `${leftRotation}deg` }],
-        }} />
-      </View>
+      <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
+        {/* Track */}
+        <Circle
+          cx={center} cy={center} r={radius}
+          stroke="#2a3050" strokeWidth={strokeWidth} fill="none"
+        />
+        {/* Progress arc */}
+        <Circle
+          cx={center} cy={center} r={radius}
+          stroke={progressColor} strokeWidth={strokeWidth} fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
+          strokeLinecap="round"
+        />
+      </Svg>
       <View style={{
         position: 'absolute', top: strokeWidth, left: strokeWidth,
         width: innerSize, height: innerSize, borderRadius: innerSize / 2,
@@ -74,10 +76,21 @@ const RestTimeUI = ({
   totalRestSeconds: number;
   routineName: string;
 }) => {
-  const remainingMs = nextExerciseTimestamp - Date.now();
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    let rafId: number;
+    const tick = () => {
+      setNow(Date.now());
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
+  const remainingMs = nextExerciseTimestamp - now;
   const remainingSeconds = Math.max(0, Math.floor(remainingMs / 1000));
   const isRestOver = remainingMs <= 0;
-  const fillFraction = totalRestSeconds > 0 ? remainingSeconds / totalRestSeconds : 0;
+  const fillFraction = totalRestSeconds > 0 ? Math.max(0, remainingMs) / (totalRestSeconds * 1000) : 0;
   const ringSize = normalizeWidth(110);
   const strokeWidth = normalizeWidth(11);
 
