@@ -14,16 +14,72 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
 
+const CircularRing = ({
+  fillFraction,
+  size,
+  strokeWidth,
+  progressColor,
+  innerBgColor,
+  children,
+}: {
+  fillFraction: number;
+  size: number;
+  strokeWidth: number;
+  progressColor: string;
+  innerBgColor: string;
+  children?: React.ReactNode;
+}) => {
+  const halfSize = size / 2;
+  const clamped = Math.min(1, Math.max(0, fillFraction));
+  const rightRotation = clamped >= 0.5 ? 0 : (0.5 - clamped) * 360;
+  const leftRotation = clamped > 0.5 ? -180 + (clamped - 0.5) * 360 : -180;
+  const innerSize = size - strokeWidth * 2;
+
+  return (
+    <View style={{ width: size, height: size }}>
+      <View style={{ position: 'absolute', width: size, height: size, borderRadius: halfSize, backgroundColor: '#2a3050' }} />
+      <View style={{ position: 'absolute', left: halfSize, width: halfSize, height: size, overflow: 'hidden' }}>
+        <View style={{
+          position: 'absolute', left: -halfSize, width: size, height: size,
+          borderRadius: halfSize, backgroundColor: progressColor,
+          transform: [{ rotate: `${rightRotation}deg` }],
+        }} />
+      </View>
+      <View style={{ position: 'absolute', left: 0, width: halfSize, height: size, overflow: 'hidden' }}>
+        <View style={{
+          position: 'absolute', left: 0, width: size, height: size,
+          borderRadius: halfSize, backgroundColor: progressColor,
+          transform: [{ rotate: `${leftRotation}deg` }],
+        }} />
+      </View>
+      <View style={{
+        position: 'absolute', top: strokeWidth, left: strokeWidth,
+        width: innerSize, height: innerSize, borderRadius: innerSize / 2,
+        backgroundColor: innerBgColor, alignItems: 'center', justifyContent: 'center',
+      }}>
+        {children}
+      </View>
+    </View>
+  );
+};
+
 const RestTimeUI = ({
   nextExercise,
   nextExerciseTimestamp,
+  totalRestSeconds,
+  routineName,
 }: {
   nextExercise: any;
   nextExerciseTimestamp: number;
+  totalRestSeconds: number;
+  routineName: string;
 }) => {
   const remainingMs = nextExerciseTimestamp - Date.now();
   const remainingSeconds = Math.max(0, Math.floor(remainingMs / 1000));
   const isRestOver = remainingMs <= 0;
+  const fillFraction = totalRestSeconds > 0 ? remainingSeconds / totalRestSeconds : 0;
+  const ringSize = normalizeWidth(110);
+  const strokeWidth = normalizeWidth(11);
 
   const formatCountdown = (secs: number) => {
     const m = Math.floor(secs / 60).toString().padStart(2, '0');
@@ -33,24 +89,34 @@ const RestTimeUI = ({
 
   return (
     <View style={restStyles.card}>
-      <View style={restStyles.pillRow}>
-        <View style={restStyles.pill}>
-          <Text style={restStyles.pillText}>{isRestOver ? 'REST OVER' : 'REST TIME'}</Text>
+      <View style={restStyles.headerRow}>
+        <View style={restStyles.iconPlaceholder} />
+        <View style={restStyles.headerTextGroup}>
+          <Text style={restStyles.headerLabel}>CURRENT ROUTINE</Text>
+          <Text style={restStyles.headerRoutineName} numberOfLines={1}>{routineName}</Text>
         </View>
       </View>
-
-      <Text style={restStyles.upNextLabel}>UP NEXT</Text>
-      <Text style={restStyles.exerciseName}>{nextExercise?.name ?? '—'}</Text>
-
-      <View style={restStyles.divider} />
-
-      <View style={restStyles.countdownBox}>
-        <Text style={restStyles.countdownLabel}>
-          {isRestOver ? 'Ready to go!' : 'Starting in'}
-        </Text>
-        {!isRestOver && (
-          <Text style={restStyles.countdownValue}>{formatCountdown(remainingSeconds)}</Text>
-        )}
+      <View style={restStyles.headerDivider} />
+      <View style={restStyles.bodyRow}>
+        <View style={restStyles.ringColumn}>
+          <CircularRing
+            fillFraction={fillFraction}
+            size={ringSize}
+            strokeWidth={strokeWidth}
+            progressColor="#3a5bbf"
+            innerBgColor="#1c2238"
+          >
+            <Text style={restStyles.ringLabel}>{isRestOver ? 'REST\nOVER' : 'REST\nTIME'}</Text>
+            {!isRestOver && (
+              <Text style={restStyles.ringCountdown}>{formatCountdown(remainingSeconds)}</Text>
+            )}
+          </CircularRing>
+        </View>
+        <View style={restStyles.verticalDivider} />
+        <View style={restStyles.infoColumn}>
+          <Text style={restStyles.upNextLabel}>UP NEXT</Text>
+          <Text style={restStyles.exerciseNameText} numberOfLines={2}>{nextExercise?.name ?? '—'}</Text>
+        </View>
       </View>
     </View>
   );
@@ -84,6 +150,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const [isExerciseInProgress,setIsExerciseInProgress] = useState(false);
   const nextExerciseRef = useRef(null);
   const nextExerciseTime = useRef(null);
+  const restDurationRef = useRef(0);
   const initialLoadingDone = useRef(null);
   const workout = useRef({
     startTime: startTimeRef.current,
@@ -190,8 +257,10 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
       endTime: endTime
     };
 
-    nextExerciseRef.current = getNthExerciseInRoutine(workout.current.exercises.length+1) 
-    nextExerciseTime.current = endTime + getNthExerciseInRoutine(workout.current.exercises.length).rest * 1000 
+    nextExerciseRef.current = getNthExerciseInRoutine(workout.current.exercises.length+1);
+    const restExercise = getNthExerciseInRoutine(workout.current.exercises.length);
+    restDurationRef.current = restExercise?.rest ?? 0;
+    nextExerciseTime.current = endTime + restDurationRef.current * 1000;
      setIsExerciseInProgress(false);
     setActiveExercise(null);
     setShowFinishModal(false)
@@ -222,6 +291,8 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
             <RestTimeUI
               nextExercise={nextExerciseRef.current}
               nextExerciseTimestamp={nextExerciseTime.current ?? 0}
+              totalRestSeconds={restDurationRef.current}
+              routineName={routine?.name ?? ''}
             />
           ) : (<><Text>before first </Text></>)
         ) : initialLoadingDone.current ? (
@@ -298,69 +369,94 @@ const restStyles = StyleSheet.create({
   card: {
     marginTop: normalizeHeight(12),
     marginBottom: normalizeHeight(16),
-    marginHorizontal: normalizeWidth(30),
+    marginHorizontal: normalizeWidth(16),
     backgroundColor: '#20273d',
-    borderWidth: 2,
-    borderColor: '#485172',
+    borderWidth: 1,
+    borderColor: '#3a4060',
     borderRadius: normalize(16),
-    paddingHorizontal: normalizeWidth(24),
-    paddingTop: normalizeHeight(16),
-    paddingBottom: normalizeHeight(18),
+    overflow: 'hidden',
+  },
+  headerRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: normalizeWidth(16),
+    paddingVertical: normalizeHeight(12),
+    gap: normalizeWidth(10),
   },
-  pillRow: {
-    marginBottom: normalizeHeight(14),
+  iconPlaceholder: {
+    width: normalizeWidth(38),
+    height: normalizeWidth(38),
+    borderRadius: normalize(8),
+    backgroundColor: '#2f3d6e',
+    borderWidth: 1,
+    borderColor: '#485172',
   },
-  pill: {
-    backgroundColor: 'transparent',
-    borderRadius: normalize(20),
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,255,255,0.12)',
-    paddingHorizontal: normalizeWidth(14),
-    paddingVertical: normalizeHeight(4),
+  headerTextGroup: {
+    flex: 1,
   },
-  pillText: {
-    color: 'rgba(255,255,255,0.6)',
-    fontSize: normalize(11),
-    fontWeight: '500',
-    letterSpacing: normalize(1.5),
-  },
-  upNextLabel: {
-    fontSize: normalize(11),
+  headerLabel: {
+    fontSize: normalize(10),
     fontWeight: '500',
     color: 'rgba(255,255,255,0.45)',
-    letterSpacing: normalize(1.5),
-    marginBottom: normalizeHeight(4),
+    letterSpacing: normalize(1.2),
   },
-  exerciseName: {
-    fontSize: normalize(24),
+  headerRoutineName: {
+    fontSize: normalize(17),
     fontWeight: '700',
     color: '#F2F4F8',
-    textAlign: 'center',
-    letterSpacing: normalize(0.2),
+    marginTop: normalizeHeight(1),
   },
-  divider: {
-    width: '24%',
-    height: 2,
-    backgroundColor: '#485172',
-    marginTop: normalizeHeight(14),
-    marginBottom: normalizeHeight(14),
+  headerDivider: {
+    height: 1,
+    backgroundColor: 'rgba(72, 81, 114, 0.6)',
   },
-  countdownBox: {
+  bodyRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: normalizeWidth(20),
+    paddingVertical: normalizeHeight(20),
   },
-  countdownLabel: {
-    fontSize: normalize(12),
-    fontWeight: '400',
-    color: 'rgba(255,255,255,0.5)',
-    letterSpacing: normalize(1),
+  ringColumn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: normalizeWidth(16),
+  },
+  verticalDivider: {
+    width: 1,
+    alignSelf: 'stretch',
+    backgroundColor: 'rgba(72, 81, 114, 0.6)',
+    marginRight: normalizeWidth(16),
+  },
+  infoColumn: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  ringLabel: {
+    fontSize: normalize(9),
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.55)',
+    letterSpacing: normalize(0.8),
+    textAlign: 'center',
+  },
+  ringCountdown: {
+    fontSize: normalize(18),
+    fontWeight: '700',
+    color: '#F2F4F8',
+    letterSpacing: normalize(0.5),
+    marginTop: normalizeHeight(2),
+  },
+  upNextLabel: {
+    fontSize: normalize(10),
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.45)',
+    letterSpacing: normalize(1.2),
     marginBottom: normalizeHeight(4),
   },
-  countdownValue: {
-    fontSize: normalize(36),
+  exerciseNameText: {
+    fontSize: normalize(22),
     fontWeight: '700',
-    color: '#4ECDC4',
-    letterSpacing: normalize(1),
+    color: '#F2F4F8',
+    lineHeight: normalize(28),
   },
 });
 
