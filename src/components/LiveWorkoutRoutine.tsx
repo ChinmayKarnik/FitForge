@@ -8,9 +8,10 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
 import { TimerComponent } from './TimerComponent';
-import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeF, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
+import muscle_white from '../images/muscle-white.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
@@ -96,7 +97,7 @@ const RestTimeUI = ({
   const isRestOver = remainingMs <= 0;
   const fillFraction = totalRestSeconds > 0 ? Math.max(0, remainingMs) / (totalRestSeconds * 1000) : 0;
   const ringSize = normalizeWidth(110);
-  const strokeWidth = normalizeWidth(6);
+  const strokeWidth = normalizeWidth(7.5);
 
   const formatCountdown = (secs: number) => {
     const m = Math.floor(secs / 60).toString().padStart(2, '0');
@@ -107,9 +108,14 @@ const RestTimeUI = ({
   return (
     <View style={restStyles.card}>
       <View style={restStyles.headerRow}>
-        <View style={restStyles.iconPlaceholder} />
+        <View style={restStyles.routineIconBox}>
+          <Image
+            source={muscle_white}
+            style={{ width: normalizeWidth(16), height: normalizeWidth(26) * (574 / 495), resizeMode: 'contain', tintColor: '#84bef4' }}
+          />
+        </View>
         <View style={restStyles.headerTextGroup}>
-          <Text style={restStyles.headerLabel}>CURRENT ROUTINE</Text>
+          <Text style={restStyles.headerLabel}>ROUTINE NAME</Text>
           <Text style={restStyles.headerRoutineName} numberOfLines={1}>{routineName}</Text>
         </View>
       </View>
@@ -120,10 +126,10 @@ const RestTimeUI = ({
             fillFraction={fillFraction}
             size={ringSize}
             strokeWidth={strokeWidth}
-            progressColor="#3a5bbf"
+            progressColor="#5570dd"
             innerBgColor="#1c2238"
           >
-            <Text style={restStyles.ringLabel}>{isRestOver ? 'REST\nOVER' : 'REST\nTIME'}</Text>
+            <Text style={restStyles.ringLabel}>{isRestOver ? 'REST OVER' : 'REST TIME'}</Text>
             {!isRestOver && (
               <Text style={restStyles.ringCountdown}>{formatCountdown(remainingSeconds)}</Text>
             )}
@@ -391,9 +397,9 @@ const restStyles = StyleSheet.create({
   card: {
     marginTop: normalizeHeight(12),
     marginBottom: normalizeHeight(16),
-    marginHorizontal: normalizeWidth(16),
-    backgroundColor: '#20273d',
-    borderWidth: 1,
+    marginHorizontal: normalizeWidth(30),
+    backgroundColor: '#1e253d',
+    borderWidth:normalizeF(3,2),
     borderColor: '#3a4060',
     borderRadius: normalize(16),
     overflow: 'hidden',
@@ -403,15 +409,17 @@ const restStyles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: normalizeWidth(16),
     paddingVertical: normalizeHeight(12),
-    gap: normalizeWidth(10),
+    gap: normalizeWidth(12),
   },
-  iconPlaceholder: {
+  routineIconBox: {
     width: normalizeWidth(38),
     height: normalizeWidth(38),
     borderRadius: normalize(8),
-    backgroundColor: '#2f3d6e',
-    borderWidth: 1,
-    borderColor: '#485172',
+    backgroundColor: '#2b3656',
+    borderWidth: normalize(1),
+    borderColor: '#313e5e',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerTextGroup: {
     flex: 1,
@@ -429,8 +437,9 @@ const restStyles = StyleSheet.create({
     marginTop: normalizeHeight(1),
   },
   headerDivider: {
-    height: 1,
+    height: normalize(1),
     backgroundColor: 'rgba(72, 81, 114, 0.6)',
+    marginHorizontal: normalizeWidth(12)
   },
   bodyRow: {
     flexDirection: 'row',
@@ -461,7 +470,7 @@ const restStyles = StyleSheet.create({
     textAlign: 'center',
   },
   ringCountdown: {
-    fontSize: normalize(18),
+    fontSize: normalize(22),
     fontWeight: '700',
     color: '#F2F4F8',
     letterSpacing: normalize(0.5),
@@ -472,28 +481,28 @@ const restStyles = StyleSheet.create({
     fontWeight: '500',
     color: 'rgba(255,255,255,0.45)',
     letterSpacing: normalize(1.2),
-    marginBottom: normalizeHeight(4),
+    marginBottom: normalizeHeight(6),
   },
   exerciseNameText: {
-    fontSize: normalize(22),
+    fontSize: normalize(18),
     fontWeight: '700',
     color: '#F2F4F8',
-    lineHeight: normalize(28),
+    lineHeight: normalize(23),
   },
   setPill: {
     alignSelf: 'flex-start',
-    marginTop: normalizeHeight(6),
-    paddingHorizontal: normalizeWidth(10),
+    marginTop: normalizeHeight(9),
+    paddingHorizontal: normalizeWidth(8),
     paddingVertical: normalizeHeight(3),
-    borderRadius: normalize(20),
+    borderRadius: normalize(5),
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
-    backgroundColor: 'rgba(255,255,255,0.07)',
+    borderColor: '#354776',
+    backgroundColor: '#2a3963',
   },
   setPillText: {
     fontSize: normalize(11),
     fontWeight: '500',
-    color: 'rgba(255,255,255,0.6)',
+    color: '#bde4fd',
     letterSpacing: normalize(0.5),
   },
 });
