@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
-import { routines } from '../data/dummy/routines';
+import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import checkbox_blue_bg from '../images/checkbox-blue-bg.png';
@@ -25,7 +25,7 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
     }
   }, [onEndWorkout]);
 
-  const filteredRoutines = routines.filter(routine =>
+  const filteredRoutines = databaseController.getAllRoutines().filter((routine: any) =>
     routine.name.toLowerCase().includes(searchText.toLowerCase())
   );
 

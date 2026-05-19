@@ -186,7 +186,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
           </View>
         ) : null
       )}
-      {isExerciseInProgress && activeExercise && (
+      {isExerciseInProgress && activeExercise && !showFinishModal && (
         <ActiveExerciseInfo
           exerciseName={activeExercise.name}
           exerciseStartTime={activeExerciseStartTime}
@@ -214,22 +214,24 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
         </TouchableOpacity>
       )}
       {showFinishModal && activeExercise && (
-        <ExerciseForm
-          exerciseName={activeExercise.name}
-          exerciseId={activeExercise.id}
-          onFormDataChange={setExerciseParams}
-          onSave={() => {
-            handleFinishExercise(exerciseParams);
-          }}
-          onDiscard={() => {
-            setShowFinishModal(false);
-            setExerciseParams({});
-          }}
-          onCloseForm={() => {
-            setShowFinishModal(false);
-            setExerciseParams({});
-          }}
-        />
+        <View style={{ marginTop: normalizeHeight(16) }}>
+          <ExerciseForm
+            exerciseName={activeExercise.name}
+            exerciseId={activeExercise.id}
+            onFormDataChange={setExerciseParams}
+            onSave={() => {
+              handleFinishExercise(exerciseParams);
+            }}
+            onDiscard={() => {
+              setShowFinishModal(false);
+              setExerciseParams({});
+            }}
+            onCloseForm={() => {
+              setShowFinishModal(false);
+              setExerciseParams({});
+            }}
+          />
+        </View>
       )}
       <TouchableOpacity style={styles.endWorkoutButton} onPress={handleEndWorkout}>
         <Image
