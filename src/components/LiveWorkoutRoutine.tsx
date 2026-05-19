@@ -12,6 +12,7 @@ import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
+import ActiveExerciseInfo from './ActiveExerciseInfo';
 
 export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout: () => void; navigation?: any }) => {
   const handleBackPress = useCallback(() => {
@@ -36,7 +37,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const [seconds, setSeconds] = useState(0);
   const startTimeRef = useRef(Date.now());
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const [activeExercise,setActiveExercise] =useState(null);
+  const [activeExercise,setActiveExercise] =useState<any>(null);
   const [activeExerciseStartTime, setActiveExerciseStartTime] = useState<number | null>(null);
   const [isExerciseInProgress,setIsExerciseInProgress] = useState(false);
   const nextExerciseRef = useRef(null);
@@ -186,11 +187,12 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
         ) : null
       )}
       {isExerciseInProgress && activeExercise && (
-        <View style={styles.exerciseInfoContainer}>
-          <Text style={styles.currentlyPerformingText}>Currently Performing:</Text>
-          <Text style={styles.exerciseNameText}>{activeExercise.name}</Text>
-          <Text style={styles.setNumberText}>Set {workout.current.exercises.length + 1}</Text>
-        </View>
+        <ActiveExerciseInfo
+          exerciseName={activeExercise.name}
+          exerciseStartTime={activeExerciseStartTime}
+          workoutStartTime={startTimeRef.current}
+          elapsedTime={seconds * 1000}
+        />
       )}
       
       {!isExerciseInProgress && nextExerciseRef.current && (
@@ -298,31 +300,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: '700',
     color: '#fefefe',
-  },
-  exerciseInfoContainer: {
-    marginTop: normalizeHeight(30),
-    alignItems: 'center',
-    marginBottom: normalize(40),
-  },
-  currentlyPerformingText: {
-    fontSize: normalize(18),
-    fontWeight: '500',
-    lineHeight: normalize(20),
-    letterSpacing: normalize(0.2),
-    color: '#A9B1C2',
-  },
-  exerciseNameText: {
-    fontSize: normalize(28),
-    fontWeight: '600',
-    lineHeight: normalize(34),
-    letterSpacing: normalize(0.3),
-    color: '#F2F4F8',
-    marginTop: normalizeHeight(10),
-  },
-  setNumberText: {
-    fontSize: normalize(16),
-    color: '#A9B1C2',
-    marginTop: normalizeHeight(4),
   },
   nextExerciseText: {
     fontSize: normalize(18),
