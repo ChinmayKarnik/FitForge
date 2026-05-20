@@ -8,10 +8,11 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
 import { TimerComponent } from './TimerComponent';
-import { normalize, normalizeF, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeF, normalizeHeight, normalizeWidth, normalizeWidthF } from '../utils/normalize';
 import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
 import muscle_white from '../images/muscle-white.png';
+import white_tick from '../images/white-tick.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
@@ -96,8 +97,8 @@ const RestTimeUI = ({
   const remainingSeconds = Math.max(0, Math.floor(remainingMs / 1000));
   const isRestOver = remainingMs <= 0;
   const fillFraction = totalRestSeconds > 0 ? Math.max(0, remainingMs) / (totalRestSeconds * 1000) : 0;
-  const ringSize = normalizeWidth(110);
-  const strokeWidth = normalizeWidth(7.5);
+  const ringSize = normalizeWidth(95);
+  const strokeWidth = normalizeWidthF(13,2);
 
   const formatCountdown = (secs: number) => {
     const m = Math.floor(secs / 60).toString().padStart(2, '0');
@@ -111,7 +112,7 @@ const RestTimeUI = ({
         <View style={restStyles.routineIconBox}>
           <Image
             source={muscle_white}
-            style={{ width: normalizeWidth(16), height: normalizeWidth(26) * (574 / 495), resizeMode: 'contain', tintColor: '#84bef4' }}
+            style={{ width: normalizeWidth(22), height: normalizeWidth(22) * (574 / 495), resizeMode: 'contain', tintColor: '#84bef4' }}
           />
         </View>
         <View style={restStyles.headerTextGroup}>
@@ -122,18 +123,38 @@ const RestTimeUI = ({
       <View style={restStyles.headerDivider} />
       <View style={restStyles.bodyRow}>
         <View style={restStyles.ringColumn}>
-          <CircularRing
-            fillFraction={fillFraction}
-            size={ringSize}
-            strokeWidth={strokeWidth}
-            progressColor="#5570dd"
-            innerBgColor="#1c2238"
-          >
-            <Text style={restStyles.ringLabel}>{isRestOver ? 'REST OVER' : 'REST TIME'}</Text>
-            {!isRestOver && (
+          {isRestOver ? (
+            <View style={{
+              width: ringSize, height: ringSize,
+              borderRadius: ringSize / 2,
+              borderWidth: strokeWidth,
+              borderColor: '#62a7ff',
+              backgroundColor: '#1c2238',
+              alignItems: 'center', justifyContent: 'center',
+            }}>
+              <Image
+                source={white_tick}
+                style={{ width: normalizeWidth(37), height: normalizeWidth(37) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#62a7ff' }}
+              />
+            </View>
+          ) : (
+            <CircularRing
+              fillFraction={fillFraction}
+              size={ringSize}
+              strokeWidth={strokeWidth}
+              progressColor="#62a7ff"
+              innerBgColor="#1c2238"
+            >
+              <Text style={restStyles.ringLabel}>REST TIME</Text>
               <Text style={restStyles.ringCountdown}>{formatCountdown(remainingSeconds)}</Text>
-            )}
-          </CircularRing>
+            </CircularRing>
+          )}
+          {isRestOver && (
+            <>
+              <Text style={restStyles.restOverTitle}>REST OVER</Text>
+              <Text style={restStyles.restOverSubtitle}>LET'S GO!</Text>
+            </>
+          )}
         </View>
         <View style={restStyles.verticalDivider} />
         <View style={restStyles.infoColumn}>
@@ -461,6 +482,22 @@ const restStyles = StyleSheet.create({
   infoColumn: {
     flex: 1,
     justifyContent: 'center',
+  },
+  restOverTitle: {
+    fontSize: normalize(17),
+    fontWeight: '700',
+    color: '#F2F4F8',
+    marginTop: normalizeHeight(7),
+    textAlign: 'center',
+    letterSpacing: 0.4,
+  },
+  restOverSubtitle: {
+    fontSize: normalize(12),
+    fontWeight: '600',
+    color: '#68bbff',
+    marginTop: normalizeHeight(3),
+    textAlign: 'center',
+    letterSpacing: normalize(0.5),
   },
   ringLabel: {
     fontSize: normalize(9),
