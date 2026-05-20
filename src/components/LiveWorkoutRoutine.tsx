@@ -13,9 +13,87 @@ import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
 import muscle_white from '../images/muscle-white.png';
 import white_tick from '../images/white-tick.png';
+import trend_arrow from '../images/trend-arrow.png';
+import slant_dumbbell from '../images/slant-dumbbell-2.png';
+import clock_3 from '../images/clock-3.png';
+import white_right_arrow from '../images/white-right-arrow.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
+
+const WorkoutCompleteCard = ({
+  exercisesCompleted,
+  totalSeconds,
+}: {
+  exercisesCompleted: number;
+  totalSeconds: number;
+}) => {
+  const ringSize = normalizeWidth(102);
+  const strokeWidth = normalizeWidthF(12, 2);
+
+  const formatTotal = (secs: number) => {
+    const h = Math.floor(secs / 3600).toString().padStart(2, '0');
+    const m = Math.floor((secs % 3600) / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${h}:${m}:${s}`;
+  };
+
+  return (
+    <View style={completedStyles.card}>
+      {/* Ring + tick */}
+      <View style={completedStyles.ringWrapper}>
+        <View style={{
+          width: ringSize, height: ringSize,
+          borderRadius: ringSize / 2,
+          borderWidth: strokeWidth,
+          borderColor: '#62a7ff',
+          backgroundColor: '#1c2238',
+          alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Image
+            source={white_tick}
+            style={{ width: normalizeWidth(28), height: normalizeWidth(28) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#62a7ff' }}
+          />
+        </View>
+      </View>
+
+      {/* Title + subtitle */}
+      <Text style={completedStyles.title}>Workout Complete!</Text>
+      <Text style={completedStyles.subtitle}>You showed up and put in the work.{'\n'}Great job today.</Text>
+
+      {/* Stats row */}
+      <View style={completedStyles.statsDivider} />
+      <View style={completedStyles.statsRow}>
+        <View style={completedStyles.statBox}>
+          {/* Placeholder icon */}
+          <View style={completedStyles.statIconBoxExercises}>
+            <Image source={slant_dumbbell} style={{ width: normalizeWidth(24), height: normalizeWidth(24) * (411.0 / 547.0), resizeMode: 'contain', tintColor: '#c47ff0' }} />
+          </View>
+          <Text style={completedStyles.statLabel}>EXERCISES COMPLETED</Text>
+          <Text style={completedStyles.statValue}>{exercisesCompleted}</Text>
+        </View>
+        <View style={completedStyles.statsVerticalDivider} />
+        <View style={completedStyles.statBox}>
+          {/* Placeholder icon */}
+          <View style={completedStyles.statIconBoxTime}>
+            <Image source={clock_3} style={{ width: normalizeWidth(22), height: normalizeWidth(22) * (492.0 / 434.0), resizeMode: 'contain', tintColor: '#7ab4f5' }} />
+          </View>
+          <Text style={completedStyles.statLabel}>TOTAL TIME</Text>
+          <Text style={completedStyles.statValue}>{formatTotal(totalSeconds)}</Text>
+        </View>
+      </View>
+
+      {/* View Workout Summary */}
+      <View style={completedStyles.summaryContainer}>
+        <TouchableOpacity style={completedStyles.summaryRow} onPress={() => {}}>
+          <Image source={trend_arrow} style={{ width: normalizeWidth(20), aspectRatio: 538.0 / 290.0, resizeMode: 'contain', tintColor: '#62a7ff' }} />
+          <Text style={completedStyles.summaryText}>View Workout Summary</Text>
+          <Image source={white_right_arrow} style={{ width: normalizeWidth(7), height: normalizeWidth(7) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#62a7ff' }} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const CircularRing = ({
   fillFraction,
@@ -308,6 +386,10 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     const restExercise = getNthExerciseInRoutine(workout.current.exercises.length);
     restDurationRef.current = restExercise?.rest ?? 0;
     nextExerciseTime.current = endTime + restDurationRef.current * 1000;
+    if (!nextExerciseRef.current && intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
      setIsExerciseInProgress(false);
     setActiveExercise(null);
     setShowFinishModal(false)
@@ -345,9 +427,10 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
             />
           ) : (<><Text>before first </Text></>)
         ) : initialLoadingDone.current ? (
-          <View style={{ alignItems: 'center', marginVertical: normalizeHeight(16) }}>
-            <Text style={styles.finishedText}>Your workout has finished.</Text>
-          </View>
+          <WorkoutCompleteCard
+            exercisesCompleted={workout.current.exercises.length}
+            totalSeconds={seconds}
+          />
         ) : null
       )}
       {isExerciseInProgress && activeExercise && !showFinishModal && (
@@ -644,7 +727,7 @@ const styles = StyleSheet.create({
     borderColor: '#dc6c72',
     backgroundColor: '#ad2126',
     borderRadius: normalize(12),
-    marginTop: normalize(12),
+    marginTop: normalize(6),
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: normalizeHeight(32),
@@ -666,5 +749,113 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: normalize(20),
     color: '#FFFFFF',
+  },
+});
+
+const completedStyles = StyleSheet.create({
+  card: {
+    marginTop: normalizeHeight(12),
+    marginBottom: normalizeHeight(6),
+    marginHorizontal: normalizeWidth(30),
+    backgroundColor: '#1e253d',
+    borderWidth: normalizeF(3, 2),
+    borderColor: '#3a4060',
+    borderRadius: normalize(16),
+    overflow: 'hidden',
+  },
+  ringWrapper: {
+    alignItems: 'center',
+    marginTop: normalizeHeight(18),
+  },
+  title: {
+    fontSize: normalize(22),
+    fontWeight: '700',
+    color: '#F2F4F8',
+    textAlign: 'center',
+    marginTop: normalizeHeight(12),
+    letterSpacing: 0.3,
+  },
+  subtitle: {
+    fontSize: normalize(13),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.55)',
+    textAlign: 'center',
+    marginTop: normalizeHeight(6),
+    lineHeight: normalize(19),
+    paddingHorizontal: normalizeWidth(20),
+    marginBottom: normalizeHeight(16),
+  },
+  statsDivider: {
+    height: 1,
+    backgroundColor: 'rgba(72, 81, 114, 0.6)',
+    marginHorizontal: normalizeWidth(12),
+  },
+  statsRow: {
+    flexDirection: 'row',
+    paddingVertical: normalizeHeight(14),
+    paddingHorizontal: normalizeWidth(16),
+  },
+  statBox: {
+    flex: 1,
+    alignItems: 'center',
+    gap: normalizeHeight(5),
+  },
+  statIconBoxExercises: {
+    width: normalizeWidth(44),
+    height: normalizeWidth(44),
+    borderRadius: normalizeWidth(22),
+    backgroundColor: '#5a3690',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statIconBoxTime: {
+    width: normalizeWidth(44),
+    height: normalizeWidth(44),
+    borderRadius: normalizeWidth(22),
+    backgroundColor: '#1e2f5c',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statLabel: {
+    fontSize: normalize(9),
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.45)',
+    letterSpacing: normalize(0.9),
+    textAlign: 'center',
+  },
+  statValue: {
+    fontSize: normalize(20),
+    fontWeight: '700',
+    color: '#F2F4F8',
+    letterSpacing: 0.3,
+  },
+  statsVerticalDivider: {
+    width: 1,
+    backgroundColor: 'rgba(72, 81, 114, 0.6)',
+    alignSelf: 'stretch',
+    marginHorizontal: normalizeWidth(4),
+  },
+  summaryContainer: {
+    marginHorizontal: normalizeWidth(12),
+    marginBottom: normalizeHeight(12),
+    marginTop: normalizeHeight(8),
+    borderRadius: normalize(10),
+    borderWidth: 1,
+    borderColor: '#3a4060',
+    backgroundColor: '#242c4a',
+    overflow: 'hidden',
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: normalizeWidth(14),
+    paddingVertical: normalizeHeight(13),
+    gap: normalizeWidth(10),
+  },
+  summaryText: {
+    flex: 1,
+    fontSize: normalize(13),
+    fontWeight: '500',
+    color: '#62a7ff',
   },
 });
