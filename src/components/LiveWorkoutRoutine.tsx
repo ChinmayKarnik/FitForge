@@ -46,13 +46,13 @@ const WorkoutCompleteCard = ({
           width: ringSize, height: ringSize,
           borderRadius: ringSize / 2,
           borderWidth: strokeWidth,
-          borderColor: '#62a7ff',
+          borderColor: '#6d8eff',
           backgroundColor: '#1c2238',
           alignItems: 'center', justifyContent: 'center',
         }}>
           <Image
             source={white_tick}
-            style={{ width: normalizeWidth(32), height: normalizeWidth(32) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#62a7ff' }}
+            style={{ width: normalizeWidth(32), height: normalizeWidth(32) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#6d8eff' }}
           />
         </View>
       </View>
@@ -67,7 +67,7 @@ const WorkoutCompleteCard = ({
         <View style={completedStyles.statBox}>
           {/* Placeholder icon */}
           <View style={completedStyles.statIconBoxExercises}>
-            <Image source={slant_dumbbell} style={{ width: normalizeWidth(17), height: normalizeWidth(17) * (411.0 / 547.0), resizeMode: 'contain', tintColor: '#c47ff0' }} />
+            <Image source={slant_dumbbell} style={{ width: normalizeWidth(17), height: normalizeWidth(17) * (411.0 / 547.0), resizeMode: 'contain', tintColor: '#ad85ff' }} />
           </View>
           <Text style={completedStyles.statLabel}>EXERCISES COMPLETED</Text>
           <Text style={completedStyles.statValue}>{exercisesCompleted}</Text>
@@ -76,7 +76,7 @@ const WorkoutCompleteCard = ({
         <View style={completedStyles.statBox}>
           {/* Placeholder icon */}
           <View style={completedStyles.statIconBoxTime}>
-            <Image source={clock_3} style={{ width: normalizeWidth(13), height: normalizeWidth(13) * (492.0 / 434.0), resizeMode: 'contain', tintColor: '#7ab4f5' }} />
+            <Image source={clock_3} style={{ width: normalizeWidth(13), height: normalizeWidth(13) * (492.0 / 434.0), resizeMode: 'contain', tintColor: '#688efe' }} />
           </View>
           <Text style={completedStyles.statLabel}>TOTAL TIME</Text>
           <Text style={completedStyles.statValue}>{formatTotal(totalSeconds)}</Text>
@@ -86,9 +86,9 @@ const WorkoutCompleteCard = ({
       {/* View Workout Summary */}
       <View style={completedStyles.summaryContainer}>
         <TouchableOpacity style={completedStyles.summaryRow} onPress={() => {}}>
-          <Image source={trend_arrow} style={{ width: normalizeWidth(20), aspectRatio: 538.0 / 290.0, resizeMode: 'contain', tintColor: '#62a7ff' }} />
+          <Image source={trend_arrow} style={{ width: normalizeWidth(20), aspectRatio: 538.0 / 290.0, resizeMode: 'contain', tintColor: '#628ef6' }} />
           <Text style={completedStyles.summaryText}>View Workout Summary</Text>
-          <Image source={white_right_arrow} style={{ width: normalizeWidth(6), height: normalizeWidth(6) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#62a7ff' }} />
+          <Image source={white_right_arrow} style={{ width: normalizeWidth(6), height: normalizeWidth(6) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#628ef6' }} />
         </TouchableOpacity>
       </View>
     </View>
@@ -757,7 +757,7 @@ const completedStyles = StyleSheet.create({
     marginTop: normalizeHeight(20),
     marginBottom: normalizeHeight(6),
     marginHorizontal: normalizeWidth(30),
-    backgroundColor: '#1e253d',
+    backgroundColor: '#222944',
     borderWidth: normalizeF(3, 2),
     borderColor: '#3a4060',
     borderRadius: normalize(16),
@@ -778,7 +778,7 @@ const completedStyles = StyleSheet.create({
   subtitle: {
     fontSize: normalize(12),
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.55)',
+    color: '#919fd4',
     textAlign: 'center',
     marginTop: normalizeHeight(6),
     lineHeight: normalize(19),
@@ -804,9 +804,9 @@ const completedStyles = StyleSheet.create({
     width: normalizeWidth(35),
     height: normalizeWidth(35),
     borderRadius: normalizeWidth(22),
-    backgroundColor: '#5a3690',
-    borderWidth:normalize(1),
-    borderColor: 'gray',
+    backgroundColor: '#332b56',
+    borderWidth: normalize(1),
+    borderColor: '#382f5b',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -814,16 +814,16 @@ const completedStyles = StyleSheet.create({
     width: normalizeWidth(35),
     height: normalizeWidth(35),
     borderRadius: normalizeWidth(22),
-    backgroundColor: '#1e2f5c',
+    backgroundColor: '#283569',
     borderWidth: normalize(1),
-    borderColor: 'gray',
+    borderColor: '#28386c',
     alignItems: 'center',
     justifyContent: 'center',
   },
   statLabel: {
     fontSize: normalize(9),
     fontWeight: '500',
-    color: 'rgba(255,255,255,0.45)',
+    color: '#8489a4',
     letterSpacing: 0.3,
     textAlign: 'center',
     marginTop: normalizeHeight(2)
@@ -847,7 +847,7 @@ const completedStyles = StyleSheet.create({
     borderRadius: normalize(10),
     borderWidth: 1,
     borderColor: '#3a4060',
-    backgroundColor: '#242c4a',
+    backgroundColor: '#262e4e',
     overflow: 'hidden',
   },
   summaryRow: {
@@ -861,6 +861,6 @@ const completedStyles = StyleSheet.create({
     flex: 1,
     fontSize: normalize(12),
     fontWeight: '500',
-    color: '#62a7ff',
+    color: '#628ef6',
   },
 });
