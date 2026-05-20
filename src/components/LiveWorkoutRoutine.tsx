@@ -28,7 +28,7 @@ const WorkoutCompleteCard = ({
   exercisesCompleted: number;
   totalSeconds: number;
 }) => {
-  const ringSize = normalizeWidth(102);
+  const ringSize = normalizeWidth(87);
   const strokeWidth = normalizeWidthF(12, 2);
 
   const formatTotal = (secs: number) => {
@@ -52,7 +52,7 @@ const WorkoutCompleteCard = ({
         }}>
           <Image
             source={white_tick}
-            style={{ width: normalizeWidth(28), height: normalizeWidth(28) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#62a7ff' }}
+            style={{ width: normalizeWidth(32), height: normalizeWidth(32) * (283.0 / 383.0), resizeMode: 'contain', tintColor: '#62a7ff' }}
           />
         </View>
       </View>
@@ -67,7 +67,7 @@ const WorkoutCompleteCard = ({
         <View style={completedStyles.statBox}>
           {/* Placeholder icon */}
           <View style={completedStyles.statIconBoxExercises}>
-            <Image source={slant_dumbbell} style={{ width: normalizeWidth(24), height: normalizeWidth(24) * (411.0 / 547.0), resizeMode: 'contain', tintColor: '#c47ff0' }} />
+            <Image source={slant_dumbbell} style={{ width: normalizeWidth(17), height: normalizeWidth(17) * (411.0 / 547.0), resizeMode: 'contain', tintColor: '#c47ff0' }} />
           </View>
           <Text style={completedStyles.statLabel}>EXERCISES COMPLETED</Text>
           <Text style={completedStyles.statValue}>{exercisesCompleted}</Text>
@@ -76,7 +76,7 @@ const WorkoutCompleteCard = ({
         <View style={completedStyles.statBox}>
           {/* Placeholder icon */}
           <View style={completedStyles.statIconBoxTime}>
-            <Image source={clock_3} style={{ width: normalizeWidth(22), height: normalizeWidth(22) * (492.0 / 434.0), resizeMode: 'contain', tintColor: '#7ab4f5' }} />
+            <Image source={clock_3} style={{ width: normalizeWidth(13), height: normalizeWidth(13) * (492.0 / 434.0), resizeMode: 'contain', tintColor: '#7ab4f5' }} />
           </View>
           <Text style={completedStyles.statLabel}>TOTAL TIME</Text>
           <Text style={completedStyles.statValue}>{formatTotal(totalSeconds)}</Text>
@@ -88,7 +88,7 @@ const WorkoutCompleteCard = ({
         <TouchableOpacity style={completedStyles.summaryRow} onPress={() => {}}>
           <Image source={trend_arrow} style={{ width: normalizeWidth(20), aspectRatio: 538.0 / 290.0, resizeMode: 'contain', tintColor: '#62a7ff' }} />
           <Text style={completedStyles.summaryText}>View Workout Summary</Text>
-          <Image source={white_right_arrow} style={{ width: normalizeWidth(7), height: normalizeWidth(7) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#62a7ff' }} />
+          <Image source={white_right_arrow} style={{ width: normalizeWidth(6), height: normalizeWidth(6) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#62a7ff' }} />
         </TouchableOpacity>
       </View>
     </View>
@@ -754,7 +754,7 @@ const styles = StyleSheet.create({
 
 const completedStyles = StyleSheet.create({
   card: {
-    marginTop: normalizeHeight(12),
+    marginTop: normalizeHeight(20),
     marginBottom: normalizeHeight(6),
     marginHorizontal: normalizeWidth(30),
     backgroundColor: '#1e253d',
@@ -765,7 +765,7 @@ const completedStyles = StyleSheet.create({
   },
   ringWrapper: {
     alignItems: 'center',
-    marginTop: normalizeHeight(18),
+    marginTop: normalizeHeight(24),
   },
   title: {
     fontSize: normalize(22),
@@ -776,7 +776,7 @@ const completedStyles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   subtitle: {
-    fontSize: normalize(13),
+    fontSize: normalize(12),
     fontWeight: '400',
     color: 'rgba(255,255,255,0.55)',
     textAlign: 'center',
@@ -801,18 +801,22 @@ const completedStyles = StyleSheet.create({
     gap: normalizeHeight(5),
   },
   statIconBoxExercises: {
-    width: normalizeWidth(44),
-    height: normalizeWidth(44),
+    width: normalizeWidth(35),
+    height: normalizeWidth(35),
     borderRadius: normalizeWidth(22),
     backgroundColor: '#5a3690',
+    borderWidth:normalize(1),
+    borderColor: 'gray',
     alignItems: 'center',
     justifyContent: 'center',
   },
   statIconBoxTime: {
-    width: normalizeWidth(44),
-    height: normalizeWidth(44),
+    width: normalizeWidth(35),
+    height: normalizeWidth(35),
     borderRadius: normalizeWidth(22),
     backgroundColor: '#1e2f5c',
+    borderWidth: normalize(1),
+    borderColor: 'gray',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -820,11 +824,12 @@ const completedStyles = StyleSheet.create({
     fontSize: normalize(9),
     fontWeight: '500',
     color: 'rgba(255,255,255,0.45)',
-    letterSpacing: normalize(0.9),
+    letterSpacing: 0.3,
     textAlign: 'center',
+    marginTop: normalizeHeight(2)
   },
   statValue: {
-    fontSize: normalize(20),
+    fontSize: normalize(17),
     fontWeight: '700',
     color: '#F2F4F8',
     letterSpacing: 0.3,
@@ -850,11 +855,11 @@ const completedStyles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: normalizeWidth(14),
     paddingVertical: normalizeHeight(13),
-    gap: normalizeWidth(10),
+    gap: normalizeWidth(12),
   },
   summaryText: {
     flex: 1,
-    fontSize: normalize(13),
+    fontSize: normalize(12),
     fontWeight: '500',
     color: '#62a7ff',
   },
