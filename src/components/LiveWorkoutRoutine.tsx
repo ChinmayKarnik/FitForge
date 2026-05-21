@@ -12,6 +12,7 @@ import { normalize, normalizeF, normalizeHeight, normalizeWidth, normalizeWidthF
 import white_plus from '../images/white-plus.png';
 import white_donut from '../images/white-donut.png';
 import muscle_white from '../images/muscle-white.png';
+import dumbbell_horizontal from '../images/dumbbell-horizontal-2.png';
 import white_tick from '../images/white-tick.png';
 import trend_arrow from '../images/trend-arrow.png';
 import slant_dumbbell from '../images/slant-dumbbell-2.png';
@@ -140,6 +141,48 @@ const CircularRing = ({
         backgroundColor: innerBgColor, alignItems: 'center', justifyContent: 'center',
       }}>
         {children}
+      </View>
+    </View>
+  );
+};
+
+const BeforeFirstSetCard = ({
+  nextExercise,
+  routineName,
+  totalSets,
+}: {
+  nextExercise: any;
+  routineName: string;
+  totalSets: number;
+}) => {
+  return (
+    <View style={[restStyles.card]}>
+      <View style={restStyles.headerRow}>
+        <View style={restStyles.routineIconBox}>
+          <Image
+            source={muscle_white}
+            style={{ width: normalizeWidth(22), height: normalizeWidth(22) * (574 / 495), resizeMode: 'contain', tintColor: '#84bef4' }}
+          />
+        </View>
+        <View style={restStyles.headerTextGroup}>
+          <Text style={restStyles.headerLabel}>ROUTINE NAME</Text>
+          <Text style={restStyles.headerRoutineName} numberOfLines={1}>{routineName}</Text>
+        </View>
+      </View>
+      <View style={restStyles.headerDivider} />
+      <View style={restStyles.bodyRow}>
+        <Image
+          source={dumbbell_horizontal}
+          style={{ width: normalizeWidth(72), height: normalizeWidth(72) * (449 / 1004), resizeMode: 'contain', marginRight: normalizeWidth(16), tintColor: '#7a89c2' }}
+        />
+        <View style={restStyles.verticalDivider} />
+        <View style={restStyles.infoColumn}>
+          <Text style={restStyles.upNextLabel}>FIRST UP</Text>
+          <Text style={restStyles.exerciseNameText} numberOfLines={2}>{nextExercise?.name ?? '—'}</Text>
+          <View style={restStyles.setPill}>
+            <Text style={restStyles.setPillText}>Set 1 of {totalSets}</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -336,25 +379,6 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEndWorkout} />;
   }
 
-  // UI for when no active workout is running
-  // (isExerciseInProgress is false)
-  let nextExerciseMessage = null;
-  let showCountdown = false;
-  let countdownSeconds = 0;
-  if (!isExerciseInProgress && nextExerciseTime.current && typeof nextExerciseTime.current === 'number') {
-    const now = Date.now();
-    const nextTime = nextExerciseTime.current;
-    if (nextTime > now) {
-      // Case 1: next workout time is in the future
-      countdownSeconds = Math.floor((nextTime - now) / 1000);
-      showCountdown = true;
-      nextExerciseMessage = `Start the next exercise in ${countdownSeconds} seconds`;
-    } else {
-      // Case 2: next workout time is before now
-      nextExerciseMessage = 'Start the next exercise right now';
-    }
-  }
-
   const handleStartExercise = () => {
     setIsExerciseInProgress(true);
     setActiveExercise(nextExerciseRef.current);
@@ -425,7 +449,13 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
               nextSetNumber={workout.current.exercises.filter((e: any) => e.exerciseId === (nextExerciseRef.current as any)?.id).length + 1}
               totalSets={(nextExerciseRef.current as any)?.sets ?? 1}
             />
-          ) : (<><Text>before first </Text></>)
+          ) : (
+            <BeforeFirstSetCard
+              nextExercise={nextExerciseRef.current}
+              routineName={routine?.name ?? ''}
+              totalSets={(nextExerciseRef.current as any)?.sets ?? 1}
+            />
+          )
         ) : initialLoadingDone.current ? (
           <WorkoutCompleteCard
             exercisesCompleted={workout.current.exercises.length}
@@ -502,7 +532,7 @@ const restStyles = StyleSheet.create({
     marginTop: normalizeHeight(12),
     marginBottom: normalizeHeight(16),
     marginHorizontal: normalizeWidth(30),
-    backgroundColor: '#1e253d',
+    backgroundColor: '#1f243b',
     borderWidth:normalizeF(3,2),
     borderColor: '#3a4060',
     borderRadius: normalize(16),
