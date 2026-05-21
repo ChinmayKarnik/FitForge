@@ -21,14 +21,18 @@ import white_right_arrow from '../images/white-right-arrow.png';
 import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
+import WorkoutSummaryModal from './WorkoutSummaryModal';
 
 const WorkoutCompleteCard = ({
   exercisesCompleted,
   totalSeconds,
+  workout,
 }: {
   exercisesCompleted: number;
   totalSeconds: number;
+  workout: any;
 }) => {
+  const [summaryVisible, setSummaryVisible] = useState(false);
   const ringSize = normalizeWidth(87);
   const strokeWidth = normalizeWidthF(12, 2);
 
@@ -86,12 +90,13 @@ const WorkoutCompleteCard = ({
 
       {/* View Workout Summary */}
       <View style={completedStyles.summaryContainer}>
-        <TouchableOpacity style={completedStyles.summaryRow} onPress={() => {}}>
+        <TouchableOpacity style={completedStyles.summaryRow} onPress={() => setSummaryVisible(true)}>
           <Image source={trend_arrow} style={{ width: normalizeWidth(20), aspectRatio: 538.0 / 290.0, resizeMode: 'contain', tintColor: '#628ef6' }} />
           <Text style={completedStyles.summaryText}>View Workout Summary</Text>
           <Image source={white_right_arrow} style={{ width: normalizeWidth(6), height: normalizeWidth(6) * (87.0 / 52.0), resizeMode: 'contain', tintColor: '#628ef6' }} />
         </TouchableOpacity>
       </View>
+      <WorkoutSummaryModal visible={summaryVisible} onClose={() => setSummaryVisible(false)} workout={workout} />
     </View>
   );
 };
@@ -460,6 +465,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
           <WorkoutCompleteCard
             exercisesCompleted={workout.current.exercises.length}
             totalSeconds={seconds}
+            workout={workout.current}
           />
         ) : null
       )}
