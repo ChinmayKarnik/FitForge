@@ -22,6 +22,7 @@ import ExerciseForm from './ExerciseForm';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import ActiveExerciseInfo from './ActiveExerciseInfo';
 import WorkoutSummaryModal from './WorkoutSummaryModal';
+import AreYouSureModal from './AreYouSureModal';
 
 const WorkoutCompleteCard = ({
   exercisesCompleted,
@@ -296,22 +297,9 @@ const RestTimeUI = ({
 };
 
 export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout: () => void; navigation?: any }) => {
-  const handleBackPress = useCallback(() => {
-    onEndWorkout();
-    return true;
-  }, [onEndWorkout]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const unsubscribe = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-      return () => {
-        unsubscribe.remove();
-      };
-    }, [handleBackPress])
-  );
-
-   const [showFinishModal, setShowFinishModal] = useState(false);
+  const [showFinishModal, setShowFinishModal] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
+  const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [exerciseParams, setExerciseParams] = useState<Record<string, any>>({});
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const routine = databaseController.getRoutineById(selectedRoutineId);
@@ -333,6 +321,22 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
 
   const isInRestTime = !isExerciseInProgress && workout.current.exercises.length > 0 && !!nextExerciseRef.current;
   const isInitialWaitTime = !isExerciseInProgress && workout.current.exercises.length === 0 && !!nextExerciseRef.current;
+
+  const handleBackPress = useCallback(() => {
+    if (selectedRoutineId) {
+      setShowBackConfirm(true);
+    } else {
+      onEndWorkout();
+    }
+    return true;
+  }, [selectedRoutineId, onEndWorkout]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const unsubscribe = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => unsubscribe.remove();
+    }, [handleBackPress])
+  );
 
   const getNthExerciseInRoutine = ( n: number) => {
     const arr = [...routine.exercises];
@@ -527,7 +531,19 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
         workout={workout.current}
         visible={showEndModal}
         onClose={() => setShowEndModal(false)}
+        onEndWorkout={onEndWorkout}
         navigation={navigation}
+      />
+      <AreYouSureModal
+        visible={showBackConfirm}
+        onClose={() => setShowBackConfirm(false)}
+        title="Leave Workout?"
+        description="Your progress will be lost if you leave now."
+        primaryLabel="Leave"
+        onPrimary={() => { setShowBackConfirm(false); onEndWorkout(); }}
+        primaryVariant="destructive"
+        secondaryLabel="Stay"
+        onSecondary={() => setShowBackConfirm(false)}
       />
     </View>
   );
