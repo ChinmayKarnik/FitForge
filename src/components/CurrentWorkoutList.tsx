@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import no_workout_image from '../images/notepad-with-dumbell.png'
 import ExerciseSummaryCard from './ExerciseSummaryCard';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 
 const CurrentWorkoutList = (
     {
@@ -38,6 +39,12 @@ const CurrentWorkoutList = (
         exercises,
         separatedExercisesReverse)
     const isNoExercises = !exercises.length;
+    const [isAtBottom, setIsAtBottom] = useState(false);
+
+    const handleScroll = (event: any) => {
+        const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+        setIsAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+    };
 
     const renderItem = ({item}) => {
         return (<ExerciseSummaryCard exercises={item} />)
@@ -107,7 +114,8 @@ const CurrentWorkoutList = (
             </View>
             )}
             
-                        <FlatList
+                        <View style={{ position: 'relative' }}>
+                            <FlatList
                                 data={separatedExercisesReverse}
                                 style={listMaxHeight ? { maxHeight: listMaxHeight } : undefined}
                                 contentContainerStyle ={{
@@ -119,9 +127,24 @@ const CurrentWorkoutList = (
                                 ItemSeparatorComponent={() => (
                                     <View style={{ marginVertical: normalizeHeight(7) }} />
                                 )}
-                                showsVerticalScrollIndicator = {false}
-
-                        />
+                                showsVerticalScrollIndicator={false}
+                                onScroll={handleScroll}
+                                scrollEventThrottle={16}
+                            />
+                            {listMaxHeight && !isAtBottom && (
+                                <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
+                                    <Svg height="100%" width="100%">
+                                        <Defs>
+                                            <LinearGradient id="listFade" x1="0" y1="0" x2="0" y2="1">
+                                                <Stop offset="0" stopColor="#262745" stopOpacity="0" />
+                                                <Stop offset="1" stopColor="#262745" stopOpacity="1" />
+                                            </LinearGradient>
+                                        </Defs>
+                                        <Rect width="100%" height="100%" fill="url(#listFade)" />
+                                    </Svg>
+                                </View>
+                            )}
+                        </View>
         </View>
     );
 };
