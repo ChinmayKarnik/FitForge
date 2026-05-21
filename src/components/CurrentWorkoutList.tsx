@@ -9,6 +9,16 @@ const CurrentWorkoutList = (
         workout,
         emptyStateText = 'Tap "Start Exercise" to log your first set',
         horizontalPadding = true,
+        showHeaderDivider = true,
+        showSectionHeader = true,
+        listMaxHeight = undefined,
+    }: {
+        workout?: any;
+        emptyStateText?: string;
+        horizontalPadding?: boolean;
+        showHeaderDivider?: boolean;
+        showSectionHeader?: boolean;
+        listMaxHeight?: number;
     }
 ) => {
     const exercises = workout?.exercises || [];
@@ -71,10 +81,11 @@ const CurrentWorkoutList = (
     }
     return (
         <View style={{
-            flex: 1,
+            ...(listMaxHeight ? {} : { flex: 1 }),
             marginTop:normalizeHeight(10),
             paddingHorizontal: horizontalPadding ? normalize(14) : 0,
         }} >
+            {showSectionHeader && (
             <View style={{
                 flexDirection:'row',
                 alignItems:'center',
@@ -88,17 +99,19 @@ const CurrentWorkoutList = (
                 marginRight:normalizeWidth(7)
             }}
             >Completed Exercises</Text>
-            <View style={{
+            {showHeaderDivider && <View style={{
                flex:1,
                 height:normalizeHeight(1),
                 backgroundColor:'#464668'
-            }}/>
+            }}/>}
             </View>
+            )}
             
                         <FlatList
                                 data={separatedExercisesReverse}
+                                style={listMaxHeight ? { maxHeight: listMaxHeight } : undefined}
                                 contentContainerStyle ={{
-                                    paddingBottom: normalizeHeight(100)
+                                    paddingBottom: normalizeHeight(listMaxHeight ? 16 : 100)
                                 }}
                                 keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
                                 renderItem={renderItem}
