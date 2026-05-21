@@ -30,17 +30,19 @@ const WorkoutSummaryModal = ({
         <View style={{
           width: '100%',
           paddingHorizontal: normalizeWidth(16),
-          maxHeight: '85%',
+          maxHeight: '92%',
         }}>
           <View style={{
             backgroundColor: '#262745',
             borderRadius: normalize(12),
             borderWidth: normalize(1),
             borderColor: '#37384b',
-            paddingTop: normalizeHeight(20),
+            paddingTop: normalizeHeight(12),
             paddingBottom: normalizeHeight(20),
           }}>
-            <View style={{ paddingHorizontal: normalizeWidth(16) }}>
+            <View style={{ paddingHorizontal: normalizeWidth(16),
+              paddingBottom: normalizeHeight(10)
+             }}>
               <Text style={{
                 color: '#F2F4F8',
                 fontSize: normalize(18),
@@ -54,7 +56,9 @@ const WorkoutSummaryModal = ({
                 onPress={onClose}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 activeOpacity={0.7}
-                style={{ position: 'absolute', right: normalizeWidth(16), top: 0, bottom: 0, justifyContent: 'center' }}
+                style={{ position: 'absolute', right: normalizeWidth(16), 
+                  top: -normalizeHeight(8)
+                  , bottom: 0, justifyContent: 'center' }}
               >
                 <Image
                   source={cross_icon}
@@ -68,7 +72,7 @@ const WorkoutSummaryModal = ({
               emptyStateText="No exercises were logged in this workout"
               horizontalPadding={true}
               showHeaderDivider={false}
-              listMaxHeight={normalizeHeight(380)}
+              listMaxHeight={normalizeHeight(460)}
               showSectionHeader={false}
             />
 
