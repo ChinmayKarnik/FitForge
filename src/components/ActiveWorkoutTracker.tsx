@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
   preStartContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    marginTop:normalizeHeight(40),
     paddingHorizontal: normalizeWidth(16),
     paddingBottom: normalizeHeight(20),
   },

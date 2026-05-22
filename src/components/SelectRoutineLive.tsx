@@ -72,7 +72,7 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
             source={white_left_arrow}
           />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Track Workout</Text>
+        <Text style={styles.headerText}>Select Routine</Text>
       </View>
 
       <ScrollView
@@ -80,9 +80,6 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Select Workout Routine</Text>
-          <Text style={styles.subtitle}>Choose a workout routine to start your session.</Text>
-
           <View style={styles.searchContainer}>
             <Image
               style={styles.searchIcon}
