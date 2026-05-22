@@ -5,6 +5,7 @@ import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import info_icon from '../images/info-icon.png';
+import question_mark_with_circle from '../images/question-mark-with-circle.png';
 
 interface SelectRoutineLiveProps {
   onSelectRoutine: (routineId: string) => void;
@@ -82,10 +83,8 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
           <Image style={styles.backButtonImage} source={white_left_arrow} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Select Routine</Text>
-        {/* Question mark placeholder — top right */}
-        <View style={styles.questionMarkButton}>
-          <Text style={styles.questionMarkText}>?</Text>
-        </View>
+        {/* Question mark icon — top right */}
+        <Image source={question_mark_with_circle} style={styles.questionMarkIcon} />
       </View>
 
       {/* Search bar — fixed, does not scroll */}
@@ -131,7 +130,7 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
 
 const RADIO_SIZE = normalize(22);
 const INFO_SIZE = normalize(20);
-const QM_SIZE = normalize(28);
+const QM_SIZE = normalize(20);
 
 const styles = StyleSheet.create({
   container: {
@@ -164,22 +163,13 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fefefe',
   },
-  questionMarkButton: {
+  questionMarkIcon: {
     position: 'absolute',
-    top: normalizeHeight(46),
+    top: normalizeHeight(43),
     right: normalizeWidth(16),
     width: QM_SIZE,
-    height: QM_SIZE,
-    borderRadius: QM_SIZE / 2,
-    borderWidth: normalize(1.5),
-    borderColor: 'rgba(255,255,255,0.45)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  questionMarkText: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: normalize(14),
-    fontWeight: '600',
+    height: QM_SIZE * (402.0 / 407.0),
+    tintColor: 'rgba(255,255,255,0.55)',
   },
   scrollContent: {},
   contentContainer: {
