@@ -4,6 +4,7 @@ import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import white_left_arrow from '../images/white-left-arrow.png';
+import info_icon from '../images/info-icon.png';
 
 interface SelectRoutineLiveProps {
   onSelectRoutine: (routineId: string) => void;
@@ -60,10 +61,11 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
           </Text>
         </View>
 
-        {/* Info icon placeholder — right */}
-        <View style={styles.infoIcon}>
-          <Text style={styles.infoIconText}>i</Text>
-        </View>
+        {/* Info icon — right */}
+        <Image
+          source={info_icon}
+          style={styles.infoIcon}
+        />
       </TouchableOpacity>
     );
   };
@@ -79,27 +81,29 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         >
           <Image style={styles.backButtonImage} source={white_left_arrow} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Select Workout Routine</Text>
+        <Text style={styles.headerText}>Select Routine</Text>
         {/* Question mark placeholder — top right */}
         <View style={styles.questionMarkButton}>
           <Text style={styles.questionMarkText}>?</Text>
         </View>
       </View>
 
+      {/* Search bar — fixed, does not scroll */}
+      <View style={styles.searchWrapper}>
+        <View style={styles.searchContainer}>
+          <Image style={styles.searchIcon} source={magnifying_glass} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search routines..."
+            placeholderTextColor="rgba(255,255,255,0.4)"
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+        </View>
+      </View>
+
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          {/* Search bar */}
-          <View style={styles.searchContainer}>
-            <Image style={styles.searchIcon} source={magnifying_glass} />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search routines..."
-              placeholderTextColor="rgba(255,255,255,0.4)"
-              value={searchText}
-              onChangeText={setSearchText}
-            />
-          </View>
-
           <FlatList
             data={filteredRoutines}
             keyExtractor={(item) => item.id}
@@ -126,7 +130,7 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
 };
 
 const RADIO_SIZE = normalize(22);
-const INFO_SIZE = normalize(26);
+const INFO_SIZE = normalize(20);
 const QM_SIZE = normalize(28);
 
 const styles = StyleSheet.create({
@@ -177,13 +181,17 @@ const styles = StyleSheet.create({
     fontSize: normalize(14),
     fontWeight: '600',
   },
-  scrollContent: {
-    flexGrow: 1,
-  },
+  scrollContent: {},
   contentContainer: {
     paddingHorizontal: normalizeWidth(16),
-    paddingTop: normalizeHeight(20),
-    paddingBottom: normalizeHeight(24),
+    paddingTop: normalizeHeight(8),
+    paddingBottom: normalizeHeight(4),
+  },
+  searchWrapper: {
+    paddingHorizontal: normalizeWidth(16),
+    paddingTop: normalizeHeight(16),
+    paddingBottom: normalizeHeight(8),
+    backgroundColor: '#1c2238',
   },
   searchContainer: {
     backgroundColor: '#242a41',
@@ -191,7 +199,6 @@ const styles = StyleSheet.create({
     borderWidth: normalize(1),
     borderRadius: normalize(10),
     paddingHorizontal: normalizeWidth(12),
-    marginBottom: normalizeHeight(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -209,7 +216,7 @@ const styles = StyleSheet.create({
     paddingBottom: normalizeHeight(11),
   },
   flatList: {
-    marginBottom: normalizeHeight(8),
+
   },
   routineItem: {
     flexDirection: 'row',
@@ -268,25 +275,14 @@ const styles = StyleSheet.create({
   },
   infoIcon: {
     width: INFO_SIZE,
-    height: INFO_SIZE,
-    borderRadius: INFO_SIZE / 2,
-    borderWidth: normalize(1.5),
-    borderColor: 'rgba(255,255,255,0.3)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    aspectRatio: 411.0 / 401.0,
     marginLeft: normalizeWidth(10),
-    flexShrink: 0,
-  },
-  infoIconText: {
-    color: 'rgba(255,255,255,0.5)',
-    fontSize: normalize(13),
-    fontWeight: '600',
-    fontStyle: 'italic',
+    tintColor: 'rgba(255,255,255,0.35)',
   },
   footer: {
     paddingHorizontal: normalizeWidth(16),
     paddingTop: normalizeHeight(12),
-    paddingBottom: normalizeHeight(100),
+    paddingBottom: normalizeHeight(83),
     backgroundColor: '#1c2238',
   },
   startButton: {
