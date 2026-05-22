@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
 import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
-import checkbox_blue_bg from '../images/checkbox-blue-bg.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 
 interface SelectRoutineLiveProps {
@@ -39,52 +38,59 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
     }
   };
 
-  const renderRoutineItem = ({ item }: { item: any }) => (
-    <TouchableOpacity
-      style={[
-        styles.routineItem,
-        selectedRoutineId === item.id && styles.routineItemSelected
-      ]}
-      onPress={() => handleSelectRoutine(item.id)}
-    >
-      <Text style={styles.routineName}>{item.name}</Text>
-      {selectedRoutineId === item.id ? (
-        <Image
-          source={checkbox_blue_bg}
-          style={styles.checkboxImage}
-        />
-      ) : (
-        <View style={styles.checkboxEmpty} />
-      )}
-    </TouchableOpacity>
-  );
+  const renderRoutineItem = ({ item }: { item: any }) => {
+    const isSelected = selectedRoutineId === item.id;
+    return (
+      <TouchableOpacity
+        style={[styles.routineItem, isSelected && styles.routineItemSelected]}
+        onPress={() => handleSelectRoutine(item.id)}
+        activeOpacity={0.7}
+      >
+        {/* Radio button — left */}
+        <View style={[styles.radioOuter, isSelected && styles.radioOuterSelected]}>
+          {isSelected && <View style={styles.radioInner} />}
+        </View>
+
+        {/* Text content — middle */}
+        <View style={styles.routineTextContainer}>
+          <Text style={styles.routineName}>{item.name}</Text>
+          <Text style={styles.routineExerciseCount}>5 exercises</Text>
+          <Text style={styles.routineExerciseNames} numberOfLines={1}>
+            Bench Press, Overhead Press, Row...
+          </Text>
+        </View>
+
+        {/* Info icon placeholder — right */}
+        <View style={styles.infoIcon}>
+          <Text style={styles.infoIconText}>i</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={onEndWorkout}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <Image
-            style={styles.backButtonImage}
-            source={white_left_arrow}
-          />
+          <Image style={styles.backButtonImage} source={white_left_arrow} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Select Routine</Text>
+        <Text style={styles.headerText}>Select Workout Routine</Text>
+        {/* Question mark placeholder — top right */}
+        <View style={styles.questionMarkButton}>
+          <Text style={styles.questionMarkText}>?</Text>
+        </View>
       </View>
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
+          {/* Search bar */}
           <View style={styles.searchContainer}>
-            <Image
-              style={styles.searchIcon}
-              source={magnifying_glass}
-            />
+            <Image style={styles.searchIcon} source={magnifying_glass} />
             <TextInput
               style={styles.searchInput}
               placeholder="Search routines..."
@@ -105,12 +111,10 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         </View>
       </ScrollView>
 
+      {/* Footer — no top divider */}
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[
-            styles.startButton,
-            !selectedRoutineId && styles.startButtonDisabled
-          ]}
+          style={[styles.startButton, !selectedRoutineId && styles.startButtonDisabled]}
           onPress={handleStartWorkout}
           disabled={!selectedRoutineId}
         >
@@ -121,6 +125,10 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
   );
 };
 
+const RADIO_SIZE = normalize(22);
+const INFO_SIZE = normalize(26);
+const QM_SIZE = normalize(28);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -128,7 +136,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    borderBottomWidth: 1,
+    borderBottomWidth: normalize(1),
     borderColor: 'rgba(68, 75, 95)',
     alignItems: 'center',
     backgroundColor: 'rgba(36, 42, 65)',
@@ -147,38 +155,43 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   headerText: {
-    fontSize: 22,
+    fontSize: normalize(18),
     letterSpacing: 1,
     fontWeight: '700',
     color: '#fefefe',
+  },
+  questionMarkButton: {
+    position: 'absolute',
+    top: normalizeHeight(46),
+    right: normalizeWidth(16),
+    width: QM_SIZE,
+    height: QM_SIZE,
+    borderRadius: QM_SIZE / 2,
+    borderWidth: normalize(1.5),
+    borderColor: 'rgba(255,255,255,0.45)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  questionMarkText: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: normalize(14),
+    fontWeight: '600',
   },
   scrollContent: {
     flexGrow: 1,
   },
   contentContainer: {
     paddingHorizontal: normalizeWidth(16),
-    paddingTop: normalizeHeight(24),
+    paddingTop: normalizeHeight(20),
     paddingBottom: normalizeHeight(24),
   },
-  title: {
-    fontSize: normalize(24),
-    fontWeight: '700',
-    color: '#fefefe',
-    marginBottom: normalizeHeight(8),
-  },
-  subtitle: {
-    fontSize: normalize(14),
-    color: 'rgba(255,255,255,0.6)',
-    marginBottom: normalizeHeight(20),
-    fontWeight: '400',
-  },
   searchContainer: {
-    backgroundColor: '#292f46',
+    backgroundColor: '#242a41',
     borderColor: '#383e55',
-    borderWidth: 1,
-    borderRadius: normalize(8),
+    borderWidth: normalize(1),
+    borderRadius: normalize(10),
     paddingHorizontal: normalizeWidth(12),
-    marginBottom: normalizeHeight(20),
+    marginBottom: normalizeHeight(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -192,66 +205,103 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: normalize(14),
     color: '#fff',
-    paddingTop: normalizeHeight(10),
-    paddingBottom: normalizeHeight(10),
+    paddingTop: normalizeHeight(11),
+    paddingBottom: normalizeHeight(11),
   },
   flatList: {
-    marginBottom: normalizeHeight(16),
+    marginBottom: normalizeHeight(8),
   },
   routineItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(36, 42, 65)',
-    borderColor: 'rgba(68, 75, 95)',
-    borderWidth: 1,
-    borderRadius: normalize(8),
-    paddingHorizontal: normalizeWidth(12),
-    paddingVertical: normalizeHeight(12),
-    marginBottom: normalizeHeight(12),
+    backgroundColor: '#222840',
+    borderColor: '#383e55',
+    borderWidth: normalize(1),
+    borderRadius: normalize(10),
+    paddingHorizontal: normalizeWidth(14),
+    paddingVertical: normalizeHeight(14),
+    marginBottom: normalizeHeight(10),
   },
   routineItemSelected: {
-    borderColor: '#4f5b93',
-    backgroundColor: 'rgba(79, 91, 147, 0.2)',
+    borderColor: '#3B5BDB',
+    backgroundColor: 'rgba(59, 91, 219, 0.08)',
   },
-  checkboxImage: {
-    width: normalize(20),
-    height: normalize(20),
-    marginLeft: normalizeWidth(12),
+  radioOuter: {
+    width: RADIO_SIZE,
+    height: RADIO_SIZE,
+    borderRadius: RADIO_SIZE / 2,
+    borderWidth: normalize(2),
+    borderColor: '#5a5f7a',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: normalizeWidth(12),
+    flexShrink: 0,
   },
-  checkboxEmpty: {
-    width: normalize(20),
-    height: normalize(20),
-    borderRadius: normalize(20),
-    borderColor: '#5f637a',
-    borderWidth: normalize(1),
-    marginLeft: normalizeWidth(12),
+  radioOuterSelected: {
+    borderColor: '#3B5BDB',
+  },
+  radioInner: {
+    width: RADIO_SIZE * 0.5,
+    height: RADIO_SIZE * 0.5,
+    borderRadius: (RADIO_SIZE * 0.5) / 2,
+    backgroundColor: '#3B5BDB',
+  },
+  routineTextContainer: {
+    flex: 1,
   },
   routineName: {
-    flex: 1,
-    fontSize: normalize(16),
-    fontWeight: '600',
+    fontSize: normalize(15),
+    fontWeight: '700',
     color: '#fefefe',
+    marginBottom: normalizeHeight(3),
+  },
+  routineExerciseCount: {
+    fontSize: normalize(13),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.5)',
+    marginBottom: normalizeHeight(2),
+  },
+  routineExerciseNames: {
+    fontSize: normalize(12),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.35)',
+  },
+  infoIcon: {
+    width: INFO_SIZE,
+    height: INFO_SIZE,
+    borderRadius: INFO_SIZE / 2,
+    borderWidth: normalize(1.5),
+    borderColor: 'rgba(255,255,255,0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: normalizeWidth(10),
+    flexShrink: 0,
+  },
+  infoIconText: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: normalize(13),
+    fontWeight: '600',
+    fontStyle: 'italic',
   },
   footer: {
     paddingHorizontal: normalizeWidth(16),
-    paddingVertical: normalizeHeight(16),
+    paddingTop: normalizeHeight(12),
     paddingBottom: normalizeHeight(100),
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(68, 75, 95)',
     backgroundColor: '#1c2238',
   },
   startButton: {
-    backgroundColor: '#4f5b93',
-    paddingVertical: normalizeHeight(14),
-    borderRadius: normalize(8),
+    backgroundColor: '#3B5BDB',
+    paddingVertical: normalizeHeight(16),
+    borderRadius: normalize(10),
     alignItems: 'center',
   },
   startButtonDisabled: {
-    backgroundColor: 'rgba(79, 91, 147, 0.5)',
+    backgroundColor: 'rgba(59, 91, 219, 0.4)',
   },
   startButtonText: {
     color: '#fff',
     fontSize: normalize(16),
     fontWeight: '700',
+    letterSpacing: 0.3,
   },
 });
