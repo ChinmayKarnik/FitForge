@@ -10,6 +10,7 @@ import info_icon from '../images/info-icon.png';
 import question_mark_with_circle from '../images/question-mark-with-circle.png';
 import notepad_with_glass from '../images/notepad-with-glass.png';
 import dumbbell_slant_2 from '../images/dumbbell-slant-2.png';
+import RoutineDetailsModal from './RoutineDetailsModal';
 
 interface SelectRoutineLiveProps {
   onSelectRoutine: (routineId: string) => void;
@@ -21,6 +22,7 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [detailsRoutine, setDetailsRoutine] = useState<any>(null);
 
   const handleScroll = (event: any) => {
     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -83,10 +85,12 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         </View>
 
         {/* Info icon — right */}
-        <Image
-          source={info_icon}
-          style={styles.infoIcon}
-        />
+        <TouchableOpacity
+          onPress={() => setDetailsRoutine(item)}
+          hitSlop={{ top: normalize(12), bottom: normalize(12), left: normalize(12), right: normalize(12) }}
+        >
+          <Image source={info_icon} style={styles.infoIcon} />
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   };
@@ -175,6 +179,12 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
           </View>
         )}
       </View>
+
+      <RoutineDetailsModal
+        visible={!!detailsRoutine}
+        routine={detailsRoutine}
+        onClose={() => setDetailsRoutine(null)}
+      />
 
       {/* Footer — no top divider */}
       <View style={styles.footer}>
@@ -386,7 +396,7 @@ const styles = StyleSheet.create({
   },
   infoIcon: {
     width: INFO_SIZE,
-    aspectRatio: 411.0 / 401.0,
+    height: INFO_SIZE * (401.0 / 411.0),
     marginLeft: normalizeWidth(10),
     tintColor: 'rgba(255,255,255,0.35)',
   },
