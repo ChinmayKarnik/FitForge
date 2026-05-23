@@ -33,9 +33,16 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
     }
   }, [onEndWorkout]);
 
-  const filteredRoutines = databaseController.getAllRoutines().filter((routine: any) =>
+  const allRoutines = databaseController.getAllRoutines();
+  const filteredRoutines = allRoutines.filter((routine: any) =>
     routine.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  useEffect(() => {
+    if (selectedRoutineId && !filteredRoutines.some((r: any) => r.id === selectedRoutineId)) {
+      setSelectedRoutineId(null);
+    }
+  }, [searchText]);
 
   const handleSelectRoutine = (routineId: string) => {
     setSelectedRoutineId(routineId);
