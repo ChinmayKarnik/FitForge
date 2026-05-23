@@ -243,33 +243,20 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
 
 
         {/* Render the current workout list */}
-        <View style={{
-          flex:1
-        }}>
-        <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} />
+        <View style={{ flex: 1, paddingBottom: normalizeHeight(140) }}>
+          <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} />
         </View>
-        <View
-        style={{marginBottom: normalizeHeight(80), paddingTop: normalizeHeight(0),
-          backgroundColor:'#1c2238'
-        }}>
-        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
-          <Image
-            source={white_plus}
-            style={styles.startExerciseImage}
-          />
-          <Text
-            style={styles.buttonText}
-          >Add Exercise</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
-          <Image
-            source={white_donut}
-            style={styles.buttonImage}
-          />
-          <Text
-            style={styles.buttonText}
-          >End Workout   </Text>
-        </TouchableOpacity>
+
+        {/* Buttons — pinned to bottom */}
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+            <Image source={white_plus} style={styles.startExerciseImage} />
+            <Text style={styles.buttonText}>Add Exercise</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
+            <Image source={white_donut} style={styles.buttonImage} />
+            <Text style={styles.buttonText}>End Workout   </Text>
+          </TouchableOpacity>
         </View>
         {!!showAddExercise && (<ExercisePickerLoggerModal
           visible={showAddExercise}
@@ -366,6 +353,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#A9B1C2',
     marginBottom: 2,
+  },
+  buttonsContainer: {
+    position: 'absolute',
+    bottom: normalizeHeight(80),
+    left: normalizeWidth(16),
+    right: normalizeWidth(16),
+    backgroundColor: '#1c2238',
+    paddingTop: normalizeHeight(8),
   },
   addButton:  {
     alignItems: 'center',
