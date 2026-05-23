@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
 import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -15,6 +16,12 @@ interface SelectRoutineLiveProps {
 export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRoutineLiveProps) => {
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  const handleScroll = (event: any) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    setIsAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+  };
 
   useEffect(() => {
     if (onEndWorkout) {
@@ -101,18 +108,38 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <View style={styles.contentContainer}>
-          <FlatList
-            data={filteredRoutines}
-            keyExtractor={(item) => item.id}
-            renderItem={renderRoutineItem}
-            scrollEnabled={false}
-            style={styles.flatList}
-            nestedScrollEnabled={false}
-          />
-        </View>
-      </ScrollView>
+      <View style={{ position: 'relative', flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        >
+          <View style={styles.contentContainer}>
+            <FlatList
+              data={filteredRoutines}
+              keyExtractor={(item) => item.id}
+              renderItem={renderRoutineItem}
+              scrollEnabled={false}
+              style={styles.flatList}
+              nestedScrollEnabled={false}
+            />
+          </View>
+        </ScrollView>
+        {!isAtBottom && (
+          <View style={styles.bottomFade} pointerEvents="none">
+            <Svg height="100%" width="100%">
+              <Defs>
+                <LinearGradient id="listFade" x1="0" y1="0" x2="0" y2="1">
+                  <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                  <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                </LinearGradient>
+              </Defs>
+              <Rect width="100%" height="100%" fill="url(#listFade)" />
+            </Svg>
+          </View>
+        )}
+      </View>
 
       {/* Footer — no top divider */}
       <View style={styles.footer}>
@@ -208,6 +235,13 @@ const styles = StyleSheet.create({
   flatList: {
 
   },
+  bottomFade: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: normalizeHeight(72),
+  },
   routineItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -220,8 +254,8 @@ const styles = StyleSheet.create({
     marginBottom: normalizeHeight(10),
   },
   routineItemSelected: {
-    borderColor: '#3B5BDB',
-    backgroundColor: 'rgba(59, 91, 219, 0.08)',
+    borderColor: '#4e68a6',
+    backgroundColor: 'rgba(78, 104, 166, 0.12)',
   },
   radioOuter: {
     width: RADIO_SIZE,
@@ -235,13 +269,13 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   radioOuterSelected: {
-    borderColor: '#3B5BDB',
+    borderColor: '#4e68a6',
   },
   radioInner: {
     width: RADIO_SIZE * 0.5,
     height: RADIO_SIZE * 0.5,
     borderRadius: (RADIO_SIZE * 0.5) / 2,
-    backgroundColor: '#3B5BDB',
+    backgroundColor: '#4e68a6',
   },
   routineTextContainer: {
     flex: 1,
@@ -276,16 +310,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#1c2238',
   },
   startButton: {
-    backgroundColor: '#3B5BDB',
+    backgroundColor: '#2f4880',
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
     paddingVertical: normalizeHeight(16),
     borderRadius: normalize(10),
     alignItems: 'center',
   },
   startButtonDisabled: {
-    backgroundColor: 'rgba(59, 91, 219, 0.4)',
+    backgroundColor: '#313960',
+    borderWidth: 0,
+    opacity: 0.8,
   },
   startButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: normalize(16),
     fontWeight: '700',
     letterSpacing: 0.3,
