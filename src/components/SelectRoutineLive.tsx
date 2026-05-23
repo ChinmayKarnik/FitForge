@@ -63,9 +63,11 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         {/* Text content — middle */}
         <View style={styles.routineTextContainer}>
           <Text style={styles.routineName}>{item.name}</Text>
-          <Text style={styles.routineExerciseCount}>5 exercises</Text>
+          <Text style={styles.routineExerciseCount}>
+            {item.exercises.length === 1 ? '1 Exercise' : `${item.exercises.length} Exercises`}
+          </Text>
           <Text style={styles.routineExerciseNames} numberOfLines={1}>
-            Bench Press, Overhead Press, Row...
+            {item.exercises.map((e: any) => e.name).join(', ')}
           </Text>
         </View>
 
