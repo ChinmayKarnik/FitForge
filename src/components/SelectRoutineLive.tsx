@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
   routineExerciseCount: {
     fontSize: normalize(13),
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.5)',
+    color: '#4f8ff4',
     marginBottom: normalizeHeight(2),
   },
   routineExerciseNames: {
     fontSize: normalize(12),
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.35)',
+    color: 'rgba(255,255,255,0.5)',
   },
   infoIcon: {
     width: INFO_SIZE,
