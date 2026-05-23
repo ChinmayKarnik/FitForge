@@ -248,9 +248,9 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
         }}>
         <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} />
         </View>
-        <View 
-        style={{marginBottom:
-          normalizeHeight(80)
+        <View
+        style={{marginBottom: normalizeHeight(80), paddingTop: normalizeHeight(0),
+          backgroundColor:'#1c2238'
         }}>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Image
