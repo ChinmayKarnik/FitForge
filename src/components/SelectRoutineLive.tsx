@@ -272,10 +272,11 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     alignItems: 'center',
-    paddingVertical: normalizeHeight(28),
+    paddingTop: normalizeHeight(40),
+    paddingBottom: normalizeHeight(16),
   },
   emptyIconWrapper: {
-    marginBottom: normalizeHeight(16),
+    marginBottom: normalizeHeight(20),
   },
   emptyIcon: {
     width: normalizeWidth(70),
