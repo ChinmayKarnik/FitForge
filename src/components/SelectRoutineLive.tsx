@@ -3,7 +3,7 @@ import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
 import { databaseController } from '../data';
-import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
+import { normalizeHeight, normalizeWidth, normalize, normalizeF } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import info_icon from '../images/info-icon.png';
@@ -278,22 +278,22 @@ const styles = StyleSheet.create({
     marginBottom: normalizeHeight(16),
   },
   emptyIcon: {
-    width: normalizeWidth(80),
-    height: normalizeWidth(80) * (588.0 / 551.0),
+    width: normalizeWidth(70),
+    height: normalizeWidth(70) * (588.0 / 551.0),
     tintColor: 'rgba(255,255,255,0.6)',
   },
   emptyTitle: {
-    fontSize: normalize(18),
+    fontSize: normalize(20),
     fontWeight: '700',
     color: '#ffffff',
     marginBottom: normalizeHeight(6),
     letterSpacing: 0.2,
   },
   emptySubtitle: {
-    fontSize: normalize(13),
+    fontSize: normalize(14),
     fontWeight: '400',
     color: 'rgba(255,255,255,0.55)',
-    marginBottom: normalizeHeight(20),
+    marginBottom: normalizeHeight(15),
   },
   emptySubtitleHighlight: {
     color: '#67a4f9',
@@ -302,21 +302,22 @@ const styles = StyleSheet.create({
   emptyButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: normalize(1),
+    borderWidth: normalizeF(3,2),
     borderColor: '#4c79bb',
     borderRadius: normalize(10),
-    paddingVertical: normalizeHeight(10),
-    paddingHorizontal: normalizeWidth(20),
+    paddingVertical: normalizeHeight(8),
+    paddingRight: normalizeWidth(12),
+    paddingLeft: normalizeWidth(12),
     gap: normalizeWidth(8),
   },
   emptyButtonIcon: {
-    width: normalize(20),
-    height: normalize(20) * (357.0 / 632.0),
+    width: normalize(22),
+    height: normalize(23) * (357.0 / 632.0),
     tintColor: '#caccd8',
   },
   emptyButtonText: {
     fontSize: normalize(14),
-    fontWeight: '600',
+    fontWeight: '400',
     color: '#5391f5',
     letterSpacing: 0.2,
   },
