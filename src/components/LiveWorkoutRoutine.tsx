@@ -310,9 +310,9 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const [activeExerciseStartTime, setActiveExerciseStartTime] = useState<number | null>(null);
   const [isExerciseInProgress,setIsExerciseInProgress] = useState(false);
   const nextExerciseRef = useRef(null);
-  const nextExerciseTime = useRef(null);
+  const nextExerciseTime = useRef<number | null>(null);
   const restDurationRef = useRef(0);
-  const initialLoadingDone = useRef(null);
+  const [initialLoadingDone, setInitialLoadingDone] = useState(false);
   const workout = useRef({
     startTime: startTimeRef.current,
     endTime: startTimeRef.current,
@@ -350,15 +350,13 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     return null;
   }
 
-  useEffect(()=>{
-      if(selectedRoutineId){
-        const routine = databaseController.getRoutineById(selectedRoutineId);
-        console.log("ckck routine is ",routine)
-        nextExerciseRef.current = routine.exercises[0];
-        nextExerciseTime.current = startTimeRef.current;
-        initialLoadingDone.current = true;
-      }
-  },[selectedRoutineId]);
+  const handleSelectRoutine = (routineId: string) => {
+    const routine = databaseController.getRoutineById(routineId);
+    nextExerciseRef.current = routine.exercises[0];
+    nextExerciseTime.current = startTimeRef.current;
+    setInitialLoadingDone(true);
+    setSelectedRoutineId(routineId);
+  };
 
   useEffect(() => {
     if (selectedRoutineId) {
@@ -385,7 +383,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   };
 
   if (!selectedRoutineId) {
-    return <SelectRoutineLive onSelectRoutine={setSelectedRoutineId} onEndWorkout={onEndWorkout} />;
+    return <SelectRoutineLive onSelectRoutine={handleSelectRoutine} onEndWorkout={onEndWorkout} />;
   }
 
   const handleStartExercise = () => {
@@ -465,7 +463,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
               totalSets={(nextExerciseRef.current as any)?.sets ?? 1}
             />
           )
-        ) : initialLoadingDone.current ? (
+        ) : initialLoadingDone ? (
           <WorkoutCompleteCard
             exercisesCompleted={workout.current.exercises.length}
             totalSeconds={seconds}
