@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, FlatList, Image, BackHandler } from 'react-native';
 import { databaseController } from '../data';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -7,6 +8,8 @@ import magnifying_glass from '../images/magnifying-glass-white.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import info_icon from '../images/info-icon.png';
 import question_mark_with_circle from '../images/question-mark-with-circle.png';
+import notepad_with_glass from '../images/notepad-with-glass.png';
+import dumbbell_slant_2 from '../images/dumbbell-slant-2.png';
 
 interface SelectRoutineLiveProps {
   onSelectRoutine: (routineId: string) => void;
@@ -14,6 +17,7 @@ interface SelectRoutineLiveProps {
 }
 
 export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRoutineLiveProps) => {
+  const navigation = useNavigation<any>();
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
   const [isAtBottom, setIsAtBottom] = useState(false);
@@ -132,6 +136,28 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
               scrollEnabled={false}
               style={styles.flatList}
               nestedScrollEnabled={false}
+              ListEmptyComponent={
+                <View style={styles.emptyState}>
+                  <View style={styles.emptyIconWrapper}>
+                    <Image
+                      source={notepad_with_glass}
+                      style={styles.emptyIcon}
+                    />
+                  </View>
+
+                  <Text style={styles.emptyTitle}>No routines found</Text>
+
+                  <Text style={styles.emptySubtitle}>
+                    No results for{' '}
+                    <Text style={styles.emptySubtitleHighlight}>"{searchText}"</Text>
+                  </Text>
+
+                  <TouchableOpacity style={styles.emptyButton} onPress={() => navigation.navigate('Routines')}>
+                    <Image source={dumbbell_slant_2} style={styles.emptyButtonIcon} />
+                    <Text style={styles.emptyButtonText}>Manage Routines</Text>
+                  </TouchableOpacity>
+                </View>
+              }
             />
           </View>
         </ScrollView>
@@ -243,6 +269,56 @@ const styles = StyleSheet.create({
   },
   flatList: {
 
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: normalizeHeight(28),
+  },
+  emptyIconWrapper: {
+    marginBottom: normalizeHeight(16),
+  },
+  emptyIcon: {
+    width: normalizeWidth(80),
+    height: normalizeWidth(80) * (588.0 / 551.0),
+    tintColor: 'rgba(255,255,255,0.6)',
+  },
+  emptyTitle: {
+    fontSize: normalize(18),
+    fontWeight: '700',
+    color: '#ffffff',
+    marginBottom: normalizeHeight(6),
+    letterSpacing: 0.2,
+  },
+  emptySubtitle: {
+    fontSize: normalize(13),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.55)',
+    marginBottom: normalizeHeight(20),
+  },
+  emptySubtitleHighlight: {
+    color: '#7a9fd4',
+    fontWeight: '500',
+  },
+  emptyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
+    borderRadius: normalize(10),
+    paddingVertical: normalizeHeight(10),
+    paddingHorizontal: normalizeWidth(20),
+    gap: normalizeWidth(8),
+  },
+  emptyButtonIcon: {
+    width: normalize(16),
+    height: normalize(16) * (357.0 / 632.0),
+    tintColor: '#7a9fd4',
+  },
+  emptyButtonText: {
+    fontSize: normalize(14),
+    fontWeight: '600',
+    color: '#7a9fd4',
+    letterSpacing: 0.2,
   },
   bottomFade: {
     position: 'absolute',
