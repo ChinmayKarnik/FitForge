@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, TextInput, Image, BackHandler } from 'react-native';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import AddExerciseModal from './AddExerciseModal';
 import { useWorkoutState } from '../hooks';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -17,6 +18,12 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
   const [showDateModal, setShowDateModal] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
+  const [isListAtBottom, setIsListAtBottom] = useState(false);
+
+  const handleListScroll = (event: any) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    setIsListAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+  };
   const [workoutDateTime, setWorkoutDateTime] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
  
@@ -243,11 +250,24 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
 
 
         {/* Render the current workout list */}
-        <View style={{ flex: 1, paddingBottom: normalizeHeight(140) }}>
-          <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} />
+        <View style={{ position: 'relative', flex: 1 }}>
+          <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} onScroll={handleListScroll} />
+          {!isListAtBottom && (
+            <View style={styles.listBottomFade} pointerEvents="none">
+              <Svg height="100%" width="100%">
+                <Defs>
+                  <LinearGradient id="backdatedListFade" x1="0" y1="0" x2="0" y2="1">
+                    <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                    <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                  </LinearGradient>
+                </Defs>
+                <Rect width="100%" height="100%" fill="url(#backdatedListFade)" />
+              </Svg>
+            </View>
+          )}
         </View>
 
-        {/* Buttons — pinned to bottom */}
+        {/* Buttons */}
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
             <Image source={white_plus} style={styles.startExerciseImage} />
@@ -354,13 +374,17 @@ const styles = StyleSheet.create({
     color: '#A9B1C2',
     marginBottom: 2,
   },
-  buttonsContainer: {
+  listBottomFade: {
     position: 'absolute',
-    bottom: normalizeHeight(80),
-    left: normalizeWidth(16),
-    right: normalizeWidth(16),
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: normalizeHeight(72),
+  },
+  buttonsContainer: {
     backgroundColor: '#1c2238',
     paddingTop: normalizeHeight(8),
+    paddingBottom: normalizeHeight(83),
   },
   addButton:  {
     alignItems: 'center',

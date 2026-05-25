@@ -13,6 +13,7 @@ const CurrentWorkoutList = (
         showHeaderDivider = true,
         showSectionHeader = true,
         listMaxHeight = undefined,
+        onScroll: onScrollProp = undefined,
     }: {
         workout?: any;
         emptyStateText?: string;
@@ -20,6 +21,7 @@ const CurrentWorkoutList = (
         showHeaderDivider?: boolean;
         showSectionHeader?: boolean;
         listMaxHeight?: number;
+        onScroll?: (event: any) => void;
     }
 ) => {
     const exercises = workout?.exercises || [];
@@ -119,7 +121,7 @@ const CurrentWorkoutList = (
                                 data={separatedExercisesReverse}
                                 style={listMaxHeight ? { maxHeight: listMaxHeight } : undefined}
                                 contentContainerStyle ={{
-                                    paddingBottom: normalizeHeight(listMaxHeight ? 16 : 100)
+                                    paddingBottom: normalizeHeight(listMaxHeight ? 16 : 48)
                                 }}
                                 keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
                                 renderItem={renderItem}
@@ -128,7 +130,7 @@ const CurrentWorkoutList = (
                                     <View style={{ marginVertical: normalizeHeight(7) }} />
                                 )}
                                 showsVerticalScrollIndicator={false}
-                                onScroll={handleScroll}
+                                onScroll={(e) => { handleScroll(e); onScrollProp?.(e); }}
                                 scrollEventThrottle={16}
                             />
                             {listMaxHeight && !isAtBottom && (
