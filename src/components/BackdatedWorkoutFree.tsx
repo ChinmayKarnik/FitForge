@@ -8,6 +8,8 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import CurrentWorkoutList from './CurrentWorkoutList';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
+import calendar_3 from '../images/calendar-3.png'
+import clock_2 from '../images/clock-2.png'
 import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
@@ -218,6 +220,11 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
                 marginRight: normalizeWidth(8),
               }}
             >
+              <Image
+                source={calendar_3}
+                style={{ width: normalizeWidth(16), height: normalizeWidth(16) * (569.0 / 506.0), tintColor: '#8A95A8', marginRight: normalizeWidth(8) }}
+                resizeMode="contain"
+              />
               <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
                 {selectedDateString}
               </Text>
@@ -239,6 +246,11 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={clock_2}
+                  style={{ width: normalizeWidth(16), height: normalizeWidth(16) * (533.0 / 542.0), tintColor: '#8A95A8', marginRight: normalizeWidth(8) }}
+                  resizeMode="contain"
+                />
                 <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
                   {selectedTimeString}
                 </Text>
