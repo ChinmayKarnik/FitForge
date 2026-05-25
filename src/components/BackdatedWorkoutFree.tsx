@@ -222,7 +222,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
             >
               <Image
                 source={calendar_3}
-                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (506.0 / 569.0), tintColor: '#8A95A8', marginRight: normalizeWidth(7) }}
+                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (506.0 / 569.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                 resizeMode="contain"
               />
               <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
@@ -248,7 +248,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
                   source={clock_2}
-                  style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (542.0 / 533.0), tintColor: '#8A95A8', marginRight: normalizeWidth(7) }}
+                  style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (542.0 / 533.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                   resizeMode="contain"
                 />
                 <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
