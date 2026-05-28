@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Modal, KeyboardAvoidingView, Platform, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Modal, KeyboardAvoidingView, Keyboard, Dimensions } from 'react-native';
 import { normalize, normalizeWidth } from '../utils/normalize';
-
-const { height: screenHeight } = Dimensions.get('window');
 import { databaseController } from '../data';
 import SelectExerciseModalContent from './SelectExerciseModalContent';
 import SetsRepsSelector from './SetsRepsSelector';
 import ExerciseFormMultiset from './ExerciseFormMultiset';
 
+const { height: screenHeight } = Dimensions.get('window');
+
 
 export const ExercisePickerLoggerModal = ({ visible, onClose,
 	addSetsForExercise
  }) => {
-     
+
     const exercises = databaseController.getAllExercises();
 
     const [selectedData,setSelectedData]  = useState({exerciseId:null,data:{}});
     const isSelectionPending = !selectedData.exerciseId;
     const showNumberOfSetsInput = !!selectedData.exerciseId && !selectedData.data?.sets;
     const showSetsInput = !isSelectionPending && !showNumberOfSetsInput;
+
+	const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+	useEffect(() => {
+		const show = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+		const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+		return () => { show.remove(); hide.remove(); };
+	}, []);
 
     const onSelectExercise = (exercise)=>{
         setSelectedData({exerciseId: exercise.id, data: {}});
@@ -37,7 +45,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 	const logExercisesForParent = (exercise, loggedData) => {
 		addSetsForExercise(exercise, {numberOfSets: selectedData.data.sets, restTimeBetweenSets: selectedData.data.restTime}, loggedData);
 	}
-	
+
     return (
 		<Modal
 			visible={visible}
@@ -46,11 +54,14 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 			onRequestClose={onClose}
 		>
 			<KeyboardAvoidingView
-				style={styles.modalOverlay}
+				style={[
+					styles.modalOverlay,
+					keyboardVisible && styles.modalOverlayKeyboardOpen,
+				]}
 				behavior="padding"
 			>
 				<View style={styles.modalContent}>
-                    
+
 					{
                         !!isSelectionPending && (
                             <SelectExerciseModalContent
@@ -70,7 +81,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
                     }
 					{
 						!!showSetsInput && (
-							<ExerciseFormMultiset 
+							<ExerciseFormMultiset
 								exerciseId={selectedData.exerciseId}
 								closeModal={onClose}
 								totalSets={selectedData.data?.sets}
@@ -90,13 +101,17 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(0, 0, 0, 0.35)',
 		justifyContent: 'center',
 	},
+	modalOverlayKeyboardOpen: {
+		justifyContent: 'flex-start',
+		paddingTop: normalize(24),
+	},
 	modalContent: {
 		backgroundColor: '#272b48',
 		borderRadius: normalize(20),
 		marginHorizontal: normalizeWidth(16),
 		paddingVertical: normalize(20),
 		paddingHorizontal: normalizeWidth(16),
-		height: Math.round(screenHeight * 0.55),
+		height: Math.round(screenHeight * 0.52),
 	},
 });
 
