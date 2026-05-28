@@ -82,16 +82,16 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 const styles = StyleSheet.create({
 	modalOverlay: {
 		flex: 1,
-		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+		backgroundColor: 'rgba(0, 0, 0, 0.35)',
 		justifyContent: 'center',
 	},
 	modalContent: {
 		backgroundColor: '#272b48',
 		borderRadius: normalize(20),
 		marginHorizontal: normalizeWidth(16),
-		paddingVertical: normalize(12),
+		paddingVertical: normalize(20),
 		paddingHorizontal: normalizeWidth(16),
-		maxHeight: '60%',
+		maxHeight: '68%',
 	},
 });
 

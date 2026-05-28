@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
+import { normalize, normalizeWidth, normalizeF } from '../utils/normalize';
 import cross_icon from '../images/cross-icon-white.png';
+import blue_dumbbell from '../images/blue-dumbbell.png';
 import { databaseController } from '../data';
 
 
@@ -20,11 +21,12 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 
 	return (
 		<View>
+			{/* Header */}
 			<View style={{
 				flexDirection: 'row',
 				justifyContent: 'space-between',
 				alignItems: 'center',
-				marginBottom: normalize(16),
+				marginBottom: normalize(8),
 			}}>
 				<Text style={styles.modalTitle}>Workout Parameters</Text>
 				<TouchableOpacity
@@ -40,9 +42,25 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 				</TouchableOpacity>
 			</View>
 
-			<View style={styles.exerciseNameBadgeContainer}>
-				<Text style={styles.exerciseNameBadge}>{exerciseName}</Text>
+			{/* Exercise Hero */}
+			<View style={styles.heroSection}>
+				<View style={styles.iconContainer}>
+					<Image
+						source={blue_dumbbell}
+						style={{
+							height: normalize(36),
+							width: normalize(36) * (598 / 494),
+							tintColor: '#7FAFFF',
+						}}
+						resizeMode="contain"
+					/>
+				</View>
+
+				<Text style={styles.exerciseName}>{exerciseName}</Text>
 			</View>
+
+			{/* Separator */}
+			<View style={styles.separator} />
 
 			<View style={styles.inputContainer}>
 				<Text style={styles.label}>Number of Sets</Text>
@@ -57,18 +75,18 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 			</View>
 
 			<View style={styles.inputContainer}>
-				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-					<Text style={styles.label}>Rest time between sets </Text>
-					<Text style={styles.labelSecondary}>(seconds)</Text>
+				<Text style={styles.label}>Rest time between sets</Text>
+				<View style={styles.inputRow}>
+					<TextInput
+						style={styles.inputInner}
+						placeholder="Enter rest time"
+						placeholderTextColor={'#757689'}
+						value={restTime}
+						onChangeText={setRestTime}
+						keyboardType="numeric"
+					/>
+					<Text style={styles.secondsHint}>seconds</Text>
 				</View>
-				<TextInput
-					style={styles.input}
-					placeholder="Enter rest time"
-					placeholderTextColor={'#757689'}
-					value={restTime}
-					onChangeText={setRestTime}
-					keyboardType="numeric"
-				/>
 			</View>
 
 			<View style={styles.buttonContainer}>
@@ -77,13 +95,13 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 					onPress={closeModal}>
 					<Text style={styles.discardButtonText}>Discard</Text>
 				</TouchableOpacity>
-					<TouchableOpacity
-						style={[styles.confirmButton, !areInputsValid && { opacity: 0.5 }]}
-						onPress={onConfirm}
-						disabled={!areInputsValid}
-					>
-						<Text style={styles.confirmButtonText}>Confirm</Text>
-					</TouchableOpacity>
+				<TouchableOpacity
+					style={[styles.confirmButton, !areInputsValid && styles.confirmButtonDisabled]}
+					onPress={onConfirm}
+					disabled={!areInputsValid}
+				>
+					<Text style={[styles.confirmButtonText, !areInputsValid && styles.confirmButtonTextDisabled]}>Confirm</Text>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -93,49 +111,46 @@ const styles = StyleSheet.create({
 	modalTitle: {
 		fontSize: normalize(18),
 		fontWeight: '600',
-		color: '#fefefe'
-	},
-	exerciseNameBadgeContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		backgroundColor: '#242648',
-		borderRadius: normalize(8),
-		paddingHorizontal: normalize(12),
-		paddingVertical: normalize(10),
-		marginBottom: normalize(16),
-		borderWidth: normalize(1),
-		borderColor: '#3d3f68',
-	},
-	badgeIconPlaceholder: {
-		width: normalize(18),
-		height: normalize(18),
-		backgroundColor: '#4d5277',
-		borderRadius: normalize(4),
-		marginRight: normalize(10),
-	},
-	exerciseNameBadge: {
-		fontSize: normalize(16),
-		fontWeight: '600',
 		color: '#fefefe',
+	},
+	heroSection: {
+		alignItems: 'center',
+		marginBottom: normalize(10),
+	},
+	iconContainer: {
+		width: normalize(60),
+		height: normalize(60),
+		borderRadius: normalize(30),
+		backgroundColor: '#212841',
+		borderWidth: normalizeF(3, 2),
+		borderColor: '#4a5878',
+		marginBottom: normalize(10),
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	exerciseName: {
+		fontSize: normalize(20),
+		fontWeight: '700',
+		color: '#ffffff',
+		textAlign: 'center',
+	},
+	separator: {
+		height: normalize(1),
+		backgroundColor: '#404060',
+		marginBottom: normalize(18),
 	},
 	inputContainer: {
 		marginBottom: normalize(16),
 	},
 	label: {
-		fontSize: normalize(14),
-		fontWeight: '600',
-		color: '#fefefe',
-		marginBottom: normalize(8),
-	},
-	labelSecondary: {
-		fontSize: normalize(14),
-		fontWeight: '400',
-		color: '#9ca3af',
+		fontSize: normalize(15),
+		fontWeight: '700',
+		color: '#e8eaf6',
 		marginBottom: normalize(8),
 	},
 	input: {
 		borderWidth: normalize(1),
-		borderColor: '#474b65',
+		borderColor: '#545878',
 		borderRadius: normalize(8),
 		paddingHorizontal: normalize(12),
 		paddingVertical: normalize(10),
@@ -143,37 +158,66 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: normalize(14),
 	},
+	inputRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		borderWidth: normalize(1),
+		borderColor: '#545878',
+		borderRadius: normalize(8),
+		backgroundColor: '#1c1e34',
+		paddingHorizontal: normalize(12),
+		paddingVertical: normalize(10),
+	},
+	inputInner: {
+		flex: 1,
+		color: 'white',
+		fontSize: normalize(14),
+		padding: 0,
+	},
+	secondsHint: {
+		fontSize: normalize(13),
+		color: '#757689',
+		marginLeft: normalize(8),
+	},
 	buttonContainer: {
 		flexDirection: 'row',
 		gap: normalizeWidth(12),
+		marginTop: normalize(8),
 	},
 	discardButton: {
 		flex: 1,
-		backgroundColor: '#5d1a1a',
+		backgroundColor: '#5c2828',
 		paddingVertical: normalize(14),
-		borderRadius: normalize(10),
+		borderRadius: normalize(12),
 		borderWidth: normalize(1),
-		borderColor: '#a42a2a',
+		borderColor: '#a04040',
 		alignItems: 'center',
 	},
 	discardButtonText: {
-		color: '#ffffff',
+		color: '#e88080',
 		fontSize: normalize(16),
 		fontWeight: '600',
 	},
 	confirmButton: {
 		flex: 1,
-		backgroundColor: '#3d5a8c',
+		backgroundColor: '#2a54b0',
 		paddingVertical: normalize(14),
-		borderRadius: normalize(10),
+		borderRadius: normalize(12),
 		borderWidth: normalize(1),
-		borderColor: '#5a7ec4',
+		borderColor: '#3d6ad4',
 		alignItems: 'center',
+	},
+	confirmButtonDisabled: {
+		backgroundColor: '#1f2239',
+		borderColor: '#2f334a',
 	},
 	confirmButtonText: {
 		color: '#ffffff',
 		fontSize: normalize(16),
-		fontWeight: '600',
+		fontWeight: '700',
+	},
+	confirmButtonTextDisabled: {
+		color: '#7880a0',
 	},
 });
 
