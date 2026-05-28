@@ -88,7 +88,7 @@ const ExerciseFormMultiset = ({
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginTop: normalizeHeight(8),
+                marginTop: normalizeHeight(16),
             }}>
                 <TouchableOpacity
                     style={{

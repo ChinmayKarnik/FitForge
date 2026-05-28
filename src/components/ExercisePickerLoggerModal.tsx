@@ -60,7 +60,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 				]}
 				behavior="padding"
 			>
-				<View style={styles.modalContent}>
+				<View style={[styles.modalContent, !showSetsInput && styles.modalContentFixed]}>
 
 					{
                         !!isSelectionPending && (
@@ -111,6 +111,8 @@ const styles = StyleSheet.create({
 		marginHorizontal: normalizeWidth(16),
 		paddingVertical: normalize(20),
 		paddingHorizontal: normalizeWidth(16),
+	},
+	modalContentFixed: {
 		height: Math.round(screenHeight * 0.52),
 	},
 });
