@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Modal } from 'react-native';
+import { View, StyleSheet, Modal, KeyboardAvoidingView, Platform, Dimensions } from 'react-native';
 import { normalize, normalizeWidth } from '../utils/normalize';
+
+const { height: screenHeight } = Dimensions.get('window');
 import { databaseController } from '../data';
 import SelectExerciseModalContent from './SelectExerciseModalContent';
 import SetsRepsSelector from './SetsRepsSelector';
@@ -43,7 +45,10 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 			animationType="slide"
 			onRequestClose={onClose}
 		>
-			<View style={styles.modalOverlay}>
+			<KeyboardAvoidingView
+				style={styles.modalOverlay}
+				behavior="padding"
+			>
 				<View style={styles.modalContent}>
                     
 					{
@@ -74,7 +79,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 						)
 					}
 				</View>
-			</View>
+			</KeyboardAvoidingView>
 		</Modal>
 	);
 };
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
 		marginHorizontal: normalizeWidth(16),
 		paddingVertical: normalize(20),
 		paddingHorizontal: normalizeWidth(16),
-		maxHeight: '68%',
+		height: Math.round(screenHeight * 0.55),
 	},
 });
 

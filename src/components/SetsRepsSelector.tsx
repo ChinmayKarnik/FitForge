@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { normalize, normalizeWidth, normalizeF } from '../utils/normalize';
 import cross_icon from '../images/cross-icon-white.png';
 import blue_dumbbell from '../images/blue-dumbbell.png';
@@ -20,7 +20,7 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 	}
 
 	return (
-		<View>
+		<View style={{flex: 1}}>
 			{/* Header */}
 			<View style={{
 				flexDirection: 'row',
@@ -42,52 +42,54 @@ const SetsRepsSelector = ({ closeModal, exerciseId,
 				</TouchableOpacity>
 			</View>
 
-			{/* Exercise Hero */}
-			<View style={styles.heroSection}>
-				<View style={styles.iconContainer}>
-					<Image
-						source={blue_dumbbell}
-						style={{
-							height: normalize(36),
-							width: normalize(36) * (598 / 494),
-							tintColor: '#7FAFFF',
-						}}
-						resizeMode="contain"
-					/>
+			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+				{/* Exercise Hero */}
+				<View style={styles.heroSection}>
+					<View style={styles.iconContainer}>
+						<Image
+							source={blue_dumbbell}
+							style={{
+								height: normalize(36),
+								width: normalize(36) * (598 / 494),
+								tintColor: '#7FAFFF',
+							}}
+							resizeMode="contain"
+						/>
+					</View>
+
+					<Text style={styles.exerciseName}>{exerciseName}</Text>
 				</View>
 
-				<Text style={styles.exerciseName}>{exerciseName}</Text>
-			</View>
+				{/* Separator */}
+				<View style={styles.separator} />
 
-			{/* Separator */}
-			<View style={styles.separator} />
-
-			<View style={styles.inputContainer}>
-				<Text style={styles.label}>Number of Sets</Text>
-				<TextInput
-					style={styles.input}
-					placeholder="Enter number of sets"
-					placeholderTextColor={'#757689'}
-					value={numberOfSets}
-					onChangeText={setNumberOfSets}
-					keyboardType="numeric"
-				/>
-			</View>
-
-			<View style={styles.inputContainer}>
-				<Text style={styles.label}>Rest time between sets</Text>
-				<View style={styles.inputRow}>
+				<View style={styles.inputContainer}>
+					<Text style={styles.label}>Number of Sets</Text>
 					<TextInput
-						style={styles.inputInner}
-						placeholder="Enter rest time"
+						style={styles.input}
+						placeholder="Enter number of sets"
 						placeholderTextColor={'#757689'}
-						value={restTime}
-						onChangeText={setRestTime}
+						value={numberOfSets}
+						onChangeText={setNumberOfSets}
 						keyboardType="numeric"
 					/>
-					<Text style={styles.secondsHint}>seconds</Text>
 				</View>
-			</View>
+
+				<View style={styles.inputContainer}>
+					<Text style={styles.label}>Rest time between sets</Text>
+					<View style={styles.inputRow}>
+						<TextInput
+							style={styles.inputInner}
+							placeholder="Enter rest time"
+							placeholderTextColor={'#757689'}
+							value={restTime}
+							onChangeText={setRestTime}
+							keyboardType="numeric"
+						/>
+						<Text style={styles.secondsHint}>seconds</Text>
+					</View>
+				</View>
+			</ScrollView>
 
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity
