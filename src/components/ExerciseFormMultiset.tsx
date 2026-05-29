@@ -42,7 +42,7 @@ const ExerciseFormMultiset = ({
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: normalizeHeight(12),
+                marginBottom: normalizeHeight(14),
             }}>
                 <Text style={{
                     fontSize: normalize(20),
@@ -89,14 +89,14 @@ const ExerciseFormMultiset = ({
                     fontSize: normalize(14),
                     fontWeight: '700',
                     letterSpacing: normalize(2),
-                    marginTop: normalizeHeight(8),
+                    marginTop: normalizeHeight(6),
                     textAlign: 'center',
                 }}>
                     SET {currentSetNumber + 1} OF {totalSets}
                 </Text>
             </View>
 
-            <View style={{ height: 1, backgroundColor: '#4a5878', marginBottom: normalizeHeight(4) }} />
+            <View style={{ height: 1, backgroundColor: '#4a5878', marginBottom: normalizeHeight(10) }} />
 
             <View>
                 {
