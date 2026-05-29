@@ -20,6 +20,7 @@ const DisplayForParam = ({ paramName, value }) => {
     }
     if(paramName ==='Weight'){
         const displayValue = value || value === 0 ? value : 0;
+        if (!displayValue) return null;
         return <Text style={{ color: '#c6cbda', fontSize: normalize(14),
              fontWeight:'500'
          }}>{displayValue} kg</Text>;
@@ -42,24 +43,28 @@ const ExerciseLoggedDataInline = ({
     loggedData, params
 }) => {
 
-    console.log("ckck this function inside ld",loggedData,params)
     if (!loggedData) {
         return <Text style={{ color: '#888',
              fontStyle: 'italic' 
             }}>Click to Log</Text>;
     }
 
-    const filteredParams = params.filter(param => {
-       return param.name ==='Reps' || param.name ==='Weight' || param.name==='Time'
+    const visibleParams = params.filter(param => {
+        if (param.name === 'Reps' || param.name === 'Time') return true;
+        if (param.name === 'Weight') {
+            const val = loggedData[param.name];
+            const displayValue = val || val === 0 ? val : 0;
+            return !!displayValue;
+        }
+        return false;
     });
-
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {filteredParams && filteredParams.map((param, idx) => (
+            {visibleParams.map((param, idx) => (
                 <React.Fragment key={param.id || idx}>
-                    <DisplayForParam paramName={param.name } value={loggedData[param.name]} />
-                    {idx < filteredParams.length - 1 && <DotSeparator />}
+                    <DisplayForParam paramName={param.name} value={loggedData[param.name]} />
+                    {idx < visibleParams.length - 1 && <DotSeparator />}
                 </React.Fragment>
             ))}
         </View>

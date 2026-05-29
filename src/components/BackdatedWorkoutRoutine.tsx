@@ -329,6 +329,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 ...(exercise?.requiredParameters || []),
                                 ...(exercise?.optionalParameters || []),
                             ];
+                            const loggedCount = (workoutRef.current.exercises || []).filter(
+                                ex => ex.exerciseId === exerciseInRoutine.id && ex.loggedData && Object.keys(ex.loggedData).length > 0
+                            ).length;
+                            const isComplete = loggedCount === exerciseInRoutine.sets && exerciseInRoutine.sets > 0;
                             return (
                                 <View key={exerciseInRoutine.id} style={{ marginBottom: normalizeHeight(12) }}>
                                     <View style={{
@@ -341,33 +345,54 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                             backgroundColor: '#1b1f35',
                                             borderTopLeftRadius: normalize(12),
                                             borderTopRightRadius: normalize(12),
-                                            paddingTop: normalizeHeight(8),
-                                            paddingLeft: normalizeWidth(12),
-                                            paddingBottom:normalizeHeight(8),
+                                            paddingTop: normalizeHeight(10),
+                                            paddingBottom: normalizeHeight(10),
                                             borderBottomWidth: normalize(1),
                                             borderBottomColor: '#44475d',
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            overflow: 'hidden',
                                         }}>
-                                        <Text style={{
-                                            color: "#d6d3de",
-                                            fontSize: normalizeHeight(14),
-                                            fontWeight: '600',
-                                        }}>
-                                           
-                                            {exercise?.name || 'Unknown Exercise'}
-                                        </Text>
-                                        
+                                            <View style={{
+                                                width: normalize(3),
+                                                alignSelf: 'stretch',
+                                                backgroundColor: isComplete ? '#4a9e7a' : '#4e68a6',
+                                                marginRight: normalizeWidth(10),
+                                            }} />
+                                            <Text style={{
+                                                color: "#d6d3de",
+                                                fontSize: normalizeHeight(14),
+                                                fontWeight: '600',
+                                                flex: 1,
+                                            }}>
+                                                {exercise?.name || 'Unknown Exercise'}
+                                            </Text>
+                                            <View style={{
+                                                backgroundColor: isComplete ? 'rgba(74, 158, 122, 0.2)' : 'rgba(68, 75, 95, 0.6)',
+                                                borderRadius: normalize(10),
+                                                paddingHorizontal: normalizeWidth(8),
+                                                paddingVertical: normalizeHeight(2),
+                                                marginRight: normalizeWidth(12),
+                                            }}>
+                                                <Text style={{
+                                                    color: isComplete ? '#6cc49a' : '#8899bb',
+                                                    fontSize: normalize(11),
+                                                    fontWeight: '600',
+                                                }}>
+                                                    {loggedCount}/{exerciseInRoutine.sets}
+                                                </Text>
+                                            </View>
                                       </View>
                                         {Array.from({ length: exerciseInRoutine.sets }).map((_, setIdx) => {
                                            const loggedDataForSet = (() => {
                                                const exercisesWithId = workoutRef.current.exercises.filter(ex => ex.exerciseId === exerciseInRoutine.id);
                                                const loggedData = exercisesWithId[setIdx]?.loggedData;
-                                               console.log('ckck this function running ',loggedData)
-                                               // Check if loggedData is an empty object
                                                if (loggedData && Object.keys(loggedData).length === 0) {
                                                    return null;
                                                }
                                                return loggedData || null;
                                            })();
+                                           const isLogged = loggedDataForSet !== null;
                                             return (
                                                 <TouchableOpacity
                                                     key={`${exerciseInRoutine.id}-${setIdx}`}
@@ -382,12 +407,28 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         flexDirection: 'row',
                                                         alignItems: 'center',
                                                         paddingVertical: normalizeHeight(10),
-                                                        paddingHorizontal: normalizeWidth(8),
-                                                        marginBottom: setIdx < exerciseInRoutine.sets - 1 ? 0 : 0,
+                                                        paddingHorizontal: normalizeWidth(10),
                                                         borderTopWidth: setIdx > 0 ? normalize(1) : 0,
                                                         borderTopColor: '#404359',
+                                                        backgroundColor: isLogged ? 'rgba(78, 104, 166, 0.08)' : 'transparent',
                                                     }}
                                                 >
+                                                    <View style={{
+                                                        width: normalize(20),
+                                                        height: normalize(20),
+                                                        borderRadius: normalize(10),
+                                                        backgroundColor: isLogged ? 'rgba(74, 158, 122, 0.22)' : 'rgba(68, 75, 95, 0.5)',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        marginRight: normalizeWidth(8),
+                                                    }}>
+                                                        <Text style={{
+                                                            color: isLogged ? '#6cc49a' : '#7a85a0',
+                                                            fontSize: normalize(12),
+                                                            fontWeight: '700',
+                                                            lineHeight: normalize(14),
+                                                        }}>{isLogged ? '✓' : '+'}</Text>
+                                                    </View>
                                                     <Text style={{
                                                         color: "#c6cbda",
                                                         fontSize: normalize(14),
@@ -395,24 +436,19 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                     }}>
                                                         Set {setIdx + 1}
                                                     </Text>
-                                                    <View style={{flex:1,
-                                                        //paddingLeft:normalizeWidth(30)
-                                                        flexDirection:'row',
-                                                        justifyContent:'center',
-                                                    }}>
-                                                        <ExerciseLoggedDataInline loggedData={loggedDataForSet} 
+                                                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+                                                        <ExerciseLoggedDataInline loggedData={loggedDataForSet}
                                                         params={allParams}/>
                                                     </View>
                                                     <Image
                                                         source={require('../images/white-right-arrow.png')}
                                                         style={{
-                                                            width: normalizeWidth(12),
-                                                            height: normalizeWidth(12),
+                                                            width: normalize(7),
+                                                            height: normalize(7) * (86.0 / 51.0),
                                                             resizeMode: 'contain',
-                                                            tintColor: '#c6cbda',
+                                                            tintColor: isLogged ? '#8ab3d4' : '#7a85a0',
                                                         }}
                                                     />
-                                                     
                                                 </TouchableOpacity>
                                             );
                                         })}
