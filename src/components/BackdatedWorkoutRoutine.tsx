@@ -9,6 +9,8 @@ import TimeSelectionModal from './TimeSelectionModal';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
+import calendar_3 from '../images/calendar-3.png';
+import clock_2 from '../images/clock-2.png';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import ExerciseLoggedDataInline from './ExerciseLoggedDataInline.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
@@ -245,6 +247,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 marginRight: normalizeWidth(8),
                             }}
                         >
+                            <Image
+                                source={calendar_3}
+                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (506.0 / 569.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                                resizeMode="contain"
+                            />
                             <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
                                 {selectedDateString}
                             </Text>
@@ -262,14 +269,16 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 paddingVertical: normalizeHeight(10),
                                 paddingHorizontal: normalizeWidth(16),
                                 marginLeft: normalizeWidth(8),
-                                justifyContent: 'space-between',
                             }}
                         >
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
-                                    {selectedTimeString}
-                                </Text>
-                            </View>
+                            <Image
+                                source={clock_2}
+                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (542.0 / 533.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                                resizeMode="contain"
+                            />
+                            <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
+                                {selectedTimeString}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -404,12 +413,12 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                 </View>
                             );
                         })}
-                        <View style={{height:normalizeHeight(100)}}></View>
+                        <View style={{height:normalizeHeight(16)}}></View>
                     </ScrollView>
                 </View>
 
                 {/* End Workout Button */}
-                <View style={{ marginBottom: normalizeHeight(80), marginTop: normalizeHeight(12) }}>
+                <View style={{ marginBottom: normalizeHeight(80), marginTop: normalizeHeight(4) }}>
                     <TouchableOpacity style={styles.endButton} onPress={handleEndWorkout}>
                         <Image
                             source={white_donut}
