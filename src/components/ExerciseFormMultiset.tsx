@@ -14,6 +14,7 @@ const ExerciseFormMultiset = ({
 }) => {
 
     const [currentSetNumber, setCurrentSetNumber] = useState(0);
+    const [isSaving, setIsSaving] = useState(false);
     console.log('ckck total sets starting ',totalSets)
     const data = useRef(Array.from({ length: totalSets }, () => ({})));
     const exercise = databaseController.getExerciseById(exerciseId);
@@ -25,12 +26,16 @@ const ExerciseFormMultiset = ({
     }
 
     const onSave = () => {
-        if (currentSetNumber < totalSets-1 ) {
-            setCurrentSetNumber(currentSetNumber + 1);
-        } else {
-            logExercisesForParent(exercise, data.current);
-            closeModal();
-        }
+        setIsSaving(true);
+        setTimeout(() => {
+            setIsSaving(false);
+            if (currentSetNumber < totalSets - 1) {
+                setCurrentSetNumber(currentSetNumber + 1);
+            } else {
+                logExercisesForParent(exercise, data.current);
+                closeModal();
+            }
+        }, 1000);
     }
 
     return (
@@ -78,22 +83,34 @@ const ExerciseFormMultiset = ({
                                 flex: 1,
                                 height: normalize(6),
                                 borderRadius: normalize(3),
-                                backgroundColor: i <= currentSetNumber ? '#357ffc' : '#38437e',
+                                backgroundColor: isSaving && i === currentSetNumber ? '#4caf50' : i <= currentSetNumber ? '#357ffc' : '#38437e',
                                 marginRight: i < totalSets - 1 ? normalizeWidth(4) : 0,
                             }}
                         />
                     ))}
                 </View>
-                <Text style={{
-                    color: '#357ffc',
-                    fontSize: normalize(14),
-                    fontWeight: '700',
-                    letterSpacing: normalize(2),
-                    marginTop: normalizeHeight(6),
-                    textAlign: 'center',
-                }}>
-                    SET {currentSetNumber + 1} OF {totalSets}
-                </Text>
+                {isSaving ? (
+                    <Text style={{
+                        color: '#4caf50',
+                        fontSize: normalize(14),
+                        fontWeight: '700',
+                        marginTop: normalizeHeight(6),
+                        textAlign: 'center',
+                    }}>
+                        ✓  Saved
+                    </Text>
+                ) : (
+                    <Text style={{
+                        color: '#357ffc',
+                        fontSize: normalize(14),
+                        fontWeight: '700',
+                        letterSpacing: normalize(2),
+                        marginTop: normalizeHeight(6),
+                        textAlign: 'center',
+                    }}>
+                        SET {currentSetNumber + 1} OF {totalSets}
+                    </Text>
+                )}
             </View>
 
             <View style={{ height: 1, backgroundColor: '#4a5878', marginBottom: normalizeHeight(10) }} />
@@ -165,6 +182,7 @@ const ExerciseFormMultiset = ({
                         elevation: 2,
                     }}
                     onPress={onSave}
+                    disabled={isSaving}
                     activeOpacity={0.85}
                 >
                     <Text style={{
