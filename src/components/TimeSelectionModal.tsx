@@ -129,11 +129,11 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
 
             {/* Bottom row: Cancel + OK */}
             <View style={styles.actionsRow}>
-              <TouchableOpacity onPress={onClose}>
-                <Text style={styles.actionButton}>Cancel</Text>
+              <TouchableOpacity onPress={onClose} hitSlop={{ top: 12, bottom: 12, left: 16, right: 16 }}>
+                <Text style={styles.cancelButton}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={onPressOkay} disabled={!isTimeValid()} activeOpacity={isTimeValid() ? 0.7 : 0.3}>
-                <Text style={[styles.actionButton, !isTimeValid() && styles.actionButtonDisabled]}>OK</Text>
+              <TouchableOpacity onPress={onPressOkay} disabled={!isTimeValid()} activeOpacity={isTimeValid() ? 0.7 : 0.3} hitSlop={{ top: 12, bottom: 12, left: 16, right: 16 }}>
+                <Text style={[styles.okButton, !isTimeValid() && styles.actionButtonDisabled]}>OK</Text>
               </TouchableOpacity>
             </View>
 
@@ -171,10 +171,10 @@ const styles = StyleSheet.create({
     paddingBottom: normalizeHeight(12),
   },
   title: {
-    fontSize: normalize(13),
+    fontSize: normalize(20),
     fontWeight: '600',
-    color: '#B0B7C3',
-    marginBottom: normalizeHeight(12),
+    color: '#FFFFFF',
+    marginBottom: normalizeHeight(16),
   },
   timeRow: {
     flexDirection: 'row',
@@ -271,15 +271,19 @@ const styles = StyleSheet.create({
   },
   actionsRow: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: normalizeWidth(24),
+    justifyContent: 'space-between',
+    paddingHorizontal: normalizeWidth(24),
     marginTop: normalizeHeight(12),
   },
-  actionButton: {
-    fontSize: normalize(16),
-    fontWeight: '600',
-    //color: '#4e68a6',
-    color: 'rgba(255,255,255,0.7)'
+  cancelButton: {
+    fontSize: normalize(14),
+    fontWeight: '500',
+    color: '#B0B0B0',
+  },
+  okButton: {
+    fontSize: normalize(15),
+    fontWeight: '500',
+    color: '#6B8FDB',
   },
   actionButtonDisabled: {
     color: 'rgba(255,255,255,0.3)',
