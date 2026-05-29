@@ -87,32 +87,16 @@ const ExerciseForm: React.FC = ({
                     }
                  </View>
 
-                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', 
+                 <View style={{ flexDirection: 'row', justifyContent: 'space-between',
                   marginTop: normalizeHeight(4)
                   }}>
-                   <TouchableOpacity
-                     style={{
-                       flex: 1,
-                       backgroundColor: '#364979',
-                       borderRadius: normalize(8),
-                       paddingVertical: normalize(10),
-                       marginRight: normalize(4),
-                       alignItems: 'center',
-                       borderWidth: 1,
-                       borderColor: '#7A8CB3',
-                     }}
-                     onPress={onSave}
-                     activeOpacity={0.8}
-                   >
-                     <Text style={{ color: '#d0d0db', fontWeight: '600', fontSize: 18, letterSpacing: 0.5 }}>Save</Text>
-                   </TouchableOpacity>
                    <TouchableOpacity
                      style={{
                        flex: 1,
                        backgroundColor: '#651824',
                        borderRadius: normalize(8),
                        paddingVertical: normalize(10),
-                       marginLeft: normalize(4),
+                       marginRight: normalize(4),
                        alignItems: 'center',
                        borderWidth: normalize(1),
                        borderColor: '#D97A7A',
@@ -121,6 +105,22 @@ const ExerciseForm: React.FC = ({
                      activeOpacity={0.8}
                    >
                      <Text style={{ color: '#d1c4c9', fontWeight: '600', fontSize: 18, letterSpacing: 0.5 }}>Discard</Text>
+                   </TouchableOpacity>
+                   <TouchableOpacity
+                     style={{
+                       flex: 1,
+                       backgroundColor: '#364979',
+                       borderRadius: normalize(8),
+                       paddingVertical: normalize(10),
+                       marginLeft: normalize(4),
+                       alignItems: 'center',
+                       borderWidth: 1,
+                       borderColor: '#7A8CB3',
+                     }}
+                     onPress={onSave}
+                     activeOpacity={0.8}
+                   >
+                     <Text style={{ color: '#d0d0db', fontWeight: '600', fontSize: 18, letterSpacing: 0.5 }}>Save</Text>
                    </TouchableOpacity>
                  </View>
    

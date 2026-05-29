@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert, Image, BackHandler, ScrollView } from 'react-native';
-import { routines } from '../data/dummy/routines';
 import { databaseController } from '../data/controllers';
 import { BackdatedWorkoutRoutineInput } from './BackdatedWorkoutRoutineInput';
 import { SelectRoutineLive } from './SelectRoutineLive';
@@ -193,15 +192,13 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
 
     useEffect(()=>{
         if(selectedRoutineId){
-            const routine = routines.find(r => r.id === selectedRoutineId);
+            const routine = databaseController.getRoutineById(selectedRoutineId);
             if (routine) {
                 routine.exercises.forEach(ex => {
-                    // Assume restTimeBetweenSets is 0 if not present
                     const params = {
                         numberOfSets: ex.sets,
                         restTimeBetweenSets: ex.rest
                     };
-                    // Create empty loggedData array for each set
                     const loggedData = Array(params.numberOfSets).fill({});
                     addSetsForExercise(ex, params, loggedData);
                 });
