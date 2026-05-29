@@ -37,21 +37,21 @@ const ExerciseFormMultiset = ({
         <View style={{
             borderRadius: normalize(10),
         }}>
-            {/* Header with exercise name and set info */}
+            {/* Header: exercise name + close button */}
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: normalizeHeight(16),
+                marginBottom: normalizeHeight(12),
             }}>
                 <Text style={{
-                    fontSize: normalize(18),
-                    fontWeight: '600',
-                    lineHeight: normalize(24),
-                    letterSpacing: normalize(0.3),
+                    fontSize: normalize(20),
+                    fontWeight: '700',
                     color: '#F2F4F8',
+                    flex: 1,
+                    marginRight: normalize(12),
                 }}>
-                    {exerciseName} [Set {currentSetNumber+1} of {totalSets}]
+                    {exerciseName}
                 </Text>
                 <TouchableOpacity
                     onPress={closeModal}
@@ -67,6 +67,36 @@ const ExerciseFormMultiset = ({
                     />
                 </TouchableOpacity>
             </View>
+
+            {/* Progress section: segmented bar + set counter */}
+            <View style={{ marginBottom: normalizeHeight(12) }}>
+                <View style={{ flexDirection: 'row' }}>
+                    {Array.from({ length: totalSets }, (_, i) => (
+                        <View
+                            key={i}
+                            style={{
+                                flex: 1,
+                                height: normalize(6),
+                                borderRadius: normalize(3),
+                                backgroundColor: i <= currentSetNumber ? '#357ffc' : '#38437e',
+                                marginRight: i < totalSets - 1 ? normalizeWidth(4) : 0,
+                            }}
+                        />
+                    ))}
+                </View>
+                <Text style={{
+                    color: '#357ffc',
+                    fontSize: normalize(14),
+                    fontWeight: '700',
+                    letterSpacing: normalize(2),
+                    marginTop: normalizeHeight(8),
+                    textAlign: 'center',
+                }}>
+                    SET {currentSetNumber + 1} OF {totalSets}
+                </Text>
+            </View>
+
+            <View style={{ height: 1, backgroundColor: '#4a5878', marginBottom: normalizeHeight(4) }} />
 
             <View>
                 {
