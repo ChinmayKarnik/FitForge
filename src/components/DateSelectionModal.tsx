@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
-import { View, Modal, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, Modal, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
+
+const left_arrow = require('../images/white-left-arrow.png');
+const right_arrow = require('../images/white-right-arrow.png');
 
 
 const DateSelectionModal = ({ visible, onClose,
@@ -102,49 +105,45 @@ const DateSelectionModal = ({ visible, onClose,
         />
         <View style={styles.centeredContent} pointerEvents="box-none">
           <View style={styles.container}>
-            <Text style={styles.selectDateLabel}>Select date</Text>
             <Text style={styles.dateDisplay}>
-              {selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
             </Text>
             <View style={styles.separator} />
 
             <View style={styles.monthNavigationRow}>
-              <View style={styles.monthYearSection}>
-                <Text style={styles.monthYearText}>
-                  {new Date(displayYear, displayMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-                </Text>
-                <Text style={styles.dropdownCaret}>▼</Text>
-              </View>
+              <TouchableOpacity
+                style={styles.arrowButton}
+                hitSlop={{ top: 12, bottom: 12, left: 16, right: 16 }}
+                onPress={() => {
+                  if (displayMonth === 0) {
+                    setDisplayMonth(11);
+                    setDisplayYear(displayYear - 1);
+                  } else {
+                    setDisplayMonth(displayMonth - 1);
+                  }
+                }}
+              >
+                <Image source={left_arrow} style={styles.arrowImage} />
+              </TouchableOpacity>
 
-              <View style={styles.navigationArrows}>
-                <TouchableOpacity
-                  style={styles.arrowButton}
-                  onPress={() => {
-                    if (displayMonth === 0) {
-                      setDisplayMonth(11);
-                      setDisplayYear(displayYear - 1);
-                    } else {
-                      setDisplayMonth(displayMonth - 1);
-                    }
-                  }}
-                >
-                  <Text style={styles.arrowText}>‹</Text>
-                </TouchableOpacity>
+              <Text style={styles.monthYearText}>
+                {new Date(displayYear, displayMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </Text>
 
-                <TouchableOpacity
-                  style={styles.arrowButton}
-                  onPress={() => {
-                    if (displayMonth === 11) {
-                      setDisplayMonth(0);
-                      setDisplayYear(displayYear + 1);
-                    } else {
-                      setDisplayMonth(displayMonth + 1);
-                    }
-                  }}
-                >
-                  <Text style={styles.arrowText}>›</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={styles.arrowButton}
+                hitSlop={{ top: 12, bottom: 12, left: 16, right: 16 }}
+                onPress={() => {
+                  if (displayMonth === 11) {
+                    setDisplayMonth(0);
+                    setDisplayYear(displayYear + 1);
+                  } else {
+                    setDisplayMonth(displayMonth + 1);
+                  }
+                }}
+              >
+                <Image source={right_arrow} style={styles.arrowImage} />
+              </TouchableOpacity>
             </View>
 
             <View style={styles.calendarContainer}>
@@ -207,8 +206,9 @@ const styles = StyleSheet.create({
     fontSize: normalize(20),
     fontWeight: '600',
     color: '#FFFFFF',
+    marginTop: normalizeHeight(16),
     marginBottom: normalizeHeight(16),
-    marginLeft:normalizeWidth(12)
+    marginLeft: normalizeWidth(16),
   },
   separator: {
     height: normalizeHeight(1),
@@ -218,35 +218,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: normalizeHeight(4),
-    paddingHorizontal: normalizeWidth(16),
-  },
-  monthYearSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    marginTop: normalizeHeight(12),
+    paddingHorizontal: normalizeWidth(24),
   },
   monthYearText: {
     fontSize: normalize(14),
     fontWeight: '500',
     color: '#B0B7C3',
-    marginRight: normalizeWidth(6),
-  },
-  dropdownCaret: {
-    fontSize: normalize(12),
-    color: '#B0B7C3',
-  },
-  navigationArrows: {
-    flexDirection: 'row',
-    gap: normalizeWidth(12),
   },
   arrowButton: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  arrowText: {
-    fontSize: normalize(24),
-    color: '#B0B7C3',
-    fontWeight: '300',
+  arrowImage: {
+    width: normalize(8),
+    height: normalize(13),
+    tintColor: '#B0B7C3',
   },
   centeredContent: {
     flex: 1,
@@ -260,7 +247,7 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     paddingHorizontal: normalizeWidth(10),
-    paddingTop: normalizeHeight(12),
+    paddingTop: normalizeHeight(16),
   },
   weekdayRow: {
     flexDirection: 'row',
