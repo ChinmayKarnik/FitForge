@@ -11,6 +11,7 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
 import calendar_3 from '../images/calendar-3.png';
 import clock_2 from '../images/clock-2.png';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import ExerciseLoggedDataInline from './ExerciseLoggedDataInline.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
@@ -34,6 +35,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
     const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
     const [logSetModalState,setLogSetModalState] = useState({visible:false})
+    const [isListAtBottom, setIsListAtBottom] = useState(false);
     const workoutRef = useRef({})
 
     // State variable to force re-render
@@ -164,6 +166,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         });
         return () => backHandler.remove();
     }, [onEnd]);
+
+    const handleListScroll = (event: any) => {
+        const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+        setIsListAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+    };
 
     const addSetsForExercise = (exercise: any, params: any, loggedData: any) => {
         const workout = workoutRef.current;
@@ -313,8 +320,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         color: '#B0B7C3',
                         marginBottom: normalizeHeight(8),
                     }}>Exercises</Text>
+                    <View style={{ flex: 1 }}>
                     <ScrollView style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
+                    onScroll={handleListScroll}
+                    scrollEventThrottle={16}
                     >
                         {databaseController.getRoutineById(selectedRoutineId)?.exercises.map((exerciseInRoutine, exerciseIdx) => {
                             const exercise = databaseController.getExerciseById(exerciseInRoutine.id);
@@ -415,6 +425,20 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         })}
                         <View style={{height:normalizeHeight(16)}}></View>
                     </ScrollView>
+                    {!isListAtBottom && (
+                        <View style={styles.listBottomFade} pointerEvents="none">
+                            <Svg height="100%" width="100%">
+                                <Defs>
+                                    <LinearGradient id="routineListFade" x1="0" y1="0" x2="0" y2="1">
+                                        <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                                        <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                                    </LinearGradient>
+                                </Defs>
+                                <Rect width="100%" height="100%" fill="url(#routineListFade)" />
+                            </Svg>
+                        </View>
+                    )}
+                    </View>
                 </View>
 
                 {/* End Workout Button */}
@@ -541,5 +565,12 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: normalize(20),
         color: '#FFFFFF',
+    },
+    listBottomFade: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: normalizeHeight(72),
     },
 });
