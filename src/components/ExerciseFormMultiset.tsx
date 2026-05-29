@@ -94,10 +94,11 @@ const ExerciseFormMultiset = ({
                         color: '#4caf50',
                         fontSize: normalize(14),
                         fontWeight: '700',
+                        letterSpacing: normalize(2),
                         marginTop: normalizeHeight(6),
                         textAlign: 'center',
                     }}>
-                        ✓  Saved
+                        SAVED
                     </Text>
                 ) : (
                     <Text style={{
@@ -166,24 +167,24 @@ const ExerciseFormMultiset = ({
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={onSave}
+                    disabled={isSaving}
+                    activeOpacity={0.85}
                     style={{
                         flex: 1,
-                        backgroundColor: '#4666b0',
+                        backgroundColor: isSaving ? '#2e3d66' : '#4666b0',
                         borderRadius: normalize(8),
                         paddingVertical: normalize(12),
                         marginLeft: normalize(4),
                         alignItems: 'center',
                         borderWidth: 1,
-                        borderColor: '#7A8CB3',
+                        borderColor: isSaving ? '#3a4a70' : '#7A8CB3',
                         shadowColor: '#4666b0',
                         shadowOffset: { width: 0, height: 2 },
                         shadowOpacity: 0.2,
                         shadowRadius: 2,
                         elevation: 2,
                     }}
-                    onPress={onSave}
-                    disabled={isSaving}
-                    activeOpacity={0.85}
                 >
                     <Text style={{
                         color: '#fff',
