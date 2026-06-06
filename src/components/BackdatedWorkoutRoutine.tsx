@@ -475,7 +475,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         borderWidth: normalize(1),
                                                         borderColor: '#5a6480',
                                                         borderRadius: normalize(4),
-                                                        paddingHorizontal: normalizeWidth(9),
+                                                        paddingHorizontal: normalizeWidth(7),
                                                         paddingVertical: normalizeHeight(3),
                                                     }}>
                                                         <Text style={{
@@ -490,7 +490,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         width: normalize(1),
                                                         height: normalizeHeight(16),
                                                         backgroundColor: '#404359',
-                                                        marginHorizontal: normalizeWidth(8),
+                                                        marginHorizontal: normalizeWidth(11),
                                                     }} />
 
                                                     {/* Content */}
