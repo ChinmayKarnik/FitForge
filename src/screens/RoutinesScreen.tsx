@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import { normalizeHeight, normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
@@ -13,6 +14,12 @@ const RoutinesScreen = () => {
     const navigation = useNavigation();
     const routines = databaseController.getAllRoutines();
     const [searchText, setSearchText] = useState('');
+    const [isAtBottom, setIsAtBottom] = useState(false);
+
+    const handleScroll = (event: any) => {
+        const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+        setIsAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+    };
 
     const filteredRoutines = routines.filter(routine =>
         routine.name.toLowerCase().includes(searchText.toLowerCase())
@@ -101,17 +108,32 @@ const RoutinesScreen = () => {
             />
             </View>
 
-            <FlatList
-                data={filteredRoutines}
-                keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
-                renderItem={renderItem}
-                ItemSeparatorComponent={renderSeparator}
-                contentContainerStyle={{
-                    paddingBottom: normalizeHeight(16)
-                 }}
-                 showsVerticalScrollIndicator = {false}
-                 style={{ flex: 1 }}
-            />
+            <View style={{ flex: 1, position: 'relative' }}>
+                <FlatList
+                    data={filteredRoutines}
+                    keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
+                    renderItem={renderItem}
+                    ItemSeparatorComponent={renderSeparator}
+                    contentContainerStyle={{ paddingBottom: normalizeHeight(16) }}
+                    showsVerticalScrollIndicator={false}
+                    style={{ flex: 1 }}
+                    onScroll={handleScroll}
+                    scrollEventThrottle={16}
+                />
+                {!isAtBottom && (
+                    <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
+                        <Svg height="100%" width="100%">
+                            <Defs>
+                                <LinearGradient id="listFade" x1="0" y1="0" x2="0" y2="1">
+                                    <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                                    <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                                </LinearGradient>
+                            </Defs>
+                            <Rect width="100%" height="100%" fill="url(#listFade)" />
+                        </Svg>
+                    </View>
+                )}
+            </View>
             <TouchableOpacity
                 style={styles.addButtonContainer}
                 onPress={() => {
