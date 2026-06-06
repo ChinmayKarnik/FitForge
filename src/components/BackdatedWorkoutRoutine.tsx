@@ -5,7 +5,7 @@ import { BackdatedWorkoutRoutineInput } from './BackdatedWorkoutRoutineInput';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
-import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
+import { normalizeHeight, normalizeWidth, normalize, normalizeF } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
 import calendar_3 from '../images/calendar-3.png';
@@ -448,24 +448,24 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                             width: normalize(20),
                                                             height: normalize(20),
                                                             borderRadius: normalize(10),
-                                                            backgroundColor: '#2e7d52',
+                                                            backgroundColor: '#03a254',
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
-                                                            marginRight: normalizeWidth(8),
+                                                            marginRight: normalizeWidth(12),
                                                         }}>
                                                             <Image
                                                                 source={require('../images/white-tick.png')}
                                                                 style={{
-                                                                    width: normalize(9),
-                                                                    height: normalize(9),
+                                                                    width: normalizeF(19, 2),
+                                                                    height: normalizeF(19, 2),
                                                                     resizeMode: 'contain',
                                                                 }}
                                                             />
                                                         </View>
                                                     ) : (
-                                                        <View style={{ marginRight: normalizeWidth(8) }}>
-                                                            <Svg width={normalize(20)} height={normalize(20)} viewBox="0 0 20 20">
-                                                                <Circle cx="10" cy="10" r="8.5" stroke="#8a94aa" strokeWidth="2" strokeDasharray="3 3" fill="none" />
+                                                        <View style={{ marginRight: normalizeWidth(12) }}>
+                                                            <Svg width={normalize(22)} height={normalize(22)} viewBox="0 0 22 22">
+                                                                <Circle cx="11" cy="11" r="9.5" stroke="#8a94aa" strokeWidth="2" strokeDasharray="3 3" fill="none" />
                                                             </Svg>
                                                         </View>
                                                     )}
@@ -490,7 +490,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         width: normalize(1),
                                                         height: normalizeHeight(16),
                                                         backgroundColor: '#404359',
-                                                        marginHorizontal: normalizeWidth(10),
+                                                        marginHorizontal: normalizeWidth(8),
                                                     }} />
 
                                                     {/* Content */}
