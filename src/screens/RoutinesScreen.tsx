@@ -9,6 +9,7 @@ import RoutineCard from '../components/RoutineCard';
 import magnifying_glass from '../images/magnifying-glass-white.png'
 import white_plus from '../images/white-plus.png'
 import white_left_arrow from '../images/white-left-arrow.png'
+import notepad_with_glass from '../images/notepad-with-glass.png'
 
 const RoutinesScreen = () => {
     const navigation = useNavigation();
@@ -119,6 +120,18 @@ const RoutinesScreen = () => {
                     style={{ flex: 1 }}
                     onScroll={handleScroll}
                     scrollEventThrottle={16}
+                    ListEmptyComponent={
+                        searchText.length > 0 ? (
+                            <View style={styles.emptyState}>
+                                <Image source={notepad_with_glass} style={styles.emptyIcon} />
+                                <Text style={styles.emptyTitle}>No routines found</Text>
+                                <Text style={styles.emptySubtitle}>
+                                    No results for{' '}
+                                    <Text style={styles.emptySubtitleHighlight}>"{searchText}"</Text>
+                                </Text>
+                            </View>
+                        ) : null
+                    }
                 />
                 {!isAtBottom && (
                     <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
@@ -192,7 +205,33 @@ const styles = StyleSheet.create({
         backgroundColor: '#4f5b93',
         color: '#fff',
         fontSize: normalize(18),
-        // Remove elevation from text, keep it on container
+    },
+    emptyState: {
+        alignItems: 'center',
+        paddingTop: normalizeHeight(30),
+        paddingBottom: normalizeHeight(16),
+    },
+    emptyIcon: {
+        width: normalizeWidth(70),
+        height: normalizeWidth(70) * (588.0 / 551.0),
+        tintColor: 'rgba(255,255,255,0.6)',
+        marginBottom: normalizeHeight(20),
+    },
+    emptyTitle: {
+        fontSize: normalize(20),
+        fontWeight: '700',
+        color: '#ffffff',
+        marginBottom: normalizeHeight(6),
+        letterSpacing: 0.2,
+    },
+    emptySubtitle: {
+        fontSize: normalize(14),
+        fontWeight: '400',
+        color: 'rgba(255,255,255,0.55)',
+    },
+    emptySubtitleHighlight: {
+        color: '#67a4f9',
+        fontWeight: '500',
     },
 });
 
