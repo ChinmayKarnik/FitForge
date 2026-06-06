@@ -13,6 +13,7 @@ import clock_2 from '../images/clock-2.png';
 import Svg, { Defs, LinearGradient, Stop, Rect, Path, Circle } from 'react-native-svg';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
+import AreYouSureModal from './AreYouSureModal';
 
 // Helper function to get current time
 const getCurrentTime = () => {
@@ -28,6 +29,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [showDateModal, setShowDateModal] = useState(false);
     const [showTimeModal, setShowTimeModal] = useState(false);
     const [showEndModal, setShowEndModal] = useState(false);
+    const [showBackConfirm, setShowBackConfirm] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(getCurrentTime());
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
@@ -105,11 +107,13 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
         setForceRerender(x => x + 1);
     }
 
-    const handleBackPress = () => {
+    const doLeave = () => {
         onEnd();
-        if (onBackPress) {
-            onBackPress();
-        }
+        if (onBackPress) onBackPress();
+    };
+
+    const handleBackPress = () => {
+        setShowBackConfirm(true);
     };
 
     const handleEndWorkout = () => {
@@ -159,11 +163,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-            onEnd();
+            setShowBackConfirm(true);
             return true;
         });
         return () => backHandler.remove();
-    }, [onEnd]);
+    }, []);
 
     const handleListScroll = (event: any) => {
         const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -613,6 +617,17 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                 visible={showEndModal}
                 onClose={() => setShowEndModal(false)}
                 navigation={navigation}
+            />
+            <AreYouSureModal
+                visible={showBackConfirm}
+                onClose={() => setShowBackConfirm(false)}
+                title="Leave Workout?"
+                description="Your progress will be lost if you leave now."
+                primaryLabel="Leave"
+                onPrimary={() => { setShowBackConfirm(false); doLeave(); }}
+                primaryVariant="destructive"
+                secondaryLabel="Stay"
+                onSecondary={() => setShowBackConfirm(false)}
             />
         </>
     );

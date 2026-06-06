@@ -14,12 +14,14 @@ import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
+import AreYouSureModal from './AreYouSureModal';
 
 export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd: () => void; onBackPress?: () => void; navigation?: any }) => {
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
+  const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [isListAtBottom, setIsListAtBottom] = useState(false);
 
   const handleListScroll = (event: any) => {
@@ -165,20 +167,26 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
     console.log('workout ending ', workoutRef.current);
     setShowEndModal(true);
   };
-  const handleBackPress = () => {
+  const doLeave = () => {
     onEnd();
-    if (onBackPress) {
-      onBackPress();
+    if (onBackPress) onBackPress();
+  };
+
+  const handleBackPress = () => {
+    if (workoutRef.current.exercises?.length > 0) {
+      setShowBackConfirm(true);
+    } else {
+      doLeave();
     }
   };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      onEnd();
+      handleBackPress();
       return true;
     });
     return () => backHandler.remove();
-  }, [onEnd]);
+  }, []);
 
   return (
     <>
@@ -314,6 +322,17 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
         visible={showEndModal}
         onClose={() => setShowEndModal(false)}
         navigation={navigation}
+      />
+      <AreYouSureModal
+        visible={showBackConfirm}
+        onClose={() => setShowBackConfirm(false)}
+        title="Leave Workout?"
+        description="Your progress will be lost if you leave now."
+        primaryLabel="Leave"
+        onPrimary={() => { setShowBackConfirm(false); doLeave(); }}
+        primaryVariant="destructive"
+        secondaryLabel="Stay"
+        onSecondary={() => setShowBackConfirm(false)}
       />
     </>
   );
