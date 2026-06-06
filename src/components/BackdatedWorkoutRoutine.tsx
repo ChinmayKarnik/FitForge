@@ -465,7 +465,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                     ) : (
                                                         <View style={{ marginRight: normalizeWidth(8) }}>
                                                             <Svg width={normalize(20)} height={normalize(20)} viewBox="0 0 20 20">
-                                                                <Circle cx="10" cy="10" r="9" stroke="#8a94aa" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
+                                                                <Circle cx="10" cy="10" r="8.5" stroke="#8a94aa" strokeWidth="2" strokeDasharray="3 3" fill="none" />
                                                             </Svg>
                                                         </View>
                                                     )}
@@ -475,8 +475,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         borderWidth: normalize(1),
                                                         borderColor: '#5a6480',
                                                         borderRadius: normalize(4),
-                                                        paddingHorizontal: normalizeWidth(5),
-                                                        paddingVertical: normalizeHeight(2),
+                                                        paddingHorizontal: normalizeWidth(9),
+                                                        paddingVertical: normalizeHeight(3),
                                                     }}>
                                                         <Text style={{
                                                             color: '#c0c8dc',
@@ -499,9 +499,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                             <Text style={{
                                                                 flex: 1,
                                                                 color: '#5b9cf6',
-                                                                fontSize: normalize(13),
+                                                                fontSize: normalize(14),
                                                                 fontWeight: '700',
                                                                 letterSpacing: 0.3,
+                                                                marginLeft: normalizeWidth(8),
                                                             }}>
                                                                 {getLoggedDataString(loggedDataForSet)}
                                                             </Text>
