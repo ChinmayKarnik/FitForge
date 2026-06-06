@@ -106,13 +106,14 @@ const RoutinesScreen = () => {
                 keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
                 renderItem={renderItem}
                 ItemSeparatorComponent={renderSeparator}
-                contentContainerStyle={{ 
-                    paddingBottom: normalizeHeight(100)
+                contentContainerStyle={{
+                    paddingBottom: normalizeHeight(16)
                  }}
                  showsVerticalScrollIndicator = {false}
+                 style={{ flex: 1 }}
             />
             <TouchableOpacity
-                style={[styles.addButtonContainer, { display: 'none' }]}
+                style={styles.addButtonContainer}
                 onPress={() => {
                     if (typeof navigation !== 'undefined') {
                         navigation.navigate('AddRoutine');
@@ -148,25 +149,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#1c2238',
     },
     addButtonContainer: {
-        position: 'absolute',
-        bottom: normalizeHeight(30),
-        left: 0,
-        right: 0,
         alignItems: 'center',
-        zIndex: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.35,
         shadowRadius: 16,
-        elevation: 10, // for Android
+        elevation: 10,
         borderWidth: normalize(1),
         borderColor: 'gray',
         backgroundColor: '#31467b',
         marginHorizontal: normalizeWidth(20),
+        marginTop: normalizeHeight(12),
+        marginBottom: normalizeHeight(20),
         borderRadius: normalize(8),
         paddingVertical: normalizeHeight(12),
         flexDirection: 'row',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     addButtonText: {
         backgroundColor: '#4f5b93',
