@@ -12,6 +12,7 @@ const ExerciseForm: React.FC = ({
     exerciseId,
     onFormDataChange,
     formData,
+    initialData,
     onSave,
     onDiscard,
     setNumber,
@@ -31,7 +32,7 @@ const ExerciseForm: React.FC = ({
   
   return (
    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} scrollEnabled={false}>
+     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} scrollEnabled={false} keyboardShouldPersistTaps="handled">
        <View style={[{backgroundColor:'#232441',
                    borderWidth:normalize(1),
                    borderRadius: normalize(10),
@@ -81,7 +82,7 @@ const ExerciseForm: React.FC = ({
                       requiredParameters?.map((parameter,index)=>{
                         const isLast = index === requiredParameters.length - 1;
                         return (
-                            <RequiredParameterField parameter={parameter} key={parameter.name} showBottomSeparator={!isLast} updateParameterWithValue={updateParameterWithValue}/>
+                            <RequiredParameterField parameter={parameter} key={parameter.name} showBottomSeparator={!isLast} updateParameterWithValue={updateParameterWithValue} initialValue={initialData?.[parameter.name]}/>
                         )
                       })
                     }

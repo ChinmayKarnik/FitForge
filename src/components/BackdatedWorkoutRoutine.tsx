@@ -32,7 +32,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [selectedTime, setSelectedTime] = useState(getCurrentTime());
     const [workoutDateTime, setWorkoutDateTime] = useState<number | null>(null);
     const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
-    const [logSetModalState,setLogSetModalState] = useState({visible:false})
+    const [logSetModalState,setLogSetModalState] = useState<{visible:boolean;exerciseId?:string;setIdx?:number;initialData?:Record<string,any>|null}>({visible:false})
     const [isListAtBottom, setIsListAtBottom] = useState(false);
     const workoutRef = useRef({})
 
@@ -430,7 +430,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         setLogSetModalState({
                                                             visible: true,
                                                             exerciseId: exerciseInRoutine.id,
-                                                            setIdx
+                                                            setIdx,
+                                                            initialData: loggedDataForSet,
                                                         });
                                                     }}
                                                     style={{
@@ -598,9 +599,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
             {
                 logSetModalState.visible && (
                     <LogSetsModal exerciseId={
-                        logSetModalState.exerciseId
-                    } 
-                    setIdx={logSetModalState.setIdx}
+                        logSetModalState.exerciseId!
+                    }
+                    setIdx={logSetModalState.setIdx!}
+                    initialData={logSetModalState.initialData}
                     onClose={() => setLogSetModalState(prev => ({ ...prev, visible: false }))}
                     onSave={onLogData}
                     />

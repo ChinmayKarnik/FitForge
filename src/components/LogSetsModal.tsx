@@ -9,13 +9,15 @@ interface LogSetsModalProps {
     onClose: () => void;
     exerciseId: string;
     setIdx: number;
+    initialData?: Record<string, any> | null;
+    onSave: (setIdx: number, exerciseId: string, loggedData: Record<string, any>) => void;
 }
 
-export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx,onSave }: LogSetsModalProps) => {
+export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx, onSave, initialData }: LogSetsModalProps) => {
     const exercise = databaseController.getExerciseById(exerciseId);
     const exerciseName = exercise?.name;
 
-    const [loggedData,setLoggedData]= useState({})
+    const [loggedData, setLoggedData] = useState(initialData || {})
 
     return (
         <Modal
@@ -40,6 +42,7 @@ export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx,onSave }: Lo
                         onCloseForm={onClose}
                         exerciseId={exerciseId}
                         onFormDataChange={setLoggedData}
+                        initialData={initialData}
                         onSave={() => {onSave(setIdx, exerciseId, loggedData);
                             onClose();
                         }}

@@ -18,16 +18,16 @@ const ParameterValueSelection = ({ value, setValue, parameter }) => {
   return <></>;
 };
 
-const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateParameterWithValue }) => {
+const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateParameterWithValue, initialValue }) => {
   let defaultValue = null;
   if (parameter.type === 'boolean') defaultValue = true;
   if (parameter.type === 'reps') defaultValue = 0;
   if (parameter.type === 'weight') defaultValue = 0;
 
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(initialValue ?? defaultValue);
 
   useEffect(() => {
-    updateParameterWithValue(parameter.name, defaultValue);
+    updateParameterWithValue(parameter.name, initialValue ?? defaultValue);
   }, []);
 
   useEffect(() => {
