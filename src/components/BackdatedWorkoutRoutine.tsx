@@ -464,8 +464,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                         </View>
                                                     ) : (
                                                         <View style={{ marginRight: normalizeWidth(8) }}>
-                                                            <Svg width={normalize(20)} height={normalize(20)} viewBox="0 0 22 22">
-                                                                <Circle cx="11" cy="11" r="9" stroke="#8a94aa" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
+                                                            <Svg width={normalize(20)} height={normalize(20)} viewBox="0 0 20 20">
+                                                                <Circle cx="10" cy="10" r="9" stroke="#8a94aa" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
                                                             </Svg>
                                                         </View>
                                                     )}
@@ -508,10 +508,10 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                                             <Image
                                                                 source={require('../images/pencil-white.png')}
                                                                 style={{
-                                                                    width: normalize(12),
-                                                                    height: normalize(12) * (375/381),
+                                                                    width: normalize(14),
+                                                                    height: normalize(14) * (375/381),
                                                                     resizeMode: 'contain',
-                                                                    tintColor: '#5a6480',
+                                                                    tintColor: '#8a94aa',
                                                                 }}
                                                             />
                                                         </>
