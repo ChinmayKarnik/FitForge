@@ -4,6 +4,8 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import clock from '../images/clock.png';
 import pencil from '../images/pencil-slant.png';
 import white_left_arrow from '../images/white-left-arrow.png';
+import stopwatch from '../images/stopwatch-white.png';
+import plates_stack_2 from '../images/plates-stack-2.png';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
 
 const ACCENT = '#4f7ee8';
@@ -101,7 +103,7 @@ const RoutineDetailsScreen = (props) => {
                     marginHorizontal: normalizeWidth(16),
                     marginTop: normalizeHeight(16),
                     borderRadius: normalize(12),
-                    backgroundColor: '#2e3654',
+                    backgroundColor: '#283050',
                     borderWidth: normalize(1),
                     borderColor: '#3d4563',
                     overflow: 'hidden',
@@ -250,8 +252,16 @@ const RoutineDetailsScreen = (props) => {
                                     alignItems: 'center',
                                     marginTop: normalizeHeight(8),
                                 }}>
-                                    {/* sets icon placeholder */}
-                                    <IconPlaceholder size={12} />
+                                    <Image
+                                        source={plates_stack_2}
+                                        style={{
+                                            width: normalizeWidth(14),
+                                            height: normalizeWidth(14) * (425.0 / 469.0),
+                                            tintColor: ACCENT,
+                                            marginRight: normalizeWidth(4),
+                                            resizeMode: 'contain',
+                                        }}
+                                    />
                                     <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{setRepsText}</Text>
                                     <Dot />
                                     <Image
@@ -265,8 +275,16 @@ const RoutineDetailsScreen = (props) => {
                                     />
                                     <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{restText}</Text>
                                     <Dot />
-                                    {/* stopwatch icon placeholder */}
-                                    <IconPlaceholder size={12} />
+                                    <Image
+                                        source={stopwatch}
+                                        style={{
+                                            width: normalizeWidth(12),
+                                            height: normalizeWidth(12) * (395.0 / 346.0),
+                                            tintColor: ACCENT,
+                                            marginRight: normalizeWidth(4),
+                                            resizeMode: 'contain',
+                                        }}
+                                    />
                                     <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{estimatedTimeText}</Text>
                                 </View>
                                 {areNotes && <ShortDivider />}
