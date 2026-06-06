@@ -111,8 +111,8 @@ const RoutinesScreen = () => {
                  }}
                  showsVerticalScrollIndicator = {false}
             />
-            <TouchableOpacity 
-                style={styles.addButtonContainer}
+            <TouchableOpacity
+                style={[styles.addButtonContainer, { display: 'none' }]}
                 onPress={() => {
                     if (typeof navigation !== 'undefined') {
                         navigation.navigate('AddRoutine');
