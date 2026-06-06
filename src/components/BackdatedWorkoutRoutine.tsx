@@ -10,9 +10,8 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
 import calendar_3 from '../images/calendar-3.png';
 import clock_2 from '../images/clock-2.png';
-import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
+import Svg, { Defs, LinearGradient, Stop, Rect, Path, Circle } from 'react-native-svg';
 import { LogSetsModal } from './LogSetsModal.tsx';
-import ExerciseLoggedDataInline from './ExerciseLoggedDataInline.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 
 // Helper function to get current time
@@ -323,132 +322,230 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     onScroll={handleListScroll}
                     scrollEventThrottle={16}
                     >
-                        {databaseController.getRoutineById(selectedRoutineId)?.exercises.map((exerciseInRoutine, exerciseIdx) => {
+                        {databaseController.getRoutineById(selectedRoutineId)?.exercises.map((exerciseInRoutine) => {
                             const exercise = databaseController.getExerciseById(exerciseInRoutine.id);
                             const allParams = [
                                 ...(exercise?.requiredParameters || []),
                                 ...(exercise?.optionalParameters || []),
                             ];
-                            const loggedCount = (workoutRef.current.exercises || []).filter(
-                                ex => ex.exerciseId === exerciseInRoutine.id && ex.loggedData && Object.keys(ex.loggedData).length > 0
-                            ).length;
-                            const isComplete = loggedCount === exerciseInRoutine.sets && exerciseInRoutine.sets > 0;
+
+                            const getLoggedDataString = (loggedData: any): string => {
+                                const parts: string[] = [];
+                                const repsParam = allParams.find(p => p.name === 'Reps');
+                                const weightParam = allParams.find(p => p.name === 'Weight');
+                                const timeParam = allParams.find(p => p.name === 'Time');
+                                if (repsParam && loggedData['Reps'] !== undefined) {
+                                    const v = loggedData['Reps'];
+                                    parts.push(`${v} ${v === 1 ? 'REP' : 'REPS'}`);
+                                }
+                                if (timeParam && loggedData['Time'] !== undefined) {
+                                    const v = loggedData['Time'];
+                                    const mins = Math.floor(v / 60);
+                                    const secs = v % 60;
+                                    parts.push(`${mins}:${secs.toString().padStart(2, '0')}`);
+                                }
+                                if (weightParam && loggedData['Weight']) {
+                                    parts.push(`${loggedData['Weight']} KG`);
+                                }
+                                return parts.join(' · ');
+                            };
+
                             return (
                                 <View key={exerciseInRoutine.id} style={{ marginBottom: normalizeHeight(12) }}>
                                     <View style={{
-                                        backgroundColor: 'rgba(42, 50, 75, 1)',
+                                        backgroundColor: 'rgba(30, 36, 56, 1)',
                                         borderWidth: normalize(1),
                                         borderColor: '#404359',
                                         borderRadius: normalize(12),
+                                        overflow: 'hidden',
                                     }}>
+                                        {/* Card header */}
                                         <View style={{
-                                            backgroundColor: '#1b1f35',
-                                            borderTopLeftRadius: normalize(12),
-                                            borderTopRightRadius: normalize(12),
-                                            paddingTop: normalizeHeight(10),
-                                            paddingBottom: normalizeHeight(10),
-                                            borderBottomWidth: normalize(1),
-                                            borderBottomColor: '#44475d',
                                             flexDirection: 'row',
                                             alignItems: 'center',
-                                            overflow: 'hidden',
+                                            paddingVertical: normalizeHeight(10),
+                                            paddingHorizontal: normalizeWidth(12),
+                                            borderBottomWidth: normalize(1),
+                                            borderBottomColor: '#353b52',
                                         }}>
                                             <View style={{
-                                                width: normalize(3),
-                                                alignSelf: 'stretch',
-                                                backgroundColor: isComplete ? '#4a9e7a' : '#4e68a6',
+                                                width: normalize(32),
+                                                height: normalize(32),
+                                                backgroundColor: 'rgba(50, 60, 95, 0.8)',
+                                                borderRadius: normalize(8),
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
                                                 marginRight: normalizeWidth(10),
-                                            }} />
+                                            }}>
+                                                <Svg width={normalize(20)} height={normalize(14)} viewBox="0 0 25 14">
+                                                    <Path
+                                                        d="M0 7 L6 7 L9 1 L12 13 L15 7 L25 7"
+                                                        stroke="#5b9cf6"
+                                                        strokeWidth="1.8"
+                                                        fill="none"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </Svg>
+                                            </View>
                                             <Text style={{
-                                                color: "#d6d3de",
-                                                fontSize: normalizeHeight(14),
-                                                fontWeight: '600',
+                                                color: '#f0f2f8',
+                                                fontSize: normalize(15),
+                                                fontWeight: '700',
                                                 flex: 1,
                                             }}>
                                                 {exercise?.name || 'Unknown Exercise'}
                                             </Text>
                                             <View style={{
-                                                backgroundColor: isComplete ? 'rgba(74, 158, 122, 0.2)' : 'rgba(68, 75, 95, 0.6)',
-                                                borderRadius: normalize(10),
+                                                borderWidth: normalize(1),
+                                                borderColor: '#5a6480',
+                                                borderRadius: normalize(6),
                                                 paddingHorizontal: normalizeWidth(8),
-                                                paddingVertical: normalizeHeight(2),
-                                                marginRight: normalizeWidth(12),
+                                                paddingVertical: normalizeHeight(3),
                                             }}>
                                                 <Text style={{
-                                                    color: isComplete ? '#6cc49a' : '#8899bb',
+                                                    color: '#a0aac0',
                                                     fontSize: normalize(11),
                                                     fontWeight: '600',
                                                 }}>
-                                                    {loggedCount}/{exerciseInRoutine.sets}
+                                                    {exerciseInRoutine.sets} SETS
                                                 </Text>
                                             </View>
-                                      </View>
+                                        </View>
+
+                                        {/* Set rows */}
                                         {Array.from({ length: exerciseInRoutine.sets }).map((_, setIdx) => {
-                                           const loggedDataForSet = (() => {
-                                               const exercisesWithId = workoutRef.current.exercises.filter(ex => ex.exerciseId === exerciseInRoutine.id);
-                                               const loggedData = exercisesWithId[setIdx]?.loggedData;
-                                               if (loggedData && Object.keys(loggedData).length === 0) {
-                                                   return null;
-                                               }
-                                               return loggedData || null;
-                                           })();
-                                           const isLogged = loggedDataForSet !== null;
+                                            const loggedDataForSet = (() => {
+                                                const exercisesWithId = ((workoutRef.current as any).exercises || []).filter((ex: any) => ex.exerciseId === exerciseInRoutine.id);
+                                                const loggedData = exercisesWithId[setIdx]?.loggedData;
+                                                if (loggedData && Object.keys(loggedData).length === 0) return null;
+                                                return loggedData || null;
+                                            })();
+                                            const isLogged = loggedDataForSet !== null;
+
                                             return (
                                                 <TouchableOpacity
                                                     key={`${exerciseInRoutine.id}-${setIdx}`}
-                                                    onPress={()=>{
+                                                    onPress={() => {
                                                         setLogSetModalState({
                                                             visible: true,
                                                             exerciseId: exerciseInRoutine.id,
                                                             setIdx
-                                                        })
+                                                        });
                                                     }}
                                                     style={{
                                                         flexDirection: 'row',
                                                         alignItems: 'center',
                                                         paddingVertical: normalizeHeight(10),
-                                                        paddingHorizontal: normalizeWidth(10),
+                                                        paddingHorizontal: normalizeWidth(12),
                                                         borderTopWidth: setIdx > 0 ? normalize(1) : 0,
-                                                        borderTopColor: '#404359',
-                                                        backgroundColor: isLogged ? 'rgba(78, 104, 166, 0.08)' : 'transparent',
+                                                        borderTopColor: '#353b52',
                                                     }}
                                                 >
+                                                    {/* State circle */}
+                                                    {isLogged ? (
+                                                        <View style={{
+                                                            width: normalize(20),
+                                                            height: normalize(20),
+                                                            borderRadius: normalize(10),
+                                                            backgroundColor: '#2e7d52',
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            marginRight: normalizeWidth(8),
+                                                        }}>
+                                                            <Image
+                                                                source={require('../images/white-tick.png')}
+                                                                style={{
+                                                                    width: normalize(9),
+                                                                    height: normalize(9),
+                                                                    resizeMode: 'contain',
+                                                                }}
+                                                            />
+                                                        </View>
+                                                    ) : (
+                                                        <View style={{ marginRight: normalizeWidth(8) }}>
+                                                            <Svg width={normalize(20)} height={normalize(20)} viewBox="0 0 22 22">
+                                                                <Circle cx="11" cy="11" r="9" stroke="#8a94aa" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
+                                                            </Svg>
+                                                        </View>
+                                                    )}
+
+                                                    {/* SET badge */}
                                                     <View style={{
-                                                        width: normalize(20),
-                                                        height: normalize(20),
-                                                        borderRadius: normalize(10),
-                                                        backgroundColor: isLogged ? 'rgba(74, 158, 122, 0.22)' : 'rgba(68, 75, 95, 0.5)',
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center',
-                                                        marginRight: normalizeWidth(8),
+                                                        borderWidth: normalize(1),
+                                                        borderColor: '#5a6480',
+                                                        borderRadius: normalize(4),
+                                                        paddingHorizontal: normalizeWidth(5),
+                                                        paddingVertical: normalizeHeight(2),
                                                     }}>
                                                         <Text style={{
-                                                            color: isLogged ? '#6cc49a' : '#7a85a0',
-                                                            fontSize: normalize(12),
-                                                            fontWeight: '700',
-                                                            lineHeight: normalize(14),
-                                                        }}>{isLogged ? '✓' : '+'}</Text>
+                                                            color: '#c0c8dc',
+                                                            fontSize: normalize(11),
+                                                            fontWeight: '600',
+                                                        }}>SET {setIdx + 1}</Text>
                                                     </View>
-                                                    <Text style={{
-                                                        color: "#c6cbda",
-                                                        fontSize: normalize(14),
-                                                        fontWeight: '500',
-                                                    }}>
-                                                        Set {setIdx + 1}
-                                                    </Text>
-                                                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                                        <ExerciseLoggedDataInline loggedData={loggedDataForSet}
-                                                        params={allParams}/>
-                                                    </View>
-                                                    <Image
-                                                        source={require('../images/white-right-arrow.png')}
-                                                        style={{
-                                                            width: normalize(7),
-                                                            height: normalize(7) * (86.0 / 51.0),
-                                                            resizeMode: 'contain',
-                                                            tintColor: isLogged ? '#8ab3d4' : '#7a85a0',
-                                                        }}
-                                                    />
+
+                                                    {/* Vertical separator */}
+                                                    <View style={{
+                                                        width: normalize(1),
+                                                        height: normalizeHeight(16),
+                                                        backgroundColor: '#404359',
+                                                        marginHorizontal: normalizeWidth(10),
+                                                    }} />
+
+                                                    {/* Content */}
+                                                    {isLogged ? (
+                                                        <>
+                                                            <Text style={{
+                                                                flex: 1,
+                                                                color: '#5b9cf6',
+                                                                fontSize: normalize(13),
+                                                                fontWeight: '700',
+                                                                letterSpacing: 0.3,
+                                                            }}>
+                                                                {getLoggedDataString(loggedDataForSet)}
+                                                            </Text>
+                                                            <Image
+                                                                source={require('../images/pencil-white.png')}
+                                                                style={{
+                                                                    width: normalize(12),
+                                                                    height: normalize(12) * (375/381),
+                                                                    resizeMode: 'contain',
+                                                                    tintColor: '#5a6480',
+                                                                }}
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <View style={{
+                                                            flex: 1,
+                                                            flexDirection: 'row',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            borderWidth: normalize(1),
+                                                            borderColor: '#4e68a6',
+                                                            borderStyle: 'dashed',
+                                                            borderRadius: normalize(6),
+                                                            paddingVertical: normalizeHeight(6),
+                                                            paddingHorizontal: normalizeWidth(8),
+                                                        }}>
+                                                            <Image
+                                                                source={require('../images/pencil-with-underscore.png')}
+                                                                style={{
+                                                                    width: normalize(12),
+                                                                    height: normalize(12) * (396/375),
+                                                                    resizeMode: 'contain',
+                                                                    tintColor: '#7a9fd4',
+                                                                    marginRight: normalizeWidth(6),
+                                                                }}
+                                                            />
+                                                            <Text style={{
+                                                                color: '#7a9fd4',
+                                                                fontSize: normalize(12),
+                                                                fontWeight: '600',
+                                                                letterSpacing: 0.5,
+                                                            }}>LOG SET</Text>
+                                                        </View>
+                                                    )}
                                                 </TouchableOpacity>
                                             );
                                         })}
