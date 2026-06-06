@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
-const ACCENT = '#6b8fe8';
+const ACCENT = '#4f7ee8';
 
 const RoutineCard = ({ routine }) => {
     const navigation = useNavigation();
