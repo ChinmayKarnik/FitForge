@@ -335,7 +335,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
 
             <View style={{
                 paddingHorizontal : normalizeWidth(16),
-                marginTop: normalizeHeight(32)
+                marginTop: normalizeHeight(18)
             }}>
                 <Text style={
                     { color: 'rgba(255,255,255,0.9)',
