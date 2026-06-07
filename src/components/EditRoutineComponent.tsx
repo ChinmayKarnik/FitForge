@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity, BackHandler } from 'react-native';
+import AreYouSureModal from './AreYouSureModal';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { ExercisePickerModal } from './ExercisePickerModal';
@@ -32,6 +33,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
         };
     })
 
+    const [showBackConfirm, setShowBackConfirm] = useState(false);
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
     const exercises = databaseController.getAllExercises();
@@ -90,8 +92,24 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
         }, 100);
     };
 
+    const handleBackPress = () => {
+        if (routine.exercises && routine.exercises.length > 0) {
+            setShowBackConfirm(true);
+        } else {
+            navigation.goBack();
+        }
+    };
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            handleBackPress();
+            return true;
+        });
+        return () => backHandler.remove();
+    }, [routine.exercises]);
+
     const onCancelRoutine = () => {
-        navigation.goBack();
+        handleBackPress();
     };
 
     const onSubmitRoutine = () => {
@@ -337,7 +355,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                 <TouchableOpacity
                     style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
                     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                    onPress={() => navigation.goBack()}
+                    onPress={handleBackPress}
                 >
                     <Image
                         style={{
@@ -569,6 +587,20 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                     setShowExercisePicker(false);
                     setPickerExerciseIndex(null);
                 }}
+            />
+
+            <AreYouSureModal
+                visible={showBackConfirm}
+                onClose={() => setShowBackConfirm(false)}
+                title={isAddRoutineScreen ? 'Discard Routine?' : 'Discard Changes?'}
+                description={isAddRoutineScreen
+                    ? 'Your new routine will be lost if you leave now.'
+                    : 'Your changes to this routine will be lost if you leave now.'}
+                primaryLabel="Discard"
+                onPrimary={() => { setShowBackConfirm(false); navigation.goBack(); }}
+                primaryVariant="destructive"
+                secondaryLabel="Stay"
+                onSecondary={() => setShowBackConfirm(false)}
             />
         </View>
     );
