@@ -6,19 +6,10 @@ import pencil from '../images/pencil-slant.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import stopwatch from '../images/stopwatch-white.png';
 import plates_stack_2 from '../images/plates-stack-2.png';
+import dumbbell from '../images/dumbbell.png';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
 
 const ACCENT = '#4f7ee8';
-
-const IconPlaceholder = ({ size = 12, color = ACCENT }: { size?: number; color?: string }) => (
-    <View style={{
-        width: normalizeWidth(size),
-        height: normalizeWidth(size),
-        borderRadius: normalizeWidth(size / 2),
-        backgroundColor: color,
-        marginRight: normalizeWidth(4),
-    }} />
-);
 
 const Dot = () => (
     <View style={{
@@ -167,8 +158,16 @@ const RoutineDetailsScreen = (props) => {
                                 paddingHorizontal: normalizeWidth(10),
                                 paddingVertical: normalizeHeight(5),
                             }}>
-                                {/* dumbbell icon placeholder */}
-                                <IconPlaceholder size={13} />
+                                <Image
+                                    source={dumbbell}
+                                    style={{
+                                        width: normalizeWidth(15),
+                                        height: normalizeWidth(15) * (346.0 / 539.0),
+                                        tintColor: ACCENT,
+                                        marginRight: normalizeWidth(4),
+                                        resizeMode: 'contain',
+                                    }}
+                                />
                                 <Text style={{
                                     color: 'rgba(255,255,255,0.75)',
                                     fontSize: normalize(12),
