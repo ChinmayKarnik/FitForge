@@ -4,11 +4,16 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { ExercisePickerModal } from '../components';
 import { databaseController } from '../data';
 import down_arrow from '../images/down-arrow.png';
-import red_dustbin from '../images/red-dustbin.png';
+import dustbin from '../images/dustbin.png';
 import white_plus from '../images/white-plus.png'
 import white_left_arrow from '../images/white-left-arrow.png';
+import dumbbell_horizontal_2 from '../images/dumbbell-horizontal-2.png';
+import clock_thick_white from '../images/clock-thick-white.png';
+import repeat from '../images/repeat.png';
+import notes_icon from '../images/notes.png';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 
+const ACCENT = '#4f7ee8';
 
 const AddRoutineScreen = ({ navigation }: any) => {
     const [routine, setRoutine] = useState({
@@ -73,118 +78,101 @@ const AddRoutineScreen = ({ navigation }: any) => {
         navigation.goBack();
     };
 
+  const renderInputLabel = (icon: any, label: string, aspectRatio: number = 1) => (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(6) }}>
+          <Image source={icon} style={{
+              width: normalizeWidth(11),
+              height: normalizeWidth(11) / aspectRatio,
+              tintColor: 'rgba(255,255,255,0.35)',
+              marginRight: normalizeWidth(4),
+              resizeMode: 'contain',
+          }} />
+          <Text style={{
+              color: '#8a8a9e',
+              fontSize: normalize(12),
+              fontWeight: '500'
+          }}>{label}</Text>
+      </View>
+  );
+
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (<View style={{
-        backgroundColor: '#292f46',
-        borderColor: '#383e55',
+        flexDirection: 'row',
+        borderRadius: normalize(12),
+        backgroundColor: '#252d47',
         borderWidth: normalize(1),
-        borderRadius: normalize(8),
-        paddingHorizontal: normalizeWidth(12),
-        paddingVertical: normalizeHeight(12)}}>
-       <TouchableOpacity style={{
-        backgroundColor:'#202034',
-        paddingHorizontal: normalizeWidth(10),
-        paddingVertical: normalizeHeight(8),
-        borderRadius: normalize(6),
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center'
-       }}
-       onPress={() => {
-           setPickerExerciseIndex(index);
-           setShowExercisePicker(true);
-       }}>
-        <Text style={{
-            color: '#d4d7e4',
-            fontSize: normalize(14),
-            fontWeight: '400',
-        }}>{item.name || 'Select Exercise'}</Text>
-        <Image source={down_arrow} style={{
-            height:normalizeHeight(6),
-            aspectRatio: (320.0/173.0),
-            width: normalizeHeight(6)* (320.0/173.0)
-         }}/>
-       </TouchableOpacity>
+        borderColor: '#3d4563',
+        overflow: 'hidden',
+        elevation: 6,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+    }}>
+       <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
+       <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingVertical: normalizeHeight(14) }}>
 
-       <View style={{
-           marginTop: normalizeHeight(12),
-           flexDirection: 'row',
-           justifyContent: 'flex-start',
-           gap: normalizeWidth(12)
-       }}>
-           <View style={{ flex: 0.25 }}>
-               <Text style={{
-                   color: '#8a8a9e',
-                   fontSize: normalize(12),
-                   marginBottom: normalizeHeight(6),
-                   fontWeight: '500'
-               }}>Sets</Text>
-               <TextInput
+           {/* Name/picker row + corner delete button */}
+           <View style={{ flexDirection: 'row', alignItems: 'center', gap: normalizeWidth(10) }}>
+               <TouchableOpacity style={{
+                    flex: 1,
+                    backgroundColor:'#202034',
+                    paddingHorizontal: normalizeWidth(10),
+                    paddingVertical: normalizeHeight(10),
+                    borderRadius: normalize(8),
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    alignItems:'center'
+               }}
+               onPress={() => {
+                   setPickerExerciseIndex(index);
+                   setShowExercisePicker(true);
+               }}>
+                <Text style={{
+                    color: '#d4d7e4',
+                    fontSize: normalize(14),
+                    fontWeight: '400',
+                }}>{item.name || 'Select Exercise'}</Text>
+                <Image source={down_arrow} style={{
+                    height:normalizeHeight(6),
+                    aspectRatio: (320.0/173.0),
+                    width: normalizeHeight(6)* (320.0/173.0)
+                 }}/>
+               </TouchableOpacity>
+
+               <TouchableOpacity
                    style={{
-                       backgroundColor: '#202034',
-                       borderColor: '#383e55',
-                       borderWidth: normalize(1),
-                       borderRadius: normalize(6),
-                       paddingHorizontal: normalizeWidth(10),
-                       paddingVertical: normalizeHeight(8),
-                       color: '#fff',
-                       fontSize: normalize(14),
-                       textAlign: 'left'
+                       width: normalizeWidth(30),
+                       height: normalizeWidth(30),
+                       borderRadius: normalize(15),
+                       alignItems: 'center',
+                       justifyContent: 'center',
                    }}
-                   value={String(item.sets || '')}
-                   keyboardType='numeric'
-                   editable={true}
-                   onChangeText={(text) => {
-                       const updatedExercises = routine.exercises.map((ex: any) => 
-                           ex.localId === item.localId ? { ...ex, sets: Number(text) || '' } : ex
-                       );
-                       setRoutine({ ...routine, exercises: updatedExercises } as any);
+                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                   onPress={() => {
+                       onDeleteExercise(item.localId)
                    }}
-               />
+               >
+                   <Image
+                       source={dustbin}
+                       style={{
+                           width: normalizeWidth(15),
+                           height: normalizeWidth(15) * (471 / 406),
+                       }}
+                   />
+               </TouchableOpacity>
            </View>
 
-           <View style={{ flex: 0.25 }}>
-               <Text style={{
-                   color: '#8a8a9e',
-                   fontSize: normalize(12),
-                   marginBottom: normalizeHeight(6),
-                   fontWeight: '500'
-               }}>Reps</Text>
-               <TextInput
-                   style={{
-                       backgroundColor: '#202034',
-                       borderColor: '#383e55',
-                       borderWidth: normalize(1),
-                       borderRadius: normalize(6),
-                       paddingHorizontal: normalizeWidth(10),
-                       paddingVertical: normalizeHeight(8),
-                       color: '#fff',
-                       fontSize: normalize(14),
-                       textAlign: 'left'
-                   }}
-                   value={String(item.reps || '')}
-                   editable={true}
-                   keyboardType='numeric'
-                   onChangeText={(text) => {
-                       const updatedExercises = routine.exercises.map((ex: any) => 
-                           ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
-                       );
-                       setRoutine({ ...routine, exercises: updatedExercises } as any);
-                   }}
-               />
-           </View>
-
-           <View style={{ flex: 0.25 }}>
-               <Text style={{
-                   color: '#8a8a9e',
-                   fontSize: normalize(12),
-                   marginBottom: normalizeHeight(6),
-                   fontWeight: '500'
-               }}>Rest</Text>
-               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+           <View style={{
+               marginTop: normalizeHeight(14),
+               flexDirection: 'row',
+               justifyContent: 'flex-start',
+               gap: normalizeWidth(12)
+           }}>
+               <View style={{ flex: 0.25 }}>
+                   {renderInputLabel(dumbbell_horizontal_2, 'Sets')}
                    <TextInput
                        style={{
-                           flex: 1,
                            backgroundColor: '#202034',
                            borderColor: '#383e55',
                            borderWidth: normalize(1),
@@ -195,86 +183,107 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            fontSize: normalize(14),
                            textAlign: 'left'
                        }}
-                       value={String(item.rest || '')}
+                       value={String(item.sets || '')}
                        keyboardType='numeric'
                        editable={true}
                        onChangeText={(text) => {
-                           const updatedExercises = routine.exercises.map((ex: any) => 
-                               ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
+                           const updatedExercises = routine.exercises.map((ex: any) =>
+                               ex.localId === item.localId ? { ...ex, sets: Number(text) || '' } : ex
                            );
                            setRoutine({ ...routine, exercises: updatedExercises } as any);
                        }}
                    />
-                   <Text style={{
-                       color: '#fff',
-                       fontSize: normalize(14),
-                       marginLeft: normalizeWidth(6)
-                   }}>sec</Text>
+               </View>
+
+               <View style={{ flex: 0.25 }}>
+                   {renderInputLabel(repeat, 'Reps', 467 / 429)}
+                   <TextInput
+                       style={{
+                           backgroundColor: '#202034',
+                           borderColor: '#383e55',
+                           borderWidth: normalize(1),
+                           borderRadius: normalize(6),
+                           paddingHorizontal: normalizeWidth(10),
+                           paddingVertical: normalizeHeight(8),
+                           color: '#fff',
+                           fontSize: normalize(14),
+                           textAlign: 'left'
+                       }}
+                       value={String(item.reps || '')}
+                       editable={true}
+                       keyboardType='numeric'
+                       onChangeText={(text) => {
+                           const updatedExercises = routine.exercises.map((ex: any) =>
+                               ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
+                           );
+                           setRoutine({ ...routine, exercises: updatedExercises } as any);
+                       }}
+                   />
+               </View>
+
+               <View style={{ flex: 0.25 }}>
+                   {renderInputLabel(clock_thick_white, 'Rest', 453 / 448)}
+                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                       <TextInput
+                           style={{
+                               flex: 1,
+                               backgroundColor: '#202034',
+                               borderColor: '#383e55',
+                               borderWidth: normalize(1),
+                               borderRadius: normalize(6),
+                               paddingHorizontal: normalizeWidth(10),
+                               paddingVertical: normalizeHeight(8),
+                               color: '#fff',
+                               fontSize: normalize(14),
+                               textAlign: 'left'
+                           }}
+                           value={String(item.rest || '')}
+                           keyboardType='numeric'
+                           editable={true}
+                           onChangeText={(text) => {
+                               const updatedExercises = routine.exercises.map((ex: any) =>
+                                   ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
+                               );
+                               setRoutine({ ...routine, exercises: updatedExercises } as any);
+                           }}
+                       />
+                       <Text style={{
+                           color: 'rgba(255,255,255,0.5)',
+                           fontSize: normalize(13),
+                           marginLeft: normalizeWidth(6)
+                       }}>sec</Text>
+                   </View>
                </View>
            </View>
-       </View>
 
-       <View style={{
-           marginTop: normalizeHeight(12)
-       }}>
-           <Text style={{
-               color: '#8a8a9e',
-               fontSize: normalize(12),
-               marginBottom: normalizeHeight(6),
-               fontWeight: '500'
-           }}>Notes</Text>
-           <TextInput
-               style={{
-                   backgroundColor: '#202034',
-                   borderColor: '#383e55',
-                   borderWidth: normalize(1),
-                   borderRadius: normalize(6),
-                   paddingHorizontal: normalizeWidth(12),
-                   paddingVertical: normalizeHeight(10),
-                   color: '#fff',
-                   fontSize: normalize(13),
-                   textAlignVertical: 'top',
-                   minHeight: normalizeHeight(80)
-               }}
-               value={item.notes || ''}
-               editable={true}
-               multiline
-               onChangeText={(text) => {
-                   // Update notes in exercise
-                   const updatedExercises = routine.exercises.map((ex: any) => 
-                       ex.localId === item.localId ? { ...ex, notes: text } : ex
-                   );
-                   setRoutine({ ...routine, exercises: updatedExercises } as any);
-               }}
-           />
-       </View>
-       <View style={{
-           marginTop: normalizeHeight(12)
-       }}>
-           <TouchableOpacity 
-               style={{
-                   flexDirection: 'row',
-                   alignItems: 'center'
-               }}
-               onPress={() => {
-                   onDeleteExercise(item.localId)
-               }}
-           >
-               <Image 
-                   source={red_dustbin}
+           <View style={{
+               marginTop: normalizeHeight(14)
+           }}>
+               {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
+               <TextInput
                    style={{
-                       width: normalizeWidth(16),
-                       height: normalizeHeight(16),
-                       aspectRatio: 325/348,
-                       marginRight: normalizeWidth(8)
+                       backgroundColor: '#202034',
+                       borderColor: '#383e55',
+                       borderWidth: normalize(1),
+                       borderRadius: normalize(6),
+                       paddingHorizontal: normalizeWidth(12),
+                       paddingVertical: normalizeHeight(10),
+                       color: '#fff',
+                       fontSize: normalize(13),
+                       textAlignVertical: 'top',
+                       minHeight: normalizeHeight(80)
+                   }}
+                   value={item.notes || ''}
+                   editable={true}
+                   multiline
+                   onChangeText={(text) => {
+                       const updatedExercises = routine.exercises.map((ex: any) =>
+                           ex.localId === item.localId ? { ...ex, notes: text } : ex
+                       );
+                       setRoutine({ ...routine, exercises: updatedExercises } as any);
                    }}
                />
-               <Text style={{
-                   color: '#e75c6d',
-                   fontSize: normalize(14),
-                   fontWeight: '500'
-               }}>Delete</Text>
-           </TouchableOpacity>
+           </View>
        </View>
         </View>);
   };
@@ -321,13 +330,14 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 marginTop: normalizeHeight(24)
             }}>
                 <Text style={
-                    { color: '#b3b2c5',
+                    { color: 'rgba(255,255,255,0.9)',
                      fontSize: normalize(15),
+                     fontWeight: '600',
                       marginBottom: normalizeHeight(8)
                       }}>Routine Name</Text>
                 <TextInput
                     style={{
-                        backgroundColor: '#292f46',
+                        backgroundColor: '#202034',
                         borderColor: '#383e55',
                         borderWidth: 1,
                         borderRadius: 8,
@@ -350,11 +360,11 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 marginTop: normalizeHeight(10)
             }}
             >
-                <Text 
+                <Text
                 style={{
-                    color: '#b3b2c5',
+                    color: 'rgba(255,255,255,0.9)',
                     fontSize: normalize(15),
-                    fontWeight: '400',
+                    fontWeight: '600',
                 }}
                 >Exercises</Text>
                 <View style={{flex:1}}>
@@ -399,19 +409,19 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 ListFooterComponent={() => {
                     return (
                         <View style={{
-                            alignItems: 'center',
                             marginTop: normalizeHeight(20),
                             marginBottom: normalizeHeight(30)
                         }}>
                             <TouchableOpacity
                                 style={{
                                     borderWidth: normalize(1),
-                                    borderColor: '#383e55',
-                                    borderRadius: normalize(8),
-                                    paddingHorizontal: normalizeWidth(20),
-                                    paddingVertical: normalizeHeight(8),
+                                    borderColor: ACCENT,
+                                    backgroundColor: 'rgba(79,126,232,0.08)',
+                                    borderRadius: normalize(10),
+                                    paddingVertical: normalizeHeight(12),
                                     flexDirection: 'row',
                                     alignItems: 'center',
+                                    justifyContent: 'center',
                                     marginBottom: normalizeHeight(100)
                                 }}
                                 onPress={onAddExercise}
@@ -423,13 +433,13 @@ const AddRoutineScreen = ({ navigation }: any) => {
                                         width: (112.0 / 115.0) * normalize(10),
                                         aspectRatio: (115.0 / 112.0),
                                         marginRight: normalizeWidth(6),
-                                        tintColor: 'rgba(255,255,255,0.8)'
+                                        tintColor: ACCENT
                                     }}
                                 />
                                 <Text style={{
-                                    color: 'rgba(255,255,255,0.6)',
+                                    color: ACCENT,
                                     fontSize: normalize(14),
-                                    fontWeight: '500'
+                                    fontWeight: '600'
                                 }}>Add Exercise</Text>
                             </TouchableOpacity>
                         </View>
@@ -439,16 +449,21 @@ const AddRoutineScreen = ({ navigation }: any) => {
             <View style={{
                 flexDirection: 'row',
                 paddingHorizontal: normalizeWidth(16),
-                paddingVertical: normalizeHeight(16),
+                paddingTop: normalizeHeight(16),
+                paddingBottom: normalizeHeight(16),
                 gap: normalizeWidth(12),
-                borderTopWidth: normalizeHeight(1),
-                borderColor: 'rgba(255,255,255,0.1)',
+                backgroundColor: '#1c2238',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: -4 },
+                shadowOpacity: 0.25,
+                shadowRadius: 8,
+                elevation: 12,
             }}>
                 <TouchableOpacity
                     style={{
                         flex: 1,
                         borderWidth: normalize(1),
-                        borderColor: '#383e55',
+                        borderColor: 'rgba(255,255,255,0.25)',
                         borderRadius: normalize(8),
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
@@ -456,7 +471,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                     onPress={onCancelRoutine}
                 >
                     <Text style={{
-                        color: '#8a8a9e',
+                        color: 'rgba(255,255,255,0.75)',
                         fontSize: normalize(16),
                         fontWeight: '500'
                     }}>Cancel</Text>
@@ -464,7 +479,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 <TouchableOpacity
                     style={{
                         flex: 1,
-                        backgroundColor: isRoutineValid ? '#4f5b93' : 'rgba(79,91,147,0.5)',
+                        backgroundColor: isRoutineValid ? ACCENT : 'rgba(79,126,232,0.35)',
                         borderRadius: normalize(8),
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
