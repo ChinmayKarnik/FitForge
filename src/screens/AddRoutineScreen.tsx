@@ -84,7 +84,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
               width: normalizeWidth(iconWidth),
               height: normalizeWidth(iconWidth) / aspectRatio,
               tintColor: 'rgba(255,255,255,0.7)',
-              marginRight: normalizeWidth(6),
+              marginRight: normalizeWidth(8),
               resizeMode: 'contain',
           }} />
           <Text style={{
@@ -147,6 +147,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                        width: normalizeWidth(22),
                        height: normalizeWidth(22),
                        borderRadius: normalize(11),
+                       marginRight:-normalizeWidth(4),
+                       marginLeft: normalizeWidth(10),
                        alignItems: 'center',
                        justifyContent: 'center',
                    }}
@@ -161,6 +163,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            width: normalizeWidth(15),
                            height: normalizeWidth(15) * (471 / 406),
                            tintColor: '#f45765',
+
                        }}
                    />
                </TouchableOpacity>
@@ -169,9 +172,9 @@ const AddRoutineScreen = ({ navigation }: any) => {
            <View style={{
                marginTop: normalizeHeight(20),
                flexDirection: 'row',
-               justifyContent: 'space-between',
+               gap: normalizeWidth(20),
            }}>
-               <View style={{ flex: 0.27 }}>
+               <View style={{ flex: 1 }}>
                    {renderInputLabel(dumbbell_horizontal_2, 'Sets', 1, 17)}
                    <TextInput
                        style={{
@@ -179,8 +182,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            borderColor: 'rgba(255,255,255,0.5)',
                            borderWidth: normalize(1),
                            borderRadius: normalize(6),
-                           paddingHorizontal: normalizeWidth(10),
-                           paddingVertical: normalizeHeight(8),
+                           paddingHorizontal: normalizeWidth(8),
+                           paddingVertical: normalizeHeight(7),
                            color: '#fff',
                            fontSize: normalize(14),
                            textAlign: 'left'
@@ -197,7 +200,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    />
                </View>
 
-               <View style={{ flex: 0.27 }}>
+               <View style={{ flex: 1 }}>
                    {renderInputLabel(repeat, 'Reps', 467 / 429)}
                    <TextInput
                        style={{
@@ -205,8 +208,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            borderColor: 'rgba(255,255,255,0.5)',
                            borderWidth: normalize(1),
                            borderRadius: normalize(6),
-                           paddingHorizontal: normalizeWidth(10),
-                           paddingVertical: normalizeHeight(8),
+                           paddingHorizontal: normalizeWidth(8),
+                           paddingVertical: normalizeHeight(7),
                            color: '#fff',
                            fontSize: normalize(14),
                            textAlign: 'left'
@@ -223,7 +226,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    />
                </View>
 
-               <View style={{ flex: 0.4 }}>
+               <View style={{ flex: 1.2 }}>
                    {renderInputLabel(clock_thick_white, 'Rest', 453 / 448)}
                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                        <TextInput
@@ -233,8 +236,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                                borderColor: 'rgba(255,255,255,0.5)',
                                borderWidth: normalize(1),
                                borderRadius: normalize(6),
-                               paddingHorizontal: normalizeWidth(10),
-                               paddingVertical: normalizeHeight(8),
+                               paddingHorizontal: normalizeWidth(8),
+                               paddingVertical: normalizeHeight(7),
                                color: '#fff',
                                fontSize: normalize(14),
                                textAlign: 'left'
