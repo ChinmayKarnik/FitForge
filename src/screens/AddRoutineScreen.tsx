@@ -12,6 +12,7 @@ import dumbbell_2 from '../images/dumbbell-2.png';
 import stopwatch_white_2 from '../images/stopwatch-white-2.png';
 import repeat from '../images/repeat.png';
 import notes_icon from '../images/notes.png';
+import notepad_with_plus from '../images/notepad-with-plus.png';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 
 const ACCENT = '#4f7ee8';
@@ -411,14 +412,16 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
                 ListEmptyComponent={() => (
                     <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
-                        <View style={{
-                            width: normalizeWidth(60),
-                            height: normalizeWidth(60),
-                            borderRadius: normalize(12),
-                            borderWidth: normalize(1.5),
-                            borderColor: 'rgba(255,255,255,0.25)',
-                            marginBottom: normalizeHeight(14),
-                        }} />
+                        <Image
+                            source={notepad_with_plus}
+                            style={{
+                                width: normalizeWidth(60),
+                                height: normalizeWidth(60) * (551.0 / 518.0),
+                                tintColor: 'rgba(255,255,255,0.55)',
+                                marginBottom: normalizeHeight(14),
+                                resizeMode: 'contain',
+                            }}
+                        />
                         <Text style={{
                             color: 'rgba(255,255,255,0.85)',
                             fontSize: normalize(18),
