@@ -43,13 +43,14 @@ const AddRoutineScreen = ({ navigation }: any) => {
     setPickerExerciseIndex(null);
     };
 
-    const onDeleteExercise = (exerciseId: string) => {
-        const updatedExercises = routine.exercises.filter((ex: any) => ex.id !== exerciseId);
+    const onDeleteExercise = (localId: string) => {
+        const updatedExercises = routine.exercises.filter((ex: any) => ex.localId !== localId);
         setRoutine({ ...routine, exercises: updatedExercises } as any);
     };
 
     const onAddExercise = () => {
         const newExercise = {
+            localId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
             name: undefined,
             sets: 1,
             reps: undefined,
@@ -135,7 +136,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    editable={true}
                    onChangeText={(text) => {
                        const updatedExercises = routine.exercises.map((ex: any) => 
-                           ex.id === item.id ? { ...ex, sets: Number(text) || '' } : ex
+                           ex.localId === item.localId ? { ...ex, sets: Number(text) || '' } : ex
                        );
                        setRoutine({ ...routine, exercises: updatedExercises } as any);
                    }}
@@ -166,7 +167,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    keyboardType='numeric'
                    onChangeText={(text) => {
                        const updatedExercises = routine.exercises.map((ex: any) => 
-                           ex.id === item.id ? { ...ex, reps: Number(text) || undefined } : ex
+                           ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
                        );
                        setRoutine({ ...routine, exercises: updatedExercises } as any);
                    }}
@@ -199,7 +200,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                        editable={true}
                        onChangeText={(text) => {
                            const updatedExercises = routine.exercises.map((ex: any) => 
-                               ex.id === item.id ? { ...ex, rest: Number(text) || undefined } : ex
+                               ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
                            );
                            setRoutine({ ...routine, exercises: updatedExercises } as any);
                        }}
@@ -241,7 +242,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                onChangeText={(text) => {
                    // Update notes in exercise
                    const updatedExercises = routine.exercises.map((ex: any) => 
-                       ex.id === item.id ? { ...ex, notes: text } : ex
+                       ex.localId === item.localId ? { ...ex, notes: text } : ex
                    );
                    setRoutine({ ...routine, exercises: updatedExercises } as any);
                }}
@@ -256,7 +257,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    alignItems: 'center'
                }}
                onPress={() => {
-                   onDeleteExercise(item.id)
+                   onDeleteExercise(item.localId)
                }}
            >
                <Image 
@@ -368,7 +369,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
 
             <FlatList
                 data={routine.exercises}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.localId}
                 renderItem={renderItem}
                 ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />} 
                 scrollEnabled={true}
