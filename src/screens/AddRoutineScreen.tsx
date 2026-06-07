@@ -337,17 +337,17 @@ const AddRoutineScreen = ({ navigation }: any) => {
                       }}>Routine Name</Text>
                 <TextInput
                     style={{
-                        backgroundColor: '#202034',
-                        borderColor: '#383e55',
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgba(255,255,255,0.3)',
                         borderWidth: 1,
                         borderRadius: 8,
                         paddingHorizontal: normalizeWidth(12),
                         paddingVertical: normalizeHeight(12),
-                        color: '#fff',
+                        color: 'rgba(255,255,255,0.8)',
                         fontSize: normalize(14)
                     }}
                     placeholder="Routine Name"
-                    placeholderTextColor="rgba(255,255,255,0.3)"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     value={routine.name}
                     onChangeText={(text) => setRoutine({ ...routine, name: text })}
                 />
