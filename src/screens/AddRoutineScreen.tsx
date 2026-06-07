@@ -78,13 +78,13 @@ const AddRoutineScreen = ({ navigation }: any) => {
         navigation.goBack();
     };
 
-  const renderInputLabel = (icon: any, label: string, aspectRatio: number = 1) => (
+  const renderInputLabel = (icon: any, label: string, aspectRatio: number = 1, iconWidth: number = 13) => (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(6) }}>
           <Image source={icon} style={{
-              width: normalizeWidth(11),
-              height: normalizeWidth(11) / aspectRatio,
+              width: normalizeWidth(iconWidth),
+              height: normalizeWidth(iconWidth) / aspectRatio,
               tintColor: 'rgba(255,255,255,0.7)',
-              marginRight: normalizeWidth(4),
+              marginRight: normalizeWidth(6),
               resizeMode: 'contain',
           }} />
           <Text style={{
@@ -110,7 +110,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
         shadowRadius: 8,
     }}>
        <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
-       <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingVertical: normalizeHeight(14) }}>
+       <View style={{ flex: 1, paddingHorizontal: normalizeWidth(16), paddingVertical: normalizeHeight(18) }}>
 
            {/* Name/picker row + corner delete button */}
            <View style={{ flexDirection: 'row', alignItems: 'center', gap: normalizeWidth(10) }}>
@@ -144,9 +144,9 @@ const AddRoutineScreen = ({ navigation }: any) => {
 
                <TouchableOpacity
                    style={{
-                       width: normalizeWidth(30),
-                       height: normalizeWidth(30),
-                       borderRadius: normalize(15),
+                       width: normalizeWidth(22),
+                       height: normalizeWidth(22),
+                       borderRadius: normalize(11),
                        alignItems: 'center',
                        justifyContent: 'center',
                    }}
@@ -167,13 +167,12 @@ const AddRoutineScreen = ({ navigation }: any) => {
            </View>
 
            <View style={{
-               marginTop: normalizeHeight(14),
+               marginTop: normalizeHeight(20),
                flexDirection: 'row',
-               justifyContent: 'flex-start',
-               gap: normalizeWidth(12)
+               justifyContent: 'space-between',
            }}>
-               <View style={{ flex: 0.25 }}>
-                   {renderInputLabel(dumbbell_horizontal_2, 'Sets')}
+               <View style={{ flex: 0.27 }}>
+                   {renderInputLabel(dumbbell_horizontal_2, 'Sets', 1, 17)}
                    <TextInput
                        style={{
                            backgroundColor: '#1c2337',
@@ -198,7 +197,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    />
                </View>
 
-               <View style={{ flex: 0.25 }}>
+               <View style={{ flex: 0.27 }}>
                    {renderInputLabel(repeat, 'Reps', 467 / 429)}
                    <TextInput
                        style={{
@@ -224,7 +223,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    />
                </View>
 
-               <View style={{ flex: 0.25 }}>
+               <View style={{ flex: 0.4 }}>
                    {renderInputLabel(clock_thick_white, 'Rest', 453 / 448)}
                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                        <TextInput
@@ -260,9 +259,11 @@ const AddRoutineScreen = ({ navigation }: any) => {
            </View>
 
            <View style={{
-               marginTop: normalizeHeight(14)
+               marginTop: normalizeHeight(20)
            }}>
-               {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
+               <View style={{ marginBottom: normalizeHeight(6) }}>
+                   {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
+               </View>
                <TextInput
                    style={{
                        backgroundColor: '#1c2337',
@@ -330,7 +331,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
 
             <View style={{
                 paddingHorizontal : normalizeWidth(16),
-                marginTop: normalizeHeight(24)
+                marginTop: normalizeHeight(32)
             }}>
                 <Text style={
                     { color: 'rgba(255,255,255,0.9)',
@@ -387,7 +388,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />} 
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(12) }}
+                contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(18) }}
                 ListEmptyComponent={() => (
                     <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
                         <Text style={{
@@ -412,7 +413,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 ListFooterComponent={() => {
                     return (
                         <View style={{
-                            marginTop: normalizeHeight(20),
+                            marginTop: normalizeHeight(28),
                             marginBottom: normalizeHeight(30)
                         }}>
                             <TouchableOpacity
