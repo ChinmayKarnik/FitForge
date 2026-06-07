@@ -131,9 +131,9 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    setShowExercisePicker(true);
                }}>
                 <Text style={{
-                    color: '#d4d7e4',
+                    color: 'rgba(255,255,255,1)',
                     fontSize: normalize(14),
-                    fontWeight: '400',
+                    fontWeight: '500',
                 }}>{item.name || 'Select Exercise'}</Text>
                 <Image source={down_arrow} style={{
                     height:normalizeHeight(5),
@@ -185,7 +185,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            borderRadius: normalize(6),
                            paddingHorizontal: normalizeWidth(8),
                            paddingVertical: normalizeHeight(7),
-                           color: '#fff',
+                           color: 'rgba(255,255,255,0.8)',
                            fontSize: normalize(14),
                            textAlign: 'left'
                        }}
@@ -211,7 +211,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            borderRadius: normalize(6),
                            paddingHorizontal: normalizeWidth(8),
                            paddingVertical: normalizeHeight(7),
-                           color: '#fff',
+                            color: 'rgba(255,255,255,0.8)',
                            fontSize: normalize(14),
                            textAlign: 'left'
                        }}
@@ -239,7 +239,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                                borderRadius: normalize(6),
                                paddingHorizontal: normalizeWidth(8),
                                paddingVertical: normalizeHeight(7),
-                               color: '#fff',
+                               color: 'rgba(255,255,255,0.8)',
                                fontSize: normalize(14),
                                textAlign: 'left'
                            }}
@@ -276,7 +276,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                        borderRadius: normalize(6),
                        paddingHorizontal: normalizeWidth(12),
                        paddingVertical: normalizeHeight(10),
-                       color: '#fff',
+                       color: 'rgba(255,255,255,0.7)',
                        fontSize: normalize(13),
                        textAlignVertical: 'top',
                        minHeight: normalizeHeight(80)
