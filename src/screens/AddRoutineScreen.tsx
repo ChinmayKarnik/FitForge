@@ -7,8 +7,8 @@ import down_arrow from '../images/down-arrow.png';
 import dustbin from '../images/dustbin.png';
 import white_plus from '../images/white-plus.png'
 import white_left_arrow from '../images/white-left-arrow.png';
-import dumbbell_horizontal_2 from '../images/dumbbell-horizontal-2.png';
-import clock_thick_white from '../images/clock-thick-white.png';
+import dumbbell_2 from '../images/dumbbell-2.png';
+import stopwatch_white_2 from '../images/stopwatch-white-2.png';
 import repeat from '../images/repeat.png';
 import notes_icon from '../images/notes.png';
 import { get } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
@@ -175,7 +175,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                gap: normalizeWidth(20),
            }}>
                <View style={{ flex: 1 }}>
-                   {renderInputLabel(dumbbell_horizontal_2, 'Sets', 1, 17)}
+                   {renderInputLabel(dumbbell_2, 'Sets', 410 / 241, 17)}
                    <TextInput
                        style={{
                            backgroundColor: '#1c2337',
@@ -227,7 +227,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                </View>
 
                <View style={{ flex: 1.2 }}>
-                   {renderInputLabel(clock_thick_white, 'Rest', 453 / 448)}
+                   {renderInputLabel(stopwatch_white_2, 'Rest', 372 / 420)}
                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                        <TextInput
                            style={{
