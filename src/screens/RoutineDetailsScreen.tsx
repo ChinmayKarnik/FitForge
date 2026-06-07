@@ -17,7 +17,7 @@ const Dot = () => (
         height: normalizeHeight(3),
         borderRadius: normalize(2),
         backgroundColor: 'rgba(255,255,255,0.3)',
-        marginHorizontal: normalizeWidth(6),
+        marginHorizontal: normalizeWidth(9),
         marginTop: normalizeHeight(1),
     }} />
 );
@@ -26,7 +26,8 @@ const ShortDivider = () => (
     <View style={{
         height: normalizeHeight(1),
         backgroundColor: 'rgba(255,255,255,0.15)',
-        marginVertical: normalizeHeight(10),
+        marginTop: normalizeHeight(12),
+        marginBottom: normalizeHeight(8),
     }} />
 );
 
@@ -290,7 +291,8 @@ const RoutineDetailsScreen = (props) => {
                                 {areNotes && (
                                     <Text style={{
                                         fontSize: normalize(13),
-                                        color: 'rgba(255,255,255,0.45)',
+                                        fontStyle: 'italic',
+                                        color: 'rgba(255,255,255,0.4)',
                                         lineHeight: normalize(19),
                                     }}>{exercise.notes}</Text>
                                 )}
