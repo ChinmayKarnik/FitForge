@@ -411,23 +411,29 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
                 ListEmptyComponent={() => (
                     <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
+                        <View style={{
+                            width: normalizeWidth(60),
+                            height: normalizeWidth(60),
+                            borderRadius: normalize(12),
+                            borderWidth: normalize(1.5),
+                            borderColor: 'rgba(255,255,255,0.25)',
+                            marginBottom: normalizeHeight(14),
+                        }} />
                         <Text style={{
-                            color: '#d4d7e4',
+                            color: 'rgba(255,255,255,0.85)',
                             fontSize: normalize(18),
-                            fontWeight: '500',
-                            marginBottom: normalizeHeight(8),
+                            fontWeight: '600',
+                            marginBottom: normalizeHeight(6),
                             textAlign: 'center',
                         }}>
                             No exercises added yet
                         </Text>
                         <Text style={{
-                            color: '#b3b2c5',
-                            fontSize: normalize(15),
+                            color: 'rgba(255,255,255,0.45)',
+                            fontSize: normalize(14),
                             fontWeight: '400',
                             textAlign: 'center',
-                        }}>
-                            Tap the button below to add your first exercise.
-                        </Text>
+                        }}>{"Tap the button below to add your first exercise"}</Text>
                     </View>
                 )}
                 ListFooterComponent={() => {
