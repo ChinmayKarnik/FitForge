@@ -83,12 +83,12 @@ const AddRoutineScreen = ({ navigation }: any) => {
           <Image source={icon} style={{
               width: normalizeWidth(11),
               height: normalizeWidth(11) / aspectRatio,
-              tintColor: 'rgba(255,255,255,0.35)',
+              tintColor: 'rgba(255,255,255,0.7)',
               marginRight: normalizeWidth(4),
               resizeMode: 'contain',
           }} />
           <Text style={{
-              color: '#8a8a9e',
+              color: '#dbdfea',
               fontSize: normalize(12),
               fontWeight: '500'
           }}>{label}</Text>
@@ -99,7 +99,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
     return (<View style={{
         flexDirection: 'row',
         borderRadius: normalize(12),
-        backgroundColor: '#252d47',
+        backgroundColor: '#2b3248',
         borderWidth: normalize(1),
         borderColor: '#3d4563',
         overflow: 'hidden',
@@ -116,13 +116,15 @@ const AddRoutineScreen = ({ navigation }: any) => {
            <View style={{ flexDirection: 'row', alignItems: 'center', gap: normalizeWidth(10) }}>
                <TouchableOpacity style={{
                     flex: 1,
-                    backgroundColor:'#202034',
+                    backgroundColor:'#1c2337',
                     paddingHorizontal: normalizeWidth(10),
                     paddingVertical: normalizeHeight(10),
                     borderRadius: normalize(8),
                     flexDirection:'row',
                     justifyContent:'space-between',
-                    alignItems:'center'
+                    alignItems:'center',
+                    borderWidth:normalize(1),
+                    borderColor: 'rgba(255,255,255,0.5)'
                }}
                onPress={() => {
                    setPickerExerciseIndex(index);
@@ -158,6 +160,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                        style={{
                            width: normalizeWidth(15),
                            height: normalizeWidth(15) * (471 / 406),
+                           tintColor: '#f45765',
                        }}
                    />
                </TouchableOpacity>
@@ -173,8 +176,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    {renderInputLabel(dumbbell_horizontal_2, 'Sets')}
                    <TextInput
                        style={{
-                           backgroundColor: '#202034',
-                           borderColor: '#383e55',
+                           backgroundColor: '#1c2337',
+                           borderColor: 'rgba(255,255,255,0.5)',
                            borderWidth: normalize(1),
                            borderRadius: normalize(6),
                            paddingHorizontal: normalizeWidth(10),
@@ -199,8 +202,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    {renderInputLabel(repeat, 'Reps', 467 / 429)}
                    <TextInput
                        style={{
-                           backgroundColor: '#202034',
-                           borderColor: '#383e55',
+                           backgroundColor: '#1c2337',
+                           borderColor: 'rgba(255,255,255,0.5)',
                            borderWidth: normalize(1),
                            borderRadius: normalize(6),
                            paddingHorizontal: normalizeWidth(10),
@@ -227,8 +230,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                        <TextInput
                            style={{
                                flex: 1,
-                               backgroundColor: '#202034',
-                               borderColor: '#383e55',
+                               backgroundColor: '#1c2337',
+                               borderColor: 'rgba(255,255,255,0.5)',
                                borderWidth: normalize(1),
                                borderRadius: normalize(6),
                                paddingHorizontal: normalizeWidth(10),
@@ -248,7 +251,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                            }}
                        />
                        <Text style={{
-                           color: 'rgba(255,255,255,0.5)',
+                           color: 'rgba(255,255,255,0.6)',
                            fontSize: normalize(13),
                            marginLeft: normalizeWidth(6)
                        }}>sec</Text>
@@ -262,8 +265,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
                <TextInput
                    style={{
-                       backgroundColor: '#202034',
-                       borderColor: '#383e55',
+                       backgroundColor: '#1c2337',
+                       borderColor: 'rgba(255,255,255,0.5)',
                        borderWidth: normalize(1),
                        borderRadius: normalize(6),
                        paddingHorizontal: normalizeWidth(12),
@@ -370,7 +373,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 <View style={{flex:1}}>
                 <View style={{
                     height:normalizeHeight(1),
-                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.2)',
                     marginTop: normalizeHeight(3),
                     marginLeft: normalizeWidth(8),
                 }}/>
@@ -415,8 +418,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                             <TouchableOpacity
                                 style={{
                                     borderWidth: normalize(1),
-                                    borderColor: ACCENT,
-                                    backgroundColor: 'rgba(79,126,232,0.08)',
+                                    borderColor: '#7f8ec7',
+                                    backgroundColor: 'transparent',
                                     borderRadius: normalize(10),
                                     paddingVertical: normalizeHeight(12),
                                     flexDirection: 'row',
@@ -433,11 +436,11 @@ const AddRoutineScreen = ({ navigation }: any) => {
                                         width: (112.0 / 115.0) * normalize(10),
                                         aspectRatio: (115.0 / 112.0),
                                         marginRight: normalizeWidth(6),
-                                        tintColor: ACCENT
+                                        tintColor: '#7f8ec7'
                                     }}
                                 />
                                 <Text style={{
-                                    color: ACCENT,
+                                    color: '#7f8ec7',
                                     fontSize: normalize(14),
                                     fontWeight: '600'
                                 }}>Add Exercise</Text>
