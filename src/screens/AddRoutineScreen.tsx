@@ -411,7 +411,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 scrollEventThrottle={16}
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
                 ListEmptyComponent={() => (
-                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(42), marginBottom: normalizeHeight(0) }}>
+                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(28), marginBottom: normalizeHeight(0) }}>
                         <Image
                             source={notepad_with_plus}
                             style={{
@@ -437,6 +437,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                             fontWeight: '400',
                             textAlign: 'center',
                             lineHeight: normalize(18),
+                            marginBottom: normalizeHeight(20),
                         }}>{"Tap the button below to add your first exercise."}</Text>
                     </View>
                 )}
@@ -444,7 +445,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                     const isEmpty = routine.exercises.length === 0;
                     return (
                         <View style={{
-                            marginTop: normalizeHeight(20),
+                            marginTop: normalizeHeight(isEmpty ? 0 : 20),
                             marginBottom: normalizeHeight(20),
                             alignItems: 'center',
                         }}>
