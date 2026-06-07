@@ -101,7 +101,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
         borderRadius: normalize(12),
         backgroundColor: '#2b3248',
         borderWidth: normalize(1),
-        borderColor: '#3d4563',
+        borderColor:'rgba(255,255,255,0.2)',
         overflow: 'hidden',
         elevation: 6,
         shadowColor: '#000',
@@ -136,9 +136,10 @@ const AddRoutineScreen = ({ navigation }: any) => {
                     fontWeight: '400',
                 }}>{item.name || 'Select Exercise'}</Text>
                 <Image source={down_arrow} style={{
-                    height:normalizeHeight(6),
+                    height:normalizeHeight(5),
                     aspectRatio: (320.0/173.0),
-                    width: normalizeHeight(6)* (320.0/173.0)
+                    width: normalizeHeight(5)* (320.0/173.0),
+                    marginRight: normalizeWidth(2),
                  }}/>
                </TouchableOpacity>
 
