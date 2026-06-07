@@ -365,7 +365,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
             style={{flexDirection:'row',
                 alignItems:'center',
                 marginHorizontal: normalizeWidth(16),
-                marginTop: normalizeHeight(10)
+                marginTop: normalizeHeight(10),
+                marginBottom: normalizeHeight(8)
             }}
             >
                 <Text
@@ -389,10 +390,10 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 data={routine.exercises}
                 keyExtractor={(item) => item.localId}
                 renderItem={renderItem}
-                ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(8) }} />} 
+                ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(18) }} />}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(18) }}
+                contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
                 ListEmptyComponent={() => (
                     <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
                         <Text style={{
@@ -417,8 +418,8 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 ListFooterComponent={() => {
                     return (
                         <View style={{
-                            marginTop: normalizeHeight(28),
-                            marginBottom: normalizeHeight(30)
+                            marginTop: normalizeHeight(20),
+                            marginBottom: normalizeHeight(20)
                         }}>
                             <TouchableOpacity
                                 style={{
@@ -430,7 +431,6 @@ const AddRoutineScreen = ({ navigation }: any) => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    marginBottom: normalizeHeight(100)
                                 }}
                                 onPress={onAddExercise}
                             >
