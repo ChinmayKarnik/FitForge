@@ -411,42 +411,46 @@ const AddRoutineScreen = ({ navigation }: any) => {
                 scrollEventThrottle={16}
                 contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
                 ListEmptyComponent={() => (
-                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(50), marginBottom: normalizeHeight(0) }}>
+                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(42), marginBottom: normalizeHeight(0) }}>
                         <Image
                             source={notepad_with_plus}
                             style={{
-                                width: normalizeWidth(60),
-                                height: normalizeWidth(60) * (551.0 / 518.0),
-                                tintColor: 'rgba(255,255,255,0.55)',
-                                marginBottom: normalizeHeight(14),
+                                width: normalizeWidth(52),
+                                height: normalizeWidth(52) * (551.0 / 518.0),
+                                tintColor: 'rgba(255,255,255,0.5)',
+                                marginBottom: normalizeHeight(18),
                                 resizeMode: 'contain',
                             }}
                         />
                         <Text style={{
                             color: 'rgba(255,255,255,0.85)',
-                            fontSize: normalize(18),
+                            fontSize: normalize(17),
                             fontWeight: '600',
-                            marginBottom: normalizeHeight(6),
+                            marginBottom: normalizeHeight(7),
                             textAlign: 'center',
                         }}>
                             No exercises added yet
                         </Text>
                         <Text style={{
-                            color: 'rgba(255,255,255,0.45)',
-                            fontSize: normalize(14),
+                            color: 'rgba(255,255,255,0.4)',
+                            fontSize: normalize(13),
                             fontWeight: '400',
                             textAlign: 'center',
-                        }}>{"Tap the button below to add your first exercise"}</Text>
+                            lineHeight: normalize(18),
+                        }}>{"Tap the button below to add your first exercise."}</Text>
                     </View>
                 )}
                 ListFooterComponent={() => {
+                    const isEmpty = routine.exercises.length === 0;
                     return (
                         <View style={{
                             marginTop: normalizeHeight(20),
-                            marginBottom: normalizeHeight(20)
+                            marginBottom: normalizeHeight(20),
+                            alignItems: 'center',
                         }}>
                             <TouchableOpacity
                                 style={{
+                                    width: isEmpty ? '60%' : '100%',
                                     borderWidth: normalize(1),
                                     borderColor: '#7f8ec7',
                                     backgroundColor: 'transparent',
