@@ -131,7 +131,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
                    setShowExercisePicker(true);
                }}>
                 <Text style={{
-                    color: 'rgba(255,255,255,1)',
+                    color: item.name ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.8)',
                     fontSize: normalize(14),
                     fontWeight: '500',
                 }}>{item.name || 'Select Exercise'}</Text>
