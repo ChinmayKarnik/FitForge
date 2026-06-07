@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { ExercisePickerModal } from '../components';
@@ -23,6 +23,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
     const exercises = databaseController.getAllExercises();
+    const flatListRef = useRef<FlatList<any>>(null);
 
     const isRoutineValid = 
         routine.name && 
@@ -66,6 +67,9 @@ const AddRoutineScreen = ({ navigation }: any) => {
             ...routine,
             exercises: [...routine.exercises, newExercise],
         } as any);
+        setTimeout(() => {
+            flatListRef.current?.scrollToEnd({ animated: true });
+        }, 100);
     };
 
     const onCancelRoutine = () => {
@@ -387,6 +391,7 @@ const AddRoutineScreen = ({ navigation }: any) => {
             </View>
 
             <FlatList
+                ref={flatListRef}
                 data={routine.exercises}
                 keyExtractor={(item) => item.localId}
                 renderItem={renderItem}
