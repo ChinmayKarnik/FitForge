@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import clock from '../images/clock.png';
+import clock from '../images/clock-thick-white.png';
 import pencil from '../images/pencil-slant.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import stopwatch from '../images/stopwatch-white.png';
@@ -25,7 +25,7 @@ const Dot = () => (
 const ShortDivider = () => (
     <View style={{
         height: normalizeHeight(1),
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: 'rgba(255,255,255,0.15)',
         marginVertical: normalizeHeight(10),
     }} />
 );
@@ -153,7 +153,7 @@ const RoutineDetailsScreen = (props) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 borderWidth: normalize(1),
-                                borderColor: 'rgba(79,126,232,0.45)',
+                                borderColor: 'rgba(255,255,255,0.35)',
                                 borderRadius: normalize(20),
                                 paddingHorizontal: normalizeWidth(10),
                                 paddingVertical: normalizeHeight(5),
@@ -178,7 +178,7 @@ const RoutineDetailsScreen = (props) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 borderWidth: normalize(1),
-                                borderColor: 'rgba(79,126,232,0.45)',
+                                borderColor: 'rgba(255,255,255,0.35)',
                                 borderRadius: normalize(20),
                                 paddingHorizontal: normalizeWidth(10),
                                 paddingVertical: normalizeHeight(5),
@@ -187,7 +187,7 @@ const RoutineDetailsScreen = (props) => {
                                     source={clock}
                                     style={{
                                         width: normalizeWidth(12),
-                                        height: normalizeWidth(12) * (346.0 / 357.0),
+                                        height: normalizeWidth(12) * (448.0 / 453.0),
                                         tintColor: ACCENT,
                                         marginRight: normalizeWidth(5),
                                     }}
@@ -219,14 +219,14 @@ const RoutineDetailsScreen = (props) => {
                     }
                     const estimatedTimeSec = getEstimatedExerciseTimeSeconds(exercise);
                     const estimatedTimeMin = Math.ceil(estimatedTimeSec / 60);
-                    const estimatedTimeText = `~${estimatedTimeMin} min`;
+                    const estimatedTimeText = `${estimatedTimeMin} min`;
                     const areNotes = !!exercise.notes;
 
                     return (
                         <View key={idx} style={{
                             flexDirection: 'row',
                             marginHorizontal: normalizeWidth(16),
-                            marginTop: normalizeHeight(12),
+                            marginTop: normalizeHeight(idx === 0 ? 26 : 12),
                             borderRadius: normalize(12),
                             backgroundColor: '#252d47',
                             borderWidth: normalize(1),
@@ -239,7 +239,7 @@ const RoutineDetailsScreen = (props) => {
                             shadowRadius: 8,
                         }}>
                             <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
-                            <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingTop: normalizeHeight(12), paddingBottom: normalizeHeight(12) }}>
+                            <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingTop: normalizeHeight(12), paddingBottom: normalizeHeight(areNotes ? 4 : 12) }}>
                                 <Text style={{
                                     fontSize: normalize(17),
                                     fontWeight: '700',
@@ -256,41 +256,41 @@ const RoutineDetailsScreen = (props) => {
                                         style={{
                                             width: normalizeWidth(14),
                                             height: normalizeWidth(14) * (425.0 / 469.0),
-                                            tintColor: ACCENT,
+                                            tintColor: 'rgba(255,255,255,0.58)',
                                             marginRight: normalizeWidth(4),
                                             resizeMode: 'contain',
                                         }}
                                     />
-                                    <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{setRepsText}</Text>
+                                    <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{setRepsText}</Text>
                                     <Dot />
                                     <Image
                                         source={clock}
                                         style={{
                                             width: normalizeWidth(12),
-                                            height: normalizeWidth(12) * (346.0 / 357.0),
-                                            tintColor: ACCENT,
+                                            height: normalizeWidth(12) * (448.0 / 453.0),
+                                            tintColor: 'rgba(255,255,255,0.58)',
                                             marginRight: normalizeWidth(4),
                                         }}
                                     />
-                                    <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{restText}</Text>
+                                    <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>
                                     <Dot />
                                     <Image
                                         source={stopwatch}
                                         style={{
                                             width: normalizeWidth(12),
                                             height: normalizeWidth(12) * (395.0 / 346.0),
-                                            tintColor: ACCENT,
+                                            tintColor: 'rgba(255,255,255,0.58)',
                                             marginRight: normalizeWidth(4),
                                             resizeMode: 'contain',
                                         }}
                                     />
-                                    <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12) }}>{estimatedTimeText}</Text>
+                                    <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{estimatedTimeText}</Text>
                                 </View>
                                 {areNotes && <ShortDivider />}
                                 {areNotes && (
                                     <Text style={{
                                         fontSize: normalize(13),
-                                        color: 'rgba(255,255,255,0.4)',
+                                        color: 'rgba(255,255,255,0.45)',
                                         lineHeight: normalize(19),
                                     }}>{exercise.notes}</Text>
                                 )}
