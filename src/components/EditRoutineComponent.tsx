@@ -18,7 +18,19 @@ const ACCENT = '#4f7ee8';
 
 export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: any) => {
     const routineProp = route?.params?.routine;
-    const [routine, setRoutine] = useState(isAddRoutineScreen ? { exercises: [] } : (routineProp || { exercises: [] }))
+    const [routine, setRoutine] = useState(() => {
+        if (isAddRoutineScreen) {
+            return { exercises: [] };
+        }
+        const initialRoutine = routineProp || { exercises: [] };
+        return {
+            ...initialRoutine,
+            exercises: (initialRoutine.exercises || []).map((exercise: any) => ({
+                ...exercise,
+                localId: exercise.localId || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            })),
+        };
+    })
 
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
