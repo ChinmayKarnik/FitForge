@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import right_arrow from '../images/white-right-arrow.png';
@@ -23,8 +23,8 @@ const ProfilePageSection = ({ section }) => {
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: normalize(1),
-        borderColor: '#283156',
-        backgroundColor: '#222a4e',
+        borderColor: '#3d4563',
+        backgroundColor: '#252d47',
         borderRadius: normalize(10),
         marginHorizontal: normalizeWidth(12),
         marginBottom: normalizeHeight(12),
