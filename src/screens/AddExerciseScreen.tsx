@@ -142,7 +142,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                 contentContainerStyle={{
                     paddingHorizontal: normalizeWidth(16),
                     paddingTop: normalizeHeight(18),
-                    paddingBottom: normalizeHeight(100)
+                    paddingBottom: normalizeHeight(10)
                 }}
                 showsVerticalScrollIndicator={false}
             >
@@ -192,8 +192,6 @@ const AddExerciseScreen = ({ navigation }: any) => {
                             textAlignVertical: 'top',
                             minHeight: normalizeHeight(100)
                         }}
-                        placeholder="e.g. A bodyweight move for chest, triceps, shoulders."
-                        placeholderTextColor="rgba(255,255,255,0.6)"
                         value={exercise.description}
                         multiline
                         onChangeText={(text) => setExercise({ ...exercise, description: text })}
@@ -208,7 +206,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         fontWeight: '600'
                     }}>Choose Parameters</Text>
                     <Text style={{
-                        color: '#8a8a9e',
+                        color: 'rgba(255,255,255,0.6)',
                         fontSize: normalize(12),
                         marginBottom: normalizeHeight(16),
                         fontWeight: '400'
@@ -254,7 +252,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                             marginBottom: normalizeHeight(4)
                                         }}>{row.title}</Text>
                                         <Text style={{
-                                            color: '#9b9bb0',
+                                            color: 'rgba(255,255,255,0.4)',
                                             fontSize: normalize(11),
                                             fontWeight: '400'
                                         }}>{row.description}</Text>
