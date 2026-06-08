@@ -275,16 +275,21 @@ const AddExerciseScreen = ({ navigation }: any) => {
             <View style={{
                 flexDirection: 'row',
                 paddingHorizontal: normalizeWidth(16),
-                paddingVertical: normalizeHeight(16),
+                paddingTop: normalizeHeight(16),
+                paddingBottom: normalizeHeight(16),
                 gap: normalizeWidth(12),
-                borderTopWidth: normalizeHeight(1),
-                borderColor: 'rgba(255,255,255,0.1)',
+                backgroundColor: '#1c2238',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: -4 },
+                shadowOpacity: 0.25,
+                shadowRadius: 8,
+                elevation: 12,
             }}>
                 <TouchableOpacity
                     style={{
                         flex: 1,
                         borderWidth: normalize(1),
-                        borderColor: '#383e55',
+                        borderColor: 'rgba(255,255,255,0.25)',
                         borderRadius: normalize(8),
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
@@ -292,7 +297,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                     onPress={onCancelExercise}
                 >
                     <Text style={{
-                        color: '#8a8a9e',
+                        color: 'rgba(255,255,255,0.75)',
                         fontSize: normalize(16),
                         fontWeight: '500'
                     }}>Cancel</Text>
@@ -300,7 +305,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                 <TouchableOpacity
                     style={{
                         flex: 1,
-                        backgroundColor: isExerciseValid ? '#4f5b93' : 'rgba(79,91,147,0.5)',
+                        backgroundColor: isExerciseValid ? '#3d5a9e' : 'rgba(79,126,232,0.35)',
                         borderRadius: normalize(8),
                         paddingVertical: normalizeHeight(12),
                         alignItems: 'center'
