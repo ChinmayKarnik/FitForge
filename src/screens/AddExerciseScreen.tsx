@@ -144,24 +144,24 @@ const AddExerciseScreen = ({ navigation }: any) => {
             >
                 <View style={{ marginBottom: normalizeHeight(20) }}>
                     <Text style={{
-                        color: '#b3b2c5',
+                        color: 'rgba(255,255,255,0.9)',
                         fontSize: normalize(15),
                         marginBottom: normalizeHeight(8),
                         fontWeight: '500'
                     }}>Exercise Name</Text>
                     <TextInput
                         style={{
-                            backgroundColor: '#292f46',
-                            borderColor: '#383e55',
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(255,255,255,0.3)',
                             borderWidth: 1,
                             borderRadius: 8,
                             paddingHorizontal: normalizeWidth(12),
                             paddingVertical: normalizeHeight(12),
-                            color: '#fff',
+                            color: 'rgba(255,255,255,1)',
                             fontSize: normalize(14)
                         }}
                         placeholder="e.g. Push-ups, Barbell Squat, Plank"
-                        placeholderTextColor="rgba(255,255,255,0.3)"
+                        placeholderTextColor="rgba(255,255,255,0.6)"
                         value={exercise.name}
                         onChangeText={(text) => setExercise({ ...exercise, name: text })}
                     />
@@ -169,26 +169,26 @@ const AddExerciseScreen = ({ navigation }: any) => {
 
                 <View style={{ marginBottom: normalizeHeight(24) }}>
                     <Text style={{
-                        color: '#b3b2c5',
+                        color: 'rgba(255,255,255,0.9)',
                         fontSize: normalize(15),
                         marginBottom: normalizeHeight(8),
                         fontWeight: '500'
                     }}>Description</Text>
                     <TextInput
                         style={{
-                            backgroundColor: '#292f46',
-                            borderColor: '#383e55',
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(255,255,255,0.3)',
                             borderWidth: 1,
                             borderRadius: 8,
                             paddingHorizontal: normalizeWidth(12),
                             paddingVertical: normalizeHeight(12),
-                            color: '#fff',
+                            color: 'rgba(255,255,255,1)',
                             fontSize: normalize(14),
                             textAlignVertical: 'top',
                             minHeight: normalizeHeight(100)
                         }}
                         placeholder="e.g. A bodyweight move for chest, triceps, shoulders."
-                        placeholderTextColor="rgba(255,255,255,0.3)"
+                        placeholderTextColor="rgba(255,255,255,0.6)"
                         value={exercise.description}
                         multiline
                         onChangeText={(text) => setExercise({ ...exercise, description: text })}
