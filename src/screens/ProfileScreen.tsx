@@ -1,4 +1,4 @@
-import React, { Activity, useState, useCallback } from 'react';
+import React, { Activity, useState, useCallback, useRef } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ProfilePageSection from '../components/ProfilePageSection';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable, ScrollView } from 'react-native';
@@ -55,6 +55,7 @@ const sections = [
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<any>();
+  const sectionsScrollRef = useRef<ScrollView>(null);
   const userInfo = databaseController.getUserInfo() || { name: 'John Doe', bio: 'Fitness enthusiast. Working hard every day to improve myself and reach new goals.' };
   const name = userInfo.name;
   const bio = userInfo.bio;
@@ -84,6 +85,12 @@ export const ProfileScreen = () => {
       if (info?.profilePhotoCrop) {
         setImageCrop(info.profilePhotoCrop);
       }
+
+      return () => {
+        setTimeout(() => {
+          sectionsScrollRef.current?.scrollTo({ y: 0, animated: false });
+        }, 1000);
+      };
     }, [])
   );
 
@@ -251,6 +258,7 @@ export const ProfileScreen = () => {
     </TouchableOpacity>
 
     <ScrollView
+      ref={sectionsScrollRef}
       scrollEnabled={true}
       contentContainerStyle={{ paddingBottom: normalizeHeight(40) }}
       showsVerticalScrollIndicator ={false}
