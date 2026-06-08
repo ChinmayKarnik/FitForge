@@ -198,13 +198,13 @@ const AddExerciseScreen = ({ navigation }: any) => {
                 <View>
                     <Text style={{
                         color: '#fefefe',
-                        fontSize: normalize(16),
+                        fontSize: normalize(15),
                         marginBottom: normalizeHeight(4),
                         fontWeight: '600'
                     }}>Choose Parameters</Text>
                     <Text style={{
                         color: '#8a8a9e',
-                        fontSize: normalize(14),
+                        fontSize: normalize(12),
                         marginBottom: normalizeHeight(16),
                         fontWeight: '400'
                     }}>Select which parameters you'd like to track for this exercise.</Text>
