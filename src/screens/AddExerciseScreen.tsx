@@ -220,11 +220,11 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         fontWeight: '600'
                     }}>Choose Parameters</Text>
                     <Text style={{
-                        color: 'rgba(255,255,255,0.6)',
+                        color: 'rgba(255,255,255,0.7)',
                         fontSize: normalize(12),
                         marginBottom: normalizeHeight(16),
                         fontWeight: '400'
-                    }}>Select which parameters you'd like to track for this exercise.</Text>
+                    }}>Select which parameters you'd like to track for this exercise</Text>
 
                     <View style={{
                         backgroundColor: '#252d47',
@@ -266,7 +266,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                             marginBottom: normalizeHeight(4)
                                         }}>{row.title}</Text>
                                         <Text style={{
-                                            color: 'rgba(255,255,255,0.4)',
+                                            color: 'rgba(255,255,255,0.55)',
                                             fontSize: normalize(11),
                                             fontWeight: '400'
                                         }}>{row.description}</Text>
