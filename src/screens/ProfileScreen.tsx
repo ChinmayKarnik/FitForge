@@ -204,12 +204,12 @@ export const ProfileScreen = () => {
           height: bluePencilHeight,
           marginTop: normalize(6),
           marginLeft: normalize(6),
-          tintColor: '#6e94cd',
+          tintColor: '#9fa5c4',
         }}
         source={blue_pencil}
       />
     </TouchableOpacity>
-      
+
     <TouchableOpacity
       key={"bio-section"}
       onPress={openEditBioModal}
@@ -243,7 +243,7 @@ export const ProfileScreen = () => {
           position:'absolute',
           right:normalizeWidth(12),
           bottom:normalizeHeight(10),
-          tintColor: '#6e94cd'
+          tintColor: '#9fa5c4'
         }}
         source={blue_pencil}
       />
