@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import white_right_arrow from '../images/white-right-arrow.png';
+import pencil_white from '../images/pencil-white.png';
 
 const ACCENT = '#4f7ee8';
 
@@ -73,10 +73,11 @@ const ExerciseCard = ({ exercise }) => {
                     )}
                 </View>
                 <Image
-                    source={white_right_arrow}
+                    source={pencil_white}
                     style={{
-                        width: normalizeWidth(10),
-                        aspectRatio: (52.0/87.0),
+                        width: normalizeWidth(15),
+                        height: normalizeWidth(15) * (381.0 / 375.0),
+                        aspectRatio: (375.0 / 381.0),
                         marginLeft: normalizeWidth(12),
                         tintColor: 'rgba(255,255,255,0.5)'
                     }}
