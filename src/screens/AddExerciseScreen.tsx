@@ -144,21 +144,22 @@ const AddExerciseScreen = ({ navigation }: any) => {
             >
                 <View style={{ marginBottom: normalizeHeight(20) }}>
                     <Text style={{
-                        color: 'rgba(255,255,255,0.9)',
+                        color: 'rgba(255,255,255,1)',
                         fontSize: normalize(15),
                         marginBottom: normalizeHeight(8),
                         fontWeight: '500'
                     }}>Exercise Name</Text>
                     <TextInput
                         style={{
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#252d47',
                             borderColor: 'rgba(255,255,255,0.3)',
                             borderWidth: 1,
                             borderRadius: 8,
                             paddingHorizontal: normalizeWidth(12),
                             paddingVertical: normalizeHeight(12),
-                            color: 'rgba(255,255,255,1)',
-                            fontSize: normalize(14)
+                            color: 'rgba(255,255,255,0.9)',
+                            fontSize: normalize(14),
+                            fontWeight: '500'
                         }}
                         placeholder="e.g. Push-ups, Barbell Squat, Plank"
                         placeholderTextColor="rgba(255,255,255,0.6)"
@@ -169,20 +170,20 @@ const AddExerciseScreen = ({ navigation }: any) => {
 
                 <View style={{ marginBottom: normalizeHeight(24) }}>
                     <Text style={{
-                        color: 'rgba(255,255,255,0.9)',
+                        color: 'rgba(255,255,255,1)',
                         fontSize: normalize(15),
                         marginBottom: normalizeHeight(8),
                         fontWeight: '500'
                     }}>Description</Text>
                     <TextInput
                         style={{
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#252d47',
                             borderColor: 'rgba(255,255,255,0.3)',
                             borderWidth: 1,
                             borderRadius: 8,
                             paddingHorizontal: normalizeWidth(12),
                             paddingVertical: normalizeHeight(12),
-                            color: 'rgba(255,255,255,1)',
+                            color: 'rgba(255,255,255,0.7)',
                             fontSize: normalize(14),
                             textAlignVertical: 'top',
                             minHeight: normalizeHeight(100)
