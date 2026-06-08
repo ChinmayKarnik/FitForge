@@ -220,7 +220,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         {PARAMETER_ROWS.map((row, index) => (
                             <View key={row.key}>
                                 <View style={{
-                                    paddingHorizontal: normalizeWidth(14),
+                                    paddingHorizontal: normalizeWidth(12),
                                     paddingVertical: normalizeHeight(14),
                                     flexDirection: 'row',
                                     alignItems: 'center'
@@ -251,7 +251,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                         }}>{row.title}</Text>
                                         <Text style={{
                                             color: '#9b9bb0',
-                                            fontSize: normalize(12),
+                                            fontSize: normalize(11),
                                             fontWeight: '400'
                                         }}>{row.description}</Text>
                                     </View>
@@ -268,7 +268,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                             justifyContent: 'center',
                                             alignItems: parameters[row.key] ? 'flex-end' : 'flex-start',
                                             paddingHorizontal: normalizeWidth(2),
-                                            marginLeft: normalizeWidth(12)
+                                            marginLeft: normalizeWidth(8)
                                         }}
                                     >
                                         <View style={{
@@ -280,7 +280,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                     </TouchableOpacity>
                                 </View>
                                 {index < PARAMETER_ROWS.length - 1 && (
-                                    <View style={{ height: 1, backgroundColor: '#3d4563', marginLeft: normalizeWidth(14) }} />
+                                    <View style={{ height: 1, backgroundColor: '#3d4563', marginHorizontal: normalizeWidth(14) }} />
                                 )}
                             </View>
                         ))}
