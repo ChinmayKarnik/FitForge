@@ -3,7 +3,42 @@ import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Switch
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
+import repeat_icon from '../images/repeat.png';
+import dumbbell_icon from '../images/dumbbell-2.png';
+import muscle_icon from '../images/muscle-white.png';
+import stopwatch_icon from '../images/stopwatch-white-2.png';
 
+
+const PARAMETER_ROWS = [
+    {
+        key: 'reps' as const,
+        title: 'Reps',
+        description: 'Track the number of repetitions for each set',
+        icon: repeat_icon,
+        iconAspectRatio: 467 / 429,
+    },
+    {
+        key: 'weight' as const,
+        title: 'Weight',
+        description: 'Track the amount of weight used for each set',
+        icon: dumbbell_icon,
+        iconAspectRatio: 410 / 241,
+    },
+    {
+        key: 'toFailure' as const,
+        title: 'To Failure',
+        description: 'Check if a set was performed to failure',
+        icon: muscle_icon,
+        iconAspectRatio: 495 / 574,
+    },
+    {
+        key: 'time' as const,
+        title: 'Time',
+        description: 'Track the duration of each set',
+        icon: stopwatch_icon,
+        iconAspectRatio: 372 / 420,
+    },
+];
 
 const AddExerciseScreen = ({ navigation }: any) => {
     const [exercise, setExercise] = useState({
@@ -174,144 +209,66 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         fontWeight: '400'
                     }}>Select which parameters you'd like to track for this exercise.</Text>
 
-                    {/* Reps Parameter */}
                     <View style={{
-                        backgroundColor: '#292f46',
-                        borderColor: '#383e55',
+                        backgroundColor: '#252d47',
+                        borderColor: '#3d4563',
                         borderWidth: 1,
-                        borderRadius: 8,
-                        paddingHorizontal: normalizeWidth(12),
-                        paddingVertical: normalizeHeight(12),
-                        marginBottom: normalizeHeight(12),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
+                        borderRadius: normalize(12),
+                        overflow: 'hidden',
                     }}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={{
-                                color: '#fefefe',
-                                fontSize: normalize(15),
-                                fontWeight: '500',
-                                marginBottom: normalizeHeight(4)
-                            }}>Reps</Text>
-                            <Text style={{
-                                color: '#8a8a9e',
-                                fontSize: normalize(13),
-                                fontWeight: '400'
-                            }}>Track the number of repetitions for each set</Text>
-                        </View>
-                        <Switch
-                            value={parameters.reps}
-                            onValueChange={() => toggleParameter('reps')}
-                            trackColor={{ false: '#484f66', true: '#4f5b93' }}
-                            thumbColor={parameters.reps ? '#4ECDC4' : '#9ca3af'}
-                            style={{ marginLeft: normalizeWidth(12) }}
-                        />
-                    </View>
-
-                    {/* Weight Parameter */}
-                    <View style={{
-                        backgroundColor: '#292f46',
-                        borderColor: '#383e55',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        paddingHorizontal: normalizeWidth(12),
-                        paddingVertical: normalizeHeight(12),
-                        marginBottom: normalizeHeight(12),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={{
-                                color: '#fefefe',
-                                fontSize: normalize(15),
-                                fontWeight: '500',
-                                marginBottom: normalizeHeight(4)
-                            }}>Weight</Text>
-                            <Text style={{
-                                color: '#8a8a9e',
-                                fontSize: normalize(13),
-                                fontWeight: '400'
-                            }}>Track the amount of weight used for each set</Text>
-                        </View>
-                        <Switch
-                            value={parameters.weight}
-                            onValueChange={() => toggleParameter('weight')}
-                            trackColor={{ false: '#484f66', true: '#4f5b93' }}
-                            thumbColor={parameters.weight ? '#4ECDC4' : '#9ca3af'}
-                            style={{ marginLeft: normalizeWidth(12) }}
-                        />
-                    </View>
-
-                    {/* To Failure Parameter */}
-                    <View style={{
-                        backgroundColor: '#292f46',
-                        borderColor: '#383e55',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        paddingHorizontal: normalizeWidth(12),
-                        paddingVertical: normalizeHeight(12),
-                        marginBottom: normalizeHeight(12),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={{
-                                color: '#fefefe',
-                                fontSize: normalize(15),
-                                fontWeight: '500',
-                                marginBottom: normalizeHeight(4)
-                            }}>To Failure</Text>
-                            <Text style={{
-                                color: '#8a8a9e',
-                                fontSize: normalize(13),
-                                fontWeight: '400'
-                            }}>Check if a set was performed to failure</Text>
-                        </View>
-                        <Switch
-                            value={parameters.toFailure}
-                            onValueChange={() => toggleParameter('toFailure')}
-                            trackColor={{ false: '#484f66', true: '#4f5b93' }}
-                            thumbColor={parameters.toFailure ? '#4ECDC4' : '#9ca3af'}
-                            style={{ marginLeft: normalizeWidth(12) }}
-                        />
-                    </View>
-
-                    {/* Time Parameter */}
-                    <View style={{
-                        backgroundColor: '#292f46',
-                        borderColor: '#383e55',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        paddingHorizontal: normalizeWidth(12),
-                        paddingVertical: normalizeHeight(12),
-                        marginBottom: normalizeHeight(12),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={{
-                                color: '#fefefe',
-                                fontSize: normalize(15),
-                                fontWeight: '500',
-                                marginBottom: normalizeHeight(4)
-                            }}>Time</Text>
-                            <Text style={{
-                                color: '#8a8a9e',
-                                fontSize: normalize(13),
-                                fontWeight: '400'
-                            }}>Track the duration of each set</Text>
-                        </View>
-                        <Switch
-                            value={parameters.time}
-                            onValueChange={() => toggleParameter('time')}
-                            trackColor={{ false: '#484f66', true: '#4f5b93' }}
-                            thumbColor={parameters.time ? '#4ECDC4' : '#9ca3af'}
-                            style={{ marginLeft: normalizeWidth(12) }}
-                        />
+                        {PARAMETER_ROWS.map((row, index) => (
+                            <View key={row.key}>
+                                <View style={{
+                                    paddingHorizontal: normalizeWidth(14),
+                                    paddingVertical: normalizeHeight(14),
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}>
+                                    <View style={{
+                                        width: normalizeWidth(36),
+                                        height: normalizeWidth(36),
+                                        borderRadius: normalize(8),
+                                        backgroundColor: '#1c2238',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginRight: normalizeWidth(12)
+                                    }}>
+                                        <Image
+                                            source={row.icon}
+                                            resizeMode="contain"
+                                            style={{
+                                                width: normalizeWidth(18),
+                                                height: normalizeWidth(18) / row.iconAspectRatio,
+                                                tintColor: '#8fa8e8'
+                                            }}
+                                        />
+                                    </View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{
+                                            color: '#fefefe',
+                                            fontSize: normalize(15),
+                                            fontWeight: '500',
+                                            marginBottom: normalizeHeight(4)
+                                        }}>{row.title}</Text>
+                                        <Text style={{
+                                            color: '#9b9bb0',
+                                            fontSize: normalize(13),
+                                            fontWeight: '400'
+                                        }}>{row.description}</Text>
+                                    </View>
+                                    <Switch
+                                        value={parameters[row.key]}
+                                        onValueChange={() => toggleParameter(row.key)}
+                                        trackColor={{ false: '#484f66', true: '#4f5b93' }}
+                                        thumbColor={parameters[row.key] ? '#4ECDC4' : '#9ca3af'}
+                                        style={{ marginLeft: normalizeWidth(12) }}
+                                    />
+                                </View>
+                                {index < PARAMETER_ROWS.length - 1 && (
+                                    <View style={{ height: 1, backgroundColor: '#3d4563', marginLeft: normalizeWidth(14) }} />
+                                )}
+                            </View>
+                        ))}
                     </View>
                 </View>
             </ScrollView>
