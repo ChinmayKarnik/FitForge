@@ -121,7 +121,7 @@ const ExercisesScreen = () => {
                      scrollEventThrottle={16}
                 />
                 {!isAtBottom && (
-                    <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
+                    <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(40) }} pointerEvents="none">
                         <Svg height="100%" width="100%">
                             <Defs>
                                 <LinearGradient id="listFade" x1="0" y1="0" x2="0" y2="1">
