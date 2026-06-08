@@ -36,6 +36,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
     const [showBackConfirm, setShowBackConfirm] = useState(false);
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
+    const [isNotesFocused, setIsNotesFocused] = useState(false);
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
     const exercises = databaseController.getAllExercises();
@@ -118,6 +119,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
         const hideSub = Keyboard.addListener('keyboardDidHide', () => {
             setIsKeyboardVisible(false);
             setKeyboardHeight(0);
+            Keyboard.dismiss();
         });
         return () => {
             showSub.remove();
@@ -342,7 +344,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                    marginBottom: normalizeHeight(6),
                }}>
                    {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
-                   {isKeyboardVisible && (
+                   {isKeyboardVisible && isNotesFocused && (
                        <TouchableOpacity
                            style={{
                                borderWidth: normalize(1),
@@ -378,7 +380,11 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                    value={item.notes || ''}
                    editable={true}
                    multiline
-                   onFocus={() => scrollItemIntoView(index, -normalizeHeight(40))}
+                   onFocus={() => {
+                       setIsNotesFocused(true);
+                       scrollItemIntoView(index, -normalizeHeight(40));
+                   }}
+                   onBlur={() => setIsNotesFocused(false)}
                    onChangeText={(text) => {
                        const updatedExercises = routine.exercises.map((ex: any) =>
                            ex.localId === item.localId ? { ...ex, notes: text } : ex
