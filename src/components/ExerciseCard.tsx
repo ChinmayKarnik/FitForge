@@ -4,9 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_right_arrow from '../images/white-right-arrow.png';
 
+const ACCENT = '#4f7ee8';
+
 const ExerciseCard = ({ exercise }) => {
     const navigation = useNavigation();
-    
+
     const name = exercise.name || 'Unnamed Exercise';
     const description = exercise.description || '';
 
@@ -16,48 +18,70 @@ const ExerciseCard = ({ exercise }) => {
     };
 
     return (
-        <TouchableOpacity onPress={handlePress} style={{
-            borderWidth:normalize(1),
-            backgroundColor:'#292f46',
-            marginHorizontal: normalize(16),
-            borderColor: '#383e55',
-            paddingVertical:normalizeHeight(16),
-            paddingLeft:normalizeWidth(16),
-            paddingRight:normalizeWidth(12),
-            borderRadius: normalize(12),
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        }}>
-            <View style={{ flex: 1 }}>
-                <Text style={
-                    {
-                        fontSize: normalize(16),
-                        fontWeight: '600',
-                        color: 'white',
-                        letterSpacing: 0.2,
-                        marginBottom: normalizeHeight(6)
-                    }
-                }>{name}</Text>
-                {description && (
-                    <Text
-                        style={{
-                            fontSize:normalize(14),
-                            fontWeight: '400',
-                            color: 'rgba(255,255,255,0.6)',
-                        }}
-                    >{description}</Text>
-                )}
+        <TouchableOpacity
+            onPress={handlePress}
+            activeOpacity={0.85}
+            style={{
+                flexDirection: 'row',
+                alignItems: 'stretch',
+                marginHorizontal: normalizeWidth(16),
+                borderRadius: normalize(12),
+                backgroundColor: '#252d47',
+                borderWidth: normalize(1),
+                borderColor: '#3d4563',
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.3,
+                shadowRadius: 8,
+                elevation: 6,
+            }}
+        >
+            {/* Accent bar */}
+            <View style={{
+                width: normalizeWidth(6),
+                backgroundColor: ACCENT,
+            }} />
+
+            <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingVertical: normalizeHeight(16),
+                paddingLeft: normalizeWidth(14),
+                paddingRight: normalizeWidth(12),
+            }}>
+                <View style={{ flex: 1 }}>
+                    <Text style={
+                        {
+                            fontSize: normalize(16),
+                            fontWeight: '600',
+                            color: 'white',
+                            letterSpacing: 0.2,
+                            marginBottom: normalizeHeight(6)
+                        }
+                    }>{name}</Text>
+                    {description && (
+                        <Text
+                            style={{
+                                fontSize:normalize(14),
+                                fontWeight: '400',
+                                color: 'rgba(255,255,255,0.6)',
+                            }}
+                        >{description}</Text>
+                    )}
+                </View>
+                <Image
+                    source={white_right_arrow}
+                    style={{
+                        width: normalizeWidth(10),
+                        aspectRatio: (52.0/87.0),
+                        marginLeft: normalizeWidth(12),
+                        tintColor: 'rgba(255,255,255,0.5)'
+                    }}
+                />
             </View>
-            <Image 
-                source={white_right_arrow}
-                style={{
-                    width: normalizeWidth(10),
-                    aspectRatio: (52.0/87.0),
-                    marginLeft: normalizeWidth(12),
-                    tintColor: 'rgba(255,255,255,0.5)'
-                }}
-            />
         </TouchableOpacity>
     );
 };
