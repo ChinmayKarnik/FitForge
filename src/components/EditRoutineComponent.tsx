@@ -335,8 +335,32 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
            <View style={{
                marginTop: normalizeHeight(20)
            }}>
-               <View style={{ marginBottom: normalizeHeight(6) }}>
+               <View style={{
+                   flexDirection: 'row',
+                   alignItems: 'center',
+                   justifyContent: 'space-between',
+                   marginBottom: normalizeHeight(6),
+               }}>
                    {renderInputLabel(notes_icon, 'Notes', 358 / 441)}
+                   {isKeyboardVisible && (
+                       <TouchableOpacity
+                           style={{
+                               borderWidth: normalize(1),
+                               borderColor: ACCENT,
+                               borderRadius: normalize(20),
+                               paddingHorizontal: normalizeWidth(12),
+                               paddingVertical: normalizeHeight(4),
+                           }}
+                           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                           onPress={() => Keyboard.dismiss()}
+                       >
+                           <Text style={{
+                               color: ACCENT,
+                               fontSize: normalize(12),
+                               fontWeight: '600',
+                           }}>Done</Text>
+                       </TouchableOpacity>
+                   )}
                </View>
                <TextInput
                    style={{
