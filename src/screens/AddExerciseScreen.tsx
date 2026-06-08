@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -255,13 +255,29 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                             fontWeight: '400'
                                         }}>{row.description}</Text>
                                     </View>
-                                    <Switch
-                                        value={parameters[row.key]}
-                                        onValueChange={() => toggleParameter(row.key)}
-                                        trackColor={{ false: '#484f66', true: '#4f5b93' }}
-                                        thumbColor={parameters[row.key] ? '#4ECDC4' : '#9ca3af'}
-                                        style={{ marginLeft: normalizeWidth(12) }}
-                                    />
+                                    <TouchableOpacity
+                                        activeOpacity={0.8}
+                                        onPress={() => toggleParameter(row.key)}
+                                        style={{
+                                            width: normalizeWidth(38),
+                                            height: normalizeWidth(22),
+                                            borderRadius: normalizeWidth(11),
+                                            borderWidth: 1.5,
+                                            borderColor: parameters[row.key] ? '#4f6bed' : 'rgba(255,255,255,0.35)',
+                                            backgroundColor: parameters[row.key] ? '#4f6bed' : 'transparent',
+                                            justifyContent: 'center',
+                                            alignItems: parameters[row.key] ? 'flex-end' : 'flex-start',
+                                            paddingHorizontal: normalizeWidth(2),
+                                            marginLeft: normalizeWidth(12)
+                                        }}
+                                    >
+                                        <View style={{
+                                            width: normalizeWidth(16),
+                                            height: normalizeWidth(16),
+                                            borderRadius: normalizeWidth(8),
+                                            backgroundColor: '#fefefe'
+                                        }} />
+                                    </TouchableOpacity>
                                 </View>
                                 {index < PARAMETER_ROWS.length - 1 && (
                                     <View style={{ height: 1, backgroundColor: '#3d4563', marginLeft: normalizeWidth(14) }} />
