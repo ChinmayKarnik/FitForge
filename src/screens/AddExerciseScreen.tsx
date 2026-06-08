@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Switch
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
-import repeat_icon from '../images/repeat.png';
+import repeat_icon from '../images/repeat-2.png';
 import dumbbell_icon from '../images/dumbbell-2.png';
 import muscle_icon from '../images/muscle-white.png';
 import stopwatch_icon from '../images/stopwatch-white-2.png';
@@ -15,7 +15,7 @@ const PARAMETER_ROWS = [
         title: 'Reps',
         description: 'Track the number of repetitions for each set',
         icon: repeat_icon,
-        iconAspectRatio: 467 / 429,
+        iconAspectRatio: 406 / 384,
     },
     {
         key: 'weight' as const,
@@ -227,8 +227,6 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                     <View style={{
                                         width: normalizeWidth(36),
                                         height: normalizeWidth(36),
-                                        borderRadius: normalize(8),
-                                        backgroundColor: '#1c2238',
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         marginRight: normalizeWidth(12)
@@ -237,8 +235,8 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                             source={row.icon}
                                             resizeMode="contain"
                                             style={{
-                                                width: normalizeWidth(18),
-                                                height: normalizeWidth(18) / row.iconAspectRatio,
+                                                width: normalizeWidth(22),
+                                                height: normalizeWidth(22) / row.iconAspectRatio,
                                                 tintColor: '#8fa8e8'
                                             }}
                                         />
