@@ -5,7 +5,7 @@ import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
 import repeat_icon from '../images/repeat-2.png';
 import dumbbell_icon from '../images/dumbbell-2.png';
-import muscle_icon from '../images/muscle-white.png';
+import flame_icon from '../images/flame-2.png';
 import stopwatch_icon from '../images/stopwatch-white-2.png';
 
 
@@ -28,8 +28,8 @@ const PARAMETER_ROWS = [
         key: 'toFailure' as const,
         title: 'To Failure',
         description: 'Check if a set was performed to failure',
-        icon: muscle_icon,
-        iconAspectRatio: 495 / 574,
+        icon: flame_icon,
+        iconAspectRatio: 131 / 170,
     },
     {
         key: 'time' as const,
