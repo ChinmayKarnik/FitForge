@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity, BackHandler } from 'react-native';
+import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity, BackHandler, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
 import AreYouSureModal from './AreYouSureModal';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -34,6 +34,8 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
     })
 
     const [showBackConfirm, setShowBackConfirm] = useState(false);
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [showExercisePicker, setShowExercisePicker] = useState(false);
    const [pickerExerciseIndex,setPickerExerciseIndex] = useState(null);
     const exercises = databaseController.getAllExercises();
@@ -107,6 +109,27 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
         });
         return () => backHandler.remove();
     }, [routine.exercises]);
+
+    useEffect(() => {
+        const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+            setIsKeyboardVisible(true);
+            setKeyboardHeight(e.endCoordinates?.height || 0);
+        });
+        const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+            setIsKeyboardVisible(false);
+            setKeyboardHeight(0);
+        });
+        return () => {
+            showSub.remove();
+            hideSub.remove();
+        };
+    }, []);
+
+    const scrollItemIntoView = (index: number, extraOffset: number = 0) => {
+        setTimeout(() => {
+            flatListRef.current?.scrollToIndex({ index, viewPosition: 0, viewOffset: extraOffset , animated: true });
+        }, 350);
+    };
 
     const onCancelRoutine = () => {
         handleBackPress();
@@ -236,6 +259,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                        value={String(item.sets || '')}
                        keyboardType='numeric'
                        editable={true}
+                       onFocus={() => scrollItemIntoView(index)}
                        onChangeText={(text) => {
                            const updatedExercises = routine.exercises.map((ex: any) =>
                                ex.localId === item.localId ? { ...ex, sets: Number(text) || '' } : ex
@@ -262,6 +286,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                        value={String(item.reps || '')}
                        editable={true}
                        keyboardType='numeric'
+                       onFocus={() => scrollItemIntoView(index)}
                        onChangeText={(text) => {
                            const updatedExercises = routine.exercises.map((ex: any) =>
                                ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
@@ -290,6 +315,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                            value={String(item.rest || '')}
                            keyboardType='numeric'
                            editable={true}
+                           onFocus={() => scrollItemIntoView(index)}
                            onChangeText={(text) => {
                                const updatedExercises = routine.exercises.map((ex: any) =>
                                    ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
@@ -328,6 +354,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                    value={item.notes || ''}
                    editable={true}
                    multiline
+                   onFocus={() => scrollItemIntoView(index, -normalizeHeight(40))}
                    onChangeText={(text) => {
                        const updatedExercises = routine.exercises.map((ex: any) =>
                            ex.localId === item.localId ? { ...ex, notes: text } : ex
@@ -342,7 +369,10 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
             <View style={{
                 width: '100%',
                 borderWidth: 1,
@@ -439,9 +469,19 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                 ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(18) }} />}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-                contentContainerStyle={{ marginHorizontal: normalizeWidth(16), marginTop: normalizeHeight(8) }}
+                onScrollToIndexFailed={(info) => {
+                    setTimeout(() => {
+                        flatListRef.current?.scrollToOffset({ offset: info.averageItemLength * info.index, animated: true });
+                    }, 100);
+                }}
+                contentContainerStyle={{
+                    marginHorizontal: normalizeWidth(16),
+                    marginTop: normalizeHeight(8),
+                    paddingBottom: isKeyboardVisible ? Math.max(keyboardHeight, normalizeHeight(280)) : 0,
+                }}
                 ListEmptyComponent={() => (
                     <View style={{ alignItems: 'center', marginTop: normalizeHeight(28), marginBottom: normalizeHeight(0) }}>
                         <Image
@@ -529,6 +569,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                 </View>
             )}
             </View>
+            {!isKeyboardVisible && (
             <View style={{
                 flexDirection: 'row',
                 paddingHorizontal: normalizeWidth(16),
@@ -577,6 +618,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                     }}>{isAddRoutineScreen ? 'Create' : 'Update'}</Text>
                 </TouchableOpacity>
             </View>
+            )}
 
             <ExercisePickerModal
                 visible={showExercisePicker}
@@ -602,7 +644,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                 secondaryLabel="Stay"
                 onSecondary={() => setShowBackConfirm(false)}
             />
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 
