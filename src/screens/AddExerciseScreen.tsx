@@ -15,28 +15,32 @@ const PARAMETER_ROWS = [
         title: 'Reps',
         description: 'Track the number of repetitions for each set',
         icon: repeat_icon,
-        iconAspectRatio: 406 / 384,
+        iconWidth: 24,
+        iconHeight: 23,
     },
     {
         key: 'weight' as const,
         title: 'Weight',
         description: 'Track the amount of weight used for each set',
         icon: dumbbell_icon,
-        iconAspectRatio: 410 / 241,
+        iconWidth: 30,
+        iconHeight: 18,
     },
     {
         key: 'toFailure' as const,
         title: 'To Failure',
         description: 'Check if a set was performed to failure',
         icon: flame_icon,
-        iconAspectRatio: 131 / 170,
+        iconWidth: 22,
+        iconHeight: 28,
     },
     {
         key: 'time' as const,
         title: 'Time',
         description: 'Track the duration of each set',
         icon: stopwatch_icon,
-        iconAspectRatio: 372 / 420,
+        iconWidth: 23,
+        iconHeight: 26,
     },
 ];
 
@@ -230,14 +234,14 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                         height: normalizeWidth(30),
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        marginRight: normalizeWidth(10)
+                                        marginRight: normalizeWidth(14)
                                     }}>
                                         <Image
                                             source={row.icon}
                                             resizeMode="contain"
                                             style={{
-                                                width: normalizeWidth(20),
-                                                height: normalizeWidth(20) / row.iconAspectRatio,
+                                                width: normalizeWidth(row.iconWidth),
+                                                height: normalizeWidth(row.iconHeight),
                                                 tintColor: '#8fa8e8'
                                             }}
                                         />
