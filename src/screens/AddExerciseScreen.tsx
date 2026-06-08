@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -56,6 +56,17 @@ const AddExerciseScreen = ({ navigation }: any) => {
         toFailure: false,
         time: true
     });
+
+    const nameInputRef = useRef<TextInput>(null);
+    const descriptionInputRef = useRef<TextInput>(null);
+
+    useEffect(() => {
+        const hideListener = Keyboard.addListener('keyboardDidHide', () => {
+            nameInputRef.current?.blur();
+            descriptionInputRef.current?.blur();
+        });
+        return () => hideListener.remove();
+    }, []);
 
     const isExerciseValid = 
         exercise.name && 
@@ -154,6 +165,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         fontWeight: '500'
                     }}>Exercise Name</Text>
                     <TextInput
+                        ref={nameInputRef}
                         style={{
                             backgroundColor: '#252d47',
                             borderColor: 'rgba(255,255,255,0.3)',
@@ -165,8 +177,6 @@ const AddExerciseScreen = ({ navigation }: any) => {
                             fontSize: normalize(14),
                             fontWeight: '500'
                         }}
-                        placeholder="e.g. Push-ups, Barbell Squat, Plank"
-                        placeholderTextColor="rgba(255,255,255,0.6)"
                         value={exercise.name}
                         onChangeText={(text) => setExercise({ ...exercise, name: text })}
                     />
@@ -180,6 +190,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         fontWeight: '500'
                     }}>Description</Text>
                     <TextInput
+                        ref={descriptionInputRef}
                         style={{
                             backgroundColor: '#252d47',
                             borderColor: 'rgba(255,255,255,0.3)',
@@ -194,6 +205,9 @@ const AddExerciseScreen = ({ navigation }: any) => {
                         }}
                         value={exercise.description}
                         multiline
+                        returnKeyType="done"
+                        submitBehavior="blurAndSubmit"
+                        onSubmitEditing={() => Keyboard.dismiss()}
                         onChangeText={(text) => setExercise({ ...exercise, description: text })}
                     />
                 </View>
