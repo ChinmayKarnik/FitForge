@@ -137,16 +137,16 @@ const AddExerciseScreen = ({ navigation }: any) => {
             <ScrollView
                 contentContainerStyle={{
                     paddingHorizontal: normalizeWidth(16),
-                    paddingTop: normalizeHeight(24),
+                    paddingTop: normalizeHeight(18),
                     paddingBottom: normalizeHeight(100)
                 }}
                 showsVerticalScrollIndicator={false}
             >
-                <View style={{ marginBottom: normalizeHeight(20) }}>
+                <View style={{ marginBottom: normalizeHeight(16) }}>
                     <Text style={{
                         color: 'rgba(255,255,255,1)',
                         fontSize: normalize(15),
-                        marginBottom: normalizeHeight(8),
+                        marginBottom:  normalizeHeight(8),
                         fontWeight: '500'
                     }}>Exercise Name</Text>
                     <TextInput
@@ -168,7 +168,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                     />
                 </View>
 
-                <View style={{ marginBottom: normalizeHeight(24) }}>
+                <View style={{ marginBottom: normalizeHeight(16) }}>
                     <Text style={{
                         color: 'rgba(255,255,255,1)',
                         fontSize: normalize(15),
@@ -226,18 +226,18 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                     alignItems: 'center'
                                 }}>
                                     <View style={{
-                                        width: normalizeWidth(36),
-                                        height: normalizeWidth(36),
+                                        width: normalizeWidth(30),
+                                        height: normalizeWidth(30),
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        marginRight: normalizeWidth(12)
+                                        marginRight: normalizeWidth(10)
                                     }}>
                                         <Image
                                             source={row.icon}
                                             resizeMode="contain"
                                             style={{
-                                                width: normalizeWidth(22),
-                                                height: normalizeWidth(22) / row.iconAspectRatio,
+                                                width: normalizeWidth(20),
+                                                height: normalizeWidth(20) / row.iconAspectRatio,
                                                 tintColor: '#8fa8e8'
                                             }}
                                         />
@@ -251,7 +251,7 @@ const AddExerciseScreen = ({ navigation }: any) => {
                                         }}>{row.title}</Text>
                                         <Text style={{
                                             color: '#9b9bb0',
-                                            fontSize: normalize(13),
+                                            fontSize: normalize(12),
                                             fontWeight: '400'
                                         }}>{row.description}</Text>
                                     </View>
