@@ -202,7 +202,7 @@ export const ProfileScreen = () => {
         style={{
           width: bluePencilWidth,
           height: bluePencilHeight,
-          marginTop: normalize(6),
+          marginTop: normalize(4),
           marginLeft: normalize(6),
           tintColor: '#9fa5c4',
         }}
