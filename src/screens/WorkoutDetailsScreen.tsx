@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -76,6 +77,12 @@ export default function WorkoutDetailsScreen() {
     timeText = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
   }
 
+
+  const [isListAtBottom, setIsListAtBottom] = useState(false);
+  const handleListScroll = (event: any) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    setIsListAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
@@ -175,12 +182,27 @@ export default function WorkoutDetailsScreen() {
         }}>
           Exercises
         </Text>
-        <CurrentWorkoutList
-          workout={workout}
-          showSectionHeader={false}
-          horizontalPadding={false}
-          showBottomFade={false}
-        />
+        <View style={{ position: 'relative', flex: 1 }}>
+          <CurrentWorkoutList
+            workout={workout}
+            showSectionHeader={false}
+            horizontalPadding={false}
+            onScroll={handleListScroll}
+          />
+          {!isListAtBottom && (
+            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(72) }} pointerEvents="none">
+              <Svg height="100%" width="100%">
+                <Defs>
+                  <LinearGradient id="detailsListFade" x1="0" y1="0" x2="0" y2="1">
+                    <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                    <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                  </LinearGradient>
+                </Defs>
+                <Rect width="100%" height="100%" fill="url(#detailsListFade)" />
+              </Svg>
+            </View>
+          )}
+        </View>
       </View>
     </View>
   );
