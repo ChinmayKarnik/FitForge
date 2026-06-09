@@ -92,7 +92,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
               fontWeight: '600',
               letterSpacing: 0.3,
             }}>
-              {exerciseNames.length} EXERCISES
+              {exerciseNames.length} {exerciseNames.length === 1 ? 'EXERCISE' : 'EXERCISES'}
             </Text>
           </View>
         </View>
