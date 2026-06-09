@@ -65,6 +65,7 @@ export default function WorkoutDetailsScreen() {
       dateText = `${startDate.getDate()} ${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
     }
   }
+  let isTodayOrYesterday = (dateText == 'Today') || (dateText=='Yesterday')
 
   let timeText = '';
   if (typeof startTimestamp === 'number' && !isNaN(startTimestamp)) {
@@ -137,7 +138,7 @@ export default function WorkoutDetailsScreen() {
           paddingVertical: normalizeHeight(10),
           borderRadius: normalize(10)
         }]}>
-          <View style={{ flex: 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ flex: isTodayOrYesterday ? 93 : 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
             <Image source={calendarIcon} style={{ width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain', marginRight: normalizeWidth(8), tintColor: 'rgba(255,255,255,0.85)' }} />
             <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{dateText}</Text>
           </View>
