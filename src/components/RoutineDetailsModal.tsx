@@ -1,10 +1,14 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
-import purple_dumbbell from '../images/purple-dumbbell.png';
-import clock from '../images/clock.png';
+import clock from '../images/clock-thick-white.png';
+import stopwatch from '../images/stopwatch-white.png';
+import plates_stack_2 from '../images/plates-stack-2.png';
+import dumbbell from '../images/dumbbell.png';
 import cross_icon from '../images/cross-icon-white.png';
+
+const ACCENT = '#4f7ee8';
 
 interface RoutineDetailsModalProps {
   visible: boolean;
@@ -12,8 +16,24 @@ interface RoutineDetailsModalProps {
   routine: any;
 }
 
+const Dot = () => (
+  <View style={{
+    width: normalizeWidth(3),
+    height: normalizeHeight(3),
+    borderRadius: normalize(2),
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    marginHorizontal: normalizeWidth(9),
+    marginTop: normalizeHeight(1),
+  }} />
+);
+
 const ShortDivider = () => (
-  <View style={styles.shortDivider} />
+  <View style={{
+    height: normalizeHeight(1),
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    marginTop: normalizeHeight(12),
+    marginBottom: normalizeHeight(8),
+  }} />
 );
 
 const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalProps) => {
@@ -31,12 +51,6 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
     return `${count} Exercise${count === 1 ? '' : 's'}`;
   })();
 
-  const createdAtText = (() => {
-    if (!routine.createdAt) return '';
-    const date = new Date(routine.createdAt);
-    return `Created ${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
-  })();
-
   return (
     <Modal
       visible={visible}
@@ -45,245 +59,167 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
       onRequestClose={onClose}
     >
       <TouchableOpacity
-        style={styles.backdrop}
+        style={{
+          flex: 1,
+          backgroundColor: 'rgba(0,0,0,0.55)',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: normalizeWidth(16),
+        }}
         activeOpacity={1}
         onPress={onClose}
       >
-        {/* Centered card — inner TouchableOpacity stops backdrop tap from propagating */}
-        <TouchableOpacity activeOpacity={1} style={styles.card}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Routine Details</Text>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={onClose}
-            hitSlop={{ top: normalize(12), bottom: normalize(12), left: normalize(12), right: normalize(12) }}
-          >
-            <Image source={cross_icon} style={styles.closeIcon} />
-          </TouchableOpacity>
-        </View>
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            width: '100%',
+            maxHeight: '85%',
+            backgroundColor: '#1c2238',
+            borderRadius: normalize(16),
+            borderWidth: normalize(1),
+            borderColor: '#383e55',
+            overflow: 'hidden',
+          }}
         >
-          {/* Routine info card */}
-          <View style={styles.routineCard}>
-            <Image style={styles.dumbbellIcon} source={purple_dumbbell} />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.routineName}>{routine.name}</Text>
-              <View style={styles.routineMeta}>
-                <Text style={styles.routineMetaText}>{exercisesText}</Text>
-                <View style={styles.metaDot} />
-                <Text style={styles.routineMetaText}>{createdAtText}</Text>
+          {/* Header */}
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: normalizeWidth(16),
+            paddingTop: normalizeHeight(14),
+            paddingBottom: normalizeHeight(8),
+            borderBottomWidth: normalize(1),
+            borderBottomColor: 'rgba(255,255,255,0.08)',
+          }}>
+            <Text style={{ fontSize: normalize(17), fontWeight: '700', color: '#fefefe', letterSpacing: 0.5 }}>
+              Routine Details
+            </Text>
+            <TouchableOpacity
+              style={{ position: 'absolute', right: normalizeWidth(16) }}
+              onPress={onClose}
+              hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            >
+              <Image source={cross_icon} style={{ width: normalize(12), height: normalize(12), tintColor: '#cecfd5' }} />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: normalizeHeight(20) }}
+          >
+            {/* Hero Card */}
+            <View style={{
+              flexDirection: 'row',
+              marginHorizontal: normalizeWidth(16),
+              marginTop: normalizeHeight(14),
+              borderRadius: normalize(12),
+              backgroundColor: '#283050',
+              borderWidth: normalize(1),
+              borderColor: '#3d4563',
+              overflow: 'hidden',
+            }}>
+              <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
+              <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingVertical: normalizeHeight(14) }}>
+                <Text style={{ fontSize: normalize(20), fontWeight: '700', color: '#ffffff' }}>
+                  {routine.name}
+                </Text>
+                {/* Chip tags */}
+                <View style={{ flexDirection: 'row', marginTop: normalizeHeight(12), gap: normalizeWidth(8) }}>
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderWidth: normalize(1),
+                    borderColor: 'rgba(255,255,255,0.35)',
+                    borderRadius: normalize(20),
+                    paddingHorizontal: normalizeWidth(10),
+                    paddingVertical: normalizeHeight(5),
+                  }}>
+                    <Image
+                      source={dumbbell}
+                      style={{ width: normalizeWidth(15), height: normalizeWidth(15) * (346.0 / 539.0), tintColor: ACCENT, marginRight: normalizeWidth(4), resizeMode: 'contain' }}
+                    />
+                    <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: normalize(12), fontWeight: '500' }}>
+                      {exercisesText}
+                    </Text>
+                  </View>
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderWidth: normalize(1),
+                    borderColor: 'rgba(255,255,255,0.35)',
+                    borderRadius: normalize(20),
+                    paddingHorizontal: normalizeWidth(10),
+                    paddingVertical: normalizeHeight(5),
+                  }}>
+                    <Image
+                      source={clock}
+                      style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (448.0 / 453.0), tintColor: ACCENT, marginRight: normalizeWidth(5) }}
+                    />
+                    <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: normalize(12), fontWeight: '500' }}>
+                      {totalEstimatedTimeText}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
 
-          {/* Exercise cards */}
-          {exercises.map((exercise: any, index: number) => {
-            const setRepsText = typeof exercise.sets === 'number'
-              ? typeof exercise.reps === 'number'
-                ? `${exercise.sets} sets of ${exercise.reps} reps`
-                : `${exercise.sets} sets`
-              : '';
-            const restText = typeof exercise.rest === 'number'
-              ? `Rest ${exercise.rest} sec between sets`
-              : '';
-            const estimatedTimeMin = Math.ceil(getEstimatedExerciseTimeSeconds(exercise) / 60);
-            const areNotes = !!exercise.notes;
+            {/* Exercise Cards */}
+            {exercises.map((exercise: any, idx: number) => {
+              let setRepsText = '';
+              if (typeof exercise.sets === 'number') {
+                setRepsText = typeof exercise.reps === 'number'
+                  ? `${exercise.sets}×${exercise.reps}`
+                  : `${exercise.sets} sets`;
+              }
+              let restText = '';
+              if (typeof exercise.rest === 'number') {
+                restText = `${exercise.rest}s rest`;
+              }
+              const estimatedTimeMin = Math.ceil(getEstimatedExerciseTimeSeconds(exercise) / 60);
+              const areNotes = !!exercise.notes;
 
-            return (
-              <View key={exercise.id ?? index} style={styles.exerciseCard}>
-                <Text style={styles.exerciseName}>{exercise.name}</Text>
-                <View style={styles.exerciseMeta}>
-                  <Text style={styles.exerciseMetaText}>{setRepsText}</Text>
-                  <View style={styles.metaDot} />
-                  <Text style={styles.exerciseMetaText}>{restText}</Text>
+              return (
+                <View key={exercise.id ?? idx} style={{
+                  flexDirection: 'row',
+                  marginHorizontal: normalizeWidth(16),
+                  marginTop: normalizeHeight(idx === 0 ? 12 : 10),
+                  borderRadius: normalize(12),
+                  backgroundColor: '#252d47',
+                  borderWidth: normalize(1),
+                  borderColor: '#3d4563',
+                  overflow: 'hidden',
+                }}>
+                  <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
+                  <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingTop: normalizeHeight(12), paddingBottom: normalizeHeight(areNotes ? 4 : 12) }}>
+                    <Text style={{ fontSize: normalize(16), fontWeight: '700', color: '#ffffff' }}>
+                      {exercise.name}
+                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: normalizeHeight(8) }}>
+                      <Image source={plates_stack_2} style={{ width: normalizeWidth(14), height: normalizeWidth(14) * (425.0 / 469.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4), resizeMode: 'contain' }} />
+                      <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{setRepsText}</Text>
+                      <Dot />
+                      <Image source={clock} style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (448.0 / 453.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4) }} />
+                      <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>
+                      <Dot />
+                      <Image source={stopwatch} style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (395.0 / 346.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4), resizeMode: 'contain' }} />
+                      <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{estimatedTimeMin} min</Text>
+                    </View>
+                    {areNotes && <ShortDivider />}
+                    {areNotes && (
+                      <Text style={{ fontSize: normalize(13), fontStyle: 'italic', color: 'rgba(255,255,255,0.4)', lineHeight: normalize(19) }}>
+                        {exercise.notes}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-                {areNotes ? <ShortDivider /> : <View style={{ height: normalizeHeight(4) }} />}
-                <View style={styles.timeRow}>
-                  <Image source={clock} style={styles.clockIcon} />
-                  <Text style={styles.exerciseMetaText}>
-                    Estimated time: {estimatedTimeMin} min
-                  </Text>
-                </View>
-                {areNotes && (
-                  <>
-                    <ShortDivider />
-                    <Text style={styles.notesLabel}>Notes</Text>
-                    <Text style={styles.notesText}>{exercise.notes}</Text>
-                  </>
-                )}
-              </View>
-            );
-          })}
-
-          {/* Total time footer */}
-          <View style={styles.totalTimeRow}>
-            <Image source={clock} style={styles.clockIcon} />
-            <Text style={styles.totalTimeText}>
-              Total Estimated Time:{' '}
-              <Text style={styles.totalTimeValue}>{totalEstimatedTimeText}</Text>
-            </Text>
-          </View>
-        </ScrollView>
+              );
+            })}
+          </ScrollView>
         </TouchableOpacity>
       </TouchableOpacity>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.55)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: normalizeWidth(16),
-  },
-  card: {
-    width: '100%',
-    maxHeight: '80%',
-    backgroundColor: '#1e2540',
-    borderRadius: normalize(16),
-    borderWidth: normalize(1),
-    borderColor: '#383e55',
-    overflow: 'hidden',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: normalizeWidth(16),
-    paddingTop: normalizeHeight(12),
-    paddingBottom: normalizeHeight(6),
-  },
-  headerTitle: {
-    fontSize: normalize(17),
-    fontWeight: '700',
-    color: '#fefefe',
-    letterSpacing: 0.5,
-  },
-  closeButton: {
-    position: 'absolute',
-    right: normalizeWidth(16),
-  },
-  closeIcon: {
-    width: normalize(12),
-    height: normalize(12),
-    tintColor: '#cecfd5',
-  },
-  scrollContent: {
-    paddingBottom: normalizeHeight(16),
-  },
-  routineCard: {
-    marginHorizontal: normalizeWidth(16),
-    marginTop: normalizeHeight(8),
-    borderWidth: normalize(1),
-    borderColor: '#383e55',
-    borderRadius: normalize(12),
-    backgroundColor: '#292f46',
-    paddingHorizontal: normalizeWidth(16),
-    paddingTop: normalizeHeight(16),
-    paddingBottom: normalizeHeight(12),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dumbbellIcon: {
-    width: normalizeWidth(28),
-    aspectRatio: 423.0 / 292.0,
-    marginRight: normalizeWidth(10),
-  },
-  routineName: {
-    fontSize: normalize(17),
-    fontWeight: '500',
-    color: '#ffffff',
-    marginBottom: normalizeHeight(4),
-  },
-  routineMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  routineMetaText: {
-    fontSize: normalize(13),
-    color: '#9594af',
-  },
-  metaDot: {
-    width: normalizeWidth(3),
-    height: normalizeHeight(3),
-    borderRadius: normalize(1),
-    backgroundColor: '#808093',
-    marginHorizontal: normalizeWidth(6),
-    marginTop: normalizeHeight(1),
-  },
-  exerciseCard: {
-    marginHorizontal: normalizeWidth(16),
-    marginTop: normalizeHeight(10),
-    borderWidth: normalize(1),
-    borderColor: '#383e55',
-    borderRadius: normalize(8),
-    backgroundColor: '#292f46',
-    paddingHorizontal: normalizeWidth(12),
-    paddingTop: normalizeHeight(12),
-    paddingBottom: normalizeHeight(10),
-  },
-  exerciseName: {
-    fontSize: normalize(15),
-    color: '#ffffff',
-    fontWeight: '500',
-  },
-  exerciseMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: normalizeHeight(6),
-  },
-  exerciseMetaText: {
-    fontSize: normalize(12),
-    fontWeight: '400',
-    color: 'rgba(255,255,255,0.45)',
-  },
-  shortDivider: {
-    height: normalizeHeight(1),
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    marginVertical: normalizeHeight(5),
-  },
-  timeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  clockIcon: {
-    width: normalizeWidth(12),
-    aspectRatio: 357.0 / 346.0,
-    marginRight: normalizeWidth(6),
-  },
-  notesLabel: {
-    fontSize: normalize(14),
-    fontWeight: '500',
-    color: '#cfcfe3',
-  },
-  notesText: {
-    fontSize: normalize(12),
-    fontWeight: '400',
-    color: 'rgba(255,255,255,0.45)',
-    marginTop: normalizeHeight(4),
-  },
-  totalTimeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: normalizeWidth(16),
-    marginTop: normalizeHeight(12),
-  },
-  totalTimeText: {
-    fontSize: normalize(13),
-    color: 'rgba(255,255,255,0.45)',
-    fontWeight: '400',
-    letterSpacing: 0.2,
-  },
-  totalTimeValue: {
-    color: 'rgba(255,255,255,0.7)',
-    fontWeight: '500',
-  },
-});
 
 export default RoutineDetailsModal;
