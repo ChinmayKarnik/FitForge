@@ -6,7 +6,6 @@ import RNExitApp from 'react-native-exit-app';
 import heartOnHouse from '../images/heart-on-house.png';
 import exitIconWhite from '../images/exit-icon-white.png';
 import palmWithTick from '../images/palm-with-tick.png';
-import crossIcon from '../images/cross-icon-white.png';
 
 const ExitButton = () => {
   return (
@@ -107,25 +106,6 @@ const ExitAppModal = ({ visible, onClose }) => {
             borderWidth: normalize(1),
             borderColor: '#4d5373'
           }}>
-            <TouchableOpacity
-              onPress={onClose}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              style={{
-                position: 'absolute',
-                top: normalizeHeight(12),
-                right: normalizeWidth(12),
-                zIndex: 10
-              }}
-            >
-              <Image
-                source={crossIcon}
-                style={{
-                  width: normalizeWidth(18),
-                  height: normalizeWidth(18) * (120.0 / 122.0),
-                  tintColor: '#cecfd5'
-                }}
-              />
-            </TouchableOpacity>
             <Image
               source={palmWithTick}
               style={{
@@ -144,9 +124,9 @@ const ExitAppModal = ({ visible, onClose }) => {
             }}>Hold on!</Text>
 
             <Text style={{
-              color: '#9ca3af',
+              color: 'rgba(255,255,255,0.82)',
               fontSize: normalize(16),
-              fontWeight: '400',
+              fontWeight: '500',
               marginTop: normalizeHeight(12),
               textAlign: 'center',
             }}>{descText}</Text>

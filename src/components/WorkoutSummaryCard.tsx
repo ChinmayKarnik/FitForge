@@ -132,7 +132,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 fontSize: normalize(12),
                 fontFamily: 'RobotoMono-Regular',
               }}>
-                {thinSpace(`${exerciseSetCounts[exName]} sets`)}
+                {thinSpace(`${exerciseSetCounts[exName]} ${exerciseSetCounts[exName] === 1 ? 'set' : 'sets'}`)}
               </Text>
             </View>
           ))}
