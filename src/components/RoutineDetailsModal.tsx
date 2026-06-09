@@ -112,7 +112,7 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
             <View style={{
               flexDirection: 'row',
               marginHorizontal: normalizeWidth(16),
-              marginTop: normalizeHeight(14),
+              marginTop: normalizeHeight(8),
               borderRadius: normalize(12),
               backgroundColor: '#283050',
               borderWidth: normalize(1),
