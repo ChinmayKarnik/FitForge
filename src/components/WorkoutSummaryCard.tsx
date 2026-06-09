@@ -4,8 +4,8 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
 import { getDayOfWeek } from '../utils/dateTimeUtils';
-import { formatDateString, formatTimeString } from './dateTimeUtils';
-import clock from '../images/clock-thick.png';
+import { formatDateString, formatTimeString, thinSpace } from './dateTimeUtils';
+import clock from '../images/clock-thick-white.png';
 import calendarIcon from '../images/calendar.png';
 
 type Exercise = {
@@ -141,53 +141,56 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: normalizeWidth(14),
-          paddingVertical: normalizeHeight(12),
+          paddingVertical: normalizeHeight(7),
         }}>
           <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center' }}>
             <Image
               source={calendarIcon}
               style={{
-                width: normalizeWidth(16),
-                height: normalizeWidth(16) * (420.0 / 410.0),
+                width: normalizeHeight(13) * (410.0 / 420.0),
+                height: normalizeHeight(13),
                 aspectRatio: (410.0 / 420.0),
                 resizeMode: 'contain',
-                tintColor: '#AEB3D1',
+                tintColor: 'rgba(255,255,255,0.7)',
                 marginRight: normalizeWidth(8),
               }}
             />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
+            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>
               {formatDateString(workout.startTime)}
             </Text>
             <View style={{
               width: normalize(3),
               height: normalize(3),
               borderRadius: normalize(2),
-              backgroundColor: '#AEB3D1',
+              backgroundColor: 'rgba(255,255,255,0.6)',
               marginHorizontal: normalizeWidth(6),
             }} />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
+            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>
               {formatTimeString(workout.startTime)}
             </Text>
           </View>
           <View style={{
             width: normalize(1),
             height: normalizeHeight(14),
-            backgroundColor: 'rgba(255,255,255,0.25)',
+            backgroundColor: 'rgba(255,255,255,0.3)',
+            marginLeft:normalizeWidth(25)
           }} />
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: normalizeWidth(14) }}>
             <Image
               source={clock}
               style={{
-                width: normalizeWidth(13),
-                aspectRatio: (357.0 / 346.0),
+                height: normalizeHeight(13),
+                aspectRatio: (453.0 / 448.0),
+                width: normalizeHeight(13) * (453.0 / 448.0),
                 resizeMode: 'contain',
-                tintColor: '#AEB3D1',
+                tintColor: 'rgba(255,255,255,0.6)',
                 marginRight: normalizeWidth(7),
-                marginLeft:normalizeWidth(20)
+                marginLeft:normalizeWidth(12),
+                marginTop:normalizeHeight(1)
               }}
             />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
-              {durationMin} min
+            <Text style={{ color: 'rgba(255,255,255, 0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>
+              {thinSpace(`${durationMin} min`)}
             </Text>
           </View>
         </View>
