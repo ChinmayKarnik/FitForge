@@ -200,7 +200,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                 routine.exercises.forEach(ex => {
                     const params = {
                         numberOfSets: ex.sets,
-                        restTimeBetweenSets: ex.rest
+                        restTimeBetweenSets: Number(ex.rest) * 1000
                     };
                     const loggedData = Array(params.numberOfSets).fill({});
                     addSetsForExercise(ex, params, loggedData);
