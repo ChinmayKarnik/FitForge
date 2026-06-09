@@ -7,7 +7,7 @@ import { normalize, normalizeHeight } from '../utils/normalize';
 const ActivityListEmpty = () => {
     const navigation = useNavigation();
     const aspectRatio = 1077.0/694.0;
-    const height = normalizeHeight(130)
+    const height = normalizeHeight(115)
     const width = height * aspectRatio;
 
     const onTrackWorkout = () => {
@@ -16,8 +16,9 @@ const ActivityListEmpty = () => {
     
     return (
         <View style={{
-            alignItems:'center',
-            marginTop: normalizeHeight(70)
+            flex: 1,
+            alignItems: 'center',
+            marginTop: normalizeHeight(150)
         }}>
             <Image
             style={{
@@ -31,52 +32,46 @@ const ActivityListEmpty = () => {
             <Text
                 style={
                     {
-                        fontSize: normalize(20),
+                        fontSize: normalize(22),
                         fontWeight: "600",
-                        lineHeight: 28,
-                        color: "rgba(255, 255, 255, 0.95)",
+                        lineHeight: normalizeHeight(26),
+                        color: "rgba(255, 255, 255, 1)",
                         textAlign: "center",
                         letterSpacing: -0.2,
                         marginBottom: normalizeHeight(8),
-                        marginTop: normalizeHeight(24),
+                        marginTop: normalizeHeight(20),
                     }
                 }
             >No workouts yet</Text>
             <Text
                 style={
                     {
-                        fontSize: normalize(17),
+                        fontSize: normalize(15),
                         fontWeight: "400",
-                        lineHeight: normalize,
-                        color: "rgba(255, 255, 255, 0.65)",
+                        lineHeight: normalizeHeight(20),
+                        color: "rgba(255, 255, 255, 0.7)",
                         textAlign: "center",
-                        marginBottom: normalizeHeight(24),
+                        marginBottom: normalizeHeight(14),
                     }
                 }
             >You haven't logged any workouts</Text>
-                        <View>
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: '#23253A',
-                                        borderRadius: normalize(30),
-                                        paddingVertical: normalize(12),
-                                        paddingHorizontal: normalize(32),
-                                        borderWidth: normalize(1),
-                                        borderColor: '#414461',
-                                        shadowColor: '#000',
-                                        shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.2,
-                                        shadowRadius: normalize(4),
-                                        elevation: normalize(3),
-                                        marginTop: normalizeHeight(8),
-                                    }}
-                                    onPress={onTrackWorkout}
-                                >
-                                    <Text style={{ color: '#e5e4ec', fontSize: normalize(18), fontWeight: '500' }}>
-                                        Track a Workout
-                                    </Text>
-                                </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: '#2f4880',
+                                borderRadius: normalize(12),
+                                paddingVertical: normalize(12),
+                                paddingHorizontal: normalize(40),
+                                borderWidth: normalize(1),
+                                borderColor: 'rgba(255,255,255,0.2)',
+                                marginTop: normalizeHeight(8),
+                                alignSelf: 'center',
+                            }}
+                            onPress={onTrackWorkout}
+                        >
+                            <Text style={{ color: '#ffffff', fontSize: normalize(15), fontWeight: '600' }}>
+                                Track Workout
+                            </Text>
+                        </TouchableOpacity>
         </View>
     )
 }

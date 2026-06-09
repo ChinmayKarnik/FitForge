@@ -53,6 +53,7 @@ export const ActivityScreen = () => {
         contentContainerStyle={{
           paddingTop: normalizeHeight(12),
           paddingBottom: normalizeHeight(90),
+          flexGrow: 1,
         }}
         showsVerticalScrollIndicator={false}
       />
