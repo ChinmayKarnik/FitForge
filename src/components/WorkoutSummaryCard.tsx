@@ -1,13 +1,12 @@
 // @ts-nocheck
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
 import { getDayOfWeek } from '../utils/dateTimeUtils';
 import { formatDateTimeString } from './dateTimeUtils';
-import clock from '../images/clock-thick.png'
-import calendarWithBorder from '../images/calendar-with-border.png';
-
+import clock from '../images/clock-thick.png';
+import calendarIcon from '../images/calendar.png';
 
 type Exercise = {
   name?: string;
@@ -29,201 +28,160 @@ type Props = {
   disableHorizontalMargin?: boolean;
 };
 
+const ACCENT = '#4f7ee8';
+
 export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableHorizontalMargin = false }) => {
-  // Calculate duration in minutes and seconds
   const durationMs = workout.endTime - workout.startTime;
   const durationMin = Math.floor(durationMs / 60000);
-  const durationSec = Math.floor((durationMs % 60000) / 1000);
-  const durationStr = `${durationMin}m ${durationSec < 10 ? '0' : ''}${durationSec}s`;
   const dayOfTheWeek = getDayOfWeek(workout.startTime);
-  // Get distinct exercise names
-  let exerciseNames: string[] = [];
-  if (workout.exercises && workout.exercises.length > 0) {
-    const allNames = workout.exercises.map((e: Exercise) => {
+
+  const exerciseSetCounts: Record<string, number> = {};
+  if (workout.exercises?.length > 0) {
+    workout.exercises.forEach((e: Exercise) => {
       const ex = databaseController.getExerciseById(e.exerciseId);
-      return ex.name;
+      if (ex?.name) exerciseSetCounts[ex.name] = (exerciseSetCounts[ex.name] || 0) + 1;
     });
-    exerciseNames = Array.from(new Set(allNames));
   }
+  const exerciseNames = Object.keys(exerciseSetCounts);
+
   const routine = databaseController.getRoutineById(workout.routineId);
-  const routineName =  routine?.name || 'Free Workout'
-  
+  const routineName = routine?.name || 'Free Workout';
+  const workoutTitle = workout.name ? workout.name : `${dayOfTheWeek} - ${routineName}`;
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <View style={{
-        flex: 1,
-        minHeight: 70,
         marginHorizontal: disableHorizontalMargin ? 0 : normalizeWidth(16),
-        backgroundColor:'#292f46',
-        borderRadius: normalizeHeight(10),
+        backgroundColor: '#232d4e',
+        borderRadius: normalize(10),
         borderWidth: normalize(1),
-        borderColor: '#383e55'
+        borderColor: '#3a4470',
       }}>
-      <View style={{paddingLeft: normalizeWidth(14),
-        paddingVertical:normalizeHeight(12),
-        borderBottomWidth: normalize(1),
-        borderBottomColor: '#484d63'
-      }}>
-         <Text style={{color: '#fcfbfc',
-          fontWeight: '600',
-          fontSize: normalize(15)
-         }}>{workout.name ? workout.name : `${dayOfTheWeek} - ${routineName}`}</Text>
-      </View>
 
-      <View style={{width:'80%',
-        paddingHorizontal: normalizeWidth(14),
-        paddingVertical: normalizeHeight(8),
-        borderBottomWidth: normalize(1),
-        borderBottomColor: '#484d63'
-      }}>
-          <View style={{ flexDirection: 'row' ,
-            alignItems:'center'
-          }}>
-            <Image
-            source={calendarWithBorder}
+        {/* Header */}
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: normalizeWidth(14),
+          paddingVertical: normalizeHeight(12),
+        }}>
+          <Text
             style={{
-              width: normalizeWidth(15),
-              aspectRatio: (538.0/496.0),
-              marginRight: normalizeWidth(8),
-              resizeMode: 'contain',
+              flex: 1,
+              color: '#f0f2ff',
+              fontSize: normalize(15),
+              fontWeight: '700',
             }}
-          />
-            <View><Text style={{ color: "#AEB3D1",
-                }}>{formatDateTimeString(workout.startTime)}</Text></View>
-              <View style={{
-                width: normalizeWidth(1.5), height: normalizeHeight(12),
-                backgroundColor:  'rgba(255,255,255,0.17)',
-                marginHorizontal:normalizeWidth(8)
-              }}></View>
-              
-            <Image
-                        source={clock}
-                        style={{
-                          width: normalizeWidth(13),
-                          marginRight:normalizeWidth(5),
-                          marginTop:normalizeHeight(1),
-                          aspectRatio: (357.0/346.0),
-                          resizeMode: 'contain',
-                          tintColor: '#bebdd1',
-                        }}
-                      />
-                     
-            <View><Text style={{ color:
-              "#AEB3D1", }}>Duration : {durationMin} min</Text></View>
-          </View>
-      </View>
-
-      <View style={{paddingTop:normalizeHeight(8),
-        paddingLeft: normalizeWidth(14),
-        paddingBottom:normalizeHeight(10)
-      }}>
-        {
-          exerciseNames.map((exName, index)=>{
-            const isLast = index==exerciseNames.length - 1;
-           return (<View key={exName}
-            style={[
-              !isLast && {marginBottom:normalizeHeight(5)}
-            ]}
-           >
+            numberOfLines={1}
+          >
+            {workoutTitle}
+          </Text>
+          <View style={{
+            marginLeft: normalizeWidth(8),
+            backgroundColor: ACCENT + '2a',
+            borderRadius: normalizeHeight(20),
+            paddingHorizontal: normalizeWidth(8),
+            paddingVertical: normalizeHeight(3),
+          }}>
             <Text style={{
-              color: '#F4F2FF' || '#f8f8f9',
-              fontSize: normalize(13)
-              }}>{exName}</Text>
-            </View>)
-          })
-        }
-      </View>
+              color: ACCENT,
+              fontSize: normalize(10),
+              fontWeight: '700',
+              letterSpacing: 0.5,
+            }}>
+              {exerciseNames.length} EXERCISES
+            </Text>
+          </View>
+        </View>
+
+        <View style={{ height: normalize(1), backgroundColor: '#3a4470' }} />
+
+        {/* Exercise list */}
+        <View style={{
+          paddingHorizontal: normalizeWidth(14),
+          paddingVertical: normalizeHeight(10),
+        }}>
+          {exerciseNames.map((exName, index) => (
+            <View
+              key={exName}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: index < exerciseNames.length - 1 ? normalizeHeight(6) : 0,
+              }}
+            >
+              <View style={{
+                width: normalize(6),
+                height: normalize(6),
+                borderRadius: normalize(3),
+                backgroundColor: ACCENT,
+                marginRight: normalizeWidth(10),
+              }} />
+              <Text style={{
+                flex: 1,
+                color: '#c8ccdf',
+                fontSize: normalize(13),
+              }}>
+                {exName}
+              </Text>
+              <Text style={{
+                color: '#7a7f98',
+                fontSize: normalize(12),
+              }}>
+                {exerciseSetCounts[exName]} sets
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={{ height: normalize(1), backgroundColor: '#3a4470' }} />
+
+        {/* Footer */}
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: normalizeWidth(14),
+          paddingVertical: normalizeHeight(10),
+        }}>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              source={calendarIcon}
+              style={{
+                width: normalizeWidth(14),
+                height: normalizeWidth(14) * (420.0 / 410.0),
+                aspectRatio: (410.0 / 420.0),
+                resizeMode: 'contain',
+                tintColor: '#AEB3D1',
+                marginRight: normalizeWidth(6),
+              }}
+            />
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+              {formatDateTimeString(workout.startTime)}
+            </Text>
+          </View>
+          <View style={{
+            width: normalize(1),
+            height: normalizeHeight(12),
+            backgroundColor: 'rgba(255,255,255,0.15)',
+          }} />
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <Image
+              source={clock}
+              style={{
+                width: normalizeWidth(13),
+                aspectRatio: (357.0 / 346.0),
+                resizeMode: 'contain',
+                tintColor: '#AEB3D1',
+                marginRight: normalizeWidth(5),
+              }}
+            />
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+              {durationMin} min
+            </Text>
+          </View>
+        </View>
 
       </View>
     </TouchableOpacity>
-  )
-
-  
+  );
 };
-
-const styles = StyleSheet.create({
-  cardOuterShadow: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 24,
-    shadowColor: '#E5C97B',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.10,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  cardContainer: {
-    backgroundColor: '#FFFDF7',
-    borderRadius: 24,
-    padding: 22,
-    minHeight: 120,
-    justifyContent: 'center',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-  },
-  headerLeft: {
-    flex: 1,
-  },
-  timeText: {
-    color: '#A89B7C',
-    fontSize: 15,
-   fontWeight: '600',
-    marginBottom: 6,
-  },
-  badgeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 0,
-  },
-  placeholderCircle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#F7B733',
-    marginRight: 8,
-  },
-  badgeText: {
-    fontSize: 16,
-    color: '#7C6F57',
-    fontFamily: 'Inter-Bold',
-    letterSpacing: 0.2,
-  },
-  durationText: {
-    color: '#C6A15B',
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
-    marginLeft: 12,
-  },
-  exerciseList: {
-    marginTop: 8,
-  },
-  exerciseRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  exerciseIcon: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    backgroundColor: '#E5C97B',
-    marginRight: 10,
-  },
-  exerciseName: {
-    color: '#7C6F57',
-    fontSize: 15,
-    fontWeight:'500'
-  },
-  divider: {
-    height: 1,
-    flex: 1,
-    marginLeft: 24,
-    marginVertical: 2,
-    backgroundColor: '#F2E9D8',
-  },
-});
