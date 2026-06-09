@@ -13,7 +13,7 @@ export const ActivityScreen = () => {
   useEffect(() => {
     const loadWorkouts = async () => {
       const data = databaseController.getAllWorkouts();
-      setWorkouts(data);
+      setWorkouts([...data].reverse());
     };
     loadWorkouts();
   }, []);

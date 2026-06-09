@@ -67,7 +67,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
          <Text style={{color: '#fcfbfc',
           fontWeight: '600',
           fontSize: normalize(15)
-         }}>{dayOfTheWeek} - {routineName}</Text>
+         }}>{workout.name ? workout.name : `${dayOfTheWeek} - ${routineName}`}</Text>
       </View>
 
       <View style={{width:'80%',
