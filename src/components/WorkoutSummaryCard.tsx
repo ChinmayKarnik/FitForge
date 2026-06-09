@@ -155,7 +155,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 marginRight: normalizeWidth(8),
               }}
             />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
               {formatDateString(workout.startTime)}
             </Text>
             <View style={{
@@ -165,7 +165,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
               backgroundColor: '#AEB3D1',
               marginHorizontal: normalizeWidth(6),
             }} />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
               {formatTimeString(workout.startTime)}
             </Text>
           </View>
@@ -186,7 +186,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 marginLeft:normalizeWidth(20)
               }}
             />
-            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12), fontFamily: 'SpaceMono-Regular' }}>
               {durationMin} min
             </Text>
           </View>
