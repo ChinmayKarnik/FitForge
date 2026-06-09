@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock-thick-white.png';
 import stopwatch from '../images/stopwatch-white.png';
 import calendarIcon from '../images/calendar.png';
+import notesIcon from '../images/notes.png';
 import { databaseController } from '../data/controllers';
-import ExerciseLoggedDataInline from '../components/ExerciseLoggedDataInline';
+import CurrentWorkoutList from '../components/CurrentWorkoutList';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
@@ -21,15 +22,6 @@ const cardStyle = {
   borderWidth: 1,
   borderColor: CARD_BORDER,
 };
-
-const IconPlaceholder = ({ size = 22 }: { size?: number }) => (
-  <View style={{
-    width: size,
-    height: size,
-    borderRadius: size / 2,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-  }} />
-);
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
@@ -84,16 +76,6 @@ export default function WorkoutDetailsScreen() {
     timeText = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
   }
 
-  // Compute stats
-  const groupedExercises: { [key: string]: any[] } = {};
-  if (workout?.exercises) {
-    workout.exercises.forEach((ex: any) => {
-      if (!groupedExercises[ex.exerciseId]) groupedExercises[ex.exerciseId] = [];
-      groupedExercises[ex.exerciseId].push(ex);
-    });
-  }
-  const exerciseCount = Object.keys(groupedExercises).length;
-  const setCount = workout?.exercises?.length || 0;
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
@@ -127,11 +109,8 @@ export default function WorkoutDetailsScreen() {
         </Text>
       </View>
 
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(20), paddingBottom: normalizeHeight(40) }}
-        showsVerticalScrollIndicator={false}
-      >
+      {/* Fixed top content */}
+      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(20) }}>
         {/* Workout Title */}
         <Text style={{
           fontSize: normalize(28),
@@ -151,30 +130,18 @@ export default function WorkoutDetailsScreen() {
           paddingVertical: normalizeHeight(10),
           borderRadius: normalize(10)
         }]}>
-          {/* Date */}
-          <View style={{ flex: 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' ,
-           
-          }}>
-            <Image source={calendarIcon} style={{ 
-              width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain',
-               marginRight: normalizeWidth(8),
-             tintColor: 'rgba(255,255,255,85)',
-            }} />
+          <View style={{ flex: 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={calendarIcon} style={{ width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain', marginRight: normalizeWidth(8), tintColor: 'rgba(255,255,255,0.85)' }} />
             <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{dateText}</Text>
           </View>
-
           <View style={{ width: normalizeWidth(1), height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
-          {/* Time */}
           <View style={{ flex: 92, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6),  
-              tintColor: 'rgba(255,255,255,0.85)' }} />
+            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.85)' }} />
             <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{timeText}</Text>
           </View>
           <View style={{ width: 1, height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
-          {/* Duration */}
           <View style={{ flex: 93, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), 
-               tintColor: 'rgba(255,255,255,0.85)' }} />
+            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.85)' }} />
             <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{durationText}</Text>
           </View>
         </View>
@@ -187,143 +154,34 @@ export default function WorkoutDetailsScreen() {
             padding: normalizeWidth(14),
             marginBottom: normalizeHeight(10),
           }]}>
-            <View style={{
-              width: normalize(40),
-              height: normalize(40),
-              borderRadius: normalize(10),
-              backgroundColor: 'rgba(255,255,255,0.06)',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: normalizeWidth(12),
-            }}>
-              <IconPlaceholder size={20} />
-            </View>
+            <Image source={notesIcon} style={{ width: normalize(22), height: normalize(22), resizeMode: 'contain', tintColor: 'rgba(255,255,255,0.7)', marginRight: normalizeWidth(12) }} />
             <View>
               <Text style={{ color: MUTED, fontSize: normalize(12), fontWeight: '400', marginBottom: 2 }}>Routine</Text>
               <Text style={{ color: PRIMARY, fontSize: normalize(16), fontWeight: '600' }}>{routineName}</Text>
             </View>
           </View>
         )}
+      </View>
 
-        {/* Stats Chips */}
-        <View style={{ flexDirection: 'row', gap: normalizeWidth(10), marginBottom: normalizeHeight(16) }}>
-          {/* Exercises */}
-          <View style={[cardStyle, {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: normalizeHeight(14),
-            paddingHorizontal: normalizeWidth(14),
-          }]}>
-            <View style={{
-              width: normalize(38),
-              height: normalize(38),
-              borderRadius: normalize(19),
-              backgroundColor: 'rgba(255,255,255,0.07)',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: normalizeWidth(10),
-            }}>
-              <IconPlaceholder size={18} />
-            </View>
-            <View>
-              <Text style={{ color: PRIMARY, fontSize: normalize(22), fontWeight: '700', lineHeight: normalize(26) }}>{exerciseCount}</Text>
-              <Text style={{ color: MUTED, fontSize: normalize(11), fontWeight: '500', letterSpacing: 0.5 }}>EXERCISES</Text>
-            </View>
-          </View>
-          {/* Sets */}
-          <View style={[cardStyle, {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: normalizeHeight(14),
-            paddingHorizontal: normalizeWidth(14),
-          }]}>
-            <View style={{
-              width: normalize(38),
-              height: normalize(38),
-              borderRadius: normalize(19),
-              backgroundColor: 'rgba(255,255,255,0.07)',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: normalizeWidth(10),
-            }}>
-              <IconPlaceholder size={18} />
-            </View>
-            <View>
-              <Text style={{ color: PRIMARY, fontSize: normalize(22), fontWeight: '700', lineHeight: normalize(26) }}>{setCount}</Text>
-              <Text style={{ color: MUTED, fontSize: normalize(11), fontWeight: '500', letterSpacing: 0.5 }}>SETS</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Exercise Cards */}
-        {Object.entries(groupedExercises).map(([exerciseId, sets]) => {
-          const exercise = databaseController.getExerciseById(exerciseId);
-          const allParams = [
-            ...(exercise?.requiredParameters || []),
-            ...(exercise?.optionalParameters || []),
-          ];
-
-          const totalDurationMs = sets.reduce((sum: number, set: any) => {
-            return sum + ((set.endTime || 0) - (set.startTime || 0));
-          }, 0);
-          const totalMinutes = Math.floor(totalDurationMs / 60000);
-          const exerciseDurationText = totalMinutes < 60
-            ? `${totalMinutes} min`
-            : `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
-
-          return (
-            <View key={exerciseId} style={{ marginBottom: normalizeHeight(10) }}>
-              <View style={[cardStyle, { overflow: 'hidden' }]}>
-                {/* Exercise header */}
-                <View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: normalizeWidth(14),
-                  paddingVertical: normalizeHeight(12),
-                  borderBottomWidth: 1,
-                  borderBottomColor: CARD_BORDER,
-                  backgroundColor: 'rgba(255,255,255,0.03)',
-                }}>
-                  <Text style={{ color: PRIMARY, fontSize: normalize(15), fontWeight: '700' }}>
-                    {exercise?.name || 'Unknown Exercise'}
-                  </Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={clock} style={{ width: normalize(12), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(5), tintColor: MUTED }} />
-                    <Text style={{ color: MUTED, fontSize: normalize(13), fontWeight: '400' }}>{exerciseDurationText}</Text>
-                  </View>
-                </View>
-                {/* Set rows */}
-                {sets.map((set: any, setIdx: number) => (
-                  <View
-                    key={`${exerciseId}-${setIdx}`}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      paddingVertical: normalizeHeight(11),
-                      paddingHorizontal: normalizeWidth(14),
-                      borderTopWidth: setIdx > 0 ? 1 : 0,
-                      borderTopColor: 'rgba(68, 75, 95, 0.3)',
-                    }}
-                  >
-                    <Text style={{ color: MUTED, fontSize: normalize(13), fontWeight: '400', width: normalizeWidth(44) }}>
-                      Set {setIdx + 1}
-                    </Text>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', gap: normalizeWidth(16) }}>
-                      <ExerciseLoggedDataInline
-                        loggedData={set.loggedData || null}
-                        params={allParams}
-                      />
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+      {/* Exercises section — scrollable */}
+      <View style={{ flex: 1, paddingHorizontal: normalizeWidth(16) }}>
+        <Text style={{
+          color: 'rgba(255,255,255,0.8)',
+          fontSize: normalize(14),
+          fontWeight: '600',
+          letterSpacing: 0.4,
+          marginTop: normalizeHeight(6),
+          marginBottom: normalizeHeight(2),
+        }}>
+          Exercises
+        </Text>
+        <CurrentWorkoutList
+          workout={workout}
+          showSectionHeader={false}
+          horizontalPadding={false}
+          showBottomFade={false}
+        />
+      </View>
     </View>
   );
 }

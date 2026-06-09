@@ -13,6 +13,8 @@ const CurrentWorkoutList = (
         showHeaderDivider = true,
         showSectionHeader = true,
         listMaxHeight = undefined,
+        scrollEnabled = true,
+        showBottomFade = false,
         onScroll: onScrollProp = undefined,
     }: {
         workout?: any;
@@ -21,6 +23,8 @@ const CurrentWorkoutList = (
         showHeaderDivider?: boolean;
         showSectionHeader?: boolean;
         listMaxHeight?: number;
+        scrollEnabled?: boolean;
+        showBottomFade?: boolean;
         onScroll?: (event: any) => void;
     }
 ) => {
@@ -90,7 +94,7 @@ const CurrentWorkoutList = (
     }
     return (
         <View style={{
-            ...(listMaxHeight ? {} : { flex: 1 }),
+            ...(listMaxHeight ? {} : scrollEnabled ? { flex: 1 } : {}),
             marginTop:normalizeHeight(10),
             paddingHorizontal: horizontalPadding ? normalize(14) : 0,
         }} >
@@ -125,7 +129,7 @@ const CurrentWorkoutList = (
                                 }}
                                 keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
                                 renderItem={renderItem}
-                                scrollEnabled={true}
+                                scrollEnabled={scrollEnabled}
                                 ItemSeparatorComponent={() => (
                                     <View style={{ marginVertical: normalizeHeight(7) }} />
                                 )}
@@ -133,7 +137,7 @@ const CurrentWorkoutList = (
                                 onScroll={(e) => { handleScroll(e); onScrollProp?.(e); }}
                                 scrollEventThrottle={16}
                             />
-                            {listMaxHeight && !isAtBottom && (
+                            {(listMaxHeight || showBottomFade) && !isAtBottom && (
                                 <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
                                     <Svg height="100%" width="100%">
                                         <Defs>
