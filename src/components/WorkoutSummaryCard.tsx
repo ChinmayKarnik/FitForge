@@ -52,10 +52,10 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <View style={{
         marginHorizontal: disableHorizontalMargin ? 0 : normalizeWidth(16),
-        backgroundColor: '#232d4e',
+        backgroundColor: '#272d46',
         borderRadius: normalize(10),
         borderWidth: normalize(1),
-        borderColor: '#3a4470',
+        borderColor: '#3d4563',
       }}>
 
         {/* Header */}
@@ -78,23 +78,23 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           </Text>
           <View style={{
             marginLeft: normalizeWidth(8),
-            backgroundColor: ACCENT + '2a',
-            borderRadius: normalizeHeight(20),
-            paddingHorizontal: normalizeWidth(8),
+            borderWidth: normalize(1),
+            borderColor: '#5a7bb3',
+            borderRadius: normalize(4),
+            backgroundColor: '#1f243b',
+            paddingHorizontal: normalizeWidth(6),
             paddingVertical: normalizeHeight(3),
           }}>
             <Text style={{
-              color: ACCENT,
+              color: '#7fb3ff',
               fontSize: normalize(10),
-              fontWeight: '700',
-              letterSpacing: 0.5,
+              fontWeight: '600',
+              letterSpacing: 0.3,
             }}>
               {exerciseNames.length} EXERCISES
             </Text>
           </View>
         </View>
-
-        <View style={{ height: normalize(1), backgroundColor: '#3a4470' }} />
 
         {/* Exercise list */}
         <View style={{
@@ -114,7 +114,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 width: normalize(6),
                 height: normalize(6),
                 borderRadius: normalize(3),
-                backgroundColor: ACCENT,
+                backgroundColor: '#7a7f98',
                 marginRight: normalizeWidth(10),
               }} />
               <Text style={{
@@ -134,7 +134,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           ))}
         </View>
 
-        <View style={{ height: normalize(1), backgroundColor: '#3a4470' }} />
+        <View style={{ height: normalize(1), backgroundColor: 'rgba(180,180,180,0.15)' }} />
 
         {/* Footer */}
         <View style={{
@@ -143,7 +143,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           paddingHorizontal: normalizeWidth(14),
           paddingVertical: normalizeHeight(10),
         }}>
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center' }}>
             <Image
               source={calendarIcon}
               style={{
@@ -161,7 +161,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           </View>
           <View style={{
             width: normalize(1),
-            height: normalizeHeight(12),
+            height: normalizeHeight(18),
             backgroundColor: 'rgba(255,255,255,0.15)',
           }} />
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
