@@ -63,7 +63,8 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: normalizeWidth(14),
-          paddingVertical: normalizeHeight(12),
+          paddingTop: normalizeHeight(12),
+          paddingBottom: normalizeHeight(10)
         }}>
           <Text
             style={{
@@ -99,7 +100,8 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
         {/* Exercise list */}
         <View style={{
           paddingHorizontal: normalizeWidth(14),
-          paddingVertical: normalizeHeight(10),
+          paddingTop: normalizeHeight(1),
+          paddingBottom: normalizeHeight(10),
         }}>
           {exerciseNames.map((exName, index) => (
             <View
@@ -107,28 +109,30 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: index < exerciseNames.length - 1 ? normalizeHeight(6) : 0,
+                marginBottom: index < exerciseNames.length - 1 ? normalizeHeight(4) : 0,
               }}
             >
               <View style={{
-                width: normalize(7),
-                height: normalize(7),
+                width: normalize(5),
+                height: normalize(5),
                 borderRadius: normalize(4),
-                backgroundColor: '#7a7f98',
+                backgroundColor: '#7fb3ff',
                 marginRight: normalizeWidth(10),
               }} />
               <Text style={{
                 flex: 1,
-                color: '#c8ccdf',
-                fontSize: normalize(13),
+                color: 'rgba(255,255,255,0.8)',
+                fontSize: normalize(12),
+                fontFamily: 'RobotoMono-Regular',
               }}>
                 {exName}
               </Text>
               <Text style={{
-                color: '#7a7f98',
+                color: '#8f99c5',
                 fontSize: normalize(12),
+                fontFamily: 'RobotoMono-Regular',
               }}>
-                {exerciseSetCounts[exName]} sets
+                {thinSpace(`${exerciseSetCounts[exName]} sets`)}
               </Text>
             </View>
           ))}
