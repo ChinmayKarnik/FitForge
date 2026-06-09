@@ -3,14 +3,14 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
-import clock from '../images/clock-thick.png';
+import clock from '../images/clock-thick-white.png';
 import stopwatch from '../images/stopwatch-white.png';
-import calendarWithBorder from '../images/calendar-with-border.png';
+import calendarIcon from '../images/calendar.png';
 import { databaseController } from '../data/controllers';
 import ExerciseLoggedDataInline from '../components/ExerciseLoggedDataInline';
 
-const CARD_BG = 'rgba(255, 255, 255, 0.04)';
-const CARD_BORDER = 'rgba(68, 75, 95, 0.55)';
+const CARD_BG = '#272d46';
+const CARD_BORDER = '#3d4563';
 const CARD_RADIUS = normalize(12);
 const MUTED = '#8a8d9c';
 const PRIMARY = '#fefefe';
@@ -148,23 +148,34 @@ export default function WorkoutDetailsScreen() {
           flexDirection: 'row',
           alignItems: 'center',
           marginBottom: normalizeHeight(10),
+          paddingVertical: normalizeHeight(10),
+          borderRadius: normalize(10)
         }]}>
           {/* Date */}
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
-            <Image source={calendarWithBorder} style={{ width: normalize(15), aspectRatio: 538/496, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
-            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{dateText}</Text>
+          <View style={{ flex: 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' ,
+           
+          }}>
+            <Image source={calendarIcon} style={{ 
+              width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain',
+               marginRight: normalizeWidth(8),
+             tintColor: 'rgba(255,255,255,85)',
+            }} />
+            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{dateText}</Text>
           </View>
-          <View style={{ width: 1, height: normalizeHeight(20), backgroundColor: CARD_BORDER }} />
+
+          <View style={{ width: normalizeWidth(1), height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
           {/* Time */}
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
-            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
-            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{timeText}</Text>
+          <View style={{ flex: 92, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6),  
+              tintColor: 'rgba(255,255,255,0.85)' }} />
+            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{timeText}</Text>
           </View>
-          <View style={{ width: 1, height: normalizeHeight(20), backgroundColor: CARD_BORDER }} />
+          <View style={{ width: 1, height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
           {/* Duration */}
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
-            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
-            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{durationText}</Text>
+          <View style={{ flex: 93, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), 
+               tintColor: 'rgba(255,255,255,0.85)' }} />
+            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{durationText}</Text>
           </View>
         </View>
 
