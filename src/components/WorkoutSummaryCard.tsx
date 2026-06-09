@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { normalizeWidth, normalizeHeight, normalize } from '../utils/normalize';
 import { databaseController } from '../data';
 import { getDayOfWeek } from '../utils/dateTimeUtils';
-import { formatDateTimeString } from './dateTimeUtils';
+import { formatDateString, formatTimeString } from './dateTimeUtils';
 import clock from '../images/clock-thick.png';
 import calendarIcon from '../images/calendar.png';
 
@@ -111,9 +111,9 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
               }}
             >
               <View style={{
-                width: normalize(6),
-                height: normalize(6),
-                borderRadius: normalize(3),
+                width: normalize(7),
+                height: normalize(7),
+                borderRadius: normalize(4),
                 backgroundColor: '#7a7f98',
                 marginRight: normalizeWidth(10),
               }} />
@@ -141,30 +141,40 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: normalizeWidth(14),
-          paddingVertical: normalizeHeight(10),
+          paddingVertical: normalizeHeight(12),
         }}>
           <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center' }}>
             <Image
               source={calendarIcon}
               style={{
-                width: normalizeWidth(14),
-                height: normalizeWidth(14) * (420.0 / 410.0),
+                width: normalizeWidth(16),
+                height: normalizeWidth(16) * (420.0 / 410.0),
                 aspectRatio: (410.0 / 420.0),
                 resizeMode: 'contain',
                 tintColor: '#AEB3D1',
-                marginRight: normalizeWidth(6),
+                marginRight: normalizeWidth(8),
               }}
             />
             <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
-              {formatDateTimeString(workout.startTime)}
+              {formatDateString(workout.startTime)}
+            </Text>
+            <View style={{
+              width: normalize(3),
+              height: normalize(3),
+              borderRadius: normalize(2),
+              backgroundColor: '#AEB3D1',
+              marginHorizontal: normalizeWidth(6),
+            }} />
+            <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
+              {formatTimeString(workout.startTime)}
             </Text>
           </View>
           <View style={{
             width: normalize(1),
-            height: normalizeHeight(18),
-            backgroundColor: 'rgba(255,255,255,0.15)',
+            height: normalizeHeight(14),
+            backgroundColor: 'rgba(255,255,255,0.25)',
           }} />
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: normalizeWidth(14) }}>
             <Image
               source={clock}
               style={{
@@ -172,7 +182,8 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 aspectRatio: (357.0 / 346.0),
                 resizeMode: 'contain',
                 tintColor: '#AEB3D1',
-                marginRight: normalizeWidth(5),
+                marginRight: normalizeWidth(7),
+                marginLeft:normalizeWidth(20)
               }}
             />
             <Text style={{ color: '#AEB3D1', fontSize: normalize(12) }}>
