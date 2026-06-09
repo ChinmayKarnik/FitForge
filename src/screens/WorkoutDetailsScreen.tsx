@@ -4,19 +4,41 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock-thick.png';
+import stopwatch from '../images/stopwatch-white.png';
 import calendarWithBorder from '../images/calendar-with-border.png';
 import { databaseController } from '../data/controllers';
 import ExerciseLoggedDataInline from '../components/ExerciseLoggedDataInline';
+
+const CARD_BG = 'rgba(255, 255, 255, 0.04)';
+const CARD_BORDER = 'rgba(68, 75, 95, 0.55)';
+const CARD_RADIUS = normalize(12);
+const MUTED = '#8a8d9c';
+const PRIMARY = '#fefefe';
+
+const cardStyle = {
+  backgroundColor: CARD_BG,
+  borderRadius: CARD_RADIUS,
+  borderWidth: 1,
+  borderColor: CARD_BORDER,
+};
+
+const IconPlaceholder = ({ size = 22 }: { size?: number }) => (
+  <View style={{
+    width: size,
+    height: size,
+    borderRadius: size / 2,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+  }} />
+);
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const workout = route.params?.workout;
-  console.log("ckck workout here is ",workout)
 
   const routineId = workout?.routineId;
   const routineName = routineId ? databaseController.getRoutineById(routineId)?.name || 'Unknown Routine' : '';
-  // Format duration from ms to human readable string
+
   let durationText = '';
   const durationMs = workout?.duration;
   if (typeof durationMs === 'number' && !isNaN(durationMs)) {
@@ -28,20 +50,16 @@ export default function WorkoutDetailsScreen() {
     } else {
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
-      durationText = `${hours} hour${hours === 1 ? '' : 's'}`;
-      if (minutes > 0) {
-        durationText += ` ${minutes} min`;
-      }
+      durationText = `${hours}h`;
+      if (minutes > 0) durationText += ` ${minutes}m`;
     }
   }
 
-  // Format date from workout.start timestamp
   let dateText = '';
   const startTimestamp = workout?.startTime;
   if (typeof startTimestamp === 'number' && !isNaN(startTimestamp)) {
     const startDate = new Date(startTimestamp);
     const now = new Date();
-    // Get midnight for today and yesterday
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
     const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
@@ -55,7 +73,6 @@ export default function WorkoutDetailsScreen() {
     }
   }
 
-  // Format time from workout.startTime timestamp
   let timeText = '';
   if (typeof startTimestamp === 'number' && !isNaN(startTimestamp)) {
     const startDate = new Date(startTimestamp);
@@ -67,13 +84,19 @@ export default function WorkoutDetailsScreen() {
     timeText = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
   }
 
+  // Compute stats
+  const groupedExercises: { [key: string]: any[] } = {};
+  if (workout?.exercises) {
+    workout.exercises.forEach((ex: any) => {
+      if (!groupedExercises[ex.exerciseId]) groupedExercises[ex.exerciseId] = [];
+      groupedExercises[ex.exerciseId].push(ex);
+    });
+  }
+  const exerciseCount = Object.keys(groupedExercises).length;
+  const setCount = workout?.exercises?.length || 0;
+
   return (
-    <View style={{
-      flex: 1,
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#1c2238',
-    }}>
+    <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
       {/* Header */}
       <View style={{
         width: '100%',
@@ -82,264 +105,214 @@ export default function WorkoutDetailsScreen() {
         alignItems: 'center',
         backgroundColor: 'rgba(36, 42, 65)',
         paddingTop: normalizeHeight(40),
-        paddingBottom: normalizeHeight(12)
+        paddingBottom: normalizeHeight(12),
       }}>
-        <TouchableOpacity 
-          style={{
-            position: 'absolute',
-            top: normalizeHeight(46),
-            left: normalizeWidth(16),
-          }}
+        <TouchableOpacity
+          style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={() => {
-            navigation.goBack();
-          }}
+          onPress={() => navigation.goBack()}
         >
-          <Image 
+          <Image
             style={{
               width: normalizeWidth(9),
               height: normalizeWidth(9) * (86.0 / 51.0),
               aspectRatio: 51.0 / 86.0,
-              resizeMode: 'stretch'
+              resizeMode: 'stretch',
             }}
             source={white_left_arrow}
           />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 22,
-            letterSpacing: 1,
-            fontWeight: '700',
-            color: "#fefefe"
-          }}
-        >Workout Details</Text>
+        <Text style={{ fontSize: 22, letterSpacing: 1, fontWeight: '700', color: PRIMARY }}>
+          Workout Details
+        </Text>
       </View>
 
-      {/* Body Container */}
-      <View style={{
-        flex: 1,
-        padding: normalizeWidth(16),
-      }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(20), paddingBottom: normalizeHeight(40) }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Workout Title */}
         <Text style={{
-          fontSize: normalizeHeight(24),
+          fontSize: normalize(28),
           fontWeight: '500',
-          color: '#fefefe',
-          marginBottom: normalizeHeight(12),
+          color: PRIMARY,
+          letterSpacing: -0.5,
+          marginBottom: normalizeHeight(16),
         }}>
           {workout?.name}
         </Text>
 
-        
-        <View style={{
+        {/* Meta Row Card */}
+        <View style={[cardStyle, {
           flexDirection: 'row',
           alignItems: 'center',
-          marginBottom: normalizeHeight(12),
-        }}>
-          {/* Calendar Icon */}
-          <Image
-            source={calendarWithBorder}
-            style={{
-              width: normalizeWidth(15),
-              aspectRatio: (538.0/496.0),
-              marginRight: normalizeWidth(8),
-              resizeMode: 'contain',
-            }}
-          />
-          <Text style={{
-            fontSize: normalizeHeight(13),
-            color: '#bebdd1',
-            fontWeight: '400',
-          }}>
-            {dateText} • {timeText}
-          </Text>
-           <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-          <Image
-            source={clock}
-            style={{
-              width: normalizeWidth(13),
-              marginRight: normalizeWidth(6),
-              marginLeft: normalizeWidth(8),
-              aspectRatio: (357.0/346.0),
-              resizeMode: 'contain',
-              tintColor: '#bebdd1',
-            }}
-          />
-          <Text style={{
-            fontSize: normalizeHeight(13),
-            color: '#bebdd1',
-            fontWeight: '400',
-          }}>
-            {durationText}
-          </Text>
+          marginBottom: normalizeHeight(10),
+        }]}>
+          {/* Date */}
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
+            <Image source={calendarWithBorder} style={{ width: normalize(15), aspectRatio: 538/496, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
+            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{dateText}</Text>
+          </View>
+          <View style={{ width: 1, height: normalizeHeight(20), backgroundColor: CARD_BORDER }} />
+          {/* Time */}
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
+            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
+            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{timeText}</Text>
+          </View>
+          <View style={{ width: 1, height: normalizeHeight(20), backgroundColor: CARD_BORDER }} />
+          {/* Duration */}
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: normalizeHeight(14) }}>
+            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: MUTED }} />
+            <Text style={{ color: PRIMARY, fontSize: normalize(13), fontWeight: '500' }}>{durationText}</Text>
+          </View>
         </View>
 
-        </View>
-       
-        {/* Divider */}
-        <View style={{
-          height: normalizeHeight(2),
-          backgroundColor: 'rgba(68, 75, 95, 0.5)',
-          marginBottom: normalizeHeight(24),
-        }} />
-
-        {/* Routine Section */}
+        {/* Routine Card */}
         {routineId && (
-          <>
-            <Text style={{
-              fontSize: normalizeHeight(13),
-              color: '#8a8c9c',
-              fontWeight: '400',
-              marginBottom: normalizeHeight(8),
-            }}>
-              Routine
-            </Text>
-            <Text style={{
-              fontSize: normalizeHeight(16),
-              fontWeight: '600',
-              color: '#fefefe',
-              marginBottom: normalizeHeight(24),
-            }}>
-              {routineName}
-            </Text>
-
-            {/* Divider */}
+          <View style={[cardStyle, {
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: normalizeWidth(14),
+            marginBottom: normalizeHeight(10),
+          }]}>
             <View style={{
-              height: normalizeHeight(2),
-              backgroundColor: 'rgba(68, 75, 95, 0.5)',
-              marginBottom: normalizeHeight(24),
-            }} />
-          </>
-        )}
-
-        {/* Exercises Section */}
-        {workout?.exercises && workout.exercises.length > 0 && (
-          <>
-            <Text style={{
-              fontSize: normalize(15),
-              fontWeight: '600',
-              color: '#B0B7C3',
-              marginBottom: normalizeHeight(12),
+              width: normalize(40),
+              height: normalize(40),
+              borderRadius: normalize(10),
+              backgroundColor: 'rgba(255,255,255,0.06)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: normalizeWidth(12),
             }}>
-              Exercises
-            </Text>
-            <View style={{ marginBottom: normalizeHeight(24) }}>
-              {(() => {
-                // Group exercises by exerciseId
-                const groupedExercises: { [key: string]: any[] } = {};
-                workout.exercises.forEach((ex: any) => {
-                  if (!groupedExercises[ex.exerciseId]) {
-                    groupedExercises[ex.exerciseId] = [];
-                  }
-                  groupedExercises[ex.exerciseId].push(ex);
-                });
-
-                return Object.entries(groupedExercises).map(([exerciseId, sets]) => {
-                  const exercise = databaseController.getExerciseById(exerciseId);
-                  const allParams = [
-                    ...(exercise?.requiredParameters || []),
-                    ...(exercise?.optionalParameters || []),
-                  ];
-
-                  // Calculate total duration for the exercise
-                  const totalDurationMs = sets.reduce((sum: number, set: any) => {
-                    const setDuration = (set.endTime || 0) - (set.startTime || 0);
-                    return sum + setDuration;
-                  }, 0);
-
-                  // Format duration
-                  const totalMinutes = Math.floor(totalDurationMs / 60000);
-                  let exerciseDurationText = '';
-                  if (totalMinutes < 60) {
-                    exerciseDurationText = `${totalMinutes} min`;
-                  } else {
-                    const hours = Math.floor(totalMinutes / 60);
-                    const minutes = totalMinutes % 60;
-                    exerciseDurationText = `${hours}h ${minutes}m`;
-                  }
-
-                  return (
-                    <View key={exerciseId} style={{ marginBottom: normalizeHeight(12) }}>
-                      <View style={{
-                        backgroundColor: 'rgba(42, 50, 75, 1)',
-                        borderWidth: normalize(1),
-                        borderColor: '#404359',
-                        borderRadius: normalize(12),
-                        overflow: 'hidden',
-                      }}>
-                        <View style={{
-                          backgroundColor: '#1b1f35',
-                          borderTopLeftRadius: normalize(12),
-                          borderTopRightRadius: normalize(12),
-                          paddingTop: normalizeHeight(8),
-                          paddingLeft: normalizeWidth(12),
-                          paddingRight: normalizeWidth(12),
-                          paddingBottom: normalizeHeight(8),
-                          borderBottomWidth: normalize(1),
-                          borderBottomColor: '#44475d',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}>
-                          <Text style={{
-                            color: '#d6d3de',
-                            fontSize: normalizeHeight(14),
-                            fontWeight: '600',
-                          }}>
-                            {exercise?.name || 'Unknown Exercise'}
-                          </Text>
-                          <Text style={{
-                            color: '#bebdd1',
-                            fontSize: normalizeHeight(14),
-                            fontWeight: '500',
-                          }}>
-                            {exerciseDurationText}
-                          </Text>
-                        </View>
-                        {sets.map((set: any, setIdx: number) => (
-                          <View
-                            key={`${exerciseId}-${setIdx}`}
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              paddingVertical: normalizeHeight(10),
-                              paddingHorizontal: normalizeWidth(8),
-                              borderTopWidth: setIdx > 0 ? normalize(1) : 0,
-                              borderTopColor: '#404359',
-                            }}
-                          >
-                            <Text style={{
-                              color: '#c6cbda',
-                              fontSize: normalize(14),
-                              fontWeight: '500',
-                            }}>
-                              Set {setIdx + 1}
-                            </Text>
-                            <View style={{
-                              flex: 1,
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                            }}>
-                              <ExerciseLoggedDataInline
-                                loggedData={set.loggedData || null}
-                                params={allParams}
-                              />
-                            </View>
-                          </View>
-                        ))}
-                      </View>
-                    </View>
-                  );
-                });
-              })()}
+              <IconPlaceholder size={20} />
             </View>
-          </>
+            <View>
+              <Text style={{ color: MUTED, fontSize: normalize(12), fontWeight: '400', marginBottom: 2 }}>Routine</Text>
+              <Text style={{ color: PRIMARY, fontSize: normalize(16), fontWeight: '600' }}>{routineName}</Text>
+            </View>
+          </View>
         )}
-           
-      </View>
+
+        {/* Stats Chips */}
+        <View style={{ flexDirection: 'row', gap: normalizeWidth(10), marginBottom: normalizeHeight(16) }}>
+          {/* Exercises */}
+          <View style={[cardStyle, {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: normalizeHeight(14),
+            paddingHorizontal: normalizeWidth(14),
+          }]}>
+            <View style={{
+              width: normalize(38),
+              height: normalize(38),
+              borderRadius: normalize(19),
+              backgroundColor: 'rgba(255,255,255,0.07)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: normalizeWidth(10),
+            }}>
+              <IconPlaceholder size={18} />
+            </View>
+            <View>
+              <Text style={{ color: PRIMARY, fontSize: normalize(22), fontWeight: '700', lineHeight: normalize(26) }}>{exerciseCount}</Text>
+              <Text style={{ color: MUTED, fontSize: normalize(11), fontWeight: '500', letterSpacing: 0.5 }}>EXERCISES</Text>
+            </View>
+          </View>
+          {/* Sets */}
+          <View style={[cardStyle, {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: normalizeHeight(14),
+            paddingHorizontal: normalizeWidth(14),
+          }]}>
+            <View style={{
+              width: normalize(38),
+              height: normalize(38),
+              borderRadius: normalize(19),
+              backgroundColor: 'rgba(255,255,255,0.07)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: normalizeWidth(10),
+            }}>
+              <IconPlaceholder size={18} />
+            </View>
+            <View>
+              <Text style={{ color: PRIMARY, fontSize: normalize(22), fontWeight: '700', lineHeight: normalize(26) }}>{setCount}</Text>
+              <Text style={{ color: MUTED, fontSize: normalize(11), fontWeight: '500', letterSpacing: 0.5 }}>SETS</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Exercise Cards */}
+        {Object.entries(groupedExercises).map(([exerciseId, sets]) => {
+          const exercise = databaseController.getExerciseById(exerciseId);
+          const allParams = [
+            ...(exercise?.requiredParameters || []),
+            ...(exercise?.optionalParameters || []),
+          ];
+
+          const totalDurationMs = sets.reduce((sum: number, set: any) => {
+            return sum + ((set.endTime || 0) - (set.startTime || 0));
+          }, 0);
+          const totalMinutes = Math.floor(totalDurationMs / 60000);
+          const exerciseDurationText = totalMinutes < 60
+            ? `${totalMinutes} min`
+            : `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
+
+          return (
+            <View key={exerciseId} style={{ marginBottom: normalizeHeight(10) }}>
+              <View style={[cardStyle, { overflow: 'hidden' }]}>
+                {/* Exercise header */}
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingHorizontal: normalizeWidth(14),
+                  paddingVertical: normalizeHeight(12),
+                  borderBottomWidth: 1,
+                  borderBottomColor: CARD_BORDER,
+                  backgroundColor: 'rgba(255,255,255,0.03)',
+                }}>
+                  <Text style={{ color: PRIMARY, fontSize: normalize(15), fontWeight: '700' }}>
+                    {exercise?.name || 'Unknown Exercise'}
+                  </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={clock} style={{ width: normalize(12), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(5), tintColor: MUTED }} />
+                    <Text style={{ color: MUTED, fontSize: normalize(13), fontWeight: '400' }}>{exerciseDurationText}</Text>
+                  </View>
+                </View>
+                {/* Set rows */}
+                {sets.map((set: any, setIdx: number) => (
+                  <View
+                    key={`${exerciseId}-${setIdx}`}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: normalizeHeight(11),
+                      paddingHorizontal: normalizeWidth(14),
+                      borderTopWidth: setIdx > 0 ? 1 : 0,
+                      borderTopColor: 'rgba(68, 75, 95, 0.3)',
+                    }}
+                  >
+                    <Text style={{ color: MUTED, fontSize: normalize(13), fontWeight: '400', width: normalizeWidth(44) }}>
+                      Set {setIdx + 1}
+                    </Text>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', gap: normalizeWidth(16) }}>
+                      <ExerciseLoggedDataInline
+                        loggedData={set.loggedData || null}
+                        params={allParams}
+                      />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
