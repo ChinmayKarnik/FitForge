@@ -92,7 +92,7 @@ export const DayDetails = () => {
                                     {String(numberOfWorkouts)}
                                 </SvgText>
                             </Svg>
-                            <Text style={styles.statLbl}>WORKOUTS</Text>
+                            <Text style={styles.statLbl}>{numberOfWorkouts === 1 ? 'WORKOUT' : 'WORKOUTS'}</Text>
                         </View>
                         <View style={styles.statVertDivider} />
                         <View style={styles.statCol}>
@@ -125,6 +125,7 @@ export const DayDetails = () => {
                     keyExtractor={(item) => item.id}
                     scrollEnabled={true}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: normalizeHeight(32) }}
                     ItemSeparatorComponent={() => <View style={{ height: normalizeHeight(12) }} />}
                 />
             </View>
@@ -225,9 +226,9 @@ const styles = StyleSheet.create({
     workoutsTitle: {
         fontSize: normalize(14),
         fontWeight: '600',
-        color: 'rgba(255,255,255,0.8)',
+        color: 'rgba(255,255,255,0.95)',
         letterSpacing: 0.4,
-        marginTop: normalizeHeight(10),
+        marginTop: normalizeHeight(30),
         marginBottom: normalizeHeight(10),
     },
 });
