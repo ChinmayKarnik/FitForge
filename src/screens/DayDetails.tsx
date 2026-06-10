@@ -70,7 +70,7 @@ export const DayDetails = () => {
                             fontSize={normalize(52)}
                             fill="#fefefe"
                             stroke="#fefefe"
-                            strokeWidth="1"
+                            strokeWidth="1.5"
                             letterSpacing="-0.5"
                         >
                             {dayName}
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     },
     topSection: {
         position: 'relative',
-        paddingTop: normalizeHeight(26),
+        paddingTop: normalizeHeight(18),
         paddingBottom: normalizeHeight(14),
         paddingLeft: normalizeWidth(24),
     },
@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        width: normalizeWidth(82),
-        height: normalizeHeight(82),
+        width: normalizeWidth(110),
+        height: normalizeHeight(58),
         borderTopWidth: normalize(2),
         borderLeftWidth: normalize(2),
         borderColor: 'rgba(127,179,255,0.6)',
