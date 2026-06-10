@@ -7,14 +7,13 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import clock from '../images/clock-thick-white.png';
 import stopwatch from '../images/stopwatch-white.png';
 import calendarIcon from '../images/calendar.png';
-import notesIcon from '../images/notes.png';
+import notes2Icon from '../images/notes-2.png';
 import { databaseController } from '../data/controllers';
 import CurrentWorkoutList from '../components/CurrentWorkoutList';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
 const CARD_RADIUS = normalize(12);
-const MUTED = '#8a8d9c';
 const PRIMARY = '#fefefe';
 
 const cardStyle = {
@@ -159,13 +158,14 @@ export default function WorkoutDetailsScreen() {
           <View style={[cardStyle, {
             flexDirection: 'row',
             alignItems: 'center',
-            padding: normalizeWidth(14),
+            paddingVertical: normalizeHeight(8),
+            paddingHorizontal: normalizeWidth(14),
             marginBottom: normalizeHeight(10),
           }]}>
-            <Image source={notesIcon} style={{ width: normalize(22), height: normalize(22), resizeMode: 'contain', tintColor: 'rgba(255,255,255,0.7)', marginRight: normalizeWidth(12) }} />
+            <Image source={notes2Icon} style={{ width: normalize(18), height: normalize(18) * (458.0 / 399.0), aspectRatio: (399.0 / 458.0), resizeMode: 'contain', tintColor: '#a1a9ea', marginRight: normalizeWidth(16) }} />
             <View>
-              <Text style={{ color: MUTED, fontSize: normalize(12), fontWeight: '400', marginBottom: 2 }}>Routine</Text>
-              <Text style={{ color: PRIMARY, fontSize: normalize(16), fontWeight: '600' }}>{routineName}</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), fontWeight: '400', marginBottom: 1 }}>Routine</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(13), fontWeight: '600' }}>{routineName}</Text>
             </View>
           </View>
         )}
