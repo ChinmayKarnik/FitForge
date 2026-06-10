@@ -172,15 +172,15 @@ const styles = StyleSheet.create({
     topSection: {
         position: 'relative',
         paddingTop: normalizeHeight(26),
-        paddingBottom: normalizeHeight(24),
+        paddingBottom: normalizeHeight(14),
         paddingLeft: normalizeWidth(24),
     },
     bracketTopLeft: {
         position: 'absolute',
         top: 0,
         left: 0,
-        width: normalizeWidth(68),
-        height: normalizeHeight(68),
+        width: normalizeWidth(82),
+        height: normalizeHeight(82),
         borderTopWidth: normalize(2),
         borderLeftWidth: normalize(2),
         borderColor: 'rgba(127,179,255,0.6)',
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     dateLabel: {
         fontSize: normalize(20),
         fontWeight: '500',
-        color: '#929bc4',
+        color: 'rgba(255,255,255,0.78)',
         marginBottom: normalizeHeight(20),
     },
     statsRow: {
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: 'rgba(255,255,255,0.8)',
         letterSpacing: 0.4,
-        marginTop: normalizeHeight(20),
+        marginTop: normalizeHeight(10),
         marginBottom: normalizeHeight(10),
     },
 });
