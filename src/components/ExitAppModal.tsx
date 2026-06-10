@@ -79,8 +79,8 @@ const StayButton = ({ onPress }) => {
 
 const ExitAppModal = ({ visible, onClose }) => {
 
-  const descText = "You're about to leave FitForge.\nSee you later?"
-  const mainImageWidth = normalize(70);
+  const descText = "Are you sure you want to quit?"
+  const mainImageWidth = normalize(46);
   const mainImageAspectRatio = (455.0 / 607.0);
   const mainImageHeight = mainImageWidth / mainImageAspectRatio;
   return (
@@ -113,23 +113,28 @@ const ExitAppModal = ({ visible, onClose }) => {
                 width: mainImageWidth,
                 aspectRatio: mainImageAspectRatio,
                 height: mainImageHeight,
-                marginBottom: normalizeHeight(16)
+                marginBottom: normalizeHeight(8),
+                opacity: 0.7
               }}
             />
 
             <Text style={{
               color: '#ffffff',
-              fontSize: normalize(28),
+              fontSize: normalize(22),
               fontWeight: '700',
-              textAlign: 'center'
-            }}>Hold on!</Text>
+              textAlign: 'center',
+              lineHeight: normalize(30),
+            }}>{"You're about to\nleave FitForge"}</Text>
+
 
             <Text style={{
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: normalize(15),
+              color: 'rgba(255,255,255,0.65)',
+              fontSize: normalize(14),
               fontWeight: '400',
-              marginTop: normalizeHeight(12),
+              marginTop: normalizeHeight(10),
               textAlign: 'center',
+              lineHeight: normalize(20),
+              letterSpacing: 0.2,
             }}>{descText}</Text>
 
             <View style={{
