@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
-import clock2 from '../images/clock-2.png';
+import clock4 from '../images/clock-4.png';
 import slant_dumbbell from '../images/slant-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getWorkoutsForADay } from '../utils/workoutUtils';
@@ -73,7 +73,7 @@ export const DayDetails = () => {
 
 
                     <View style={styles.statItem}>
-                        <Image source={clock2} style={styles.clockIcon} />
+                        <Image source={clock4} style={styles.clockIcon} />
                         <View style={styles.statContent}>
                             <Text style={styles.statValue}>{totalDurationMins} Min</Text>
                             <Text style={styles.statLabel}>Total</Text>
@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
     },
     clockIcon: {
         height: normalizeHeight(45),
-        aspectRatio: (304.0 / 351.0),
-        width: normalizeHeight(45) * (304.0 / 351.0),
+        aspectRatio: (300.0 / 348.0),
+        width: normalizeHeight(45) * (300.0 / 348.0),
         resizeMode: 'contain',
     },
     dumbbellIcon: {

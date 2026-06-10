@@ -8,8 +8,10 @@ import clock from '../images/clock-thick-white.png';
 import stopwatch from '../images/stopwatch-white.png';
 import calendarIcon from '../images/calendar.png';
 import notes2Icon from '../images/notes-2.png';
+import infoIcon from '../images/info-icon.png';
 import { databaseController } from '../data/controllers';
 import CurrentWorkoutList from '../components/CurrentWorkoutList';
+import RoutineDetailsModal from '../components/RoutineDetailsModal';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
@@ -29,7 +31,9 @@ export default function WorkoutDetailsScreen() {
   const workout = route.params?.workout;
 
   const routineId = workout?.routineId;
-  const routineName = routineId ? databaseController.getRoutineById(routineId)?.name || 'Unknown Routine' : '';
+  const routine = routineId ? databaseController.getRoutineById(routineId) : null;
+  const routineName = routine?.name || '';
+  const [detailsRoutine, setDetailsRoutine] = useState<any>(null);
 
   let durationText = '';
   const durationMs = workout?.duration;
@@ -139,18 +143,18 @@ export default function WorkoutDetailsScreen() {
           borderRadius: normalize(10)
         }]}>
           <View style={{ flex: isTodayOrYesterday ? 93 : 118, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={calendarIcon} style={{ width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain', marginRight: normalizeWidth(8), tintColor: 'rgba(255,255,255,0.85)' }} />
-            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{dateText}</Text>
+            <Image source={calendarIcon} style={{ width: normalizeWidth(14), aspectRatio: 410/420, resizeMode: 'contain', marginRight: normalizeWidth(8), tintColor: 'rgba(255,255,255,0.72)' }} />
+            <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '500' }}>{dateText}</Text>
           </View>
           <View style={{ width: normalizeWidth(1), height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
           <View style={{ flex: 92, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.85)' }} />
-            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{timeText}</Text>
+            <Image source={clock} style={{ width: normalize(14), aspectRatio: 357/346, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.72)' }} />
+            <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '500' }}>{timeText}</Text>
           </View>
           <View style={{ width: 1, height: normalizeHeight(16), backgroundColor: 'rgba(255,255,255,0.15)' }} />
           <View style={{ flex: 93, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.85)' }} />
-            <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(11), fontWeight: '500' }}>{durationText}</Text>
+            <Image source={stopwatch} style={{ width: normalize(14), aspectRatio: 1, resizeMode: 'contain', marginRight: normalizeWidth(6), tintColor: 'rgba(255,255,255,0.72)' }} />
+            <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '500' }}>{durationText}</Text>
           </View>
         </View>
 
@@ -164,10 +168,16 @@ export default function WorkoutDetailsScreen() {
             marginBottom: normalizeHeight(10),
           }]}>
             <Image source={notes2Icon} style={{ width: normalize(18), height: normalize(18) * (458.0 / 399.0), aspectRatio: (399.0 / 458.0), resizeMode: 'contain', tintColor: '#a1a9ea', marginRight: normalizeWidth(16) }} />
-            <View>
+            <View style={{ flex: 1 }}>
               <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), fontWeight: '400', marginBottom: 1 }}>Routine</Text>
               <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: normalize(13), fontWeight: '600' }}>{routineName}</Text>
             </View>
+            <TouchableOpacity
+              onPress={() => setDetailsRoutine(routine)}
+              hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            >
+              <Image source={infoIcon} style={{ width: normalize(17), height: normalize(17) * (401.0 / 411.0), tintColor: 'rgba(255,255,255,0.5)' }} />
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -209,6 +219,11 @@ export default function WorkoutDetailsScreen() {
           )}
         </View>
       </View>
+      <RoutineDetailsModal
+        visible={!!detailsRoutine}
+        routine={detailsRoutine}
+        onClose={() => setDetailsRoutine(null)}
+      />
     </View>
   );
 }

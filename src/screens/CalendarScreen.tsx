@@ -8,6 +8,7 @@ import white_right_arrow from '../images/white-right-arrow.png';
 import flame from '../images/flame.png';
 import calendar2 from '../images/calendar-2.png';
 import clock2 from '../images/clock-2.png';
+import clock4 from '../images/clock-4.png';
 import dumbbell from '../images/orange-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate } from '../utils/workoutUtils';
@@ -125,7 +126,7 @@ export const CalendarScreen = () => {
 
           {/* Average Duration Card */}
           <View style={styles.statCard}>
-            <Image source={clock2} style={styles.clockIcon} />
+            <Image source={clock4} style={styles.clockIcon} />
             <Text style={styles.statLabel}>Avg Duration</Text>
             <Text style={styles.statValue}>{avrDurationThisWeekMins} Min</Text>
           </View>
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
   },
   clockIcon: {
     height: normalizeHeight(40),
-    aspectRatio: (304.0) / (351.0),
+    aspectRatio: (300.0 / 348.0),
     marginBottom: normalizeHeight(12),
     resizeMode: 'contain',
   },
