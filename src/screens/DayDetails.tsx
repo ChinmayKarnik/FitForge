@@ -62,7 +62,7 @@ export const DayDetails = () => {
                 <View style={styles.topSection}>
                     <View style={styles.bracketTopLeft} />
                     <View style={styles.bracketBottomRight} />
-                    <Svg height={normalize(72)} width="100%" style={{ marginBottom: normalizeHeight(4) }}>
+                    <Svg height={normalize(64)} width="100%" style={{ marginBottom: normalizeHeight(0) }}>
                         <SvgText
                             x="0"
                             y={normalize(52)}
@@ -181,18 +181,18 @@ const styles = StyleSheet.create({
         left: 0,
         width: normalizeWidth(68),
         height: normalizeHeight(68),
-        borderTopWidth: 2,
-        borderLeftWidth: 2,
+        borderTopWidth: normalize(2),
+        borderLeftWidth: normalize(2),
         borderColor: 'rgba(127,179,255,0.6)',
     },
     bracketBottomRight: {
         position: 'absolute',
         bottom: 0,
         right: 0,
-        width: normalizeWidth(68),
-        height: normalizeHeight(68),
-        borderBottomWidth: 2,
-        borderRightWidth: 2,
+        width: normalizeWidth(112),
+        height: normalizeHeight(72),
+        borderBottomWidth: normalize(2),
+        borderRightWidth: normalize(2),
         borderColor: 'rgba(127,179,255,0.6)',
     },
     dateLabel: {
