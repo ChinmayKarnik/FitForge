@@ -120,8 +120,9 @@ export default function WorkoutDetailsScreen() {
       <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(14) }}>
         {/* Workout Title */}
         <Text style={{
-          fontSize: normalize(28),
-          fontWeight: '500',
+          fontSize: normalize(29),
+          fontWeight: '300',
+          fontStyle: 'italic',
           color: PRIMARY,
           letterSpacing: -0.5,
           marginBottom: normalizeHeight(16),
