@@ -193,11 +193,12 @@ export default function WorkoutDetailsScreen() {
             onScroll={handleListScroll}
           />
           {!isListAtBottom && (
-            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(72) }} pointerEvents="none">
+            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(100) }} pointerEvents="none">
               <Svg height="100%" width="100%">
                 <Defs>
                   <LinearGradient id="detailsListFade" x1="0" y1="0" x2="0" y2="1">
                     <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                    <Stop offset="0.4" stopColor="#1c2238" stopOpacity="0.3" />
                     <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
                   </LinearGradient>
                 </Defs>
