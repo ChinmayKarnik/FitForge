@@ -118,16 +118,16 @@ const ExitAppModal = ({ visible, onClose }) => {
             />
 
             <Text style={{
-              color: '#F2F4F8',
-              fontSize: normalize(24),
-              fontWeight: '600',
+              color: '#ffffff',
+              fontSize: normalize(28),
+              fontWeight: '700',
               textAlign: 'center'
             }}>Hold on!</Text>
 
             <Text style={{
-              color: 'rgba(255,255,255,0.82)',
-              fontSize: normalize(16),
-              fontWeight: '500',
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: normalize(15),
+              fontWeight: '400',
               marginTop: normalizeHeight(12),
               textAlign: 'center',
             }}>{descText}</Text>
