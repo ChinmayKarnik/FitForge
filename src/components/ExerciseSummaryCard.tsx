@@ -9,18 +9,25 @@ import { databaseController } from '../data';
 import clock from '../images/clock-thick-white.png'
 import stopwatch from '../images/stopwatch-white.png'
 
-const NthSetUI = ({ setNumber}) => {
+const BLUE = '#7fb3ff';
+const BLUE_BORDER = '#5a7bb3';
+const NEUTRAL = 'rgba(255,255,255,0.78)';
+const NEUTRAL_BORDER = 'rgba(255,255,255,0.18)';
+
+const NthSetUI = ({ setNumber, avoidMonochrome = false }) => {
+  const accent = avoidMonochrome ? '#a1a9ea' : BLUE;
+  const border = avoidMonochrome ? 'rgba(161,169,234,0.35)' : BLUE_BORDER;
   return (
     <View style={{
       borderWidth: normalize(1),
-      borderColor: '#5a7bb3',
+      borderColor: border,
       borderRadius: normalize(4),
       backgroundColor:'#2A314E',
       paddingHorizontal: normalizeWidthF(13,2),
       paddingVertical: normalizeHeight(3),
     }}>
       <Text style={{
-        color: '#7fb3ff',
+        color: accent,
         fontSize: normalizeHeight(11),
         fontWeight: '600',
         letterSpacing: 0.3
@@ -31,11 +38,13 @@ const NthSetUI = ({ setNumber}) => {
   );
 };
 
-const NSetsUI = ({ numSets }) => {
+const NSetsUI = ({ numSets, avoidMonochrome = false }) => {
+  const accent = BLUE;
+  const border = BLUE_BORDER;
   return (
     <View style={{
       borderWidth: normalize(1),
-      borderColor: '#5a7bb3',
+      borderColor: border,
       borderRadius: normalize(4),
       backgroundColor: '#1f243b',
       paddingHorizontal: normalizeWidthF(13,2),
@@ -43,7 +52,7 @@ const NSetsUI = ({ numSets }) => {
       alignSelf: 'flex-start',
     }}>
       <Text style={{
-        color: '#7fb3ff',
+        color: accent,
         fontSize: normalizeHeight(10),
         fontWeight: '600',
         letterSpacing: 0.3
@@ -54,20 +63,21 @@ const NSetsUI = ({ numSets }) => {
   );
 }
 
-const SingularSetEntry = ({ reps, weight }) => {
+const SingularSetEntry = ({ reps, weight, avoidMonochrome = false }) => {
+  const weightAccent = avoidMonochrome ? NEUTRAL : BLUE;
   return (
     <View style={{
       flexDirection: 'row',
       alignItems: 'center'
     }}>
-      <NSetsUI numSets={1} />
+      <NSetsUI numSets={1} avoidMonochrome={avoidMonochrome} />
       <Divider
         marginLeft={normalizeWidth(12)}
-    marginRight={normalizeWidth(17)}
-    width={normalizeWidthF(3,2)}
+        marginRight={normalizeWidth(17)}
+        width={normalizeWidthF(3,2)}
       />
       <Text style={{
-        color: '#7fb3ff',
+        color: BLUE,
         fontSize: normalizeHeight(12),
         width:normalizeWidth(60),
         fontWeight: '600',
@@ -84,10 +94,9 @@ const SingularSetEntry = ({ reps, weight }) => {
             marginRight: normalizeWidth(12)
           }} />
           <Text style={{
-            color: '#7fb3ff',
+            color: weightAccent,
             fontSize: normalizeHeight(12),
             fontWeight: '600',
-
           }}>
             {weight} KG
           </Text>
@@ -113,14 +122,14 @@ const Divider = ({height = normalizeHeight(14),marginLeft,marginRight,
   );
 };
 
-const IndividualSetEntry = ({ setNumber, reps, weight }) => {
-
+const IndividualSetEntry = ({ setNumber, reps, weight, avoidMonochrome = false }) => {
+  const weightAccent = avoidMonochrome ? NEUTRAL : BLUE;
   return (
   <View style={{
     flexDirection:'row',
    alignItems:'center',
   }}>
-    <NthSetUI setNumber={setNumber}/>
+    <NthSetUI setNumber={setNumber} avoidMonochrome={avoidMonochrome} />
     <Divider
     marginLeft={normalizeWidth(12)}
     marginRight={normalizeWidth(17)}
@@ -132,7 +141,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
     }}>
       <View style={{ width: normalizeWidth(60) }}>
         <Text style={{
-          color: '#7fb3ff',
+          color: BLUE,
           fontSize: normalizeHeight(12),
           fontWeight: '600',
           letterSpacing: 0.3
@@ -150,7 +159,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
             marginRight: normalizeWidth(12)
           }} />
           <Text style={{
-            color: '#7fb3ff',
+            color: weightAccent,
             fontSize: normalizeHeight(12),
             fontWeight: '600',
             letterSpacing: 0.3
@@ -164,7 +173,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight }) => {
 };
 
 
-const ExerciseSummaryCard = ({ exercises }) => {
+const ExerciseSummaryCard = ({ exercises, avoidMonochrome = false }) => {
   const imageAspectRatio = (598.0 / 494.0);
   const imageHeight = normalize(20);
   const imageWidth = imageAspectRatio * imageHeight;
@@ -264,7 +273,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
               height: imageHeight,
               width: imageWidth,
               aspectRatio: imageAspectRatio,
-              tintColor:'#7FAFFF'
+              tintColor: avoidMonochrome ? '#a1a9ea' : '#7FAFFF'
             }}
               source={blue_dumbbell}
             />
@@ -291,6 +300,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
                 key={index}
                 reps = {obj.reps}
                 weight={obj.weight}
+                avoidMonochrome={avoidMonochrome}
                 />
               }
               const isLast = index === setsList.length - 1;
@@ -298,7 +308,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
               return (<View key={index}>
                 {
                   (!!isFirst) && (<>
-                    <NSetsUI numSets={setsList.length}/>
+                    <NSetsUI numSets={setsList.length} avoidMonochrome={avoidMonochrome}/>
                     <View style={{height:normalizeHeight(2)}}></View>
                     </>
                   )
@@ -315,6 +325,7 @@ const ExerciseSummaryCard = ({ exercises }) => {
                   setNumber={index + 1}
                   reps={obj.reps}
                   weight={obj.weight}
+                  avoidMonochrome={avoidMonochrome}
                 />
               </View>)
             })

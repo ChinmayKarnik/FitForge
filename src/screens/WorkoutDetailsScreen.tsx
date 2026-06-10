@@ -189,6 +189,7 @@ export default function WorkoutDetailsScreen() {
             showSectionHeader={false}
             horizontalPadding={false}
             reverseOrder={false}
+            avoidMonochrome={true}
             onScroll={handleListScroll}
           />
           {!isListAtBottom && (

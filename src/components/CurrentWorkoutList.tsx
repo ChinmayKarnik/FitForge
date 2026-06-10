@@ -16,6 +16,7 @@ const CurrentWorkoutList = (
         scrollEnabled = true,
         showBottomFade = false,
         reverseOrder = true,
+        avoidMonochrome = false,
         onScroll: onScrollProp = undefined,
     }: {
         workout?: any;
@@ -27,6 +28,7 @@ const CurrentWorkoutList = (
         scrollEnabled?: boolean;
         showBottomFade?: boolean;
         reverseOrder?: boolean;
+        avoidMonochrome?: boolean;
         onScroll?: (event: any) => void;
     }
 ) => {
@@ -56,7 +58,7 @@ const CurrentWorkoutList = (
     };
 
     const renderItem = ({item}) => {
-        return (<ExerciseSummaryCard exercises={item} />)
+        return (<ExerciseSummaryCard exercises={item} avoidMonochrome={avoidMonochrome} />)
     }
 
     if (isNoExercises) {
