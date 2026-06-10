@@ -188,6 +188,7 @@ export default function WorkoutDetailsScreen() {
             workout={workout}
             showSectionHeader={false}
             horizontalPadding={false}
+            reverseOrder={false}
             onScroll={handleListScroll}
           />
           {!isListAtBottom && (

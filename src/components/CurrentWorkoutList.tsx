@@ -15,6 +15,7 @@ const CurrentWorkoutList = (
         listMaxHeight = undefined,
         scrollEnabled = true,
         showBottomFade = false,
+        reverseOrder = true,
         onScroll: onScrollProp = undefined,
     }: {
         workout?: any;
@@ -25,12 +26,13 @@ const CurrentWorkoutList = (
         listMaxHeight?: number;
         scrollEnabled?: boolean;
         showBottomFade?: boolean;
+        reverseOrder?: boolean;
         onScroll?: (event: any) => void;
     }
 ) => {
     const exercises = workout?.exercises || [];
     // Group exercises by exerciseId
-    const separatedExercisesReverse = Object.values(
+    const grouped = Object.values(
         exercises.reduce((acc, exercise) => {
             const id = exercise.exerciseId;
             if (!id) return acc;
@@ -40,7 +42,8 @@ const CurrentWorkoutList = (
             acc[id].push(exercise);
             return acc;
         }, {})
-    )?.reverse();
+    );
+    const separatedExercisesReverse = reverseOrder ? [...grouped].reverse() : grouped;
      console.log("ckck exercieses sep exercieses",
         exercises,
         separatedExercisesReverse)
