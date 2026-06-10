@@ -3,8 +3,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
-import clock4 from '../images/clock-4.png';
-import slant_dumbbell from '../images/slant-dumbbell.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getWorkoutsForADay } from '../utils/workoutUtils';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
@@ -13,13 +11,14 @@ export const DayDetails = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const date = route.params?.date;
+    let dayName = '';
     let dateText = '';
     if (date) {
         const d = new Date(date);
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const dayName = days[d.getDay()];
+        dayName = days[d.getDay()];
         const monthName = d.toLocaleString('default', { month: 'long' });
-        dateText = `${dayName} - ${monthName} ${d.getDate()}, ${d.getFullYear()}`;
+        dateText = `${monthName} ${d.getDate()}, ${d.getFullYear()}`;
     }
     
 
@@ -58,31 +57,28 @@ export const DayDetails = () => {
             </View>
 
             <View style={styles.container}>
-                {/* Date Display */}
-                <Text style={styles.dateText}>{dateText}</Text>
-
-                {/* Stats Card */}
-                <View style={styles.statsCard}>
-                    <View style={styles.statItem}>
-                        <Image source={slant_dumbbell} style={styles.dumbbellIcon} />
-                        <View style={styles.statContent}>
-                            <Text style={styles.statValue}>{numberOfWorkouts}</Text>
-                            <Text style={styles.statLabel}>{numberOfWorkouts === 1 ? 'Workout' : 'Workouts'}</Text>
+                {/* TOP SECTION */}
+                <View style={styles.topSection}>
+                    <View style={styles.bracketTopLeft} />
+                    <View style={styles.bracketBottomRight} />
+                    <Text style={styles.dayNameText}>{dayName}</Text>
+                    <Text style={styles.dateLabel}>{dateText}</Text>
+                    <View style={styles.statsRow}>
+                        <View style={styles.statCol}>
+                            <Text style={styles.statNum}>{numberOfWorkouts}</Text>
+                            <Text style={styles.statLbl}>WORKOUTS</Text>
                         </View>
-                    </View>
-
-
-                    <View style={styles.statItem}>
-                        <Image source={clock4} style={styles.clockIcon} />
-                        <View style={styles.statContent}>
-                            <Text style={styles.statValue}>{totalDurationMins} Min</Text>
-                            <Text style={styles.statLabel}>Total</Text>
+                        <View style={styles.statVertDivider} />
+                        <View style={styles.statCol}>
+                            <Text style={styles.statNum}>{totalDurationMins}</Text>
+                            <Text style={styles.statLbl}>MIN</Text>
                         </View>
                     </View>
                 </View>
 
                 {/* Workouts Title */}
                 <Text style={styles.workoutsTitle}>Workouts</Text>
+
 
                 {/* Workouts List */}
                 <FlatList
@@ -101,7 +97,7 @@ export const DayDetails = () => {
 const styles = StyleSheet.create({
     bg: {
         flex: 1,
-        backgroundColor: 'rgba(36, 42, 65)',
+        backgroundColor: '#1c2238',
     },
     header: {
         width: '100%',
@@ -135,74 +131,78 @@ const styles = StyleSheet.create({
         paddingHorizontal: normalizeWidth(16),
         paddingTop: normalizeHeight(20),
     },
-    dateText: {
-        fontSize: normalize(24),
-        fontWeight: '700',
+    topSection: {
+        position: 'relative',
+        paddingTop: normalizeHeight(26),
+        paddingBottom: normalizeHeight(24),
+        paddingLeft: normalizeWidth(18),
+    },
+    bracketTopLeft: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: normalizeWidth(68),
+        height: normalizeHeight(68),
+        borderTopWidth: 2,
+        borderLeftWidth: 2,
+        borderColor: 'rgba(127,179,255,0.6)',
+    },
+    bracketBottomRight: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: normalizeWidth(68),
+        height: normalizeHeight(68),
+        borderBottomWidth: 2,
+        borderRightWidth: 2,
+        borderColor: 'rgba(127,179,255,0.6)',
+    },
+    dayNameText: {
+        fontSize: normalize(38),
+        fontWeight: '800',
         color: '#fefefe',
-        textAlign: 'center',
-        marginBottom: normalizeHeight(24),
-    },
-    statsCard: {
-        backgroundColor: '#2b2c41',
-        borderRadius: normalize(12),
-        borderWidth: normalize(2),
-        borderColor: '#556179',
-        paddingVertical: normalizeHeight(20),
-        paddingHorizontal: normalizeWidth(16),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    statItem: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: normalizeWidth(12),
-    },
-    iconPlaceholder: {
-        width: normalizeWidth(40),
-        height: normalizeWidth(40),
-        backgroundColor: '#353c58',
-        borderRadius: normalize(8),
-    },
-    statContent: {
-        flex: 1,
-    },
-    statValue: {
-        fontSize: normalize(18),
-        fontWeight: '700',
-        color: '#d1514c',
+        letterSpacing: -0.5,
+        textTransform: 'uppercase',
         marginBottom: normalizeHeight(4),
     },
-    statLabel: {
-        fontSize: normalize(15),
-        color: '#d0d0db',
+    dateLabel: {
+        fontSize: normalize(18),
         fontWeight: '500',
+        color: 'rgba(255,255,255,0.65)',
+        marginBottom: normalizeHeight(20),
     },
-    statDivider: {
-        width: normalize(1),
-        height: normalizeHeight(50),
-        backgroundColor: '#353c58',
-        marginHorizontal: normalizeWidth(16),
+    statsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    clockIcon: {
-        height: normalizeHeight(45),
-        aspectRatio: (300.0 / 348.0),
-        width: normalizeHeight(45) * (300.0 / 348.0),
-        resizeMode: 'contain',
+    statCol: {
+        paddingRight: normalizeWidth(20),
     },
-    dumbbellIcon: {
-        height: normalizeHeight(45),
-        aspectRatio: (660.0 / 592.0),
-        width: normalizeHeight(45) * (660.0 / 592.0),
-        resizeMode: 'contain',
+    statVertDivider: {
+        width: 1.5,
+        height: normalizeHeight(38),
+        backgroundColor: 'rgba(255,255,255,0.25)',
+        marginRight: normalizeWidth(20),
+    },
+    statNum: {
+        fontSize: normalize(27),
+        fontWeight: '700',
+        color: '#7fb3ff',
+        lineHeight: normalize(30),
+    },
+    statLbl: {
+        fontSize: normalize(10),
+        fontWeight: '500',
+        color: '#808cbd',
+        letterSpacing: 0.8,
+        marginTop: normalizeHeight(2),
     },
     workoutsTitle: {
-        fontSize: normalize(20),
-        fontWeight: '700',
-        color: '#fefefe',
-        textAlign: 'center',
-        marginTop: normalizeHeight(24),
-        marginBottom: normalizeHeight(16),
+        fontSize: normalize(14),
+        fontWeight: '600',
+        color: 'rgba(255,255,255,0.8)',
+        letterSpacing: 0.4,
+        marginTop: normalizeHeight(20),
+        marginBottom: normalizeHeight(10),
     },
 });
