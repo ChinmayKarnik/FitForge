@@ -79,12 +79,36 @@ export const DayDetails = () => {
                     <Text style={styles.dateLabel}>{dateText}</Text>
                     <View style={styles.statsRow}>
                         <View style={styles.statCol}>
-                            <Text style={styles.statNum}>{numberOfWorkouts}</Text>
+                            <Svg width={normalizeWidth(60)} height={normalize(36)}>
+                                <SvgText
+                                    x="0"
+                                    y={normalize(30)}
+                                    fontFamily="BarlowCondensed-Black"
+                                    fontSize={normalize(28)}
+                                    fill="#7fb3ff"
+                                    stroke="#7fb3ff"
+                                    strokeWidth="1.2"
+                                >
+                                    {String(numberOfWorkouts)}
+                                </SvgText>
+                            </Svg>
                             <Text style={styles.statLbl}>WORKOUTS</Text>
                         </View>
                         <View style={styles.statVertDivider} />
                         <View style={styles.statCol}>
-                            <Text style={styles.statNum}>{totalDurationMins}</Text>
+                            <Svg width={normalizeWidth(80)} height={normalize(36)}>
+                                <SvgText
+                                    x="0"
+                                    y={normalize(30)}
+                                    fontFamily="BarlowCondensed-Black"
+                                    fontSize={normalize(28)}
+                                    fill="#7fb3ff"
+                                    stroke="#7fb3ff"
+                                    strokeWidth="1.2"
+                                >
+                                    {String(totalDurationMins)}
+                                </SvgText>
+                            </Svg>
                             <Text style={styles.statLbl}>MIN</Text>
                         </View>
                     </View>
@@ -149,7 +173,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         paddingTop: normalizeHeight(26),
         paddingBottom: normalizeHeight(24),
-        paddingLeft: normalizeWidth(18),
+        paddingLeft: normalizeWidth(24),
     },
     bracketTopLeft: {
         position: 'absolute',
@@ -172,9 +196,9 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(127,179,255,0.6)',
     },
     dateLabel: {
-        fontSize: normalize(18),
+        fontSize: normalize(20),
         fontWeight: '500',
-        color: 'rgba(255,255,255,0.65)',
+        color: '#929bc4',
         marginBottom: normalizeHeight(20),
     },
     statsRow: {
@@ -190,16 +214,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.25)',
         marginRight: normalizeWidth(20),
     },
-    statNum: {
-        fontSize: normalize(27),
-        fontWeight: '700',
-        color: '#7fb3ff',
-        lineHeight: normalize(30),
-    },
+
     statLbl: {
         fontSize: normalize(10),
         fontWeight: '500',
-        color: '#808cbd',
+        color: '#a0a8d4',
         letterSpacing: 0.8,
         marginTop: normalizeHeight(2),
     },
