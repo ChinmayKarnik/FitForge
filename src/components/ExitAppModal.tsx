@@ -6,6 +6,7 @@ import RNExitApp from 'react-native-exit-app';
 import heartOnHouse from '../images/heart-on-house.png';
 import exitIconWhite from '../images/exit-icon-white.png';
 import palmWithTick from '../images/palm-with-tick.png';
+import palm from '../images/palm.png';
 
 const ExitButton = () => {
   return (
@@ -80,8 +81,8 @@ const ExitAppModal = ({ visible, onClose }) => {
 
   const descText = "You're about to leave FitForge.\nSee you later?"
   const mainImageWidth = normalize(70);
-  const mainImageAspectRatio =  (627.0 / 686.0);
-  const mainImageHeight = mainImageWidth/ mainImageAspectRatio
+  const mainImageAspectRatio = (455.0 / 607.0);
+  const mainImageHeight = mainImageWidth / mainImageAspectRatio;
   return (
     <Modal
       visible={visible}
@@ -107,7 +108,7 @@ const ExitAppModal = ({ visible, onClose }) => {
             borderColor: '#4d5373'
           }}>
             <Image
-              source={palmWithTick}
+              source={palm}
               style={{
                 width: mainImageWidth,
                 aspectRatio: mainImageAspectRatio,
