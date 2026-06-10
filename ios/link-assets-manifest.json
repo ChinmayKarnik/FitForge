@@ -2,8 +2,16 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/BarlowCondensed-Black.ttf",
+      "sha1": "1ac8d9f6bfd235b7c226abeb7d9cc851ac8cd2d3"
+    },
+    {
+      "path": "assets/fonts/RobotoMono-Regular.ttf",
+      "sha1": "ec2f606ac1f9c17b25710fe87ad866ada0f2a4a0"
+    },
+    {
       "path": "assets/fonts/SpaceMono-Regular.ttf",
-      "sha1": "c8976cdc957f3ba861affa126bc3249f9d95c0b4"
+      "sha1": "a1b4a68ecdd83db4cc9e3adc67fe05890df33a23"
     }
   ]
 }

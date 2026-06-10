@@ -51,7 +51,12 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>RobotoMono-Regular.ttf</string>
 		<string>SpaceMono-Regular.ttf</string>
+		<string>BarlowCondensed-Black.ttf</string>
+		<string>Anton-Regular.ttf</string>
+		<string>BebasNeue-Regular.ttf</string>
+		<string>BigShouldersDisplay-Black.ttf</string>
 	</array>
 </dict>
 </plist>

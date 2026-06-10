@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Svg, { Text as SvgText } from 'react-native-svg';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getWorkoutsForADay } from '../utils/workoutUtils';
@@ -61,7 +62,20 @@ export const DayDetails = () => {
                 <View style={styles.topSection}>
                     <View style={styles.bracketTopLeft} />
                     <View style={styles.bracketBottomRight} />
-                    <Text style={styles.dayNameText}>{dayName}</Text>
+                    <Svg height={normalize(72)} width="100%" style={{ marginBottom: normalizeHeight(4) }}>
+                        <SvgText
+                            x="0"
+                            y={normalize(52)}
+                            fontFamily="BarlowCondensed-Black"
+                            fontSize={normalize(52)}
+                            fill="#fefefe"
+                            stroke="#fefefe"
+                            strokeWidth="1"
+                            letterSpacing="-0.5"
+                        >
+                            {dayName}
+                        </SvgText>
+                    </Svg>
                     <Text style={styles.dateLabel}>{dateText}</Text>
                     <View style={styles.statsRow}>
                         <View style={styles.statCol}>
@@ -156,14 +170,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderRightWidth: 2,
         borderColor: 'rgba(127,179,255,0.6)',
-    },
-    dayNameText: {
-        fontSize: normalize(38),
-        fontWeight: '800',
-        color: '#fefefe',
-        letterSpacing: -0.5,
-        textTransform: 'uppercase',
-        marginBottom: normalizeHeight(4),
     },
     dateLabel: {
         fontSize: normalize(18),
