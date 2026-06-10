@@ -11,8 +11,7 @@ import stopwatch from '../images/stopwatch-white.png'
 
 const BLUE = '#7fb3ff';
 const BLUE_BORDER = '#5a7bb3';
-const NEUTRAL = 'rgba(255,255,255,0.78)';
-const NEUTRAL_BORDER = 'rgba(255,255,255,0.18)';
+
 
 const NthSetUI = ({ setNumber, avoidMonochrome = false }) => {
   const accent = avoidMonochrome ? '#a1a9ea' : BLUE;
@@ -64,7 +63,7 @@ const NSetsUI = ({ numSets, avoidMonochrome = false }) => {
 }
 
 const SingularSetEntry = ({ reps, weight, avoidMonochrome = false }) => {
-  const weightAccent = avoidMonochrome ? NEUTRAL : BLUE;
+  const weightAccent = BLUE;
   return (
     <View style={{
       flexDirection: 'row',
@@ -123,7 +122,7 @@ const Divider = ({height = normalizeHeight(14),marginLeft,marginRight,
 };
 
 const IndividualSetEntry = ({ setNumber, reps, weight, avoidMonochrome = false }) => {
-  const weightAccent = avoidMonochrome ? NEUTRAL : BLUE;
+  const weightAccent = BLUE;
   return (
   <View style={{
     flexDirection:'row',
