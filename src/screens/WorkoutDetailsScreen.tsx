@@ -117,7 +117,7 @@ export default function WorkoutDetailsScreen() {
       </View>
 
       {/* Fixed top content */}
-      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop:  normalizeHeight(10) }}>
+      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(14) }}>
         {/* Workout Title */}
         <Text style={{
           fontSize: normalize(28),
@@ -178,7 +178,7 @@ export default function WorkoutDetailsScreen() {
           fontSize: normalize(14),
           fontWeight: '600',
           letterSpacing: 0.4,
-          marginTop: normalizeHeight(6),
+          marginTop: normalizeHeight(14),
           marginBottom: normalizeHeight(2),
         }}>
           Exercises
