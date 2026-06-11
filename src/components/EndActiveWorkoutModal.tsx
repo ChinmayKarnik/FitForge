@@ -107,7 +107,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                         </View>
 
                         {/* Workout Name */}
-                        <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>WORKOUT NAME</Text>
+                        <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>WORKOUT NAME</Text>
                         <View style={{
                             borderWidth: normalize(1), borderColor: '#33344f',
                             backgroundColor: '#1d2039',
@@ -116,7 +116,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                             marginBottom: normalizeHeight(14),
                         }}>
                             <TextInput
-                                style={{ color: '#d2d0db', fontSize: normalize(15), fontWeight: '400', paddingVertical: normalizeHeight(8), width: '100%' }}
+                                style={{ color: '#ffffff', fontSize: normalize(15), fontWeight: '400', paddingVertical: normalizeHeight(8), width: '100%' }}
                                 value={workoutName}
                                 onChangeText={(text) => setWorkoutName(text)}
                                 placeholder={workoutName}
@@ -125,7 +125,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                         </View>
 
                         {/* Exercise Breakdown */}
-                        <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>EXERCISE BREAKDOWN</Text>
+                        <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>EXERCISE BREAKDOWN</Text>
                         <View style={{
                             borderWidth: normalize(1), borderColor: '#33344f',
                             backgroundColor: '#1d2039',
