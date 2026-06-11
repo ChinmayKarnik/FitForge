@@ -147,7 +147,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                     >
                                         <View style={{ width: normalize(5), height: normalize(5), borderRadius: normalize(4), backgroundColor: '#7fb3ff', marginRight: normalizeWidth(10) }} />
                                         <Text style={{ color: 'rgba(255,255,255,0.9)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular', flex: 1 }}>{exercise.name}</Text>
-                                        <Text style={{ color: '#8f99c5', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{exercise.sets} {exercise.sets > 1 ? 'sets' : 'set'}</Text>
+                                        <Text style={{ color: '#7fb3ff', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{exercise.sets} {exercise.sets > 1 ? 'sets' : 'set'}</Text>
                                     </View>
                                 );
                             })}
