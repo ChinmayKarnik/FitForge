@@ -25,7 +25,7 @@ const AreYouSureModal = ({
       onRequestClose={onClose}
     >
       <TouchableOpacity
-        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.72)' }}
         activeOpacity={1}
         onPress={onClose}
       >
@@ -66,16 +66,17 @@ const AreYouSureModal = ({
 
             {/* Title */}
             <Text style={{
-              color: '#F2F4F8',
-              fontSize: normalize(18),
+              color: '#ffffff',
+              fontSize: normalize(22),
               fontWeight: '700',
               textAlign: 'center',
+              lineHeight: normalize(28),
               marginBottom: normalizeHeight(8),
             }}>{title}</Text>
 
             {/* Description */}
             <Text style={{
-              color: '#acadba',
+              color: 'rgba(255,255,255,0.6)',
               fontSize: normalize(14),
               fontWeight: '400',
               textAlign: 'center',
