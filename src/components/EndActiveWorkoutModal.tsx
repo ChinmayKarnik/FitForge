@@ -107,7 +107,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                         </View>
 
                         {/* Workout Name */}
-                        <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>WORKOUT NAME</Text>
+                        <Text style={{ color: '#8ea0cd', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>WORKOUT NAME</Text>
                         <View style={{
                             borderWidth: normalize(1), borderColor: '#33344f',
                             backgroundColor: '#1d2039',
@@ -125,7 +125,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                         </View>
 
                         {/* Exercise Breakdown */}
-                        <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>EXERCISE BREAKDOWN</Text>
+                        <Text style={{ color: '#8ea0cd', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>EXERCISE BREAKDOWN</Text>
                         <View style={{
                             borderWidth: normalize(1), borderColor: '#33344f',
                             backgroundColor: '#1d2039',
@@ -145,7 +145,8 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                             paddingVertical: normalizeHeight(8),
                                         }, !isLast && { borderBottomWidth: normalize(1), borderColor: '#31324f' }]}
                                     >
-                                        <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular', flex: 1 }}>{exercise.name}</Text>
+                                        <View style={{ width: normalize(5), height: normalize(5), borderRadius: normalize(4), backgroundColor: '#7fb3ff', marginRight: normalizeWidth(10) }} />
+                                        <Text style={{ color: 'rgba(255,255,255,0.9)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular', flex: 1 }}>{exercise.name}</Text>
                                         <Text style={{ color: '#8f99c5', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{exercise.sets} {exercise.sets > 1 ? 'sets' : 'set'}</Text>
                                     </View>
                                 );
