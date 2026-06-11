@@ -172,10 +172,10 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
 
                         {/* Workout Name */}
                         <Text style={{
-                            color: '#8ea0cd',
+                            color: '#9aadd0',
                             fontSize: normalize(10),
-                            fontWeight: '500',
-                            letterSpacing: 1.2,
+                            fontWeight: '600',
+                            letterSpacing: 1.5,
                             marginBottom: normalizeHeight(6),
                         }}>WORKOUT NAME</Text>
                         <View style={{
@@ -230,11 +230,11 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
 
                         {/* Exercise Breakdown */}
                         <Text style={{
-                            color: '#8ea0cd',
+                            color: '#9aadd0',
                             fontSize: normalize(10),
-                            fontWeight: '500',
-                            letterSpacing: 1.2,
-                            marginBottom: normalizeHeight(6),
+                            fontWeight: '600',
+                            letterSpacing: 1.5,
+                            marginBottom: normalizeHeight(8),
                         }}>EXERCISE BREAKDOWN</Text>
                         <View style={{
                             borderWidth: normalize(1),
