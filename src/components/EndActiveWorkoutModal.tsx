@@ -13,14 +13,12 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
     const workoutDefaultName = `${dayOfTheWeek} Workout`
     const [workoutName, setWorkoutName] = useState(workoutDefaultName);
 
-    
-    console.log('ckck workout ',workout)
+    console.log('ckck workout ', workout)
     const exercisesList = getExercisesListFromWorkout(workout)
-    console.log('ckck ex list  ',exercisesList)
+    console.log('ckck ex list  ', exercisesList)
     const isNoExercisesLogged = !exercisesList.length
-    // Calculate duration in ms
+
     const durationMs = workout?.duration;
-    // Format duration as HH : MM : SS
     const hours = Math.floor(durationMs / (1000 * 60 * 60));
     const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((durationMs % (1000 * 60)) / 1000);
@@ -32,14 +30,14 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
     const totalSets = exercisesList.reduce((sum, ex) => sum + ex.sets, 0);
 
     const onSaveWorkout = () => {
-        databaseController.addWorkout({...workout, name: workoutName});
+        databaseController.addWorkout({ ...workout, name: workoutName });
         onClose();
         onEndWorkout?.();
         if (navigation) {
             navigation.navigate('Activity');
         }
     }
-   
+
     if (isNoExercisesLogged) {
         return (
             <AreYouSureModal
@@ -70,7 +68,10 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                 alignItems: 'center',
                 backgroundColor: 'rgba(0,0,0,0.72)',
             }}>
-                <View style={{ width: '100%', paddingHorizontal: normalizeWidth(16) }}>
+                <View style={{
+                    width: '100%',
+                    paddingHorizontal: normalizeWidth(16),
+                }}>
                     <View style={{
                         backgroundColor: '#262745',
                         borderRadius: normalize(12),
@@ -82,41 +83,116 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                     }}>
 
                         {/* Header label */}
-                        <View style={{ alignItems: 'center', marginBottom: normalizeHeight(28) }}>
-                            <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.5 }}>WORKOUT COMPLETE</Text>
-                            <View style={{ width: normalizeWidth(28), height: normalize(2), backgroundColor: '#7fb3ff', marginTop: normalizeHeight(6) }} />
+                        <View style={{
+                            alignItems: 'center',
+                            marginBottom: normalizeHeight(12),
+                        }}>
+                            <Text style={{
+                                color:
+                                 '#b7c4ef',
+                                fontSize: normalize(11),
+                                fontWeight: '400',
+                                letterSpacing: 1.5,
+                            }}>WORKOUT COMPLETE</Text>
+                            <View style={{
+                                width: normalizeWidth(28),
+                                height: normalize(1),
+                                backgroundColor: '#7fb3ff',
+                                marginTop: normalizeHeight(12),
+                            }} />
                         </View>
 
                         {/* Hero duration */}
-                        <View style={{ alignItems: 'center', marginBottom: normalizeHeight(24) }}>
-                            <Text style={{ color: '#ffffff', fontSize: normalize(46), fontWeight: '700', letterSpacing: -1 }}>{heroDuration}</Text>
-                            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(11), fontWeight: '500', letterSpacing: 1.2, marginTop: normalizeHeight(2) }}>TOTAL DURATION</Text>
+                        <View style={{
+                            alignItems: 'center',
+                            marginBottom: normalizeHeight(24),
+                        }}>
+                            <Text style={{
+                                color: '#ffffff',
+                                fontSize: normalize(56),
+                                fontWeight: '700',
+                                letterSpacing: -1,
+                            }}>{heroDuration}</Text>
+                            <Text style={{
+                                color: '#98a5da' || 'rgba(255,255,255,0.7)',
+                                fontSize: normalize(10),
+                                fontWeight: '400',
+                                letterSpacing: 1,
+                                marginTop: normalizeHeight(0),
+                            }}>TOTAL DURATION</Text>
                         </View>
 
                         {/* Stats row */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: normalizeHeight(24) }}>
-                            <Text>
-                                <Text style={{ color: '#7fb3ff', fontSize: normalize(26), fontWeight: '700' }}>{exercisesList.length}</Text>
-                                <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(13) }}> Exercises</Text>
-                            </Text>
-                            <View style={{ width: 1, height: normalizeHeight(28), backgroundColor: 'rgba(255,255,255,0.2)', marginHorizontal: normalizeWidth(18) }} />
-                            <Text>
-                                <Text style={{ color: '#7fb3ff', fontSize: normalize(26), fontWeight: '700' }}>{totalSets}</Text>
-                                <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(13) }}> Sets</Text>
-                            </Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: normalizeHeight(24),
+                        }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    color: '#7fb3ff',
+                                    fontSize: normalize(26),
+                                    fontWeight: '700',
+                                }}>{exercisesList.length}</Text>
+                                <Text style={{
+                                    color: 'rgba(255,255,255,0.75)',
+                                    fontSize: normalize(11),
+                                    marginLeft: normalizeWidth(10),
+                                    marginTop:normalizeHeight(2)
+                                }}>Exercises</Text>
+                            </View>
+                            <View style={{
+                                width: 1,
+                                height: normalizeHeight(28),
+                                backgroundColor: 'rgba(255,255,255,0.2)',
+                                marginHorizontal: normalizeWidth(24),
+                            }} />
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    color: '#7fb3ff',
+                                    fontSize: normalize(26),
+                                    fontWeight: '700',
+                                }}>{totalSets}</Text>
+                                <Text style={{
+                                    color: 'rgba(255,255,255,0.75)',
+                                    fontSize: normalize(11),
+                                    marginLeft: normalizeWidth(10),
+                                    marginTop:normalizeHeight(2)
+                                }}>Sets</Text>
+                            </View>
                         </View>
 
                         {/* Workout Name */}
-                        <Text style={{ color: '#8ea0cd', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>WORKOUT NAME</Text>
+                        <Text style={{
+                            color: '#8ea0cd',
+                            fontSize: normalize(10),
+                            fontWeight: '500',
+                            letterSpacing: 1.2,
+                            marginBottom: normalizeHeight(6),
+                        }}>WORKOUT NAME</Text>
                         <View style={{
-                            borderWidth: normalize(1), borderColor: '#33344f',
+                            borderWidth: normalize(1),
+                            borderColor: '#33344f',
                             backgroundColor: '#1d2039',
                             borderRadius: normalize(6),
                             paddingLeft: normalizeWidth(12),
                             marginBottom: normalizeHeight(14),
                         }}>
                             <TextInput
-                                style={{ color: '#ffffff', fontSize: normalize(15), fontWeight: '400', paddingVertical: normalizeHeight(8), width: '100%' }}
+                                style={{
+                                    color: '#ffffff',
+                                    fontSize: normalize(15),
+                                    fontWeight: '400',
+                                    paddingVertical: normalizeHeight(8),
+                                    width: '100%',
+                                }}
                                 value={workoutName}
                                 onChangeText={(text) => setWorkoutName(text)}
                                 placeholder={workoutName}
@@ -125,9 +201,16 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                         </View>
 
                         {/* Exercise Breakdown */}
-                        <Text style={{ color: '#8ea0cd', fontSize: normalize(11), fontWeight: '600', letterSpacing: 1.2, marginBottom: normalizeHeight(6) }}>EXERCISE BREAKDOWN</Text>
+                        <Text style={{
+                            color: '#8ea0cd',
+                            fontSize: normalize(10),
+                            fontWeight: '500',
+                            letterSpacing: 1.2,
+                            marginBottom: normalizeHeight(6),
+                        }}>EXERCISE BREAKDOWN</Text>
                         <View style={{
-                            borderWidth: normalize(1), borderColor: '#33344f',
+                            borderWidth: normalize(1),
+                            borderColor: '#33344f',
                             backgroundColor: '#1d2039',
                             borderRadius: normalize(6),
                             paddingHorizontal: normalizeWidth(12),
@@ -143,11 +226,29 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             paddingVertical: normalizeHeight(8),
-                                        }, !isLast && { borderBottomWidth: normalize(1), borderColor: '#31324f' }]}
+                                        }, !isLast && {
+                                            borderBottomWidth: normalize(1),
+                                            borderColor: '#31324f',
+                                        }]}
                                     >
-                                        <View style={{ width: normalize(5), height: normalize(5), borderRadius: normalize(4), backgroundColor: '#7fb3ff', marginRight: normalizeWidth(10) }} />
-                                        <Text style={{ color: 'rgba(255,255,255,0.9)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular', flex: 1 }}>{exercise.name}</Text>
-                                        <Text style={{ color: '#7fb3ff', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{exercise.sets} {exercise.sets > 1 ? 'sets' : 'set'}</Text>
+                                        <View style={{
+                                            width: normalize(5),
+                                            height: normalize(5),
+                                            borderRadius: normalize(4),
+                                            backgroundColor: '#7fb3ff',
+                                            marginRight: normalizeWidth(10),
+                                        }} />
+                                        <Text style={{
+                                            color: 'rgba(255,255,255,0.9)',
+                                            fontSize: normalize(12),
+                                            fontFamily: 'RobotoMono-Regular',
+                                            flex: 1,
+                                        }}>{exercise.name}</Text>
+                                        <Text style={{
+                                            color: '#7fb3ff',
+                                            fontSize: normalize(12),
+                                            fontFamily: 'RobotoMono-Regular',
+                                        }}>{exercise.sets} {exercise.sets > 1 ? 'sets' : 'set'}</Text>
                                     </View>
                                 );
                             })}
@@ -169,7 +270,12 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                 onPress={onClose}
                                 activeOpacity={0.8}
                             >
-                                <Text style={{ color: '#F2F4F8', fontWeight: '500', fontSize: normalize(15), letterSpacing: 0.5 }}>Discard</Text>
+                                <Text style={{
+                                    color: '#F2F4F8',
+                                    fontWeight: '500',
+                                    fontSize: normalize(15),
+                                    letterSpacing: 0.5,
+                                }}>Discard</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{
@@ -185,7 +291,12 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                 onPress={onSaveWorkout}
                                 activeOpacity={0.8}
                             >
-                                <Text style={{ color: '#e4e5ee', fontWeight: '500', fontSize: normalize(15), letterSpacing: 0.5 }}>Save Workout</Text>
+                                <Text style={{
+                                    color: '#e4e5ee',
+                                    fontWeight: '500',
+                                    fontSize: normalize(15),
+                                    letterSpacing: 0.5,
+                                }}>Save Workout</Text>
                             </TouchableOpacity>
                         </View>
 
