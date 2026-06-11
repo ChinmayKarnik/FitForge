@@ -58,6 +58,7 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
       borderColor: '#313859',
       padding: normalize(14),
       marginLeft: isLeft ? 0 : normalizeWidth(8),
+      justifyContent: 'flex-start',
     }}>
       <IconContainer>
         <Image
@@ -164,18 +165,16 @@ export const StatisticsScreen = () => {
       </View>
 
       {!isEmptyStats ? (
-        <ScrollView
-          contentContainerStyle={{ paddingHorizontal: normalizeWidth(16), paddingBottom: normalizeHeight(32) }}
-          showsVerticalScrollIndicator={false}
-        >
+        <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(4), paddingBottom: normalizeHeight(10) }}>
           {/* Featured top card: Total Workouts + Max Streak */}
           <View style={{
+            height: normalizeHeight(185),
             flexDirection: 'row',
             backgroundColor: '#252d47',
             borderRadius: normalize(12),
             borderWidth: normalize(1),
             borderColor: '#313859',
-            marginBottom: normalizeHeight(8),
+            marginBottom: normalizeHeight(12),
             padding: normalize(16),
           }}>
             {/* Total Workouts */}
@@ -231,7 +230,7 @@ export const StatisticsScreen = () => {
           </View>
 
           {/* Row 1: Favourite Exercise + Busiest Day */}
-          <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(8) }}>
+          <View style={{ height: normalizeHeight(155), flexDirection: 'row', marginBottom: normalizeHeight(12) }}>
             <SmallCard
               icon={dumbbell_with_heart}
               iconW={644} iconH={508}
@@ -253,7 +252,7 @@ export const StatisticsScreen = () => {
           </View>
 
           {/* Row 2: Avg Sessions + Avg Sets */}
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ height: normalizeHeight(155), flexDirection: 'row' }}>
             <SmallCard
               icon={calendar_marked}
               iconW={648} iconH={652}
@@ -273,7 +272,7 @@ export const StatisticsScreen = () => {
               isLeft={false}
             />
           </View>
-        </ScrollView>
+        </View>
       ) : (
         <View style={{
           flex: 1,
