@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -9,10 +10,17 @@ import { TimeRangeSelector } from '../components/TimeRangeSelector';
 import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
 import sad_dumbbell from '../images/sweat-sad-dumbbell.png';
 import flame from '../images/flame.png';
+import flame_3 from '../images/flame-3.png';
 import calendar_marked from '../images/calendar-marked.png';
+import calendar from '../images/calendar.png';
 import dumbbell from '../images/dumbbell-horizontal.png';
+import dumbbell_2 from '../images/dumbbell-2.png';
 import plates_stack from '../images/plates-stack.png';
+import plates_stack_2 from '../images/plates-stack-2.png';
+import trend_arrow from '../images/trend-arrow.png';
+import trend_arrow_2 from '../images/trend-arrow-2.png';
 import dumbbell_with_heart from '../images/dumbbell-with-heart.png';
+import medal_white from '../images/medal-white.png';
 import bar_graph from '../images/bar-graph.png';
 
 const formatDate = (timestamp: number, includeYear: boolean) => {
@@ -46,16 +54,16 @@ const IconContainer = ({ children }) => (
 );
 
 // iconW and iconH are the pixel dimensions of the source image
-const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft }) => {
-  const renderedW = normalize(18);
+const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize }) => {
+  const renderedW = iconSize ?? normalize(18);
   const renderedH = renderedW * (iconH / iconW);
   return (
     <View style={{
       flex: 1,
-      backgroundColor: '#252d47',
+      backgroundColor: '#272d46',
       borderRadius: normalize(12),
       borderWidth: normalize(1),
-      borderColor: '#313859',
+      borderColor: '#3d4563',
       padding: normalize(14),
       marginLeft: isLeft ? 0 : normalizeWidth(8),
       justifyContent: 'flex-start',
@@ -73,8 +81,8 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
         marginBottom: normalizeHeight(2),
       }}>{value}</Text>
       <Text style={{
-        color: '#6a7499',
-        fontSize: normalize(11),
+        color: '#9aadd0',
+        fontSize: normalize(13),
         fontWeight: '500',
       }}>{label}</Text>
     </View>
@@ -97,15 +105,15 @@ export const StatisticsScreen = () => {
     ? String(statsData.averageWeeklySessions)
     : '-';
 
-  // dumbbell in icon container: source is 895x392px, rendered width normalize(20)
+  // dumbbell-2 in icon container: source is 410x241px, rendered width normalize(20)
   const dumbbellW = normalize(20);
-  const dumbbellH = dumbbellW * (392 / 895);
-  // flame in icon container: source is 506x656px, rendered width normalize(16)
+  const dumbbellH = dumbbellW * (241 / 410);
+  // flame-3 in icon container: source is 462x620px, rendered width normalize(16)
   const flameW = normalize(16);
-  const flameH = flameW * (656 / 506);
-  // calendar in date range row: source is 648x652px, rendered width normalize(14)
+  const flameH = flameW * (620 / 462);
+  // calendar in date range row: source is 410x420px, rendered width normalize(14)
   const calW = normalize(14);
-  const calH = calW * (652 / 648);
+  const calH = calW * (420 / 410);
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
@@ -153,11 +161,13 @@ export const StatisticsScreen = () => {
         marginTop: normalizeHeight(8),
       }}>
         <Image
-          source={calendar_marked}
-          style={{ width: calW, height: calH, tintColor: '#6a7499', marginRight: normalizeWidth(6) }}
+          source={calendar}
+          style={{ width: calW, height: calH, 
+            tintColor: 'rgba(255,255,255,0.8)',
+             marginRight: normalizeWidth(6) }}
         />
         <Text style={{
-          color: '#9aadd0',
+          color: 'rgba(255,255,255,1)',
           fontSize: normalize(14),
           fontWeight: '600',
           letterSpacing: 0.2,
@@ -170,21 +180,21 @@ export const StatisticsScreen = () => {
           <View style={{
             height: normalizeHeight(185),
             flexDirection: 'row',
-            backgroundColor: '#252d47',
+            backgroundColor: '#272d46',
             borderRadius: normalize(12),
             borderWidth: normalize(1),
-            borderColor: '#313859',
+            borderColor: '#3d4563',
             marginBottom: normalizeHeight(12),
             padding: normalize(16),
           }}>
             {/* Total Workouts */}
             <View style={{ flex: 1, paddingRight: normalizeWidth(12) }}>
               <IconContainer>
-                <Image source={dumbbell} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#7fb3ff' }} />
+                <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
               </IconContainer>
               <Text style={{
-                color: '#6a7499',
-                fontSize: normalize(10),
+                color: '#9aadd0',
+                fontSize: normalize(12),
                 fontWeight: '600',
                 letterSpacing: 1.2,
                 marginBottom: normalizeHeight(6),
@@ -203,26 +213,38 @@ export const StatisticsScreen = () => {
 
             {/* Max Streak */}
             <View style={{ flex: 1, paddingLeft: normalizeWidth(12) }}>
-              <IconContainer>
-                <Image source={flame} style={{ width: flameW, height: flameH, tintColor: '#f4893a' }} />
-              </IconContainer>
+              <LinearGradient
+                colors={['#4a2510', '#2a1508']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  width: normalize(34),
+                  height: normalize(34),
+                  borderRadius: normalize(8),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: normalizeHeight(10),
+                }}
+              >
+                <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
+              </LinearGradient>
               <Text style={{
-                color: '#6a7499',
-                fontSize: normalize(10),
+                color: '#9aadd0',
+                fontSize: normalize(12),
                 fontWeight: '600',
                 letterSpacing: 1.2,
                 marginBottom: normalizeHeight(6),
               }}>MAX STREAK</Text>
               <Text style={{
-                color: '#f4893a',
+                color: '#fb7028',
                 fontSize: normalize(52),
                 fontWeight: '700',
                 letterSpacing: -1,
                 lineHeight: normalize(56),
               }}>{streakValue}</Text>
               <Text style={{
-                color: '#6a7499',
-                fontSize: normalize(11),
+                color: '#9aadd0',
+                fontSize: normalize(13),
                 fontWeight: '400',
                 marginTop: normalizeHeight(2),
               }}>{streakUnit}</Text>
@@ -232,18 +254,19 @@ export const StatisticsScreen = () => {
           {/* Row 1: Favourite Exercise + Busiest Day */}
           <View style={{ height: normalizeHeight(155), flexDirection: 'row', marginBottom: normalizeHeight(12) }}>
             <SmallCard
-              icon={dumbbell_with_heart}
-              iconW={644} iconH={508}
-              iconTint="#7fb3ff"
+              icon={medal_white}
+              iconW={437} iconH={562}
+              iconTint="#ffffff"
+              iconSize={normalize(14)}
               value={statsData.favouriteExercise ?? '-'}
               valueColor="#ffffff"
               label="Favourite Exercise"
               isLeft={true}
             />
             <SmallCard
-              icon={bar_graph}
-              iconW={735} iconH={628}
-              iconTint="#7fb3ff"
+              icon={calendar}
+              iconW={410} iconH={420}
+              iconTint="#ffffff"
               value={statsData.busiestDay ?? '-'}
               valueColor="#7fb3ff"
               label="Busiest Day"
@@ -254,18 +277,18 @@ export const StatisticsScreen = () => {
           {/* Row 2: Avg Sessions + Avg Sets */}
           <View style={{ height: normalizeHeight(155), flexDirection: 'row' }}>
             <SmallCard
-              icon={calendar_marked}
-              iconW={648} iconH={652}
-              iconTint="#7fb3ff"
+              icon={trend_arrow_2}
+              iconW={512} iconH={325}
+              iconTint="#ffffff"
               value={avgSessions}
               valueColor="#7fb3ff"
               label="Avg Sessions / Week"
               isLeft={true}
             />
             <SmallCard
-              icon={plates_stack}
-              iconW={624} iconH={595}
-              iconTint="#7fb3ff"
+              icon={plates_stack_2}
+              iconW={469} iconH={425}
+              iconTint="#ffffff"
               value={avgSets}
               valueColor="#7fb3ff"
               label="Avg Sets / Workout"
