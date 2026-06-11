@@ -115,9 +115,9 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                 letterSpacing: -1,
                             }}>{heroDuration}</Text>
                             <Text style={{
-                                color: '#98a5da' || 'rgba(255,255,255,0.7)',
+                                color: '#8090bc',
                                 fontSize: normalize(10),
-                                fontWeight: '400',
+                                fontWeight: '500',
                                 letterSpacing: 1,
                                 marginTop: normalizeHeight(0),
                             }}>TOTAL DURATION</Text>
@@ -140,7 +140,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                     fontWeight: '700',
                                 }}>{exercisesList.length}</Text>
                                 <Text style={{
-                                    color: 'rgba(255,255,255,0.75)',
+                                    color: '#9aadd0',
                                     fontSize: normalize(11),
                                     marginLeft: normalizeWidth(10),
                                     marginTop:normalizeHeight(2)
@@ -162,7 +162,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                     fontWeight: '700',
                                 }}>{totalSets}</Text>
                                 <Text style={{
-                                    color: 'rgba(255,255,255,0.75)',
+                                    color: '#9aadd0',
                                     fontSize: normalize(11),
                                     marginLeft: normalizeWidth(10),
                                     marginTop:normalizeHeight(2)
