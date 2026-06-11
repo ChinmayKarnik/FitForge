@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { TimeRange } from '../enums/enums';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 
@@ -15,65 +15,53 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
   const timeRanges = Object.values(TimeRange) as string[];
 
   return (
-      <View
-       style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: '#404153',
-          borderRadius: normalize(20),
-          marginHorizontal: normalizeWidth(16),
-         marginVertical: normalizeHeight(16),
-          padding: normalizeWidth(4)
-        }}
-      >
-              {timeRanges.map((timeRange,index) => {
-                const isSelected = selectedTimeRange === timeRange;
-                const isLast = index === timeRanges.length - 1;
-                const isFirst = index === 0;
-                  return (
-                      <TouchableOpacity
-                          key={timeRange}
-                          style={[
-                              {
-                                  flex: 1,
-                                  borderWidth:normalize(1),
-                                  borderColor:'#5b5e6f',
-                                  borderRadius: normalize(20),
-                                  backgroundColor:'#2e2f42',
-                                  justifyContent:'center',
-                              },
-
-                              isSelected && {
-                                borderColor: '#b05157',
-                                backgroundColor:'#91273b'
-                              },
-                              !isLast && {
-                                marginRight: normalizeWidth(4),
-                              }
-
-                          ]}
-                          onPress={() => onSelectTimeRange(timeRange)}
-                      >
-                          <Text
-                              style={[
-                                  {fontWeight:'500',
-                                    color:'#b1b0b7',
-                                    textAlign:'center',
-                                    fontSize:normalize(15),
-                                   marginVertical:normalizeHeight(4),
-                                  },
-                                  isSelected && {
-                                   color: '#ffd6d9'
-                                  }
-                              ]}
-                          >{timeRange}</Text>
-                      </TouchableOpacity>
-                  )
-              }
-              )}
-      </View>
+    <View style={{
+      flexDirection: 'row',
+      backgroundColor: '#1e2340',
+      borderRadius: normalize(24),
+      borderWidth: normalize(1),
+      borderColor: '#2e3354',
+      marginHorizontal: normalizeWidth(16),
+      marginTop: normalizeHeight(14),
+      marginBottom: normalizeHeight(6),
+      padding: normalize(3),
+    }}>
+      {timeRanges.map((timeRange, index) => {
+        const isSelected = selectedTimeRange === timeRange;
+        const isLast = index === timeRanges.length - 1;
+        return (
+          <TouchableOpacity
+            key={timeRange}
+            style={[
+              {
+                flex: 1,
+                borderRadius: normalize(20),
+                paddingVertical: normalizeHeight(6),
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+              isSelected && {
+                backgroundColor: '#3a4fa0',
+              },
+              !isLast && { marginRight: normalize(2) },
+            ]}
+            onPress={() => onSelectTimeRange(timeRange as TimeRange)}
+            activeOpacity={0.7}
+          >
+            <Text style={[
+              {
+                fontWeight: '500',
+                color: '#6a7499',
+                fontSize: normalize(13),
+              },
+              isSelected && {
+                color: '#e8ecff',
+                fontWeight: '600',
+              },
+            ]}>{timeRange}</Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-});
