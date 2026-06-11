@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
+import crossIcon from '../images/cross-icon-white.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getExercisesListFromWorkout } from '../utils/workoutUtils';
 import { databaseController } from '../data';
@@ -178,26 +179,53 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                             marginBottom: normalizeHeight(6),
                         }}>WORKOUT NAME</Text>
                         <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
                             borderWidth: normalize(1),
                             borderColor: '#33344f',
                             backgroundColor: '#1d2039',
                             borderRadius: normalize(6),
                             paddingLeft: normalizeWidth(12),
+                            paddingRight: normalizeWidth(10),
                             marginBottom: normalizeHeight(14),
                         }}>
                             <TextInput
                                 style={{
+                                    flex: 1,
                                     color: '#ffffff',
                                     fontSize: normalize(15),
                                     fontWeight: '400',
                                     paddingVertical: normalizeHeight(8),
-                                    width: '100%',
                                 }}
                                 value={workoutName}
                                 onChangeText={(text) => setWorkoutName(text)}
-                                placeholder={workoutName}
-                                placeholderTextColor="#aab3c8"
                             />
+                            {workoutName.length > 0 && (
+                                <TouchableOpacity
+                                    onPress={() => setWorkoutName('')}
+                                    activeOpacity={0.7}
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <View style={{
+                                        width: normalize(18),
+                                        height: normalize(18),
+                                        borderRadius: normalize(9),
+                                        borderWidth: normalize(1),
+                                        borderColor: 'rgba(255,255,255,0.25)',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Image
+                                            source={crossIcon}
+                                            style={{
+                                                width: normalize(7),
+                                                height: normalize(7),
+                                                tintColor: 'rgba(255,255,255,0.5)',
+                                            }}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            )}
                         </View>
 
                         {/* Exercise Breakdown */}
