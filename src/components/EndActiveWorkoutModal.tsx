@@ -308,20 +308,20 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                             <TouchableOpacity
                                 style={{
                                     flex: 1,
-                                    backgroundColor: '#313967',
+                                    backgroundColor: '#3a4fa0',
                                     borderRadius: normalize(8),
                                     paddingVertical: normalize(10),
                                     marginLeft: normalize(4),
                                     alignItems: 'center',
                                     borderWidth: normalize(1),
-                                    borderColor: '#536196',
+                                    borderColor: '#5a72c4',
                                 }}
                                 onPress={onSaveWorkout}
                                 activeOpacity={0.8}
                             >
                                 <Text style={{
-                                    color: '#e4e5ee',
-                                    fontWeight: '500',
+                                    color: '#eef0fb',
+                                    fontWeight: '600',
                                     fontSize: normalize(15),
                                     letterSpacing: 0.5,
                                 }}>Save Workout</Text>
