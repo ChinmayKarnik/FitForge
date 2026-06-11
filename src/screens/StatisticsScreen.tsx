@@ -214,7 +214,7 @@ export const StatisticsScreen = () => {
             {/* Max Streak */}
             <View style={{ flex: 1, paddingLeft: normalizeWidth(12) }}>
               <LinearGradient
-                colors={['#4a2510', '#2a1508']}
+                colors={['#7a3d18', '#32160a']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={{
