@@ -14,6 +14,7 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
 import magnifying_glass from '../images/magnifying-glass-white.png';
+import ProfileImageCircular from '../components/ProfileImageCircular';
 
 const SCREEN = Dimensions.get('window');
 
@@ -33,6 +34,8 @@ export default function CropPhotoScreen() {
     const { imageUri } = route.params;
 
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
+    const [liveCrop, setLiveCrop] = useState({ x: 0, y: 0, size: CIRCLE_SIZE / containerHeight });
+    const getCropRef = useRef<any>(null);
 
     const isHorizontalImage = imgDimensions ? imgDimensions.width >= imgDimensions.height : true;
     const scale = useRef(new Animated.Value(1)).current;
@@ -91,7 +94,15 @@ export default function CropPhotoScreen() {
             },
             onPanResponderRelease: (evt) => {
                 if (evt.nativeEvent.touches.length === 0) {
-                    scale.stopAnimation((val) => { scaleValue.current = val; });
+                    let px = 0, py = 0;
+                    pan.x.stopAnimation((x) => { px = x; });
+                    pan.y.stopAnimation((y) => { py = y; });
+                    scale.stopAnimation((val) => {
+                        scaleValue.current = val;
+                        if (getCropRef.current) {
+                            setLiveCrop(getCropRef.current(px, py, val));
+                        }
+                    });
                     pan.extractOffset();
                     initialDistance.current = null;
                     prevTouchesLength.current = 0;
@@ -120,7 +131,7 @@ export default function CropPhotoScreen() {
         }
     }
 
-    const getCrop = (panXVal, panYVal, scaleVal) => {
+    const getCrop = getCropRef.current = (panXVal, panYVal, scaleVal) => {
         if (isHorizontalImage) {
             const imageTopSpace = (containerHeight - (imgHeight * scaleVal)) / 2.0;
             const circleTopSpace = (containerHeight - CIRCLE_SIZE) / 2.0;
@@ -264,15 +275,14 @@ export default function CropPhotoScreen() {
                             fontWeight: '400',
                         }}>This is how your profile{'\n'}photo will look.</Text>
                     </View>
-                    <View style={{
-                        width: normalize(62),
-                        height: normalize(62),
-                        borderRadius: normalize(31),
-                        backgroundColor: '#1c2238',
-                        borderWidth: 1,
-                        borderColor: '#3d4563',
-                        marginLeft: normalizeWidth(12),
-                    }} />
+                    <View style={{ marginLeft: normalizeWidth(12) }}>
+                        <ProfileImageCircular
+                            imageSource={{ uri: imageUri }}
+                            width={normalize(62)}
+                            aspectRatio={1}
+                            crop={liveCrop}
+                        />
+                    </View>
                 </View>
 
                 {/* Gesture hints */}
