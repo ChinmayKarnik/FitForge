@@ -284,9 +284,9 @@ export default function CropPhotoScreen() {
                             letterSpacing: 0.2,
                         }}>Shown on your profile</Text>
                     </View>
-                    <View style={{ width: 1, height: normalize(50), backgroundColor: 'rgba(255,255,255,0.18)', marginHorizontal: normalizeWidth(14) }} />
                     <View style={{
                         width: normalize(94) + 4,
+                        marginLeft: normalizeWidth(14),
                         height: normalize(94) + 4,
                         borderRadius: (normalize(94) + 4) / 2,
                         borderWidth: 2,
