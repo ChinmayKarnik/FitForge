@@ -202,11 +202,11 @@ export default function CropPhotoScreen() {
                 backgroundColor: 'rgba(36,42,65,0.9)',
             }}>
                 <Text style={{
-                    color: 'rgba(255,255,255,0.68)',
+                    color: 'rgba(255,255,255,0.60)',
                     fontSize: normalize(13),
                     fontWeight: '500',
                     letterSpacing: 0.3,
-                }}>Position your photo within the circle</Text>
+                }}>Drag and pinch to position your photo</Text>
             </View>
 
             {/* Photo area with crop circle */}
