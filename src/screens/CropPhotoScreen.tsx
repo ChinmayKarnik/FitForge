@@ -266,6 +266,7 @@ export default function CropPhotoScreen() {
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     backgroundColor: '#272d46',
                     borderRadius: normalize(12),
                     borderWidth: 1,
@@ -274,21 +275,18 @@ export default function CropPhotoScreen() {
                     paddingHorizontal: normalize(16),
                     marginBottom: normalizeHeight(10),
                 }}>
-                    <View style={{ flex: 1 }}>
-                        <Text style={{
-                            color: '#ffffff',
-                            fontSize: normalize(15),
-                            fontWeight: '700',
-                        }}>How it will appear</Text>
-                    </View>
-                    <View style={{ marginLeft: normalizeWidth(12) }}>
-                        <ProfileImageCircular
-                            imageSource={{ uri: imageUri }}
-                            width={normalize(94)}
-                            aspectRatio={1}
-                            crop={liveCrop}
-                        />
-                    </View>
+                    <Text style={{
+                        color: '#ffffff',
+                        fontSize: normalize(15),
+                        fontWeight: '700',
+                    }}>How it will appear</Text>
+                    <View style={{ width: 1, height: normalize(42), backgroundColor: 'rgba(255,255,255,0.12)', marginHorizontal: normalizeWidth(14) }} />
+                    <ProfileImageCircular
+                        imageSource={{ uri: imageUri }}
+                        width={normalize(94)}
+                        aspectRatio={1}
+                        crop={liveCrop}
+                    />
                 </View>
 
                 {/* Gesture hints */}
