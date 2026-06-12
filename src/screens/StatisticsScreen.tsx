@@ -55,9 +55,29 @@ const IconContainer = ({ children }) => (
 );
 
 // iconW and iconH are the pixel dimensions of the source image
-const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize, valueFontSize, valueLines }) => {
+const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize, valueFontSize, valueLines, groupLabelValue }) => {
   const renderedW = iconSize ?? normalize(18);
   const renderedH = renderedW * (iconH / iconW);
+  const labelEl = (
+    <Text style={{
+      color: 'rgba(255,255,255,0.68)',
+      fontSize: normalize(12),
+      fontWeight: '600',
+      letterSpacing: 0.6,
+    }}>{label}</Text>
+  );
+  const valueEl = (
+    <Text
+      numberOfLines={valueLines ?? undefined}
+      adjustsFontSizeToFit={valueLines === 1}
+      minimumFontScale={0.7}
+      ellipsizeMode="tail"
+      style={{
+        color: valueColor,
+        fontSize: valueFontSize ?? normalize(24),
+        fontWeight: '800',
+      }}>{value}</Text>
+  );
   return (
     <View style={{
       flex: 1,
@@ -75,22 +95,17 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
           style={{ width: renderedW, height: renderedH, tintColor: iconTint }}
         />
       </IconContainer>
-      <Text style={{
-        color: 'rgba(255,255,255,0.68)',
-        fontSize: normalize(12),
-        fontWeight: '600',
-        letterSpacing: 0.6,
-      }}>{label}</Text>
-      <Text
-        numberOfLines={valueLines ?? undefined}
-        adjustsFontSizeToFit={valueLines === 1}
-        minimumFontScale={0.7}
-        ellipsizeMode="tail"
-        style={{
-          color: valueColor,
-          fontSize: valueFontSize ?? normalize(24),
-          fontWeight: '800',
-        }}>{value}</Text>
+      {groupLabelValue ? (
+        <View>
+          {labelEl}
+          {valueEl}
+        </View>
+      ) : (
+        <>
+          {labelEl}
+          {valueEl}
+        </>
+      )}
     </View>
   );
 };
@@ -264,10 +279,11 @@ export const StatisticsScreen = () => {
               iconSize={normalize(14)}
               value={statsData.favouriteExercise ?? '-'}
               valueColor="#ffffff"
-              valueFontSize={normalize(16)}
+              valueFontSize={normalize(18)}
               valueLines={1}
               label="Favourite Exercise"
               isLeft={true}
+              groupLabelValue={true}
             />
             <SmallCard
               icon={calendar}
@@ -275,8 +291,10 @@ export const StatisticsScreen = () => {
               iconTint="#ffffff"
               value={statsData.busiestDay ?? '-'}
               valueColor="#7fb3ff"
+              valueFontSize={normalize(26)}
               label="Busiest Day"
               isLeft={false}
+              groupLabelValue={true}
             />
           </View>
 
@@ -288,6 +306,7 @@ export const StatisticsScreen = () => {
               iconTint="#ffffff"
               value={4.2 || avgSessions}
               valueColor="#7fb3ff"
+              valueFontSize={normalize(29)}
               label="Avg Sessions / Week"
               isLeft={true}
             />
@@ -297,6 +316,7 @@ export const StatisticsScreen = () => {
               iconTint="#ffffff"
               value={12.4 || avgSets}
               valueColor="#7fb3ff"
+              valueFontSize={normalize(29)}
               label="Avg Sets / Workout"
               isLeft={false}
             />
