@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     width: '88%',
     maxWidth: normalizeWidth(380),
     paddingTop: normalizeHeight(16),
-    paddingBottom: normalizeHeight(20),
+    paddingBottom: normalizeHeight(10),
   },
   title: {
     fontSize: normalize(18),
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
   divider: {
     height: normalizeHeight(1),
     backgroundColor: 'rgba(68, 75, 95, 0.5)',
-    marginVertical: normalizeHeight(8),
+    marginVertical: normalizeHeight(6),
   },
 });
