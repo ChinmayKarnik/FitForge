@@ -254,8 +254,8 @@ export default function CropPhotoScreen() {
             <View style={{
                 flex: 1,
                 paddingHorizontal: normalizeWidth(16),
-                paddingTop: normalizeHeight(12),
-                paddingBottom: normalizeHeight(96),
+                paddingTop: normalizeHeight(14),
+                paddingBottom: normalizeHeight(100),
             }}>
                 {/* How it will appear */}
                 <View style={{
@@ -268,7 +268,7 @@ export default function CropPhotoScreen() {
                     borderColor: '#3d4563',
                     paddingVertical: normalizeHeight(14),
                     paddingHorizontal: normalize(16),
-                    marginBottom: normalizeHeight(10),
+                    marginBottom: normalizeHeight(14),
                 }}>
                     <View>
                         <Text style={{
