@@ -289,8 +289,8 @@ export default function CropPhotoScreen() {
                         width: normalize(94) + 4,
                         height: normalize(94) + 4,
                         borderRadius: (normalize(94) + 4) / 2,
-                        borderWidth: 1.5,
-                        borderColor: 'rgba(255,255,255,0.22)',
+                        borderWidth: 2,
+                        borderColor: 'rgba(255,255,255,0.30)',
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
