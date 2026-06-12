@@ -124,7 +124,7 @@ export const StatisticsScreen = () => {
   const dateRangeLabel = getDateRangeLabel(selectedTimeRange, timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
 
   const streakValue = statsData.maximumStreak !== null ? String(statsData.maximumStreak) : '-';
-  const streakUnit = (7 || statsData.maximumStreak) === 1 ? 'day in a row' : 'days in a row';
+  const streakUnit = statsData.maximumStreak === 1 ? 'day in a row' : 'days in a row';
   const avgSets = statsData.averageSets !== null ? String(statsData.averageSets) : '-';
   const avgSessions = (statsData.averageWeeklySessions !== null && statsData.averageWeeklySessions !== 0)
     ? String(statsData.averageWeeklySessions)
@@ -232,7 +232,7 @@ export const StatisticsScreen = () => {
                 fontWeight: '800',
                 letterSpacing: -1,
                 lineHeight: normalize(52),
-              }}>{(73 || statsData.totalWorkouts) ?? '-'}</Text>
+              }}>{statsData.totalWorkouts ?? '-'}</Text>
             </View>
 
             {/* Divider */}
@@ -264,7 +264,7 @@ export const StatisticsScreen = () => {
                 fontWeight: '800',
                 letterSpacing: -1,
                 lineHeight: normalize(52),
-              }}>{5 || streakValue}</Text>
+              }}>{streakValue}</Text>
               <Text style={{
                 color: 'rgba(251,112,40,0.65)',
                 fontSize: normalize(12),
@@ -309,7 +309,7 @@ export const StatisticsScreen = () => {
               icon={trend_arrow_2}
               iconW={512} iconH={325}
               iconTint="#ffffff"
-              value={4.2 || avgSessions}
+              value={avgSessions}
               valueColor="#7fb3ff"
               valueFontSize={normalize(31)}
               labelFontSize={normalize(11)}
@@ -322,7 +322,7 @@ export const StatisticsScreen = () => {
               icon={plates_stack_2}
               iconW={469} iconH={425}
               iconTint="#ffffff"
-              value={12.4 || avgSets}
+              value={avgSets}
               valueColor="#7fb3ff"
               valueFontSize={normalize(31)}
               labelFontSize={normalize(11)}
