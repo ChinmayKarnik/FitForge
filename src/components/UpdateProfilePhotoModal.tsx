@@ -126,9 +126,9 @@ const styles = StyleSheet.create({
   optionBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(58, 75, 120, 0.4)',
+    backgroundColor: 'rgba(58, 75, 120, 0.18)',
     borderWidth: normalizeWidth(1),
-    borderColor: 'rgba(100, 120, 180, 0.3)',
+    borderColor: 'rgba(100, 120, 180, 0.18)',
     borderRadius: normalize(12),
     paddingHorizontal: normalizeWidth(16),
     paddingVertical: normalizeHeight(12),
