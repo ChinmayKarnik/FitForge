@@ -314,7 +314,7 @@ export default function CropPhotoScreen() {
                     paddingHorizontal: normalize(16),
                     alignItems: 'center',
                 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Image source={all_direction_arrow} style={{ width: normalize(20), height: normalize(20) * (396.0/401.0), tintColor: 'rgba(255,255,255,0.85)' }} />
                         <View style={{ marginLeft: normalizeWidth(12) }}>
                             <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '700' }}>Move Photo</Text>
@@ -322,7 +322,7 @@ export default function CropPhotoScreen() {
                         </View>
                     </View>
                     <View style={{ width: 1, height: normalizeHeight(36), backgroundColor: 'rgba(255,255,255,0.15)' }} />
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: normalizeWidth(16) }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Image
                             source={magnifying_glass}
                             style={{ width: normalize(20), height: normalize(20) * (332.0/352.0), tintColor: 'rgba(255,255,255,0.85)' }}
