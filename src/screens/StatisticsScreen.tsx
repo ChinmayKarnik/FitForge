@@ -75,23 +75,22 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
           style={{ width: renderedW, height: renderedH, tintColor: iconTint }}
         />
       </IconContainer>
-      <View>
-        <Text style={{
-          color: 'rgba(255,255,255,0.5)',
-          fontSize: normalize(12),
-          fontWeight: '600',
-          letterSpacing: 0.6,
-          marginBottom: normalizeHeight(4),
-        }}>{label}</Text>
-        <Text
-          numberOfLines={valueLines ?? undefined}
-          ellipsizeMode="tail"
-          style={{
-            color: valueColor,
-            fontSize: valueFontSize ?? normalize(24),
-            fontWeight: '800',
-          }}>{value}</Text>
-      </View>
+      <Text style={{
+        color: 'rgba(255,255,255,0.68)',
+        fontSize: normalize(12),
+        fontWeight: '600',
+        letterSpacing: 0.6,
+      }}>{label}</Text>
+      <Text
+        numberOfLines={valueLines ?? undefined}
+        adjustsFontSizeToFit={valueLines === 1}
+        minimumFontScale={0.7}
+        ellipsizeMode="tail"
+        style={{
+          color: valueColor,
+          fontSize: valueFontSize ?? normalize(24),
+          fontWeight: '800',
+        }}>{value}</Text>
     </View>
   );
 };
@@ -202,7 +201,7 @@ export const StatisticsScreen = () => {
                 </IconContainer>
               </View>
               <Text style={{
-                color: 'rgba(255,255,255,0.5)',
+                color: 'rgba(255,255,255,0.68)',
                 fontSize: normalize(11),
                 fontWeight: '600',
                 letterSpacing: 1.8,
@@ -234,7 +233,7 @@ export const StatisticsScreen = () => {
                 <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
               </View>
               <Text style={{
-                color: 'rgba(255,255,255,0.5)',
+                color: 'rgba(255,255,255,0.68)',
                 fontSize: normalize(11),
                 fontWeight: '600',
                 letterSpacing: 1.8,
@@ -326,7 +325,7 @@ export const StatisticsScreen = () => {
             textAlign: 'center',
           }}>No workouts here</Text>
           <Text style={{
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(255,255,255,0.68)',
             fontSize: normalize(15),
             fontWeight: '400',
             textAlign: 'center',
