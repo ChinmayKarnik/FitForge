@@ -137,8 +137,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: normalizeWidth(30),
-    height: normalizeHeight(30),
-    borderRadius: normalize(8),
+    aspectRatio: 507 / 475,
     marginRight: normalizeWidth(14),
     resizeMode: 'contain',
   },
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
   arrowIcon: {
     width: normalizeWidth(8),
     aspectRatio: 52/87,
-    marginLeft: normalizeWidth(10),
+    marginLeft: normalizeWidth(14),
     resizeMode: 'contain',
   },
   cancelButton: {
