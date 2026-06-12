@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: normalize(20),
     width: '88%',
     maxWidth: normalizeWidth(380),
-    paddingTop: normalizeHeight(20),
+    paddingTop: normalizeHeight(16),
     paddingBottom: normalizeHeight(20),
   },
   title: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#f9f9f9',
     textAlign: 'center',
-    marginBottom: normalizeHeight(20),
+    marginBottom: normalizeHeight(14),
   },
   optionBox: {
     flexDirection: 'row',
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(100, 120, 180, 0.3)',
     borderRadius: normalize(12),
     paddingHorizontal: normalizeWidth(16),
-    paddingVertical: normalizeHeight(16),
-    marginBottom: normalizeHeight(12),
+    paddingVertical: normalizeHeight(12),
+    marginBottom: normalizeHeight(8),
     marginHorizontal: normalizeWidth(20),
   },
   icon: {
