@@ -270,7 +270,8 @@ export default function CropPhotoScreen() {
                     borderRadius: normalize(12),
                     borderWidth: 1,
                     borderColor: '#3d4563',
-                    padding: normalize(16),
+                    paddingVertical: normalizeHeight(14),
+                    paddingHorizontal: normalize(16),
                     marginBottom: normalizeHeight(10),
                 }}>
                     <View style={{ flex: 1 }}>
@@ -278,18 +279,12 @@ export default function CropPhotoScreen() {
                             color: '#ffffff',
                             fontSize: normalize(15),
                             fontWeight: '700',
-                            marginBottom: normalizeHeight(4),
                         }}>How it will appear</Text>
-                        <Text style={{
-                            color: 'rgba(255,255,255,0.5)',
-                            fontSize: normalize(13),
-                            fontWeight: '400',
-                        }}>This is how your profile{'\n'}photo will look.</Text>
                     </View>
                     <View style={{ marginLeft: normalizeWidth(12) }}>
                         <ProfileImageCircular
                             imageSource={{ uri: imageUri }}
-                            width={normalize(62)}
+                            width={normalize(94)}
                             aspectRatio={1}
                             crop={liveCrop}
                         />
@@ -303,7 +298,7 @@ export default function CropPhotoScreen() {
                     borderRadius: normalize(12),
                     borderWidth: 1,
                     borderColor: '#3d4563',
-                    paddingVertical: normalizeHeight(14),
+                    paddingVertical: normalizeHeight(10),
                     paddingHorizontal: normalize(16),
                     alignItems: 'center',
                 }}>
