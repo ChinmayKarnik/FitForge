@@ -13,7 +13,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
-import magnifying_glass from '../images/magnifying-glass-white.png';
+import magnifying_glass from '../images/magnifying-glass-thin.png';
+import all_direction_arrow from '../images/all-direction-arrow.png';
 import ProfileImageCircular from '../components/ProfileImageCircular';
 
 const SCREEN = Dimensions.get('window');
@@ -21,12 +22,6 @@ const SCREEN = Dimensions.get('window');
 const CIRCLE_SIZE = normalize(300);
 const MAX_SCALE = 5;
 
-const MoveIcon = () => (
-    <View style={{ width: normalize(22), height: normalize(22), alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ position: 'absolute', width: normalize(2), height: normalize(14), backgroundColor: 'rgba(255,255,255,0.85)', borderRadius: 1 }} />
-        <View style={{ position: 'absolute', width: normalize(14), height: normalize(2), backgroundColor: 'rgba(255,255,255,0.85)', borderRadius: 1 }} />
-    </View>
-);
 
 export default function CropPhotoScreen() {
     const navigation = useNavigation<any>();
@@ -275,12 +270,21 @@ export default function CropPhotoScreen() {
                     paddingHorizontal: normalize(16),
                     marginBottom: normalizeHeight(10),
                 }}>
-                    <Text style={{
-                        color: '#ffffff',
-                        fontSize: normalize(15),
-                        fontWeight: '700',
-                    }}>How it will appear</Text>
-                    <View style={{ width: 1, height: normalize(42), backgroundColor: 'rgba(255,255,255,0.12)', marginHorizontal: normalizeWidth(14) }} />
+                    <View>
+                        <Text style={{
+                            color: '#ffffff',
+                            fontSize: normalize(15),
+                            fontWeight: '700',
+                        }}>How it will appear</Text>
+                        <Text style={{
+                            color: 'rgba(255,255,255,0.45)',
+                            fontSize: normalize(11),
+                            fontWeight: '500',
+                            marginTop: normalizeHeight(3),
+                            letterSpacing: 0.2,
+                        }}>Shown on your profile</Text>
+                    </View>
+                    <View style={{ width: 1, height: normalize(50), backgroundColor: 'rgba(255,255,255,0.18)', marginHorizontal: normalizeWidth(14) }} />
                     <ProfileImageCircular
                         imageSource={{ uri: imageUri }}
                         width={normalize(94)}
@@ -301,7 +305,7 @@ export default function CropPhotoScreen() {
                     alignItems: 'center',
                 }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <MoveIcon />
+                        <Image source={all_direction_arrow} style={{ width: normalize(20), height: normalize(20) * (396.0/401.0), tintColor: 'rgba(255,255,255,0.85)' }} />
                         <View style={{ marginLeft: normalizeWidth(10) }}>
                             <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '700' }}>Move Photo</Text>
                             <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>Drag to position</Text>
@@ -311,7 +315,7 @@ export default function CropPhotoScreen() {
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: normalizeWidth(16) }}>
                         <Image
                             source={magnifying_glass}
-                            style={{ width: normalize(20), height: normalize(20), tintColor: 'rgba(255,255,255,0.85)' }}
+                            style={{ width: normalize(20), height: normalize(20) * (332.0/352.0), tintColor: 'rgba(255,255,255,0.85)' }}
                         />
                         <View style={{ marginLeft: normalizeWidth(10) }}>
                             <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '700' }}>Zoom</Text>
