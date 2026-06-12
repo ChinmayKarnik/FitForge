@@ -33,7 +33,10 @@ const formatDate = (timestamp: number, includeYear: boolean) => {
 
 const getDateRangeLabel = (selectedTimeRange: TimeRange, startTime: number, endTime: number) => {
   if (selectedTimeRange === TimeRange.All) return 'All time';
-  const start = formatDate(startTime, false);
+  const startYear = new Date(startTime).getFullYear();
+  const endYear = new Date(endTime).getFullYear();
+  const crossesYears = startYear !== endYear;
+  const start = formatDate(startTime, crossesYears);
   const end = formatDate(endTime, true);
   return `${start} – ${end}`;
 };
