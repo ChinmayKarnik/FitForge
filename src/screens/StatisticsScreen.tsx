@@ -279,8 +279,8 @@ export const StatisticsScreen = () => {
               iconSize={normalize(14)}
               value={statsData.favouriteExercise ?? '-'}
               valueColor="#ffffff"
-              valueFontSize={normalize(18)}
-              valueLines={1}
+              valueFontSize={normalize(20)}
+              valueLines={2}
               label="Favourite Exercise"
               isLeft={true}
               groupLabelValue={true}
