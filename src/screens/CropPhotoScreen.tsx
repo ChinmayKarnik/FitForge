@@ -285,12 +285,22 @@ export default function CropPhotoScreen() {
                         }}>Shown on your profile</Text>
                     </View>
                     <View style={{ width: 1, height: normalize(50), backgroundColor: 'rgba(255,255,255,0.18)', marginHorizontal: normalizeWidth(14) }} />
-                    <ProfileImageCircular
-                        imageSource={{ uri: imageUri }}
-                        width={normalize(94)}
-                        aspectRatio={1}
-                        crop={liveCrop}
-                    />
+                    <View style={{
+                        width: normalize(94) + 4,
+                        height: normalize(94) + 4,
+                        borderRadius: (normalize(94) + 4) / 2,
+                        borderWidth: 1.5,
+                        borderColor: 'rgba(255,255,255,0.22)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <ProfileImageCircular
+                            imageSource={{ uri: imageUri }}
+                            width={normalize(94)}
+                            aspectRatio={1}
+                            crop={liveCrop}
+                        />
+                    </View>
                 </View>
 
                 {/* Gesture hints */}
