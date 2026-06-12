@@ -124,6 +124,12 @@ export default function CropPhotoScreen() {
         }
     }, [imageUri]);
 
+    useEffect(() => {
+        if (imgDimensions && getCropRef.current) {
+            setLiveCrop(getCropRef.current(0, 0, 1));
+        }
+    }, [imgDimensions]);
+
     const containerHeight = SCREEN.width;
     let imgWidth = SCREEN.width;
     let imgHeight = containerHeight;
