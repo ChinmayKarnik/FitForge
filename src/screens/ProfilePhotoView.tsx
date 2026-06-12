@@ -5,6 +5,7 @@ import { normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import profile_photo_default from '../images/profile-photo-default.png';
 import { databaseController } from '../data';
+import ProfileImageSquare from '../components/ProfileImageSquare';
 
 
 const SCREEN = Dimensions.get('window');
@@ -13,26 +14,24 @@ export default function ProfilePhotoView() {
   const navigation = useNavigation<any>();
 
   const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(null);
+  const [profilePhotoCrop, setProfilePhotoCrop] = useState<{ x: number; y: number; size: number } | null>(null);
   
 
   const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
       
   const isHorizontalImage = imgDimensions ? imgDimensions.width >= imgDimensions.height : true;
 
-  const [imageAspectRatio, setImageAspectRatio] = useState(1);
   const SQUARE_SIZE = Dimensions.get('window').width;
+  const imageAspectRatio = imgDimensions ? imgDimensions.width / imgDimensions.height : 1;
 
   const containerHeight = SCREEN.width;
-    // Calculate image dimensions maintaining aspect ratio
     let imgWidth = SCREEN.width;
     let imgHeight = containerHeight;
-    const aspectRatio = imgDimensions ? imgDimensions.width / imgDimensions.height : 1;
     if (imgDimensions) {
-        const aspectRatio = imgDimensions.width / imgDimensions.height;
-        imgHeight = imgWidth / aspectRatio;
+        imgHeight = imgWidth / imageAspectRatio;
         if (imgHeight > containerHeight) {
             imgHeight = containerHeight;
-            imgWidth = imgHeight * aspectRatio;
+            imgWidth = imgHeight * imageAspectRatio;
         }
     }
 
@@ -42,6 +41,7 @@ export default function ProfilePhotoView() {
       console.log('ckck userinfo ',userInfo)
       if (userInfo?.profilePhotoPath) {
         setProfilePhotoPath(userInfo.profilePhotoPath);
+        setProfilePhotoCrop(userInfo.profilePhotoCrop ?? null);
       }
     }, [])
   );
@@ -50,14 +50,12 @@ export default function ProfilePhotoView() {
     if (profilePhotoPath) {
       console.log('ckck profile photo path here is ',profilePhotoPath)
       Image.getSize(profilePhotoPath, (width, height) => {
-        setImgDimensions({width,height})
-        setImageAspectRatio(width / height);
+        setImgDimensions({ width, height });
       });
     } else {
       console.log('ckck no profile photo ')
       const source = Image.resolveAssetSource(profile_photo_default);
-      setImgDimensions({width: source.width, height: source.height})
-      setImageAspectRatio(source.width / source.height);
+      setImgDimensions({ width: source.width, height: source.height });
     }
   }, [profilePhotoPath]);
 
@@ -115,25 +113,22 @@ export default function ProfilePhotoView() {
       <View
         style={{
           width: '100%',
-          height: containerHeight,
           marginTop: normalizeHeight(110),
-          backgroundColor: 'black',
-          overflow: 'hidden',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
-        {imgDimensions && (
+        {imgDimensions && profilePhotoPath && profilePhotoCrop ? (
+          <ProfileImageSquare
+            imageSource={{ uri: profilePhotoPath }}
+            width={SQUARE_SIZE}
+            aspectRatio={imageAspectRatio}
+            crop={profilePhotoCrop}
+          />
+        ) : imgDimensions && (
           <Image
-            source={
-              profilePhotoPath ? { uri: profilePhotoPath }
-            : 
-            profile_photo_default
-          }
-            style={{
-              width: imgWidth,
-              height: imgHeight,
-            }}
+            source={profilePhotoPath ? { uri: profilePhotoPath } : profile_photo_default}
+            style={{ width: imgWidth, height: imgHeight }}
             resizeMode="contain"
           />
         )}
