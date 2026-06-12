@@ -7,7 +7,7 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { TimeRange } from '../enums/enums';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
-import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/workoutUtils';
+import { getStatsForTimeRange, getTimeRangeIntervalFormat, getStatsStartDate } from '../utils/workoutUtils';
 import sad_dumbbell from '../images/sweat-sad-dumbbell.png';
 import flame from '../images/flame.png';
 import flame_3 from '../images/flame-3.png';
@@ -32,7 +32,11 @@ const formatDate = (timestamp: number, includeYear: boolean) => {
 };
 
 const getDateRangeLabel = (selectedTimeRange: TimeRange, startTime: number, endTime: number) => {
-  if (selectedTimeRange === TimeRange.All) return 'All time';
+  if (selectedTimeRange === TimeRange.All) {
+    const firstDate = getStatsStartDate();
+    if (firstDate === null) return 'All Time';
+    return `Since ${formatDate(firstDate, true)}`;
+  }
   const startYear = new Date(startTime).getFullYear();
   const endYear = new Date(endTime).getFullYear();
   const crossesYears = startYear !== endYear;

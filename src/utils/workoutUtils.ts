@@ -291,3 +291,13 @@ export const getTimeRangeIntervalFormat = (timeRange: string) => {
 		end: endTime,
 	};
 }
+
+export const getStatsStartDate = (): number | null => {
+	const allWorkouts = databaseController.getAllWorkouts();
+	const validWorkouts = allWorkouts.filter(w => w.startTime > 0);
+	if (validWorkouts.length === 0) return null;
+	return validWorkouts.reduce(
+		(earliest, workout) => workout.startTime < earliest ? workout.startTime : earliest,
+		validWorkouts[0].startTime
+	);
+};
