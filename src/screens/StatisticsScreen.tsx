@@ -213,21 +213,17 @@ export const StatisticsScreen = () => {
 
             {/* Max Streak */}
             <View style={{ flex: 1, paddingLeft: normalizeWidth(12) }}>
-              <LinearGradient
-                colors={['#7a3d18', '#32160a']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
+              <View style={{
                   width: normalize(34),
                   height: normalize(34),
                   borderRadius: normalize(8),
+                  backgroundColor: 'rgba(251,112,40,0.12)',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: normalizeHeight(10),
-                }}
-              >
+                }}>
                 <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
-              </LinearGradient>
+              </View>
               <Text style={{
                 color: '#9aadd0',
                 fontSize: normalize(12),
