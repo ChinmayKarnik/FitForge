@@ -61,7 +61,6 @@ export default function ProfilePhotoView() {
     <View style={{
       flex: 1,
       width: '100%',
-      height: '100%',
       backgroundColor: '#1c2238',
     }}>
       {/* Header */}
@@ -106,8 +105,8 @@ export default function ProfilePhotoView() {
       {/* Image display area */}
       <View
         style={{
+          flex: 1,
           width: '100%',
-          marginTop: normalizeHeight(110),
           alignItems: 'center',
           justifyContent: 'center',
         }}
