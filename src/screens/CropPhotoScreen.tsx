@@ -202,7 +202,7 @@ export default function CropPhotoScreen() {
                 backgroundColor: 'rgba(36,42,65,0.9)',
             }}>
                 <Text style={{
-                    color: 'rgba(255,255,255,0.55)',
+                    color: 'rgba(255,255,255,0.68)',
                     fontSize: normalize(13),
                     fontWeight: '500',
                     letterSpacing: 0.3,
@@ -277,7 +277,7 @@ export default function CropPhotoScreen() {
                             fontWeight: '700',
                         }}>How it will appear</Text>
                         <Text style={{
-                            color: 'rgba(255,255,255,0.45)',
+                            color: 'rgba(255,255,255,0.62)',
                             fontSize: normalize(11),
                             fontWeight: '500',
                             marginTop: normalizeHeight(3),
@@ -308,7 +308,7 @@ export default function CropPhotoScreen() {
                         <Image source={all_direction_arrow} style={{ width: normalize(20), height: normalize(20) * (396.0/401.0), tintColor: 'rgba(255,255,255,0.85)' }} />
                         <View style={{ marginLeft: normalizeWidth(10) }}>
                             <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '700' }}>Move Photo</Text>
-                            <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>Drag to position</Text>
+                            <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>Drag to position</Text>
                         </View>
                     </View>
                     <View style={{ width: 1, height: normalizeHeight(36), backgroundColor: 'rgba(255,255,255,0.15)' }} />
@@ -319,7 +319,7 @@ export default function CropPhotoScreen() {
                         />
                         <View style={{ marginLeft: normalizeWidth(10) }}>
                             <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '700' }}>Zoom</Text>
-                            <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>Pinch to zoom</Text>
+                            <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>Pinch to zoom</Text>
                         </View>
                     </View>
                 </View>
