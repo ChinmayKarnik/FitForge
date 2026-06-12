@@ -49,14 +49,13 @@ const IconContainer = ({ children }) => (
     backgroundColor: 'rgba(127,179,255,0.09)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: normalizeHeight(10),
   }}>
     {children}
   </View>
 );
 
 // iconW and iconH are the pixel dimensions of the source image
-const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize }) => {
+const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize, valueFontSize, valueLines }) => {
   const renderedW = iconSize ?? normalize(18);
   const renderedH = renderedW * (iconH / iconW);
   return (
@@ -66,9 +65,9 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
       borderRadius: normalize(12),
       borderWidth: normalize(1),
       borderColor: '#3d4563',
-      padding: normalize(14),
+      padding: normalize(16),
       marginLeft: isLeft ? 0 : normalizeWidth(8),
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
     }}>
       <IconContainer>
         <Image
@@ -76,17 +75,23 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
           style={{ width: renderedW, height: renderedH, tintColor: iconTint }}
         />
       </IconContainer>
-      <Text style={{
-        color: valueColor,
-        fontSize: normalize(22),
-        fontWeight: '700',
-        marginBottom: normalizeHeight(2),
-      }}>{value}</Text>
-      <Text style={{
-        color: '#9aadd0',
-        fontSize: normalize(13),
-        fontWeight: '500',
-      }}>{label}</Text>
+      <View>
+        <Text style={{
+          color: 'rgba(255,255,255,0.5)',
+          fontSize: normalize(12),
+          fontWeight: '600',
+          letterSpacing: 0.6,
+          marginBottom: normalizeHeight(4),
+        }}>{label}</Text>
+        <Text
+          numberOfLines={valueLines ?? undefined}
+          ellipsizeMode="tail"
+          style={{
+            color: valueColor,
+            fontSize: valueFontSize ?? normalize(24),
+            fontWeight: '800',
+          }}>{value}</Text>
+      </View>
     </View>
   );
 };
@@ -101,7 +106,7 @@ export const StatisticsScreen = () => {
   const dateRangeLabel = getDateRangeLabel(selectedTimeRange, timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
 
   const streakValue = statsData.maximumStreak !== null ? String(statsData.maximumStreak) : '-';
-  const streakUnit = statsData.maximumStreak === 1 ? 'day in a row' : 'days in a row';
+  const streakUnit = (7 || statsData.maximumStreak) === 1 ? 'day in a row' : 'days in a row';
   const avgSets = statsData.averageSets !== null ? String(statsData.averageSets) : '-';
   const avgSessions = (statsData.averageWeeklySessions !== null && statsData.averageWeeklySessions !== 0)
     ? String(statsData.averageWeeklySessions)
@@ -177,10 +182,10 @@ export const StatisticsScreen = () => {
       </View>
 
       {!isEmptyStats ? (
-        <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(4), paddingBottom: normalizeHeight(10) }}>
+        <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(4), paddingBottom: normalizeHeight(16) }}>
           {/* Featured top card: Total Workouts + Max Streak */}
           <View style={{
-            height: normalizeHeight(185),
+            height: normalizeHeight(168),
             flexDirection: 'row',
             backgroundColor: '#272d46',
             borderRadius: normalize(12),
@@ -191,27 +196,29 @@ export const StatisticsScreen = () => {
           }}>
             {/* Total Workouts */}
             <View style={{ flex: 1, paddingRight: normalizeWidth(12) }}>
-              <IconContainer>
-                <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
-              </IconContainer>
+              <View style={{ marginBottom: normalizeHeight(6) }}>
+                <IconContainer>
+                  <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
+                </IconContainer>
+              </View>
               <Text style={{
-                color: '#9aadd0',
-                fontSize: normalize(12),
+                color: 'rgba(255,255,255,0.5)',
+                fontSize: normalize(11),
                 fontWeight: '600',
-                letterSpacing: 1.2,
+                letterSpacing: 1.8,
                 marginBottom: normalizeHeight(6),
               }}>TOTAL WORKOUTS</Text>
               <Text style={{
                 color: '#ffffff',
-                fontSize: normalize(52),
-                fontWeight: '700',
+                fontSize: normalize(48),
+                fontWeight: '800',
                 letterSpacing: -1,
-                lineHeight: normalize(56),
+                lineHeight: normalize(52),
               }}>{(73 || statsData.totalWorkouts) ?? '-'}</Text>
             </View>
 
             {/* Divider */}
-            <View style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.08)', marginHorizontal: normalizeWidth(4) }} />
+            <View style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.22)', marginHorizontal: normalizeWidth(4) }} />
 
             {/* Max Streak */}
             <View style={{ flex: 1, paddingLeft: normalizeWidth(12) }}>
@@ -222,35 +229,35 @@ export const StatisticsScreen = () => {
                   backgroundColor: 'rgba(251,112,40,0.12)',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: normalizeHeight(10),
+                  marginBottom: normalizeHeight(6),
                 }}>
                 <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
               </View>
               <Text style={{
-                color: '#9aadd0',
-                fontSize: normalize(12),
+                color: 'rgba(255,255,255,0.5)',
+                fontSize: normalize(11),
                 fontWeight: '600',
-                letterSpacing: 1.2,
+                letterSpacing: 1.8,
                 marginBottom: normalizeHeight(6),
               }}>MAX STREAK</Text>
               <Text style={{
                 color: '#fb7028',
-                fontSize: normalize(52),
-                fontWeight: '700',
+                fontSize: normalize(48),
+                fontWeight: '800',
                 letterSpacing: -1,
-                lineHeight: normalize(56),
+                lineHeight: normalize(52),
               }}>{5 || streakValue}</Text>
               <Text style={{
-                color: '#9aadd0',
-                fontSize: normalize(13),
-                fontWeight: '400',
-                marginTop: normalizeHeight(2),
+                color: 'rgba(251,112,40,0.65)',
+                fontSize: normalize(12),
+                fontWeight: '500',
+                marginTop: normalizeHeight(4),
               }}>{streakUnit}</Text>
             </View>
           </View>
 
           {/* Row 1: Favourite Exercise + Busiest Day */}
-          <View style={{ height: normalizeHeight(155), flexDirection: 'row', marginBottom: normalizeHeight(12) }}>
+          <View style={{ height: normalizeHeight(156), flexDirection: 'row', marginBottom: normalizeHeight(12) }}>
             <SmallCard
               icon={medal_white}
               iconW={437} iconH={562}
@@ -258,6 +265,8 @@ export const StatisticsScreen = () => {
               iconSize={normalize(14)}
               value={statsData.favouriteExercise ?? '-'}
               valueColor="#ffffff"
+              valueFontSize={normalize(16)}
+              valueLines={1}
               label="Favourite Exercise"
               isLeft={true}
             />
@@ -273,7 +282,7 @@ export const StatisticsScreen = () => {
           </View>
 
           {/* Row 2: Avg Sessions + Avg Sets */}
-          <View style={{ height: normalizeHeight(155), flexDirection: 'row' }}>
+          <View style={{ height: normalizeHeight(156), flexDirection: 'row' }}>
             <SmallCard
               icon={trend_arrow_2}
               iconW={512} iconH={325}
