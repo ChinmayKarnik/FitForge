@@ -55,13 +55,13 @@ const IconContainer = ({ children }) => (
 );
 
 // iconW and iconH are the pixel dimensions of the source image
-const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize, valueFontSize, valueLines, groupLabelValue }) => {
+const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isLeft, iconSize, valueFontSize, valueLines, groupLabelValue, valueFirst, labelFontSize, labelColor }) => {
   const renderedW = iconSize ?? normalize(18);
   const renderedH = renderedW * (iconH / iconW);
   const labelEl = (
     <Text style={{
-      color: 'rgba(255,255,255,0.68)',
-      fontSize: normalize(12),
+      color: labelColor ?? 'rgba(255,255,255,0.68)',
+      fontSize: labelFontSize ?? normalize(12),
       fontWeight: '600',
       letterSpacing: 0.6,
     }}>{label}</Text>
@@ -97,8 +97,8 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
       </IconContainer>
       {groupLabelValue ? (
         <View>
-          {labelEl}
-          {valueEl}
+          {valueFirst ? valueEl : labelEl}
+          {valueFirst ? labelEl : valueEl}
         </View>
       ) : (
         <>
@@ -284,6 +284,7 @@ export const StatisticsScreen = () => {
               label="Favourite Exercise"
               isLeft={true}
               groupLabelValue={true}
+              valueFirst={true}
             />
             <SmallCard
               icon={calendar}
@@ -306,9 +307,12 @@ export const StatisticsScreen = () => {
               iconTint="#ffffff"
               value={4.2 || avgSessions}
               valueColor="#7fb3ff"
-              valueFontSize={normalize(29)}
+              valueFontSize={normalize(31)}
+              labelFontSize={normalize(11)}
+              labelColor="rgba(255,255,255,0.56)"
               label="Avg Sessions / Week"
               isLeft={true}
+              groupLabelValue={true}
             />
             <SmallCard
               icon={plates_stack_2}
@@ -316,9 +320,12 @@ export const StatisticsScreen = () => {
               iconTint="#ffffff"
               value={12.4 || avgSets}
               valueColor="#7fb3ff"
-              valueFontSize={normalize(29)}
+              valueFontSize={normalize(31)}
+              labelFontSize={normalize(11)}
+              labelColor="rgba(255,255,255,0.56)"
               label="Avg Sets / Workout"
               isLeft={false}
+              groupLabelValue={true}
             />
           </View>
         </View>
