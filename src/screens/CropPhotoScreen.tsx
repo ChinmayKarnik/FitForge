@@ -36,6 +36,8 @@ export default function CropPhotoScreen() {
     const [imgDimensions, setImgDimensions] = useState<{ width: number, height: number } | null>(null);
     const [liveCrop, setLiveCrop] = useState({ x: 0, y: 0, size: CIRCLE_SIZE / containerHeight });
     const getCropRef = useRef<any>(null);
+    const panTotalX = useRef(0);
+    const panTotalY = useRef(0);
 
     const isHorizontalImage = imgDimensions ? imgDimensions.width >= imgDimensions.height : true;
     const scale = useRef(new Animated.Value(1)).current;
@@ -85,6 +87,9 @@ export default function CropPhotoScreen() {
                             scaleValue.current * (currentDistance / initialDistance.current)
                         ));
                         scale.setValue(newScale);
+                        if (getCropRef.current) {
+                            setLiveCrop(getCropRef.current(panTotalX.current, panTotalY.current, newScale));
+                        }
                     }
                 } else if (touches.length === 1) {
                     pan.x.setValue(gestureState.dx);
@@ -95,8 +100,8 @@ export default function CropPhotoScreen() {
             onPanResponderRelease: (evt) => {
                 if (evt.nativeEvent.touches.length === 0) {
                     let px = 0, py = 0;
-                    pan.x.stopAnimation((x) => { px = x; });
-                    pan.y.stopAnimation((y) => { py = y; });
+                    pan.x.stopAnimation((x) => { px = x; panTotalX.current = x; });
+                    pan.y.stopAnimation((y) => { py = y; panTotalY.current = y; });
                     scale.stopAnimation((val) => {
                         scaleValue.current = val;
                         if (getCropRef.current) {
