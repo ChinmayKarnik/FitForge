@@ -11,7 +11,6 @@ import { getStatsForTimeRange, getTimeRangeIntervalFormat } from '../utils/worko
 import sad_dumbbell from '../images/sweat-sad-dumbbell.png';
 import flame from '../images/flame.png';
 import flame_3 from '../images/flame-3.png';
-import calendar_marked from '../images/calendar-marked.png';
 import calendar from '../images/calendar.png';
 import dumbbell from '../images/dumbbell-horizontal.png';
 import dumbbell_2 from '../images/dumbbell-2.png';
@@ -158,12 +157,12 @@ export const StatisticsScreen = () => {
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: normalizeHeight(16),
-        marginTop: normalizeHeight(8),
+        marginTop: normalizeHeight(14),
       }}>
         <Image
           source={calendar}
           style={{ width: calW, height: calH, 
-            tintColor: 'rgba(255,255,255,0.8)',
+            tintColor: 'rgba(255,255,255,0.65)',
              marginRight: normalizeWidth(6) }}
         />
         <Text style={{
@@ -205,7 +204,7 @@ export const StatisticsScreen = () => {
                 fontWeight: '700',
                 letterSpacing: -1,
                 lineHeight: normalize(56),
-              }}>{statsData.totalWorkouts ?? '-'}</Text>
+              }}>{(73 || statsData.totalWorkouts) ?? '-'}</Text>
             </View>
 
             {/* Divider */}
@@ -237,7 +236,7 @@ export const StatisticsScreen = () => {
                 fontWeight: '700',
                 letterSpacing: -1,
                 lineHeight: normalize(56),
-              }}>{streakValue}</Text>
+              }}>{5 || streakValue}</Text>
               <Text style={{
                 color: '#9aadd0',
                 fontSize: normalize(13),
@@ -276,7 +275,7 @@ export const StatisticsScreen = () => {
               icon={trend_arrow_2}
               iconW={512} iconH={325}
               iconTint="#ffffff"
-              value={avgSessions}
+              value={4.2 || avgSessions}
               valueColor="#7fb3ff"
               label="Avg Sessions / Week"
               isLeft={true}
@@ -285,7 +284,7 @@ export const StatisticsScreen = () => {
               icon={plates_stack_2}
               iconW={469} iconH={425}
               iconTint="#ffffff"
-              value={avgSets}
+              value={12.4 || avgSets}
               valueColor="#7fb3ff"
               label="Avg Sets / Workout"
               isLeft={false}
