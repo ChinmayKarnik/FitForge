@@ -9,6 +9,7 @@ class DatabaseController {
   private workouts= null;
   private routines =null;
   private userInfo = null;
+  private processedProfilePhoto = null;
 
   // User Info CRUD
   getUserInfo() {
@@ -43,8 +44,8 @@ class DatabaseController {
 
   async saveProfilePhoto(path: string, crop?: { x: number; y: number; size: number }) {
     const base = this.userInfo ?? {};
-    if (crop) { 
-      //  x is x co-ordiante as a fraction of overall width 
+    if (crop) {
+      //  x is x co-ordiante as a fraction of overall width
       //  y is y co-ordinate as a fraction of overall height
       // size (if width >height then fraction of overall width else fraction of overall height)
       this.userInfo = { ...base, profilePhotoPath: path, profilePhotoCrop: crop } as any;
