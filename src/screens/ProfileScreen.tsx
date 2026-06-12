@@ -166,12 +166,23 @@ export const ProfileScreen = () => {
      }}
      onPress={() => navigation.navigate('ProfilePhotoView')}
      >
-        <ProfileImageCircular
-          key={profilePhotoPath || 'default'}
-          imageSource={profilePhotoPath ? { uri: `${profilePhotoPath}?t=${photoTimestamp}` } : profile_photo_default}
-          width={profilePhotoWidth}
-          crop={imageCrop}
-        />
+        <View style={{
+          width: profilePhotoWidth + 4,
+          height: profilePhotoWidth + 4,
+          borderRadius: (profilePhotoWidth + 4) / 2,
+          borderWidth: 2,
+          borderColor: 'rgba(255,255,255,0.30)',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <ProfileImageCircular
+            key={profilePhotoPath || 'default'}
+            imageSource={profilePhotoPath ? { uri: `${profilePhotoPath}?t=${photoTimestamp}` } : profile_photo_default}
+            width={profilePhotoWidth}
+            aspectRatio={1}
+            crop={imageCrop}
+          />
+        </View>
       <TouchableOpacity style={{
         position: 'absolute',
         bottom: normalizeHeight(10),
