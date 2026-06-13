@@ -36,12 +36,6 @@ const BenefitItem = ({ title, description }: { title: string; description: strin
     </View>
 );
 
-const BulletItem = ({ text }: { text: string }) => (
-    <View style={styles.bulletItem}>
-        <View style={styles.bulletDot} />
-        <Text style={styles.bulletText}>{text}</Text>
-    </View>
-);
 
 const SectionTitle = ({ children }: { children: string }) => (
     <Text style={styles.sectionTitle}>{children}</Text>
@@ -114,24 +108,25 @@ const RoutinesFaqScreen = () => {
 
                 {/* Routine vs Exercise */}
                 <SectionTitle>Routine vs Exercise</SectionTitle>
-                <View style={styles.comparisonRow}>
-                    <View style={[styles.comparisonCard, { marginRight: normalizeWidth(8) }]}>
-                        <Text style={styles.comparisonCardTitle}>Exercise</Text>
-                        <Text style={styles.comparisonCardSub}>A single movement</Text>
-                        <View style={styles.comparisonDivider} />
-                        <BulletItem text="Push-Up" />
-                        <BulletItem text="Squat" />
-                        <BulletItem text="Pull-Up" />
-                        <BulletItem text="Deadlift" />
+
+                <View style={styles.comparison}>
+                    <View style={styles.compCol}>
+                        <View style={styles.compTopBar} />
+                        <Text style={styles.compColLabel}>Exercise</Text>
+                        <Text style={styles.compColDesc}>A single movement</Text>
+                        <Text style={styles.compItem}>Push-Up</Text>
+                        <Text style={styles.compItem}>Squat</Text>
+                        <Text style={styles.compItem}>Pull-Up</Text>
+                        <Text style={styles.compItem}>Deadlift</Text>
                     </View>
-                    <View style={[styles.comparisonCard, { marginLeft: normalizeWidth(8) }]}>
-                        <Text style={styles.comparisonCardTitle}>Routine</Text>
-                        <Text style={styles.comparisonCardSub}>A collection of exercises</Text>
-                        <View style={styles.comparisonDivider} />
-                        <Text style={styles.comparisonRoutineName}>Push Day</Text>
-                        <BulletItem text="Bench Press" />
-                        <BulletItem text="Shoulder Press" />
-                        <BulletItem text="Tricep Pushdown" />
+                    <View style={styles.compCol}>
+                        <View style={[styles.compTopBar, styles.compTopBarAccent]} />
+                        <Text style={styles.compColLabel}>Routine</Text>
+                        <Text style={styles.compColDesc}>A collection of exercises</Text>
+                        <Text style={styles.compRoutineName}>Push Day</Text>
+                        <Text style={styles.compRoutineItem}>Bench Press</Text>
+                        <Text style={styles.compRoutineItem}>Shoulder Press</Text>
+                        <Text style={styles.compRoutineItem}>Tricep Pushdown</Text>
                     </View>
                 </View>
 
@@ -284,56 +279,52 @@ const styles = StyleSheet.create({
         lineHeight: normalize(20),
         paddingLeft: normalizeWidth(10),
     },
-    // Bullet items
-    bulletItem: {
+    // Routine vs Exercise comparison
+    comparison: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: normalizeHeight(6),
+        marginTop: normalizeHeight(16),
+        gap: normalizeWidth(20),
     },
-    bulletDot: {
-        width: normalize(5),
-        height: normalize(5),
-        borderRadius: normalize(3),
-        backgroundColor: '#7fb3ff',
-        marginRight: normalizeWidth(10),
-    },
-    bulletText: {
-        color: 'rgba(255,255,255,0.7)',
-        fontSize: normalize(14),
-    },
-    // Comparison cards
-    comparisonRow: {
-        flexDirection: 'row',
-    },
-    comparisonCard: {
+    compCol: {
         flex: 1,
-        backgroundColor: '#252d47',
-        borderWidth: 1,
-        borderColor: '#3d4563',
-        borderRadius: normalize(12),
-        padding: normalize(14),
     },
-    comparisonCardTitle: {
+    compTopBar: {
+        height: 2,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 1,
+        marginBottom: normalizeHeight(12),
+    },
+    compTopBarAccent: {
+        backgroundColor: '#4f8ff4',
+    },
+    compColLabel: {
         color: '#fefefe',
         fontSize: normalize(14),
-        fontWeight: '600',
-        marginBottom: normalizeHeight(4),
+        fontWeight: '700',
+        marginBottom: normalizeHeight(3),
     },
-    comparisonCardSub: {
-        color: 'rgba(255,255,255,0.4)',
+    compColDesc: {
+        color: 'rgba(255,255,255,0.38)',
         fontSize: normalize(11),
-        marginBottom: normalizeHeight(10),
+        lineHeight: normalize(16),
+        marginBottom: normalizeHeight(12),
     },
-    comparisonDivider: {
-        height: 1,
-        backgroundColor: 'rgba(255,255,255,0.08)',
-        marginBottom: normalizeHeight(10),
+    compItem: {
+        color: 'rgba(255,255,255,0.55)',
+        fontSize: normalize(13),
+        lineHeight: normalize(22),
     },
-    comparisonRoutineName: {
-        color: '#7fb3ff',
+    compRoutineName: {
+        color: '#fefefe',
         fontSize: normalize(13),
         fontWeight: '600',
-        marginBottom: normalizeHeight(6),
+        marginBottom: normalizeHeight(2),
+    },
+    compRoutineItem: {
+        color: 'rgba(255,255,255,0.55)',
+        fontSize: normalize(13),
+        lineHeight: normalize(22),
+        paddingLeft: normalizeWidth(6),
     },
 });
 
