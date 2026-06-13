@@ -252,8 +252,9 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     screenshotCaption: {
-        color: 'rgba(255,255,255,0.38)',
+        color: 'rgba(255,255,255,0.62)',
         fontSize: normalize(12),
+        fontWeight: '500',
         lineHeight: normalize(17),
         paddingTop: normalizeHeight(8),
         paddingBottom: normalizeHeight(2),
