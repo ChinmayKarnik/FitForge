@@ -346,7 +346,9 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                                     const v = loggedData['Time'];
                                     const mins = Math.floor(v / 60);
                                     const secs = v % 60;
-                                    parts.push(`${mins}:${secs.toString().padStart(2, '0')}`);
+                                    if (mins === 0) parts.push(`${secs} ${secs === 1 ? 'sec' : 'secs'}`);
+                                    else if (secs === 0) parts.push(`${mins} ${mins === 1 ? 'min' : 'mins'}`);
+                                    else parts.push(`${mins} ${mins === 1 ? 'min' : 'mins'} ${secs} ${secs === 1 ? 'sec' : 'secs'}`);
                                 }
                                 if (weightParam && loggedData['Weight']) {
                                     parts.push(`${loggedData['Weight']} KG`);
