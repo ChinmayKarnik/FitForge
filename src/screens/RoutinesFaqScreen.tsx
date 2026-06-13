@@ -9,7 +9,7 @@ const IMAGE_WIDTH = SCREEN_WIDTH - normalizeWidth(40);
 import faq_routine_details from '../images/faq-routine-details.png';
 import faq_routines_list from '../images/faq-routines-list.png';
 
-const Divider = () => <View style={styles.divider} />;
+const Divider = ({ style }: { style?: object }) => <View style={[styles.divider, style]} />;
 
 const INNER_IMAGE_WIDTH = IMAGE_WIDTH - normalizeWidth(16);
 
@@ -83,7 +83,7 @@ const RoutinesFaqScreen = () => {
                     caption="Example Routine — Push Day: Bench Press, Shoulder Press, Tricep Pushdowns"
                 />
 
-                <Divider />
+                <Divider style={{ marginTop: normalizeHeight(14) }} />
 
                 {/* Why Use Routines */}
                 <SectionTitle>Why Use Routines?</SectionTitle>
@@ -215,15 +215,16 @@ const styles = StyleSheet.create({
     },
     divider: {
         height: 1,
-        backgroundColor: 'rgba(255,255,255,0.08)',
-        marginVertical: normalizeHeight(30),
+        backgroundColor: 'rgba(255,255,255,0.05)',
+        marginVertical: normalizeHeight(26),
     },
     sectionTitle: {
         color: '#fefefe',
         fontSize: normalize(17),
         fontWeight: '700',
-        letterSpacing: 0.6,
-        marginBottom: normalizeHeight(14),
+        fontFamily: 'serif',
+        letterSpacing: 0,
+        marginBottom: normalizeHeight(12),
     },
     subTitle: {
         color: '#7fb3ff',
