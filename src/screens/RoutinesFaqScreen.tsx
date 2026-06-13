@@ -1,17 +1,23 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const IMAGE_WIDTH = SCREEN_WIDTH - normalizeWidth(40);
+import faq_routine_details from '../images/faq-routine-details.png';
+import faq_routines_list from '../images/faq-routines-list.png';
+
 const Divider = () => <View style={styles.divider} />;
 
-const ScreenshotPlaceholder = ({ caption }: { caption: string }) => (
-    <View style={styles.placeholderWrapper}>
-        <View style={styles.placeholderBox}>
-            <Text style={styles.placeholderLabel}>screenshot</Text>
-            <Text style={styles.placeholderCaption}>{caption}</Text>
-        </View>
+const ScreenshotImage = ({ source, aspectRatio }: { source: any; aspectRatio: number }) => (
+    <View style={styles.screenshotWrapper}>
+        <Image
+            source={source}
+            style={{ width: IMAGE_WIDTH, height: IMAGE_WIDTH / aspectRatio }}
+            resizeMode="cover"
+        />
     </View>
 );
 
@@ -44,7 +50,6 @@ const RoutinesFaqScreen = () => {
 
     return (
         <View style={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
@@ -52,7 +57,7 @@ const RoutinesFaqScreen = () => {
                 >
                     <Image source={white_left_arrow} style={styles.backArrow} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Understanding Routines</Text>
+                <Text style={styles.headerTitle}>Routines</Text>
                 <View style={{ width: normalizeWidth(24) }} />
             </View>
 
@@ -69,7 +74,11 @@ const RoutinesFaqScreen = () => {
                     Think of a routine as a workout template that you can save and reuse whenever you train.
                 </Text>
 
-                <ScreenshotPlaceholder caption="Routine Details Screen — e.g. a Push Day routine with Bench Press, Shoulder Press, and Tricep Pushdowns." />
+                <ScreenshotImage source={faq_routine_details} aspectRatio={707 / 806} />
+
+                <Text style={[styles.body, { marginTop: normalizeHeight(12) }]}>
+                    Example: A "Push Day" routine might contain Bench Press, Shoulder Press, and Tricep Pushdowns.
+                </Text>
 
                 <Divider />
 
@@ -97,7 +106,6 @@ const RoutinesFaqScreen = () => {
 
                 {/* Routine vs Exercise */}
                 <SectionTitle>Routine vs Exercise</SectionTitle>
-
                 <View style={styles.comparisonRow}>
                     <View style={[styles.comparisonCard, { marginRight: normalizeWidth(8) }]}>
                         <Text style={styles.comparisonCardTitle}>Exercise</Text>
@@ -123,9 +131,7 @@ const RoutinesFaqScreen = () => {
 
                 {/* Do I Need a Routine */}
                 <SectionTitle>Do I Need a Routine?</SectionTitle>
-                <Text style={styles.body}>
-                    No.
-                </Text>
+                <Text style={styles.body}>No.</Text>
                 <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
                     You can track workouts by selecting exercises individually. Routines simply make it faster when you regularly perform the same group of exercises.
                 </Text>
@@ -135,13 +141,13 @@ const RoutinesFaqScreen = () => {
                 {/* Managing Routines */}
                 <SectionTitle>Managing Your Routines</SectionTitle>
                 <Text style={styles.body}>
-                    FitForge lets you create, edit, and customise routines at any time. Build routines that match your own training style, schedule, and goals.
+                    FitForge lets you create, edit, and customise routines at any time. Build routines that match your training style, schedule, and goals.
                 </Text>
                 <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
-                    You can access and manage your routines from the Profile section.
+                    You can access and manage your routines from the Routines section.
                 </Text>
 
-                <ScreenshotPlaceholder caption="Profile → Routines — where routines can be created, edited, and organised." />
+                <ScreenshotImage source={faq_routines_list} aspectRatio={712 / 1568} />
 
             </ScrollView>
         </View>
@@ -171,9 +177,11 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: '#fefefe',
-        fontSize: normalize(20),
+        fontSize: normalize(18),
         fontWeight: '700',
-        letterSpacing: 0.5,
+        letterSpacing: 0.3,
+        flex: 1,
+        textAlign: 'center',
     },
     content: {
         paddingHorizontal: normalizeWidth(20),
@@ -209,34 +217,13 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginBottom: normalizeHeight(8),
     },
-    // Screenshot placeholder
-    placeholderWrapper: {
+    // Screenshot
+    screenshotWrapper: {
         marginTop: normalizeHeight(16),
-        marginBottom: normalizeHeight(4),
-    },
-    placeholderBox: {
-        backgroundColor: '#252d47',
+        borderRadius: normalize(16),
+        overflow: 'hidden',
         borderWidth: 1,
         borderColor: '#3d4563',
-        borderRadius: normalize(12),
-        borderStyle: 'dashed',
-        paddingVertical: normalizeHeight(32),
-        paddingHorizontal: normalizeWidth(16),
-        alignItems: 'center',
-    },
-    placeholderLabel: {
-        color: 'rgba(255,255,255,0.25)',
-        fontSize: normalize(11),
-        fontWeight: '500',
-        letterSpacing: 1.5,
-        textTransform: 'uppercase',
-        marginBottom: normalizeHeight(8),
-    },
-    placeholderCaption: {
-        color: 'rgba(255,255,255,0.4)',
-        fontSize: normalize(12),
-        textAlign: 'center',
-        lineHeight: normalize(18),
     },
     // Check items
     checkItem: {
