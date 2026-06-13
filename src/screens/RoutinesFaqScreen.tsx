@@ -13,7 +13,7 @@ const Divider = ({ style }: { style?: object }) => <View style={[styles.divider,
 
 const INNER_IMAGE_WIDTH = IMAGE_WIDTH - normalizeWidth(16);
 
-const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspectRatio: number; caption?: string }) => (
+const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspectRatio: number; caption?: React.ReactNode }) => (
     <View style={styles.screenshotWrapper}>
         <View style={styles.screenshotImageClip}>
             <Image
@@ -39,6 +39,15 @@ const BenefitItem = ({ title, description }: { title: string; description: strin
 
 const SectionTitle = ({ children }: { children: string }) => (
     <Text style={styles.sectionTitle}>{children}</Text>
+);
+
+const SectionRailBlock = ({ children }: { children: React.ReactNode }) => (
+    <View style={styles.railBlock}>
+        <View style={styles.railBar} />
+        <View style={styles.railContent}>
+            {children}
+        </View>
+    </View>
 );
 
 
@@ -80,7 +89,7 @@ const RoutinesFaqScreen = () => {
                 <ScreenshotImage
                     source={faq_routine_details}
                     aspectRatio={707 / 806}
-                    caption="Example Routine — Push Day: Bench Press, Shoulder Press, Tricep Pushdowns"
+                    caption={<>{'Example Routine — '}<Text style={{ fontWeight: '700', color: '#ffffff' }}>Push Day</Text>{': Bench Press, Shoulder Press, Tricep Pushdowns'}</>}
                 />
 
                 <Divider style={{ marginTop: normalizeHeight(14) }} />
@@ -134,21 +143,24 @@ const RoutinesFaqScreen = () => {
 
                 {/* Do I Need a Routine */}
                 <SectionTitle>Do I Need a Routine?</SectionTitle>
-                <Text style={styles.body}>No.</Text>
-                <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
-                    You can track workouts by selecting exercises individually. Routines simply make it faster when you regularly perform the same group of exercises.
-                </Text>
+                <SectionRailBlock>
+                    <Text style={styles.body}>
+                        No. You can track workouts by selecting exercises individually. Routines simply make it faster when you regularly perform the same group of exercises.
+                    </Text>
+                </SectionRailBlock>
 
                 <Divider />
 
                 {/* Managing Routines */}
                 <SectionTitle>Managing Your Routines</SectionTitle>
-                <Text style={styles.body}>
-                    FitForge lets you create, edit, and customise routines at any time. Build routines that match your training style, schedule, and goals.
-                </Text>
-                <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
-                    You can access and manage your routines from the Routines section.
-                </Text>
+                <SectionRailBlock>
+                    <Text style={styles.body}>
+                        FitForge lets you create, edit, and customise routines at any time. Build routines that match your training style, schedule, and goals.
+                    </Text>
+                    <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
+                        You can access and manage your routines from the Routines section.
+                    </Text>
+                </SectionRailBlock>
 
                 <ScreenshotImage source={faq_routines_list} aspectRatio={712 / 1568} />
 
@@ -193,25 +205,30 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         color: '#ffffff',
-        fontSize: normalize(22),
-        fontWeight: '700',
+        fontSize: normalize(29),
+        fontWeight: '800',
         fontFamily: 'serif',
-        letterSpacing: 0,
-        marginBottom: normalizeHeight(10),
+        letterSpacing: -0.6,
+        lineHeight: normalize(36),
+        marginBottom: normalizeHeight(24),
     },
     body: {
-        color: 'rgba(255,255,255,0.72)',
-        fontSize: normalize(15),
-        lineHeight: normalize(25),
+        color: 'rgba(255, 248, 232, 0.94)',
+        fontSize: normalize(14),
+        lineHeight: normalize(28),
+        fontFamily: 'NunitoSans-Regular',
+        letterSpacing: 0.1,
     },
     bodySecondary: {
-        color: 'rgba(255,255,255,0.5)',
+        color: 'rgba(255, 246, 228, 0.72)',
         fontSize: normalize(14),
-        lineHeight: normalize(23),
+        lineHeight: normalize(26),
+        fontFamily: 'NunitoSans-Regular',
+        letterSpacing: 0.1,
     },
     bodyEmphasis: {
-        color: 'rgba(255,255,255,0.92)',
-        fontWeight: '500',
+        color: 'rgba(255,255,255,0.72)',
+        fontWeight: '400',
     },
     divider: {
         height: 1,
@@ -220,11 +237,26 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         color: '#fefefe',
-        fontSize: normalize(17),
+        fontSize: normalize(21),
         fontWeight: '700',
         fontFamily: 'serif',
-        letterSpacing: 0,
-        marginBottom: normalizeHeight(12),
+        letterSpacing: -0.3,
+        lineHeight: normalize(28),
+        marginBottom: normalizeHeight(22),
+    },
+    railBlock: {
+        flexDirection: 'row',
+    },
+    railBar: {
+        width: 2,
+        backgroundColor: 'rgba(79, 126, 232, 0.45)',
+        borderRadius: 2,
+        alignSelf: 'stretch',
+        marginBottom: normalizeHeight(6),
+    },
+    railContent: {
+        flex: 1,
+        paddingLeft: normalizeWidth(10),
     },
     subTitle: {
         color: '#7fb3ff',
@@ -235,23 +267,41 @@ const styles = StyleSheet.create({
     // Screenshot
     screenshotWrapper: {
         marginTop: normalizeHeight(14),
-        borderRadius: normalize(12),
+        borderRadius: normalize(14),
         borderWidth: 1,
-        borderColor: '#3d4563',
+        borderColor: 'rgba(255,255,255,0.13)',
         padding: normalize(8),
+        backgroundColor: '#171f36',
     },
     screenshotImageClip: {
         borderRadius: normalize(6),
         overflow: 'hidden',
     },
     screenshotCaption: {
-        color: 'rgba(255,255,255,0.62)',
-        fontSize: normalize(12),
-        fontWeight: '500',
-        lineHeight: normalize(17),
-        paddingTop: normalizeHeight(8),
-        paddingBottom: normalizeHeight(2),
+        color: 'rgba(255,255,255,0.75)',
+        fontSize: normalize(13),
+        fontWeight: '400',
+        lineHeight: normalize(19),
+        paddingTop: normalizeHeight(9),
+        paddingBottom: normalizeHeight(3),
         paddingHorizontal: normalize(4),
+    },
+    // Q&A pattern
+    qaRow: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        marginTop: normalizeHeight(6),
+    },
+    qaLabel: {
+        color: 'rgba(255,255,255,0.38)',
+        fontSize: normalize(12),
+        fontWeight: '400',
+    },
+    qaAnswer: {
+        color: '#ffffff',
+        fontSize: normalize(15),
+        fontWeight: '700',
+        fontFamily: 'serif',
     },
     // Benefit items
     benefitItem: {
