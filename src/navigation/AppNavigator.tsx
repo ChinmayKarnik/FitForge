@@ -12,6 +12,7 @@ import AddRoutineScreen from '../screens/AddRoutineScreen';
 import EditRoutineScreen from '../screens/EditRoutineScreen';
 import CropPhotoScreen from '../screens/CropPhotoScreen';
 import { DayDetails } from '../screens/DayDetails';
+import RoutinesFaqScreen from '../screens/RoutinesFaqScreen';
 import ExitAppModal from '../components/ExitAppModal';
 
 import { View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
@@ -211,6 +212,7 @@ export const AppNavigator = () => {
           <RootStack.Screen name="ProfilePhotoView" component={ProfilePhotoView} />
           <RootStack.Screen name="WorkoutDetails" component={WorkoutDetailsScreen} />
           <RootStack.Screen name="DayDetails" component={DayDetails} />
+          <RootStack.Screen name="RoutinesFaq" component={RoutinesFaqScreen} />
         </RootStack.Navigator>
       </NavigationContainer>
 

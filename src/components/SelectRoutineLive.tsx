@@ -108,7 +108,13 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         </TouchableOpacity>
         <Text style={styles.headerText}>Select Routine</Text>
         {/* Question mark icon — top right */}
-        <Image source={question_mark_with_circle} style={styles.questionMarkIcon} />
+        <TouchableOpacity
+            onPress={() => navigation.navigate('RoutinesFaq')}
+            hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
+            style={styles.questionMarkButton}
+        >
+            <Image source={question_mark_with_circle} style={styles.questionMarkIcon} />
+        </TouchableOpacity>
       </View>
 
       {/* Search bar — fixed, does not scroll */}
@@ -237,10 +243,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fefefe',
   },
-  questionMarkIcon: {
+  questionMarkButton: {
     position: 'absolute',
     top: normalizeHeight(43),
     right: normalizeWidth(16),
+  },
+  questionMarkIcon: {
     width: QM_SIZE,
     height: QM_SIZE * (402.0 / 407.0),
     tintColor: 'rgba(255,255,255,0.55)',
