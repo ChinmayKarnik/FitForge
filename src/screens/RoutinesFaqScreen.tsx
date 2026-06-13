@@ -77,7 +77,7 @@ const RoutinesFaqScreen = () => {
                     <Text style={styles.bodyEmphasis}>collection of exercises</Text>
                     {' that you perform together during a workout.'}
                 </Text>
-                <Text style={[styles.bodySecondary, { marginTop: normalizeHeight(14) }]}>
+                <Text style={[styles.bodySecondary, { marginTop: normalizeHeight(10) }]}>
                     {'Think of a routine as a '}
                     <Text style={styles.bodyEmphasis}>workout template</Text>
                     {' that you can '}
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontFamily: 'serif',
         letterSpacing: 0,
-        marginBottom: normalizeHeight(16),
+        marginBottom: normalizeHeight(10),
     },
     body: {
         color: 'rgba(255,255,255,0.72)',
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 1,
         backgroundColor: 'rgba(255,255,255,0.08)',
-        marginVertical: normalizeHeight(24),
+        marginVertical: normalizeHeight(30),
     },
     sectionTitle: {
         color: '#fefefe',
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     },
     // Screenshot
     screenshotWrapper: {
-        marginTop: normalizeHeight(20),
+        marginTop: normalizeHeight(14),
         borderRadius: normalize(12),
         borderWidth: 1,
         borderColor: '#3d4563',
