@@ -72,11 +72,12 @@ const SelectExerciseModalContent = ({
                                     data={filteredExercises}
                                     keyExtractor={(item) => item.id}
                                     showsVerticalScrollIndicator={false}
-                                    renderItem={({ item }) => {
+                                    renderItem={({ item, index }) => {
                                         const isSelected = selectedExercise?.id === item.id;
+                                        const isLast = index === filteredExercises.length - 1;
                                         return (
                                             <TouchableOpacity
-                                                style={styles.exerciseItem}
+                                                style={[styles.exerciseItem, isLast && { borderBottomWidth: 0 }]}
                                                 onPress={() => {
                                                     setSelectedExercise(isSelected ? null : item)}}
                                             >
