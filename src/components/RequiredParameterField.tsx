@@ -4,6 +4,7 @@ import { normalize, normalizeHeight } from '../utils/normalize';
 import YesNoSelection from './YesNoSelection';
 import NumberSelection from './NumberSelection';
 import WeightSelection from './WeightSelection';
+import TimeSelection from './TimeSelection';
 
 const ParameterValueSelection = ({ value, setValue, parameter }) => {
   if (parameter.type === 'boolean') {
@@ -15,6 +16,9 @@ const ParameterValueSelection = ({ value, setValue, parameter }) => {
   if (parameter.type === 'weight') {
     return <WeightSelection value={value} setValue={setValue} />;
   }
+  if (parameter.type === 'time') {
+    return <TimeSelection value={value} setValue={setValue} />;
+  }
   return <></>;
 };
 
@@ -23,6 +27,7 @@ const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateP
   if (parameter.type === 'boolean') defaultValue = true;
   if (parameter.type === 'reps') defaultValue = 0;
   if (parameter.type === 'weight') defaultValue = 0;
+  if (parameter.type === 'time') defaultValue = 0;
 
   const [value, setValue] = useState(initialValue ?? defaultValue);
 
