@@ -11,13 +11,18 @@ import faq_routines_list from '../images/faq-routines-list.png';
 
 const Divider = () => <View style={styles.divider} />;
 
-const ScreenshotImage = ({ source, aspectRatio }: { source: any; aspectRatio: number }) => (
+const INNER_IMAGE_WIDTH = IMAGE_WIDTH - normalizeWidth(16);
+
+const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspectRatio: number; caption?: string }) => (
     <View style={styles.screenshotWrapper}>
-        <Image
-            source={source}
-            style={{ width: IMAGE_WIDTH, height: IMAGE_WIDTH / aspectRatio }}
-            resizeMode="cover"
-        />
+        <View style={styles.screenshotImageClip}>
+            <Image
+                source={source}
+                style={{ width: INNER_IMAGE_WIDTH, height: INNER_IMAGE_WIDTH / aspectRatio }}
+                resizeMode="cover"
+            />
+        </View>
+        {caption && <Text style={styles.screenshotCaption}>{caption}</Text>}
     </View>
 );
 
@@ -68,17 +73,23 @@ const RoutinesFaqScreen = () => {
                 {/* What are Routines */}
                 <Text style={styles.pageTitle}>What are Routines?</Text>
                 <Text style={styles.body}>
-                    A routine is a collection of exercises that you perform together during a workout.
+                    {'A routine is a '}
+                    <Text style={styles.bodyEmphasis}>collection of exercises</Text>
+                    {' that you perform together during a workout.'}
                 </Text>
-                <Text style={[styles.body, { marginTop: normalizeHeight(8) }]}>
-                    Think of a routine as a workout template that you can save and reuse whenever you train.
+                <Text style={[styles.bodySecondary, { marginTop: normalizeHeight(14) }]}>
+                    {'Think of a routine as a '}
+                    <Text style={styles.bodyEmphasis}>workout template</Text>
+                    {' that you can '}
+                    <Text style={styles.bodyEmphasis}>save and reuse</Text>
+                    {' whenever you train.'}
                 </Text>
 
-                <ScreenshotImage source={faq_routine_details} aspectRatio={707 / 806} />
-
-                <Text style={[styles.body, { marginTop: normalizeHeight(12) }]}>
-                    Example: A "Push Day" routine might contain Bench Press, Shoulder Press, and Tricep Pushdowns.
-                </Text>
+                <ScreenshotImage
+                    source={faq_routine_details}
+                    aspectRatio={707 / 806}
+                    caption="Example Routine — Push Day: Bench Press, Shoulder Press, Tricep Pushdowns"
+                />
 
                 <Divider />
 
@@ -189,16 +200,26 @@ const styles = StyleSheet.create({
         paddingBottom: normalizeHeight(60),
     },
     pageTitle: {
-        color: '#fefefe',
+        color: '#ffffff',
         fontSize: normalize(22),
         fontWeight: '700',
-        letterSpacing: 0.3,
-        marginBottom: normalizeHeight(12),
+        fontFamily: 'serif',
+        letterSpacing: 0,
+        marginBottom: normalizeHeight(16),
     },
     body: {
-        color: 'rgba(255,255,255,0.7)',
+        color: 'rgba(255,255,255,0.72)',
+        fontSize: normalize(15),
+        lineHeight: normalize(25),
+    },
+    bodySecondary: {
+        color: 'rgba(255,255,255,0.5)',
         fontSize: normalize(14),
-        lineHeight: normalize(22),
+        lineHeight: normalize(23),
+    },
+    bodyEmphasis: {
+        color: 'rgba(255,255,255,0.92)',
+        fontWeight: '500',
     },
     divider: {
         height: 1,
@@ -208,7 +229,8 @@ const styles = StyleSheet.create({
     sectionTitle: {
         color: '#fefefe',
         fontSize: normalize(17),
-        fontWeight: '600',
+        fontWeight: '700',
+        letterSpacing: 0.6,
         marginBottom: normalizeHeight(14),
     },
     subTitle: {
@@ -219,11 +241,23 @@ const styles = StyleSheet.create({
     },
     // Screenshot
     screenshotWrapper: {
-        marginTop: normalizeHeight(16),
-        borderRadius: normalize(16),
-        overflow: 'hidden',
+        marginTop: normalizeHeight(20),
+        borderRadius: normalize(12),
         borderWidth: 1,
         borderColor: '#3d4563',
+        padding: normalize(8),
+    },
+    screenshotImageClip: {
+        borderRadius: normalize(6),
+        overflow: 'hidden',
+    },
+    screenshotCaption: {
+        color: 'rgba(255,255,255,0.38)',
+        fontSize: normalize(12),
+        lineHeight: normalize(17),
+        paddingTop: normalizeHeight(8),
+        paddingBottom: normalizeHeight(2),
+        paddingHorizontal: normalize(4),
     },
     // Check items
     checkItem: {
