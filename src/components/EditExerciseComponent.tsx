@@ -97,16 +97,16 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
         let exerciseToSubmit = { ...exercise };
         const requiredParameters = [];
         if (parameters.reps) {
-            requiredParameters.push({ name: 'Reps', type: 'number', moreIsBetter: true });
+            requiredParameters.push({ name: 'Reps', type: 'reps', moreIsBetter: true });
         }
         if (parameters.weight) {
-            requiredParameters.push({ name: 'Weight', type: 'number', moreIsBetter: true });
+            requiredParameters.push({ name: 'Weight', type: 'weight', moreIsBetter: true });
         }
         if (parameters.toFailure) {
             requiredParameters.push({ name: 'To Failure', type: 'boolean' });
         }
         if (parameters.time) {
-            requiredParameters.push({ name: 'Time', type: 'number', moreIsBetter: true });
+            requiredParameters.push({ name: 'Time', type: 'time', moreIsBetter: true });
         }
         if (requiredParameters.length > 0) {
             exerciseToSubmit.requiredParameters = requiredParameters;
