@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Image, Keyboard, ToastAndroid } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -125,6 +125,14 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
     };
 
     const toggleParameter = (param: keyof typeof parameters) => {
+        if (param === 'reps' && !parameters.reps && parameters.time) {
+            ToastAndroid.show("Can't use Reps and Time together", ToastAndroid.SHORT);
+            return;
+        }
+        if (param === 'time' && !parameters.time && parameters.reps) {
+            ToastAndroid.show("Can't use Time and Reps together", ToastAndroid.SHORT);
+            return;
+        }
         setParameters({ ...parameters, [param]: !parameters[param] });
     };
 
