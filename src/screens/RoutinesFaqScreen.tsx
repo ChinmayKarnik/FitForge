@@ -213,14 +213,14 @@ const styles = StyleSheet.create({
         marginBottom: normalizeHeight(24),
     },
     body: {
-        color: 'rgba(255, 248, 232, 0.94)',
+        color: 'rgba(255, 255, 255, 0.92)',
         fontSize: normalize(14),
         lineHeight: normalize(28),
         fontFamily: 'NunitoSans-Regular',
         letterSpacing: 0.1,
     },
     bodySecondary: {
-        color: 'rgba(255, 246, 228, 0.72)',
+        color: 'rgba(255, 255, 255, 0.68)',
         fontSize: normalize(14),
         lineHeight: normalize(26),
         fontFamily: 'NunitoSans-Regular',
