@@ -50,7 +50,7 @@ const TimeSelection = ({ value, setValue }: { value: number; setValue: (v: numbe
         onChangeText={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
-        keyboardType="numbers-and-punctuation"
+        keyboardType="number-pad"
         placeholder="00:00"
         placeholderTextColor="#F2F4F8"
         selectionColor="#F2F4F8"
