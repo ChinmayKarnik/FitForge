@@ -88,6 +88,7 @@ const SingularSetEntry = ({ reps, weight, time, isTimeBased = false, avoidMonoch
           color: BLUE,
           fontSize: normalizeHeight(12),
           fontWeight: '600',
+          marginRight: normalizeWidth(12),
         }}>
           {formatTimeSecs(time || 0)}
         </Text>
@@ -162,7 +163,8 @@ const IndividualSetEntry = ({ setNumber, reps, weight, time, isTimeBased = false
             color: BLUE,
             fontSize: normalizeHeight(12),
             fontWeight: '600',
-            letterSpacing: 0.3
+            letterSpacing: 0.3,
+            marginRight: normalizeWidth(12),
           }}>
             {formatTimeSecs(time || 0)}
           </Text>
