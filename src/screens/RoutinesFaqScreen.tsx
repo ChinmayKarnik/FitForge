@@ -26,12 +26,13 @@ const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspect
     </View>
 );
 
-const CheckItem = ({ text }: { text: string }) => (
-    <View style={styles.checkItem}>
-        <View style={styles.checkMark}>
-            <Text style={styles.checkMarkText}>✓</Text>
+const BenefitItem = ({ title, description }: { title: string; description: string }) => (
+    <View style={styles.benefitItem}>
+        <View style={styles.benefitTitleRow}>
+            <View style={styles.benefitAccent} />
+            <Text style={styles.benefitTitle}>{title}</Text>
         </View>
-        <Text style={styles.checkText}>{text}</Text>
+        <Text style={styles.benefitDescription}>{description}</Text>
     </View>
 );
 
@@ -46,9 +47,6 @@ const SectionTitle = ({ children }: { children: string }) => (
     <Text style={styles.sectionTitle}>{children}</Text>
 );
 
-const SubTitle = ({ children }: { children: string }) => (
-    <Text style={styles.subTitle}>{children}</Text>
-);
 
 const RoutinesFaqScreen = () => {
     const navigation = useNavigation<any>();
@@ -93,25 +91,24 @@ const RoutinesFaqScreen = () => {
 
                 <Divider />
 
-                {/* Example Routine */}
-                <SectionTitle>Example Routine</SectionTitle>
-                <SubTitle>Push Day</SubTitle>
-                <BulletItem text="Bench Press" />
-                <BulletItem text="Incline Dumbbell Press" />
-                <BulletItem text="Shoulder Press" />
-                <BulletItem text="Tricep Pushdown" />
-                <Text style={[styles.body, { marginTop: normalizeHeight(12) }]}>
-                    This routine groups several upper-body pushing exercises into a single workout.
-                </Text>
-
-                <Divider />
-
                 {/* Why Use Routines */}
                 <SectionTitle>Why Use Routines?</SectionTitle>
-                <CheckItem text="Start workouts faster" />
-                <CheckItem text="Stay consistent between sessions" />
-                <CheckItem text="Reuse your favourite workout plans" />
-                <CheckItem text="Track progress across similar workouts" />
+                <BenefitItem
+                    title="Start Workouts Faster"
+                    description="Your exercise list is ready to go. No searching, no setup."
+                />
+                <BenefitItem
+                    title="Build a Consistent Habit"
+                    description="Same structure each session makes effort easier to measure."
+                />
+                <BenefitItem
+                    title="Reuse What Works"
+                    description="Save once. Use it until your goals change."
+                />
+                <BenefitItem
+                    title="Compare Progress Accurately"
+                    description="Like-for-like sessions make progress comparisons meaningful."
+                />
 
                 <Divider />
 
@@ -260,31 +257,32 @@ const styles = StyleSheet.create({
         paddingBottom: normalizeHeight(2),
         paddingHorizontal: normalize(4),
     },
-    // Check items
-    checkItem: {
+    // Benefit items
+    benefitItem: {
+        marginBottom: normalizeHeight(18),
+    },
+    benefitTitleRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: normalizeHeight(10),
+        marginBottom: normalizeHeight(4),
     },
-    checkMark: {
-        width: normalize(20),
-        height: normalize(20),
-        borderRadius: normalize(10),
-        backgroundColor: 'rgba(74,200,120,0.18)',
-        borderWidth: 1,
-        borderColor: 'rgba(74,200,120,0.4)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: normalizeWidth(12),
+    benefitAccent: {
+        width: 2,
+        height: normalize(14),
+        backgroundColor: 'rgba(79, 143, 244, 0.55)',
+        borderRadius: 1,
+        marginRight: normalizeWidth(8),
     },
-    checkMarkText: {
-        color: '#4ac878',
-        fontSize: normalize(11),
-        fontWeight: '700',
-    },
-    checkText: {
-        color: 'rgba(255,255,255,0.8)',
+    benefitTitle: {
+        color: 'rgba(255,255,255,0.88)',
         fontSize: normalize(14),
+        fontWeight: '600',
+    },
+    benefitDescription: {
+        color: 'rgba(255,255,255,0.5)',
+        fontSize: normalize(13),
+        lineHeight: normalize(20),
+        paddingLeft: normalizeWidth(10),
     },
     // Bullet items
     bulletItem: {
