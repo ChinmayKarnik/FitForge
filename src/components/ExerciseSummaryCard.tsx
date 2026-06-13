@@ -65,7 +65,9 @@ const NSetsUI = ({ numSets, avoidMonochrome = false }) => {
 const formatTimeSecs = (secs: number): string => {
   const m = Math.floor(secs / 60);
   const s = secs % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
+  if (m === 0) return `${s} ${s === 1 ? 'sec' : 'secs'}`;
+  if (s === 0) return `${m} ${m === 1 ? 'min' : 'mins'}`;
+  return `${m} ${m === 1 ? 'min' : 'mins'} ${s} ${s === 1 ? 'sec' : 'secs'}`;
 };
 
 const SingularSetEntry = ({ reps, weight, time, isTimeBased = false, avoidMonochrome = false }) => {
@@ -85,7 +87,6 @@ const SingularSetEntry = ({ reps, weight, time, isTimeBased = false, avoidMonoch
         <Text style={{
           color: BLUE,
           fontSize: normalizeHeight(12),
-          width: normalizeWidth(60),
           fontWeight: '600',
         }}>
           {formatTimeSecs(time || 0)}
@@ -155,7 +156,7 @@ const IndividualSetEntry = ({ setNumber, reps, weight, time, isTimeBased = false
       flexDirection: 'row',
       alignItems: 'center'
     }}>
-      <View style={{ width: normalizeWidth(60) }}>
+      <View style={!isTimeBased ? { width: normalizeWidth(60) } : {}}>
         {isTimeBased ? (
           <Text style={{
             color: BLUE,
