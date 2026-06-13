@@ -33,18 +33,18 @@ const CurrentWorkoutList = (
     }
 ) => {
     const exercises = workout?.exercises || [];
-    // Group exercises by exerciseId
-    const grouped = Object.values(
-        exercises.reduce((acc, exercise) => {
-            const id = exercise.exerciseId;
-            if (!id) return acc;
-            if (!acc[id]) {
-                acc[id] = [];
-            }
-            acc[id].push(exercise);
-            return acc;
-        }, {})
-    );
+    // Group consecutive sets of the same exercise together
+    const grouped = exercises.reduce((acc, exercise) => {
+        const id = exercise.exerciseId;
+        if (!id) return acc;
+        const lastGroup = acc[acc.length - 1];
+        if (lastGroup && lastGroup[0].exerciseId === id) {
+            lastGroup.push(exercise);
+        } else {
+            acc.push([exercise]);
+        }
+        return acc;
+    }, []);
     const separatedExercisesReverse = reverseOrder ? [...grouped].reverse() : grouped;
      console.log("ckck exercieses sep exercieses",
         exercises,
