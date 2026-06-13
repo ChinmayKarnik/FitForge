@@ -90,6 +90,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
           </View>
 
           <FlatList
+            keyboardShouldPersistTaps="handled"
             data={filteredExercises}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}

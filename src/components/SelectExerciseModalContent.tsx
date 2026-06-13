@@ -68,6 +68,7 @@ const SelectExerciseModalContent = ({
             </View>
 
             <FlatList
+                                    keyboardShouldPersistTaps="handled"
                                     data={filteredExercises}
                                     keyExtractor={(item) => item.id}
                                     showsVerticalScrollIndicator={false}
