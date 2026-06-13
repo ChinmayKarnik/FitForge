@@ -62,7 +62,13 @@ const NSetsUI = ({ numSets, avoidMonochrome = false }) => {
   );
 }
 
-const SingularSetEntry = ({ reps, weight, avoidMonochrome = false }) => {
+const formatTimeSecs = (secs: number): string => {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+};
+
+const SingularSetEntry = ({ reps, weight, time, isTimeBased = false, avoidMonochrome = false }) => {
   const weightAccent = BLUE;
   return (
     <View style={{
@@ -75,14 +81,25 @@ const SingularSetEntry = ({ reps, weight, avoidMonochrome = false }) => {
         marginRight={normalizeWidth(17)}
         width={normalizeWidthF(3,2)}
       />
-      <Text style={{
-        color: BLUE,
-        fontSize: normalizeHeight(12),
-        width:normalizeWidth(60),
-        fontWeight: '600',
-      }}>
-        {reps} {reps === 1 ? 'REP' : 'REPS'}
-      </Text>
+      {isTimeBased ? (
+        <Text style={{
+          color: BLUE,
+          fontSize: normalizeHeight(12),
+          width: normalizeWidth(60),
+          fontWeight: '600',
+        }}>
+          {formatTimeSecs(time || 0)}
+        </Text>
+      ) : (
+        <Text style={{
+          color: BLUE,
+          fontSize: normalizeHeight(12),
+          width:normalizeWidth(60),
+          fontWeight: '600',
+        }}>
+          {reps} {reps === 1 ? 'REP' : 'REPS'}
+        </Text>
+      )}
       {weight ? (
         <>
           <View style={{
@@ -121,7 +138,7 @@ const Divider = ({height = normalizeHeight(14),marginLeft,marginRight,
   );
 };
 
-const IndividualSetEntry = ({ setNumber, reps, weight, avoidMonochrome = false }) => {
+const IndividualSetEntry = ({ setNumber, reps, weight, time, isTimeBased = false, avoidMonochrome = false }) => {
   const weightAccent = BLUE;
   return (
   <View style={{
@@ -139,14 +156,25 @@ const IndividualSetEntry = ({ setNumber, reps, weight, avoidMonochrome = false }
       alignItems: 'center'
     }}>
       <View style={{ width: normalizeWidth(60) }}>
-        <Text style={{
-          color: BLUE,
-          fontSize: normalizeHeight(12),
-          fontWeight: '600',
-          letterSpacing: 0.3
-        }}>
-          {reps} {reps === 1 ? 'REP' : 'REPS'}
-        </Text>
+        {isTimeBased ? (
+          <Text style={{
+            color: BLUE,
+            fontSize: normalizeHeight(12),
+            fontWeight: '600',
+            letterSpacing: 0.3
+          }}>
+            {formatTimeSecs(time || 0)}
+          </Text>
+        ) : (
+          <Text style={{
+            color: BLUE,
+            fontSize: normalizeHeight(12),
+            fontWeight: '600',
+            letterSpacing: 0.3
+          }}>
+            {reps} {reps === 1 ? 'REP' : 'REPS'}
+          </Text>
+        )}
       </View>
       {weight ? (
         <>
@@ -235,15 +263,20 @@ const ExerciseSummaryCard = ({ exercises, avoidMonochrome = false }) => {
     console.log("ckck exercises in summary card", exercises)
   }, [exercises])
 
+  const isTimeBased = !!exerciseFromDb?.requiredParameters?.some((p: any) => p.type === 'time');
+
   const setsList = exercises.map((ex) => ({
     reps:
       ex.loggedData && typeof ex.loggedData['Reps'] !== 'undefined'
         ? ex.loggedData['Reps']
         : 0,
-
     weight:
       ex.loggedData && typeof ex.loggedData['Weight'] !== 'undefined'
         ? ex.loggedData['Weight']
+        : 0,
+    time:
+      ex.loggedData && typeof ex.loggedData['Time'] !== 'undefined'
+        ? ex.loggedData['Time']
         : 0,
   }));
 
@@ -297,8 +330,10 @@ const ExerciseSummaryCard = ({ exercises, avoidMonochrome = false }) => {
               if(setsList.length ==1){
                 return <SingularSetEntry
                 key={index}
-                reps = {obj.reps}
+                reps={obj.reps}
                 weight={obj.weight}
+                time={obj.time}
+                isTimeBased={isTimeBased}
                 avoidMonochrome={avoidMonochrome}
                 />
               }
@@ -324,6 +359,8 @@ const ExerciseSummaryCard = ({ exercises, avoidMonochrome = false }) => {
                   setNumber={index + 1}
                   reps={obj.reps}
                   weight={obj.weight}
+                  time={obj.time}
+                  isTimeBased={isTimeBased}
                   avoidMonochrome={avoidMonochrome}
                 />
               </View>)
