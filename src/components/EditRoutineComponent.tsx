@@ -271,67 +271,76 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                    />
                </View>
 
-               <View style={{ flex: 1 }}>
-                   {renderInputLabel(repeat, 'Reps', 467 / 429)}
-                   <TextInput
-                       style={{
-                           backgroundColor: '#1c2337',
-                           borderColor: 'rgba(255,255,255,0.5)',
-                           borderWidth: normalize(1),
-                           borderRadius: normalize(6),
-                           paddingHorizontal: normalizeWidth(8),
-                           paddingVertical: normalizeHeight(7),
-                            color: 'rgba(255,255,255,0.8)',
-                           fontSize: normalize(14),
-                           textAlign: 'left'
-                       }}
-                       value={String(item.reps || '')}
-                       editable={true}
-                       keyboardType='numeric'
-                       onFocus={() => scrollItemIntoView(index)}
-                       onChangeText={(text) => {
-                           const updatedExercises = routine.exercises.map((ex: any) =>
-                               ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
-                           );
-                           setRoutine({ ...routine, exercises: updatedExercises } as any);
-                       }}
-                   />
-               </View>
-
-               <View style={{ flex: 1.2 }}>
-                   {renderInputLabel(stopwatch_white_2, 'Rest', 372 / 420)}
-                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                       <TextInput
-                           style={{
-                               flex: 1,
-                               backgroundColor: '#1c2337',
-                               borderColor: 'rgba(255,255,255,0.5)',
-                               borderWidth: normalize(1),
-                               borderRadius: normalize(6),
-                               paddingHorizontal: normalizeWidth(8),
-                               paddingVertical: normalizeHeight(7),
-                               color: 'rgba(255,255,255,0.8)',
-                               fontSize: normalize(14),
-                               textAlign: 'left'
-                           }}
-                           value={String(item.rest || '')}
-                           keyboardType='numeric'
-                           editable={true}
-                           onFocus={() => scrollItemIntoView(index)}
-                           onChangeText={(text) => {
-                               const updatedExercises = routine.exercises.map((ex: any) =>
-                                   ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
-                               );
-                               setRoutine({ ...routine, exercises: updatedExercises } as any);
-                           }}
-                       />
-                       <Text style={{
-                           color: 'rgba(255,255,255,0.6)',
-                           fontSize: normalize(13),
-                           marginLeft: normalizeWidth(6)
-                       }}>sec</Text>
-                   </View>
-               </View>
+               {(() => {
+                   const isTimeBased = databaseController.getExerciseById(item.id)?.requiredParameters?.some((p: any) => p.type === 'time');
+                   const repsView = (
+                       <View style={{ flex: 1 }}>
+                           {renderInputLabel(repeat, 'Reps', 467 / 429)}
+                           <TextInput
+                               style={{
+                                   backgroundColor: '#1c2337',
+                                   borderColor: 'rgba(255,255,255,0.5)',
+                                   borderWidth: normalize(1),
+                                   borderRadius: normalize(6),
+                                   paddingHorizontal: normalizeWidth(8),
+                                   paddingVertical: normalizeHeight(7),
+                                   color: 'rgba(255,255,255,0.8)',
+                                   fontSize: normalize(14),
+                                   textAlign: 'left'
+                               }}
+                               value={String(item.reps || '')}
+                               editable={true}
+                               keyboardType='numeric'
+                               onFocus={() => scrollItemIntoView(index)}
+                               onChangeText={(text) => {
+                                   const updatedExercises = routine.exercises.map((ex: any) =>
+                                       ex.localId === item.localId ? { ...ex, reps: Number(text) || undefined } : ex
+                                   );
+                                   setRoutine({ ...routine, exercises: updatedExercises } as any);
+                               }}
+                           />
+                       </View>
+                   );
+                   const restView = (
+                       <View style={{ flex: 1.2 }}>
+                           {renderInputLabel(stopwatch_white_2, 'Rest', 372 / 420)}
+                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                               <TextInput
+                                   style={{
+                                       flex: 1,
+                                       backgroundColor: '#1c2337',
+                                       borderColor: 'rgba(255,255,255,0.5)',
+                                       borderWidth: normalize(1),
+                                       borderRadius: normalize(6),
+                                       paddingHorizontal: normalizeWidth(8),
+                                       paddingVertical: normalizeHeight(7),
+                                       color: 'rgba(255,255,255,0.8)',
+                                       fontSize: normalize(14),
+                                       textAlign: 'left'
+                                   }}
+                                   value={String(item.rest || '')}
+                                   keyboardType='numeric'
+                                   editable={true}
+                                   onFocus={() => scrollItemIntoView(index)}
+                                   onChangeText={(text) => {
+                                       const updatedExercises = routine.exercises.map((ex: any) =>
+                                           ex.localId === item.localId ? { ...ex, rest: Number(text) || undefined } : ex
+                                       );
+                                       setRoutine({ ...routine, exercises: updatedExercises } as any);
+                                   }}
+                               />
+                               <Text style={{
+                                   color: 'rgba(255,255,255,0.6)',
+                                   fontSize: normalize(13),
+                                   marginLeft: normalizeWidth(6)
+                               }}>sec</Text>
+                           </View>
+                       </View>
+                   );
+                   return isTimeBased
+                       ? <>{restView}<View style={{ flex: 1 }} /></>
+                       : <>{repsView}{restView}</>;
+               })()}
            </View>
 
            <View style={{
