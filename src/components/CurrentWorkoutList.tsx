@@ -130,7 +130,7 @@ const CurrentWorkoutList = (
                                 data={separatedExercisesReverse}
                                 style={listMaxHeight ? { maxHeight: listMaxHeight } : undefined}
                                 contentContainerStyle ={{
-                                    paddingBottom: normalizeHeight(listMaxHeight ? 16 : 48)
+                                    paddingBottom: normalizeHeight(listMaxHeight ? 16 : 115)
                                 }}
                                 keyExtractor={(item, index) => item[0].id ? item[0].id.toString() : index.toString()}
                                 renderItem={renderItem}
