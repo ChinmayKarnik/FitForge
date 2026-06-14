@@ -94,6 +94,45 @@ const RoutinesFaqScreen = () => {
 
                 <Divider style={{ marginTop: normalizeHeight(14) }} />
 
+                {/* Routine vs Exercise */}
+                <SectionTitle>Routine vs Exercise</SectionTitle>
+
+                <View style={styles.flowDiagram}>
+                    {/* Exercise block — loose chips */}
+                    <View style={styles.flowStep}>
+                        <Text style={styles.compColLabel}>Exercise</Text>
+                        <Text style={styles.compColDesc}>A single movement</Text>
+                        <View style={styles.chipsWrap}>
+                            {['Push-Up', 'Squat', 'Pull-Up', 'Deadlift'].map(name => (
+                                <View key={name} style={styles.exerciseChip}>
+                                    <Text style={styles.exerciseChipText}>{name}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+
+                    {/* Routine block — card */}
+                    <View style={styles.routineContainer}>
+                        <View style={styles.routineAccentBar} />
+                        <View style={styles.routineContainerHeader}>
+                            <Text style={styles.routineTypeLabel}>Routine</Text>
+                            <Text style={styles.routineContainerName}>Push Day</Text>
+                            <Text style={styles.routineMetadata}>3 exercises</Text>
+                        </View>
+                        <View style={styles.routineInnerDivider} />
+                        <View style={styles.routineExerciseList}>
+                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map((name, i) => (
+                                <View key={name} style={styles.routineExerciseRow}>
+                                    <Text style={styles.routineExerciseNumber}>{i + 1}</Text>
+                                    <Text style={styles.routineExerciseName}>{name}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                </View>
+
+                <Divider />
+
                 {/* Why Use Routines */}
                 <SectionTitle>Why Use Routines?</SectionTitle>
                 <View style={styles.benefitsList}>
@@ -117,53 +156,8 @@ const RoutinesFaqScreen = () => {
 
                 <Divider />
 
-                {/* Routine vs Exercise */}
-                <SectionTitle>Routine vs Exercise</SectionTitle>
-
-                <View style={styles.flowDiagram}>
-                    {/* Exercise block — loose chips */}
-                    <View style={styles.flowStep}>
-                        <Text style={styles.compColLabel}>Exercise</Text>
-                        <Text style={styles.compColDesc}>A single movement</Text>
-                        <View style={styles.chipsWrap}>
-                            {['Push-Up', 'Squat', 'Pull-Up', 'Deadlift'].map(name => (
-                                <View key={name} style={styles.exerciseChip}>
-                                    <Text style={styles.exerciseChipText}>{name}</Text>
-                                </View>
-                            ))}
-                        </View>
-                    </View>
-
-                    {/* Transformation block */}
-                    <View style={styles.flowTransform}>
-                        <Text style={styles.flowGroupLabel}>{'↓  Group these exercises together'}</Text>
-                        <Text style={styles.flowResult}>Creates a Routine</Text>
-                    </View>
-
-                    {/* Routine block — card */}
-                    <View style={styles.routineContainer}>
-                        <View style={styles.routineAccentBar} />
-                        <View style={styles.routineContainerHeader}>
-                            <Text style={styles.routineTypeLabel}>Routine</Text>
-                            <Text style={styles.routineContainerName}>Push Day</Text>
-                            <Text style={styles.routineMetadata}>3 exercises</Text>
-                        </View>
-                        <View style={styles.routineInnerDivider} />
-                        <View style={styles.routineExerciseList}>
-                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map((name, i) => (
-                                <View key={name} style={styles.routineExerciseRow}>
-                                    <Text style={styles.routineExerciseNumber}>{i + 1}</Text>
-                                    <Text style={styles.routineExerciseName}>{name}</Text>
-                                </View>
-                            ))}
-                        </View>
-                    </View>
-                </View>
-
                 {/* Do I Need a Routine */}
-                <View style={{ marginTop: normalizeHeight(32) }}>
-                    <SectionTitle>Do I Need a Routine?</SectionTitle>
-                </View>
+                <SectionTitle>Do I Need a Routine?</SectionTitle>
                 <SectionRailBlock>
                     <Text style={styles.body}>
                         No. You can track workouts by selecting exercises individually. Routines simply make it faster when you regularly perform the same group of exercises.
@@ -358,26 +352,13 @@ const styles = StyleSheet.create({
     },
     // Routine vs Exercise flow diagram
     flowDiagram: {
-        gap: normalizeHeight(20),
+        gap: normalizeHeight(28),
     },
     flowStep: {},
-    flowTransform: {
-        paddingLeft: normalizeWidth(10),
-    },
-    flowGroupLabel: {
-        color: 'rgba(255,255,255,0.42)',
-        fontSize: normalize(12),
-        fontFamily: 'NunitoSans-Regular',
-        lineHeight: normalize(18),
-        marginBottom: normalizeHeight(4),
-    },
-    flowResult: {
-        color: '#ffffff',
-        fontSize: normalize(20),
-        fontWeight: '700',
-        fontFamily: 'serif',
-        letterSpacing: -0.4,
-        lineHeight: normalize(25),
+    flowArrowOnly: {
+        color: 'rgba(255,255,255,0.2)',
+        fontSize: normalize(14),
+        textAlign: 'center',
     },
     // Chips + routine container
     chipsWrap: {
