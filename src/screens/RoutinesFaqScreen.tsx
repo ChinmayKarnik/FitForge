@@ -102,12 +102,17 @@ const RoutinesFaqScreen = () => {
                     <View style={styles.exerciseCard}>
                         <View style={styles.exerciseAccentBar} />
                         <View style={styles.exerciseCardContent}>
-                            <Text style={styles.exerciseTypeLabel}>Exercise</Text>
+                            <View style={styles.exerciseTypePill}>
+                                <Text style={styles.exerciseTypeLabel}>Exercise</Text>
+                            </View>
                             <Text style={styles.exerciseCardName}>Bench Press</Text>
                         </View>
                         <View style={styles.exerciseInnerDivider} />
                         <View style={styles.exerciseDescription}>
-                            <Text style={styles.exerciseDescriptionText}>A single movement</Text>
+                            <View style={styles.exerciseMetaRow}>
+                                <View style={styles.exerciseMetaDot} />
+                                <Text style={styles.exerciseMetaText}>A single movement</Text>
+                            </View>
                         </View>
                     </View>
 
@@ -115,7 +120,9 @@ const RoutinesFaqScreen = () => {
                     <View style={styles.routineContainer}>
                         <View style={styles.routineAccentBar} />
                         <View style={styles.routineContainerHeader}>
-                            <Text style={styles.routineTypeLabel}>Routine</Text>
+                            <View style={styles.routineTypePill}>
+                                <Text style={styles.routineTypeLabel}>ROUTINE</Text>
+                            </View>
                             <Text style={styles.routineContainerName}>Push Day</Text>
                             <Text style={styles.routineMetadata}>3 exercises</Text>
                         </View>
@@ -352,7 +359,7 @@ const styles = StyleSheet.create({
     },
     // Routine vs Exercise flow diagram
     flowDiagram: {
-        gap: normalizeHeight(28),
+        gap: normalizeHeight(20),
     },
     flowStep: {},
     flowArrowOnly: {
@@ -360,17 +367,17 @@ const styles = StyleSheet.create({
         fontSize: normalize(14),
         textAlign: 'center',
     },
-    // Exercise card
+    // Exercise card — building block, recedes visually
     exerciseCard: {
-        backgroundColor: 'rgba(255,255,255,0.03)',
+        backgroundColor: 'rgba(255,255,255,0.025)',
         borderRadius: normalize(12),
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.09)',
+        borderColor: 'rgba(255,255,255,0.07)',
         overflow: 'hidden',
     },
     exerciseAccentBar: {
-        height: 3,
-        backgroundColor: 'rgba(255,255,255,0.15)',
+        height: 2,
+        backgroundColor: 'rgba(255,255,255,0.10)',
     },
     exerciseCardContent: {
         padding: normalize(11),
@@ -383,27 +390,47 @@ const styles = StyleSheet.create({
     },
     exerciseDescription: {
         padding: normalize(11),
-        paddingTop: normalize(8),
-        paddingBottom: normalize(10),
+        paddingTop: normalize(7),
+        paddingBottom: normalize(9),
     },
-    exerciseDescriptionText: {
-        color: 'rgba(255,255,255,0.45)',
-        fontSize: normalize(12),
+    exerciseMetaRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: normalizeWidth(6),
+    },
+    exerciseMetaDot: {
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: 'rgba(255,255,255,0.22)',
+    },
+    exerciseMetaText: {
+        color: 'rgba(255,255,255,0.42)',
+        fontSize: normalize(11),
         fontFamily: 'NunitoSans-Regular',
     },
+    exerciseTypePill: {
+        alignSelf: 'flex-start',
+        backgroundColor: 'rgba(255,255,255,0.05)',
+        borderRadius: normalize(4),
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.08)',
+        paddingHorizontal: normalizeWidth(6),
+        paddingVertical: normalizeHeight(2),
+        marginBottom: normalizeHeight(7),
+    },
     exerciseTypeLabel: {
-        color: 'rgba(255,255,255,0.35)',
-        fontSize: normalize(10),
+        color: 'rgba(255,255,255,0.48)',
+        fontSize: normalize(9),
         fontWeight: '700',
-        letterSpacing: 0.8,
-        marginBottom: normalizeHeight(2),
+        letterSpacing: 1.0,
     },
     exerciseCardName: {
-        color: '#ffffff',
-        fontSize: normalize(22),
+        color: 'rgba(255,255,255,0.90)',
+        fontSize: normalize(20),
         fontWeight: '800',
-        letterSpacing: -0.5,
-        lineHeight: normalize(26),
+        letterSpacing: -0.4,
+        lineHeight: normalize(24),
     },
     // Chips + routine container
     chipsWrap: {
@@ -425,27 +452,37 @@ const styles = StyleSheet.create({
         fontSize: normalize(12),
         fontWeight: '500',
     },
+    // Routine card — assembled result, elevated visually
     routineContainer: {
-        backgroundColor: 'rgba(79,126,232,0.07)',
+        backgroundColor: '#252d47',
         borderRadius: normalize(12),
         borderWidth: 1,
-        borderColor: 'rgba(79,126,232,0.18)',
+        borderColor: '#3d4563',
         overflow: 'hidden',
     },
     routineAccentBar: {
         height: 3,
-        backgroundColor: 'rgba(79,126,232,0.55)',
+        backgroundColor: '#4f7ee8',
     },
     routineContainerHeader: {
         padding: normalize(14),
-        paddingBottom: normalize(12),
+        paddingBottom: normalize(11),
+    },
+    routineTypePill: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#1f243b',
+        borderRadius: normalize(4),
+        borderWidth: normalize(1),
+        borderColor: '#5a7bb3',
+        paddingHorizontal: normalizeWidth(7),
+        paddingVertical: normalizeHeight(3),
+        marginBottom: normalizeHeight(7),
     },
     routineTypeLabel: {
-        color: 'rgba(79,126,232,0.65)',
-        fontSize: normalize(10),
-        fontWeight: '700',
-        letterSpacing: 0.8,
-        marginBottom: normalizeHeight(4),
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(10),
+        fontWeight: '600',
+        letterSpacing: 0.3,
     },
     routineContainerName: {
         color: '#ffffff',
@@ -455,20 +492,20 @@ const styles = StyleSheet.create({
         lineHeight: normalize(26),
     },
     routineMetadata: {
-        color: 'rgba(255,255,255,0.35)',
+        color: 'rgba(255,255,255,0.45)',
         fontSize: normalize(11),
         fontFamily: 'NunitoSans-Regular',
-        marginTop: normalizeHeight(3),
+        marginTop: normalizeHeight(4),
     },
     routineInnerDivider: {
         height: 1,
-        backgroundColor: 'rgba(79,126,232,0.12)',
+        backgroundColor: 'rgba(79,126,232,0.18)',
         marginHorizontal: normalize(14),
     },
     routineExerciseList: {
         padding: normalize(14),
-        paddingTop: normalize(10),
-        gap: normalizeHeight(8),
+        paddingTop: normalize(9),
+        gap: normalizeHeight(7),
     },
     routineExerciseRow: {
         flexDirection: 'row',
@@ -476,14 +513,14 @@ const styles = StyleSheet.create({
         gap: normalizeWidth(10),
     },
     routineExerciseNumber: {
-        color: 'rgba(79,126,232,0.55)',
+        color: 'rgba(79,126,232,0.68)',
         fontSize: normalize(11),
         fontWeight: '700',
         width: normalizeWidth(14),
         textAlign: 'right',
     },
     routineExerciseName: {
-        color: 'rgba(255,255,255,0.78)',
+        color: 'rgba(255,255,255,0.84)',
         fontSize: normalize(13),
         fontWeight: '500',
     },
