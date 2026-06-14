@@ -235,7 +235,8 @@ const styles = StyleSheet.create({
     marginBottom: normalize(12),
   },
   emptyContainer: {
-    paddingVertical: normalizeHeight(28),
+    paddingTop: normalizeHeight(16),
+    paddingBottom: normalizeHeight(8),
     alignItems: 'center',
   },
   emptyText: {
@@ -243,21 +244,21 @@ const styles = StyleSheet.create({
     color: '#888888',
   },
   emptyIcon: {
-    width: normalizeWidth(60),
-    height: normalizeWidth(60) * (588.0 / 551.0),
+    width: normalizeWidth(50),
+    height: normalizeWidth(50) * (588.0 / 551.0),
     tintColor: 'rgba(255,255,255,0.5)',
-    marginBottom: normalizeHeight(16),
+    marginBottom: normalizeHeight(12),
   },
   emptyTitle: {
     fontSize: normalize(17),
     fontWeight: '700',
     color: '#ffffff',
-    marginBottom: normalizeHeight(5),
+    marginBottom: normalizeHeight(4),
   },
   emptySubtitle: {
     fontSize: normalize(13),
     color: 'rgba(255,255,255,0.5)',
-    marginBottom: normalizeHeight(20),
+    marginBottom: normalizeHeight(14),
   },
   emptySubtitleHighlight: {
     color: '#67a4f9',
