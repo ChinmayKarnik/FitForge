@@ -128,9 +128,9 @@ const RoutinesFaqScreen = () => {
                         </View>
                         <View style={styles.routineInnerDivider} />
                         <View style={styles.routineExerciseList}>
-                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map((name, i) => (
-                                <View key={name} style={styles.routineExerciseRow}>
-                                    <Text style={styles.routineExerciseNumber}>{i + 1}</Text>
+                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map((name, i, arr) => (
+                                <View key={name} style={[styles.routineExerciseRow, i < arr.length - 1 && { marginBottom: normalizeHeight(4) }]}>
+                                    <View style={styles.routineExerciseBullet} />
                                     <Text style={styles.routineExerciseName}>{name}</Text>
                                 </View>
                             ))}
@@ -492,37 +492,37 @@ const styles = StyleSheet.create({
         lineHeight: normalize(26),
     },
     routineMetadata: {
-        color: 'rgba(255,255,255,0.45)',
-        fontSize: normalize(11),
+        color: 'rgba(255,255,255,0.55)',
+        fontSize: normalize(12),
         fontFamily: 'NunitoSans-Regular',
         marginTop: normalizeHeight(4),
     },
     routineInnerDivider: {
         height: 1,
-        backgroundColor: 'rgba(79,126,232,0.18)',
+        backgroundColor: 'rgba(255,255,255,0.12)',
         marginHorizontal: normalize(14),
     },
     routineExerciseList: {
         padding: normalize(14),
         paddingTop: normalize(9),
-        gap: normalizeHeight(7),
     },
     routineExerciseRow: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: normalizeWidth(10),
     },
-    routineExerciseNumber: {
-        color: 'rgba(79,126,232,0.68)',
-        fontSize: normalize(11),
-        fontWeight: '700',
-        width: normalizeWidth(14),
-        textAlign: 'right',
+    routineExerciseBullet: {
+        width: normalize(5),
+        height: normalize(5),
+        borderRadius: normalize(4),
+        backgroundColor: '#7fb3ff',
+        marginRight: normalizeWidth(10),
     },
     routineExerciseName: {
-        color: 'rgba(255,255,255,0.84)',
-        fontSize: normalize(13),
-        fontWeight: '500',
+        flex: 1,
+        color: 'rgba(255,255,255,0.8)',
+        fontSize: normalize(12),
+        fontFamily: 'RobotoMono-Regular',
     },
     // kept for dead-style compat
     comparison: {
