@@ -14,13 +14,15 @@ const Divider = ({ style }: { style?: object }) => <View style={[styles.divider,
 const INNER_IMAGE_WIDTH = IMAGE_WIDTH - normalizeWidth(16);
 
 const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspectRatio: number; caption?: React.ReactNode }) => (
-    <View style={styles.screenshotWrapper}>
-        <View style={styles.screenshotImageClip}>
-            <Image
-                source={source}
-                style={{ width: INNER_IMAGE_WIDTH, height: INNER_IMAGE_WIDTH / aspectRatio }}
-                resizeMode="cover"
-            />
+    <View>
+        <View style={styles.screenshotWrapper}>
+            <View style={styles.screenshotImageClip}>
+                <Image
+                    source={source}
+                    style={{ width: INNER_IMAGE_WIDTH, height: INNER_IMAGE_WIDTH / aspectRatio }}
+                    resizeMode="cover"
+                />
+            </View>
         </View>
         {caption && <Text style={styles.screenshotCaption}>{caption}</Text>}
     </View>
@@ -83,7 +85,7 @@ const RoutinesFaqScreen = () => {
                     <ScreenshotImage
                         source={faq_routine_details}
                         aspectRatio={696 / 976}
-                        caption={<>{'Example Routine — '}<Text style={{ fontWeight: '700', color: '#ffffff' }}>Push Day</Text>{': Bench Press, Shoulder Press, Tricep Pushdowns'}</>}
+                        caption="An example Push Day routine comprising the exercises Bench Press, Shoulder Press and Tricep Pushdown"
                     />
                 </View>
 
@@ -287,21 +289,21 @@ const styles = StyleSheet.create({
         borderRadius: normalize(14),
         borderWidth: 1,
         borderColor: 'rgba(255,255,255,0.13)',
-        padding: normalize(8),
+        padding: normalize(6),
         backgroundColor: '#171f36',
     },
     screenshotImageClip: {
-        borderRadius: normalize(6),
+        borderRadius: normalize(8),
         overflow: 'hidden',
     },
     screenshotCaption: {
-        color: 'rgba(255,255,255,0.75)',
-        fontSize: normalize(13),
-        fontWeight: '400',
-        lineHeight: normalize(19),
-        paddingTop: normalizeHeight(9),
-        paddingBottom: normalizeHeight(3),
-        paddingHorizontal: normalize(4),
+        color: 'rgba(255,255,255,0.42)',
+        fontSize: normalize(11),
+        fontStyle: 'italic',
+        lineHeight: normalize(17),
+        marginTop: normalizeHeight(10),
+        textAlign: 'center',
+        paddingHorizontal: normalize(8),
     },
     // Q&A pattern
     qaRow: {
