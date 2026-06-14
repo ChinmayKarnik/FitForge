@@ -135,7 +135,7 @@ const RoutinesFaqScreen = () => {
                     </View>
                 </View>
 
-                <Divider />
+                <View style={{ marginTop: normalizeHeight(36) }} />
 
                 {/* Why Use Routines */}
                 <SectionTitle>Why Use Routines?</SectionTitle>
