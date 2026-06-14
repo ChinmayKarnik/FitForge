@@ -88,7 +88,7 @@ const RoutinesFaqScreen = () => {
 
                 <ScreenshotImage
                     source={faq_routine_details}
-                    aspectRatio={707 / 806}
+                    aspectRatio={696 / 976}
                     caption={<>{'Example Routine — '}<Text style={{ fontWeight: '700', color: '#ffffff' }}>Push Day</Text>{': Bench Press, Shoulder Press, Tricep Pushdowns'}</>}
                 />
 
