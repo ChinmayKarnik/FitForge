@@ -27,11 +27,8 @@ const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspect
 );
 
 const BenefitItem = ({ title, description }: { title: string; description: string }) => (
-    <View style={styles.benefitItem}>
-        <View style={styles.benefitTitleRow}>
-            <View style={styles.benefitAccent} />
-            <Text style={styles.benefitTitle}>{title}</Text>
-        </View>
+    <View>
+        <Text style={styles.benefitTitle}>{title}</Text>
         <Text style={styles.benefitDescription}>{description}</Text>
     </View>
 );
@@ -96,22 +93,24 @@ const RoutinesFaqScreen = () => {
 
                 {/* Why Use Routines */}
                 <SectionTitle>Why Use Routines?</SectionTitle>
-                <BenefitItem
-                    title="Start Workouts Faster"
-                    description="Your exercise list is ready to go. No searching, no setup."
-                />
-                <BenefitItem
-                    title="Build a Consistent Habit"
-                    description="Same structure each session makes effort easier to measure."
-                />
-                <BenefitItem
-                    title="Reuse What Works"
-                    description="Save once. Use it until your goals change."
-                />
-                <BenefitItem
-                    title="Compare Progress Accurately"
-                    description="Like-for-like sessions make progress comparisons meaningful."
-                />
+                <View style={styles.benefitsList}>
+                    <BenefitItem
+                        title="Start Workouts Faster"
+                        description="Your exercise list is ready to go. No searching, no setup."
+                    />
+                    <BenefitItem
+                        title="Build a Consistent Habit"
+                        description="Same structure each session makes effort easier to measure."
+                    />
+                    <BenefitItem
+                        title="Reuse What Works"
+                        description="Save once. Use it until your goals change."
+                    />
+                    <BenefitItem
+                        title="Compare Progress Accurately"
+                        description="Like-for-like sessions make progress comparisons meaningful."
+                    />
+                </View>
 
                 <Divider />
 
@@ -227,7 +226,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
     },
     bodyEmphasis: {
-        color: 'rgba(255,255,255,0.72)',
+        color: 'rgba(255, 255, 255, 0.92)',
         fontWeight: '400',
     },
     divider: {
@@ -304,31 +303,21 @@ const styles = StyleSheet.create({
         fontFamily: 'serif',
     },
     // Benefit items
-    benefitItem: {
-        marginBottom: normalizeHeight(18),
-    },
-    benefitTitleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: normalizeHeight(4),
-    },
-    benefitAccent: {
-        width: 2,
-        height: normalize(14),
-        backgroundColor: 'rgba(79, 143, 244, 0.55)',
-        borderRadius: 1,
-        marginRight: normalizeWidth(8),
+    benefitsList: {
+        gap: normalizeHeight(36),
     },
     benefitTitle: {
-        color: 'rgba(255,255,255,0.88)',
-        fontSize: normalize(14),
-        fontWeight: '600',
+        color: '#ffffff',
+        fontSize: normalize(13),
+        fontWeight: '900',
+        letterSpacing: 0.2,
+        marginBottom: normalizeHeight(1),
     },
     benefitDescription: {
-        color: 'rgba(255,255,255,0.5)',
-        fontSize: normalize(13),
+        color: 'rgba(255,255,255,0.55)',
+        fontSize: normalize(12),
         lineHeight: normalize(20),
-        paddingLeft: normalizeWidth(10),
+        fontFamily: 'NunitoSans-Regular',
     },
     // Routine vs Exercise comparison
     comparison: {
