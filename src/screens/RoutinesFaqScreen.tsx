@@ -27,9 +27,12 @@ const ScreenshotImage = ({ source, aspectRatio, caption }: { source: any; aspect
 );
 
 const BenefitItem = ({ title, description }: { title: string; description: string }) => (
-    <View>
-        <Text style={styles.benefitTitle}>{title}</Text>
-        <Text style={styles.benefitDescription}>{description}</Text>
+    <View style={styles.benefitItemRow}>
+        <View style={styles.benefitSegmentRail} />
+        <View style={styles.benefitItemContent}>
+            <Text style={styles.benefitTitle}>{title}</Text>
+            <Text style={styles.benefitDescription}>{description}</Text>
+        </View>
     </View>
 );
 
@@ -306,16 +309,31 @@ const styles = StyleSheet.create({
     benefitsList: {
         gap: normalizeHeight(36),
     },
+    benefitItemRow: {
+        flexDirection: 'row',
+    },
+    benefitSegmentRail: {
+        width: 2,
+        backgroundColor: 'rgba(79, 126, 232, 0.45)',
+        borderRadius: 2,
+        alignSelf: 'stretch',
+    },
+    benefitItemContent: {
+        flex: 1,
+        paddingLeft: normalizeWidth(6),
+    },
     benefitTitle: {
         color: '#ffffff',
-        fontSize: normalize(13),
+        fontSize: normalize(12),
         fontWeight: '900',
-        letterSpacing: 0.2,
+        letterSpacing: -0.2,
+        lineHeight: normalize(16),
         marginBottom: normalizeHeight(1),
     },
     benefitDescription: {
-        color: 'rgba(255,255,255,0.55)',
+        color: 'rgba(255,255,255,0.65)',
         fontSize: normalize(12),
+        fontWeight: '600',
         lineHeight: normalize(20),
         fontFamily: 'NunitoSans-Regular',
     },
