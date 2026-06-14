@@ -104,7 +104,10 @@ const RoutinesFaqScreen = () => {
                         <View style={styles.exerciseCardContent}>
                             <Text style={styles.exerciseTypeLabel}>Exercise</Text>
                             <Text style={styles.exerciseCardName}>Push-Up</Text>
-                            <Text style={styles.exerciseCardMeta}>1 movement</Text>
+                        </View>
+                        <View style={styles.exerciseInnerDivider} />
+                        <View style={styles.exerciseDescription}>
+                            <Text style={styles.exerciseDescriptionText}>A single movement</Text>
                         </View>
                     </View>
 
@@ -371,31 +374,22 @@ const styles = StyleSheet.create({
     },
     exerciseCardContent: {
         padding: normalize(11),
-        paddingBottom: normalize(10),
+        paddingBottom: normalize(7),
     },
     exerciseInnerDivider: {
         height: 1,
-        backgroundColor: 'rgba(255,255,255,0.07)',
+        backgroundColor: 'rgba(255,255,255,0.05)',
         marginHorizontal: normalize(11),
     },
-    exerciseSingleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: normalizeWidth(10),
+    exerciseDescription: {
         padding: normalize(11),
         paddingTop: normalize(8),
+        paddingBottom: normalize(10),
     },
-    exerciseSingleNumber: {
-        color: 'rgba(255,255,255,0.3)',
-        fontSize: normalize(11),
-        fontWeight: '700',
-        width: normalizeWidth(14),
-        textAlign: 'right',
-    },
-    exerciseSingleName: {
-        color: 'rgba(255,255,255,0.78)',
-        fontSize: normalize(13),
-        fontWeight: '500',
+    exerciseDescriptionText: {
+        color: 'rgba(255,255,255,0.45)',
+        fontSize: normalize(12),
+        fontFamily: 'NunitoSans-Regular',
     },
     exerciseTypeLabel: {
         color: 'rgba(255,255,255,0.35)',
@@ -406,16 +400,10 @@ const styles = StyleSheet.create({
     },
     exerciseCardName: {
         color: '#ffffff',
-        fontSize: normalize(19),
+        fontSize: normalize(22),
         fontWeight: '800',
-        letterSpacing: -0.4,
-        lineHeight: normalize(23),
-    },
-    exerciseCardMeta: {
-        color: 'rgba(255,255,255,0.35)',
-        fontSize: normalize(11),
-        fontFamily: 'NunitoSans-Regular',
-        marginTop: normalizeHeight(2),
+        letterSpacing: -0.5,
+        lineHeight: normalize(26),
     },
     // Chips + routine container
     chipsWrap: {
