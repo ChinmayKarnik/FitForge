@@ -140,16 +140,20 @@ const RoutinesFaqScreen = () => {
                         <Text style={styles.flowResult}>Creates a Routine</Text>
                     </View>
 
-                    {/* Routine block — container */}
+                    {/* Routine block — card */}
                     <View style={styles.routineContainer}>
+                        <View style={styles.routineAccentBar} />
                         <View style={styles.routineContainerHeader}>
                             <Text style={styles.routineTypeLabel}>Routine</Text>
                             <Text style={styles.routineContainerName}>Push Day</Text>
+                            <Text style={styles.routineMetadata}>3 exercises</Text>
                         </View>
-                        <View style={styles.chipsWrap}>
-                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map(name => (
-                                <View key={name} style={styles.routineChip}>
-                                    <Text style={styles.routineChipText}>{name}</Text>
+                        <View style={styles.routineInnerDivider} />
+                        <View style={styles.routineExerciseList}>
+                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map((name, i) => (
+                                <View key={name} style={styles.routineExerciseRow}>
+                                    <Text style={styles.routineExerciseNumber}>{i + 1}</Text>
+                                    <Text style={styles.routineExerciseName}>{name}</Text>
                                 </View>
                             ))}
                         </View>
@@ -400,35 +404,61 @@ const styles = StyleSheet.create({
         borderRadius: normalize(12),
         borderWidth: 1,
         borderColor: 'rgba(79,126,232,0.18)',
-        padding: normalize(14),
+        overflow: 'hidden',
+    },
+    routineAccentBar: {
+        height: 3,
+        backgroundColor: 'rgba(79,126,232,0.55)',
     },
     routineContainerHeader: {
-        marginBottom: normalizeHeight(12),
+        padding: normalize(14),
+        paddingBottom: normalize(12),
     },
     routineTypeLabel: {
         color: 'rgba(79,126,232,0.65)',
         fontSize: normalize(10),
         fontWeight: '700',
         letterSpacing: 0.8,
-        marginBottom: normalizeHeight(2),
+        marginBottom: normalizeHeight(4),
     },
     routineContainerName: {
         color: '#ffffff',
-        fontSize: normalize(16),
-        fontWeight: '700',
-        letterSpacing: -0.2,
+        fontSize: normalize(22),
+        fontWeight: '800',
+        letterSpacing: -0.5,
+        lineHeight: normalize(26),
     },
-    routineChip: {
+    routineMetadata: {
+        color: 'rgba(255,255,255,0.35)',
+        fontSize: normalize(11),
+        fontFamily: 'NunitoSans-Regular',
+        marginTop: normalizeHeight(3),
+    },
+    routineInnerDivider: {
+        height: 1,
         backgroundColor: 'rgba(79,126,232,0.12)',
-        borderRadius: normalize(20),
-        borderWidth: 1,
-        borderColor: 'rgba(79,126,232,0.22)',
-        paddingHorizontal: normalizeWidth(10),
-        paddingVertical: normalizeHeight(5),
+        marginHorizontal: normalize(14),
     },
-    routineChipText: {
-        color: 'rgba(200,215,255,0.85)',
-        fontSize: normalize(12),
+    routineExerciseList: {
+        padding: normalize(14),
+        paddingTop: normalize(10),
+        gap: normalizeHeight(8),
+    },
+    routineExerciseRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: normalizeWidth(10),
+    },
+    routineExerciseNumber: {
+        color: 'rgba(79,126,232,0.55)',
+        fontSize: normalize(11),
+        fontWeight: '700',
+        width: normalizeWidth(14),
+        textAlign: 'right',
+    },
+    routineExerciseName: {
+        color: 'rgba(255,255,255,0.78)',
+        fontSize: normalize(13),
         fontWeight: '500',
     },
     // kept for dead-style compat
