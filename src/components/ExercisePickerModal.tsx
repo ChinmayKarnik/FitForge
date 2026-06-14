@@ -79,10 +79,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
                 aspectRatio: 1,
               }} />
             <TextInput
-              style={{
-                fontSize: normalize(14), color: 'white',
-                width: '100%'
-              }}
+              style={{ flex: 1, fontSize: normalize(14), color: 'white' }}
               placeholder="Search exercises..."
               hitSlop={{ left: 50, right: 50, top: 5, bottom: 5 }}
               value={searchQuery}
@@ -91,6 +88,32 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
               autoCorrect={false}
               placeholderTextColor={'#757689'}
             />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity
+                onPress={() => setSearchQuery('')}
+                activeOpacity={0.7}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <View style={{
+                  width: normalize(18),
+                  height: normalize(18),
+                  borderRadius: normalize(9),
+                  borderWidth: normalize(1),
+                  borderColor: 'rgba(255,255,255,0.38)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <Image
+                    source={cross_icon}
+                    style={{
+                      width: normalize(7),
+                      height: normalize(7),
+                      tintColor: 'rgba(255,255,255,0.62)',
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
 
           <FlatList
