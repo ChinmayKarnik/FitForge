@@ -23,6 +23,8 @@ type RootStackParamList = {
 export const CalendarScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const toastLock = useRef(false);
+  const calendarRef = useRef(null);
+
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -132,7 +134,7 @@ export const CalendarScreen = () => {
           </View>
         </View>
 
-        <View>
+        <View ref={calendarRef} collapsable={false} style={{ backgroundColor: '#1c2238' }}>
           <View style={{
             backgroundColor: '#282d4b',
             height: normalizeHeight(50),
