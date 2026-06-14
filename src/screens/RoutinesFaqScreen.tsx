@@ -98,19 +98,19 @@ const RoutinesFaqScreen = () => {
                 <SectionTitle>Why Use Routines?</SectionTitle>
                 <View style={styles.benefitsList}>
                     <BenefitItem
-                        title="Start Workouts Faster"
+                        title="Start workouts faster"
                         description="Your exercise list is ready to go. No searching, no setup."
                     />
                     <BenefitItem
-                        title="Build a Consistent Habit"
+                        title="Build a consistent habit"
                         description="Same structure each session makes effort easier to measure."
                     />
                     <BenefitItem
-                        title="Reuse What Works"
+                        title="Reuse what works"
                         description="Save once. Use it until your goals change."
                     />
                     <BenefitItem
-                        title="Compare Progress Accurately"
+                        title="Compare progress accurately"
                         description="Like-for-like sessions make progress comparisons meaningful."
                     />
                 </View>
@@ -324,14 +324,14 @@ const styles = StyleSheet.create({
     },
     benefitTitle: {
         color: '#ffffff',
-        fontSize: normalize(12),
-        fontWeight: '900',
+        fontSize: normalize(13),
+        fontWeight: '800',
         letterSpacing: -0.2,
         lineHeight: normalize(16),
         marginBottom: normalizeHeight(1),
     },
     benefitDescription: {
-        color: 'rgba(255,255,255,0.65)',
+        color: 'rgba(255,255,255,0.6)',
         fontSize: normalize(12),
         fontWeight: '600',
         lineHeight: normalize(20),
