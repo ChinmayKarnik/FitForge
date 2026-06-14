@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Dimensions, BackHandler } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
@@ -55,6 +55,14 @@ const SectionRailBlock = ({ children }: { children: React.ReactNode }) => (
 
 const RoutinesFaqScreen = () => {
     const navigation = useNavigation<any>();
+
+    useEffect(() => {
+        const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+            navigation.goBack();
+            return true;
+        });
+        return () => sub.remove();
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
