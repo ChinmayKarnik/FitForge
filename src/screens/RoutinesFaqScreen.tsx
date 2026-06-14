@@ -103,7 +103,7 @@ const RoutinesFaqScreen = () => {
                         <View style={styles.exerciseAccentBar} />
                         <View style={styles.exerciseCardContent}>
                             <Text style={styles.exerciseTypeLabel}>Exercise</Text>
-                            <Text style={styles.exerciseCardName}>Push-Up</Text>
+                            <Text style={styles.exerciseCardName}>Bench Press</Text>
                         </View>
                         <View style={styles.exerciseInnerDivider} />
                         <View style={styles.exerciseDescription}>
