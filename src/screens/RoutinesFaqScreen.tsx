@@ -104,7 +104,7 @@ const RoutinesFaqScreen = () => {
                         <View style={styles.exerciseCardContent}>
                             <Text style={styles.exerciseTypeLabel}>Exercise</Text>
                             <Text style={styles.exerciseCardName}>Push-Up</Text>
-                            <Text style={styles.exerciseCardMeta}>A single movement.</Text>
+                            <Text style={styles.exerciseCardMeta}>1 movement</Text>
                         </View>
                     </View>
 
@@ -371,6 +371,31 @@ const styles = StyleSheet.create({
     },
     exerciseCardContent: {
         padding: normalize(11),
+        paddingBottom: normalize(10),
+    },
+    exerciseInnerDivider: {
+        height: 1,
+        backgroundColor: 'rgba(255,255,255,0.07)',
+        marginHorizontal: normalize(11),
+    },
+    exerciseSingleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: normalizeWidth(10),
+        padding: normalize(11),
+        paddingTop: normalize(8),
+    },
+    exerciseSingleNumber: {
+        color: 'rgba(255,255,255,0.3)',
+        fontSize: normalize(11),
+        fontWeight: '700',
+        width: normalizeWidth(14),
+        textAlign: 'right',
+    },
+    exerciseSingleName: {
+        color: 'rgba(255,255,255,0.78)',
+        fontSize: normalize(13),
+        fontWeight: '500',
     },
     exerciseTypeLabel: {
         color: 'rgba(255,255,255,0.35)',
