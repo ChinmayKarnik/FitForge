@@ -79,11 +79,13 @@ const RoutinesFaqScreen = () => {
                     </Text>
                 </SectionRailBlock>
 
-                <ScreenshotImage
-                    source={faq_routine_details}
-                    aspectRatio={696 / 976}
-                    caption={<>{'Example Routine — '}<Text style={{ fontWeight: '700', color: '#ffffff' }}>Push Day</Text>{': Bench Press, Shoulder Press, Tricep Pushdowns'}</>}
-                />
+                <View style={{ marginTop: normalizeHeight(20) }}>
+                    <ScreenshotImage
+                        source={faq_routine_details}
+                        aspectRatio={696 / 976}
+                        caption={<>{'Example Routine — '}<Text style={{ fontWeight: '700', color: '#ffffff' }}>Push Day</Text>{': Bench Press, Shoulder Press, Tricep Pushdowns'}</>}
+                    />
+                </View>
 
                 <Divider style={{ marginTop: normalizeHeight(14) }} />
 
