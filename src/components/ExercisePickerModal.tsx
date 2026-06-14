@@ -1,5 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, TextInput, Image, KeyboardAvoidingView, Keyboard } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, TextInput, Image, Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 import { Exercise } from '../data/types';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png'
@@ -29,14 +31,6 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
     );
   }, [exercises, searchQuery]);
 
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
-
-  useEffect(() => {
-    const show = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-    const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
-    return () => { show.remove(); hide.remove(); };
-  }, []);
-
   const handleClose = () => {
     setSearchQuery('');
     setSelectedExercise(null);
@@ -56,8 +50,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
       animationType="slide"
       onRequestClose={handleClose}
     >
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-        <View style={[styles.modalOverlay, { justifyContent: keyboardVisible ? 'flex-end' : 'center' }]}>
+      <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems:'center',
             marginBottom: normalize(16),
@@ -186,17 +179,19 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
             </TouchableOpacity>
           </View>
         </View>
-        </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   modalOverlay: {
-    flex: 1,
+    position: 'absolute',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: SCREEN_HEIGHT * 0.13,
   },
   modalContent: {
     backgroundColor: '#272b48',
@@ -205,7 +200,7 @@ const styles = StyleSheet.create({
     marginBottom: normalizeHeight(12),
     paddingVertical: normalize(12),
     paddingHorizontal: normalizeWidth(16),
-    maxHeight: '68%',
+    maxHeight: SCREEN_HEIGHT * 0.68,
   },
   modalTitle: {
     fontSize: normalize(18),
