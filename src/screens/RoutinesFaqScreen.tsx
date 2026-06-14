@@ -98,16 +98,13 @@ const RoutinesFaqScreen = () => {
                 <SectionTitle>Routine vs Exercise</SectionTitle>
 
                 <View style={styles.flowDiagram}>
-                    {/* Exercise block — loose chips */}
-                    <View style={styles.flowStep}>
-                        <Text style={styles.compColLabel}>Exercise</Text>
-                        <Text style={styles.compColDesc}>A single movement</Text>
-                        <View style={styles.chipsWrap}>
-                            {['Push-Up', 'Squat', 'Pull-Up', 'Deadlift'].map(name => (
-                                <View key={name} style={styles.exerciseChip}>
-                                    <Text style={styles.exerciseChipText}>{name}</Text>
-                                </View>
-                            ))}
+                    {/* Exercise block — card */}
+                    <View style={styles.exerciseCard}>
+                        <View style={styles.exerciseAccentBar} />
+                        <View style={styles.exerciseCardContent}>
+                            <Text style={styles.exerciseTypeLabel}>Exercise</Text>
+                            <Text style={styles.exerciseCardName}>Push-Up</Text>
+                            <Text style={styles.exerciseCardMeta}>A single movement.</Text>
                         </View>
                     </View>
 
@@ -359,6 +356,41 @@ const styles = StyleSheet.create({
         color: 'rgba(255,255,255,0.2)',
         fontSize: normalize(14),
         textAlign: 'center',
+    },
+    // Exercise card
+    exerciseCard: {
+        backgroundColor: 'rgba(255,255,255,0.03)',
+        borderRadius: normalize(12),
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.09)',
+        overflow: 'hidden',
+    },
+    exerciseAccentBar: {
+        height: 3,
+        backgroundColor: 'rgba(255,255,255,0.15)',
+    },
+    exerciseCardContent: {
+        padding: normalize(11),
+    },
+    exerciseTypeLabel: {
+        color: 'rgba(255,255,255,0.35)',
+        fontSize: normalize(10),
+        fontWeight: '700',
+        letterSpacing: 0.8,
+        marginBottom: normalizeHeight(2),
+    },
+    exerciseCardName: {
+        color: '#ffffff',
+        fontSize: normalize(19),
+        fontWeight: '800',
+        letterSpacing: -0.4,
+        lineHeight: normalize(23),
+    },
+    exerciseCardMeta: {
+        color: 'rgba(255,255,255,0.35)',
+        fontSize: normalize(11),
+        fontFamily: 'NunitoSans-Regular',
+        marginTop: normalizeHeight(2),
     },
     // Chips + routine container
     chipsWrap: {
