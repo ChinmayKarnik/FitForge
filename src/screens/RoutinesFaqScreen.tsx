@@ -120,8 +120,8 @@ const RoutinesFaqScreen = () => {
                 {/* Routine vs Exercise */}
                 <SectionTitle>Routine vs Exercise</SectionTitle>
 
-                <View style={styles.comparison}>
-                    <View style={styles.compCol}>
+                <View style={styles.flowDiagram}>
+                    <View style={styles.flowStep}>
                         <View style={styles.compTopBar} />
                         <Text style={styles.compColLabel}>Exercise</Text>
                         <Text style={styles.compColDesc}>A single movement</Text>
@@ -130,7 +130,10 @@ const RoutinesFaqScreen = () => {
                         <Text style={styles.compItem}>Pull-Up</Text>
                         <Text style={styles.compItem}>Deadlift</Text>
                     </View>
-                    <View style={styles.compCol}>
+
+                    <Text style={styles.flowConnector}>Group these together → a Routine</Text>
+
+                    <View style={styles.flowStep}>
                         <View style={[styles.compTopBar, styles.compTopBarAccent]} />
                         <Text style={styles.compColLabel}>Routine</Text>
                         <Text style={styles.compColDesc}>A collection of exercises</Text>
@@ -337,7 +340,17 @@ const styles = StyleSheet.create({
         lineHeight: normalize(20),
         fontFamily: 'NunitoSans-Regular',
     },
-    // Routine vs Exercise comparison
+    // Routine vs Exercise flow diagram
+    flowDiagram: {
+        marginTop: normalizeHeight(16),
+    },
+    flowStep: {},
+    flowConnector: {
+        color: 'rgba(255,255,255,0.38)',
+        fontSize: normalize(12),
+        marginVertical: normalizeHeight(14),
+    },
+    // kept for dead-style compat
     comparison: {
         flexDirection: 'row',
         marginTop: normalizeHeight(16),
