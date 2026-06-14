@@ -491,10 +491,26 @@ const styles = StyleSheet.create({
         letterSpacing: -0.5,
         lineHeight: normalize(26),
     },
+    routineTitleRow: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+        gap: normalizeWidth(8),
+        marginTop: normalizeHeight(4),
+    },
+    routineExerciseBadge: {
+        borderWidth: normalize(1),
+        borderColor: '#5a7bb3',
+        borderRadius: normalize(4),
+        backgroundColor: '#1f243b',
+        paddingHorizontal: normalizeWidth(6),
+        paddingVertical: normalizeHeight(3),
+        marginLeft: normalizeWidth(8),
+    },
     routineMetadata: {
-        color: 'rgba(255,255,255,0.55)',
+        color: '#8f99c5',
         fontSize: normalize(12),
-        fontFamily: 'NunitoSans-Regular',
+        fontFamily: 'RobotoMono-Regular',
         marginTop: normalizeHeight(4),
     },
     routineInnerDivider: {
