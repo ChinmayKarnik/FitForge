@@ -103,7 +103,7 @@ const RoutinesFaqScreen = () => {
                         <View style={styles.exerciseAccentBar} />
                         <View style={styles.exerciseCardContent}>
                             <View style={styles.exerciseTypePill}>
-                                <Text style={styles.exerciseTypeLabel}>Exercise</Text>
+                                <Text style={styles.exerciseTypeLabel}>EXERCISE</Text>
                             </View>
                             <Text style={styles.exerciseCardName}>Bench Press</Text>
                         </View>
@@ -367,31 +367,31 @@ const styles = StyleSheet.create({
         fontSize: normalize(14),
         textAlign: 'center',
     },
-    // Exercise card — building block, recedes visually
+    // Exercise card — same system as Routine card
     exerciseCard: {
-        backgroundColor: 'rgba(255,255,255,0.025)',
+        backgroundColor: '#252d47',
         borderRadius: normalize(12),
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.07)',
+        borderColor: '#3d4563',
         overflow: 'hidden',
     },
     exerciseAccentBar: {
-        height: 2,
-        backgroundColor: 'rgba(255,255,255,0.10)',
+        height: 3,
+        backgroundColor: '#4f7ee8',
     },
     exerciseCardContent: {
-        padding: normalize(11),
-        paddingBottom: normalize(7),
+        padding: normalize(14),
+        paddingBottom: normalize(11),
     },
     exerciseInnerDivider: {
         height: 1,
-        backgroundColor: 'rgba(255,255,255,0.05)',
-        marginHorizontal: normalize(11),
+        backgroundColor: 'rgba(255,255,255,0.12)',
+        marginHorizontal: normalize(14),
     },
     exerciseDescription: {
-        padding: normalize(11),
-        paddingTop: normalize(7),
-        paddingBottom: normalize(9),
+        padding: normalize(14),
+        paddingTop: normalize(9),
+        paddingBottom: normalize(11),
     },
     exerciseMetaRow: {
         flexDirection: 'row',
@@ -399,38 +399,40 @@ const styles = StyleSheet.create({
         gap: normalizeWidth(6),
     },
     exerciseMetaDot: {
-        width: 4,
-        height: 4,
-        borderRadius: 2,
-        backgroundColor: 'rgba(255,255,255,0.22)',
+        width: normalize(5),
+        height: normalize(5),
+        borderRadius: normalize(4),
+        backgroundColor: '#7fb3ff',
+        marginRight: normalizeWidth(4),
     },
     exerciseMetaText: {
-        color: 'rgba(255,255,255,0.42)',
-        fontSize: normalize(11),
-        fontFamily: 'NunitoSans-Regular',
+        flex: 1,
+        color: 'rgba(255,255,255,0.8)',
+        fontSize: normalize(12),
+        fontFamily: 'RobotoMono-Regular',
     },
     exerciseTypePill: {
         alignSelf: 'flex-start',
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: '#1f243b',
         borderRadius: normalize(4),
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.08)',
-        paddingHorizontal: normalizeWidth(6),
-        paddingVertical: normalizeHeight(2),
+        borderWidth: normalize(1),
+        borderColor: '#5a7bb3',
+        paddingHorizontal: normalizeWidth(7),
+        paddingVertical: normalizeHeight(3),
         marginBottom: normalizeHeight(7),
     },
     exerciseTypeLabel: {
-        color: 'rgba(255,255,255,0.48)',
-        fontSize: normalize(9),
-        fontWeight: '700',
-        letterSpacing: 1.0,
+        color: '#7fb3ff',
+        fontSize: normalizeHeight(10),
+        fontWeight: '600',
+        letterSpacing: 0.3,
     },
     exerciseCardName: {
-        color: 'rgba(255,255,255,0.90)',
-        fontSize: normalize(20),
+        color: '#ffffff',
+        fontSize: normalize(22),
         fontWeight: '800',
-        letterSpacing: -0.4,
-        lineHeight: normalize(24),
+        letterSpacing: -0.5,
+        lineHeight: normalize(26),
     },
     // Chips + routine container
     chipsWrap: {
