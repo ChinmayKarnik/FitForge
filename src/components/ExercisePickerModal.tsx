@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, TextInput, Image } from 'react-native';
+import React, { useState, useMemo, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, TextInput, Image, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { Exercise } from '../data/types';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import magnifying_glass from '../images/magnifying-glass-white.png'
@@ -29,6 +29,14 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
     );
   }, [exercises, searchQuery]);
 
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
+
   const handleClose = () => {
     setSearchQuery('');
     setSelectedExercise(null);
@@ -48,7 +56,8 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
       animationType="slide"
       onRequestClose={handleClose}
     >
-      <View style={styles.modalOverlay}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <View style={[styles.modalOverlay, { justifyContent: keyboardVisible ? 'flex-end' : 'center' }]}>
         <View style={styles.modalContent}>
           <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems:'center',
             marginBottom: normalize(16),
@@ -134,7 +143,7 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
               </View>
             }
           />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', paddingTop: normalizeHeight(10) }}>
             <TouchableOpacity
               style={{
                 backgroundColor: '#1f2239',
@@ -177,55 +186,8 @@ export const ExercisePickerModal = ({ visible, exercises, onSelectExercise, onCl
             </TouchableOpacity>
           </View>
         </View>
-      </View>
-    </Modal>
-  );
-
-  return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={handleClose}
-    >
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Select Exercise</Text>
-
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search exercises..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-
-          <FlatList
-            data={filteredExercises}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={[styles.exerciseItem, index === filteredExercises.length - 1 && { borderBottomWidth: 0 }]}
-                onPress={() => handleSelectExercise(item)}
-              >
-                <Text style={styles.exerciseItemText}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-            ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Text style={styles.emptyText}>No exercises found</Text>
-              </View>
-            }
-          />
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={handleClose}
-          >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -240,9 +202,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#272b48',
     borderRadius: normalize(20),
     marginHorizontal: normalizeWidth(16),
+    marginBottom: normalizeHeight(12),
     paddingVertical: normalize(12),
     paddingHorizontal: normalizeWidth(16),
-    maxHeight: '60%',
+    maxHeight: '68%',
   },
   modalTitle: {
     fontSize: normalize(18),
