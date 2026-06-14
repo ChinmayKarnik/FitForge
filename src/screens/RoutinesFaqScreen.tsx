@@ -181,7 +181,13 @@ const RoutinesFaqScreen = () => {
                     </Text>
                 </SectionRailBlock>
 
-                <ScreenshotImage source={faq_routines_list} aspectRatio={712 / 1568} />
+                <View style={{ marginTop: normalizeHeight(20) }}>
+                    <ScreenshotImage
+                        source={faq_routines_list}
+                        aspectRatio={851 / 1820}
+                        caption={<>{'Browse, create, and edit your workout routines\nfrom the '}<Text style={{ color: 'rgba(255,255,255,0.78)', fontWeight: '600' }}>Routines</Text>{' page'}</>}
+                    />
+                </View>
 
             </ScrollView>
         </View>
@@ -324,7 +330,7 @@ const styles = StyleSheet.create({
     },
     // Benefit items
     benefitsList: {
-        gap: normalizeHeight(36),
+        gap: normalizeHeight(28),
     },
     benefitItemRow: {
         flexDirection: 'row',
@@ -350,7 +356,7 @@ const styles = StyleSheet.create({
     benefitDescription: {
         color: 'rgba(255,255,255,0.6)',
         fontSize: normalize(12),
-        fontWeight: '600',
+        fontWeight: '400',
         lineHeight: normalize(20),
         fontFamily: 'NunitoSans-Regular',
     },
