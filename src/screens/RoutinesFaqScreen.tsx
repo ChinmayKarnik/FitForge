@@ -72,19 +72,12 @@ const RoutinesFaqScreen = () => {
                 showsVerticalScrollIndicator={false}
             >
                 {/* What are Routines */}
-                <Text style={styles.pageTitle}>What are Routines?</Text>
-                <Text style={styles.body}>
-                    {'A routine is a '}
-                    <Text style={styles.bodyEmphasis}>collection of exercises</Text>
-                    {' that you perform together during a workout.'}
-                </Text>
-                <Text style={[styles.bodySecondary, { marginTop: normalizeHeight(10) }]}>
-                    {'Think of a routine as a '}
-                    <Text style={styles.bodyEmphasis}>workout template</Text>
-                    {' that you can '}
-                    <Text style={styles.bodyEmphasis}>save and reuse</Text>
-                    {' whenever you train.'}
-                </Text>
+                <SectionTitle>What are Routines?</SectionTitle>
+                <SectionRailBlock>
+                    <Text style={styles.body}>
+                        A routine is a collection of exercises that you perform together during a workout. Think of it as a workout template you can save and reuse whenever you train.
+                    </Text>
+                </SectionRailBlock>
 
                 <ScreenshotImage
                     source={faq_routine_details}
