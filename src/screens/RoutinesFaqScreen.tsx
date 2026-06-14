@@ -85,7 +85,7 @@ const RoutinesFaqScreen = () => {
                     <ScreenshotImage
                         source={faq_routine_details}
                         aspectRatio={696 / 976}
-                        caption="An example Push Day routine comprising the exercises Bench Press, Shoulder Press and Tricep Pushdown"
+                        caption={<>{'An example '}<Text style={{ color: 'rgba(255,255,255,0.78)', fontWeight: '600' }}>Push Day</Text>{' routine comprising the exercises '}<Text style={{ color: 'rgba(255,255,255,0.78)', fontWeight: '600' }}>Bench Press</Text>{', '}<Text style={{ color: 'rgba(255,255,255,0.78)', fontWeight: '600' }}>Shoulder Press</Text>{' and '}<Text style={{ color: 'rgba(255,255,255,0.78)', fontWeight: '600' }}>Tricep Pushdown</Text></>}
                     />
                 </View>
 
