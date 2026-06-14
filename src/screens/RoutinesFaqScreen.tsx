@@ -516,11 +516,11 @@ const styles = StyleSheet.create({
         height: normalize(5),
         borderRadius: normalize(4),
         backgroundColor: '#7fb3ff',
-        marginRight: normalizeWidth(10),
+        marginRight: normalizeWidth(2),
     },
     routineExerciseName: {
         flex: 1,
-        color: 'rgba(255,255,255,0.8)',
+        color: 'rgba(255,255,255,0.95)',
         fontSize: normalize(12),
         fontFamily: 'RobotoMono-Regular',
     },
