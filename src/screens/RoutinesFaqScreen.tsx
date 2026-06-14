@@ -95,7 +95,7 @@ const RoutinesFaqScreen = () => {
                 <Divider style={{ marginTop: normalizeHeight(14) }} />
 
                 {/* Routine vs Exercise */}
-                <SectionTitle>Routine vs Exercise</SectionTitle>
+                <SectionTitle>Exercise vs Routine</SectionTitle>
 
                 <View style={styles.flowDiagram}>
                     {/* Exercise block — card */}
