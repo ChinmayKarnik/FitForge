@@ -121,33 +121,45 @@ const RoutinesFaqScreen = () => {
                 <SectionTitle>Routine vs Exercise</SectionTitle>
 
                 <View style={styles.flowDiagram}>
+                    {/* Exercise block — loose chips */}
                     <View style={styles.flowStep}>
-                        <View style={styles.compTopBar} />
                         <Text style={styles.compColLabel}>Exercise</Text>
                         <Text style={styles.compColDesc}>A single movement</Text>
-                        <Text style={styles.compItem}>Push-Up</Text>
-                        <Text style={styles.compItem}>Squat</Text>
-                        <Text style={styles.compItem}>Pull-Up</Text>
-                        <Text style={styles.compItem}>Deadlift</Text>
+                        <View style={styles.chipsWrap}>
+                            {['Push-Up', 'Squat', 'Pull-Up', 'Deadlift'].map(name => (
+                                <View key={name} style={styles.exerciseChip}>
+                                    <Text style={styles.exerciseChipText}>{name}</Text>
+                                </View>
+                            ))}
+                        </View>
                     </View>
 
-                    <Text style={styles.flowConnector}>Group these together → a Routine</Text>
+                    {/* Transformation block */}
+                    <View style={styles.flowTransform}>
+                        <Text style={styles.flowGroupLabel}>{'↓  Group these exercises together'}</Text>
+                        <Text style={styles.flowResult}>Creates a Routine</Text>
+                    </View>
 
-                    <View style={styles.flowStep}>
-                        <View style={[styles.compTopBar, styles.compTopBarAccent]} />
-                        <Text style={styles.compColLabel}>Routine</Text>
-                        <Text style={styles.compColDesc}>A collection of exercises</Text>
-                        <Text style={styles.compRoutineName}>Push Day</Text>
-                        <Text style={styles.compRoutineItem}>Bench Press</Text>
-                        <Text style={styles.compRoutineItem}>Shoulder Press</Text>
-                        <Text style={styles.compRoutineItem}>Tricep Pushdown</Text>
+                    {/* Routine block — container */}
+                    <View style={styles.routineContainer}>
+                        <View style={styles.routineContainerHeader}>
+                            <Text style={styles.routineTypeLabel}>Routine</Text>
+                            <Text style={styles.routineContainerName}>Push Day</Text>
+                        </View>
+                        <View style={styles.chipsWrap}>
+                            {['Bench Press', 'Shoulder Press', 'Tricep Pushdown'].map(name => (
+                                <View key={name} style={styles.routineChip}>
+                                    <Text style={styles.routineChipText}>{name}</Text>
+                                </View>
+                            ))}
+                        </View>
                     </View>
                 </View>
 
-                <Divider />
-
                 {/* Do I Need a Routine */}
-                <SectionTitle>Do I Need a Routine?</SectionTitle>
+                <View style={{ marginTop: normalizeHeight(32) }}>
+                    <SectionTitle>Do I Need a Routine?</SectionTitle>
+                </View>
                 <SectionRailBlock>
                     <Text style={styles.body}>
                         No. You can track workouts by selecting exercises individually. Routines simply make it faster when you regularly perform the same group of exercises.
@@ -342,13 +354,82 @@ const styles = StyleSheet.create({
     },
     // Routine vs Exercise flow diagram
     flowDiagram: {
-        marginTop: normalizeHeight(16),
+        gap: normalizeHeight(20),
     },
     flowStep: {},
-    flowConnector: {
-        color: 'rgba(255,255,255,0.38)',
+    flowTransform: {
+        paddingLeft: normalizeWidth(10),
+    },
+    flowGroupLabel: {
+        color: 'rgba(255,255,255,0.42)',
         fontSize: normalize(12),
-        marginVertical: normalizeHeight(14),
+        fontFamily: 'NunitoSans-Regular',
+        lineHeight: normalize(18),
+        marginBottom: normalizeHeight(4),
+    },
+    flowResult: {
+        color: '#ffffff',
+        fontSize: normalize(20),
+        fontWeight: '700',
+        fontFamily: 'serif',
+        letterSpacing: -0.4,
+        lineHeight: normalize(25),
+    },
+    // Chips + routine container
+    chipsWrap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: normalizeWidth(8),
+        marginTop: normalizeHeight(10),
+    },
+    exerciseChip: {
+        backgroundColor: 'rgba(255,255,255,0.06)',
+        borderRadius: normalize(20),
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.10)',
+        paddingHorizontal: normalizeWidth(10),
+        paddingVertical: normalizeHeight(5),
+    },
+    exerciseChipText: {
+        color: 'rgba(255,255,255,0.68)',
+        fontSize: normalize(12),
+        fontWeight: '500',
+    },
+    routineContainer: {
+        backgroundColor: 'rgba(79,126,232,0.07)',
+        borderRadius: normalize(12),
+        borderWidth: 1,
+        borderColor: 'rgba(79,126,232,0.18)',
+        padding: normalize(14),
+    },
+    routineContainerHeader: {
+        marginBottom: normalizeHeight(12),
+    },
+    routineTypeLabel: {
+        color: 'rgba(79,126,232,0.65)',
+        fontSize: normalize(10),
+        fontWeight: '700',
+        letterSpacing: 0.8,
+        marginBottom: normalizeHeight(2),
+    },
+    routineContainerName: {
+        color: '#ffffff',
+        fontSize: normalize(16),
+        fontWeight: '700',
+        letterSpacing: -0.2,
+    },
+    routineChip: {
+        backgroundColor: 'rgba(79,126,232,0.12)',
+        borderRadius: normalize(20),
+        borderWidth: 1,
+        borderColor: 'rgba(79,126,232,0.22)',
+        paddingHorizontal: normalizeWidth(10),
+        paddingVertical: normalizeHeight(5),
+    },
+    routineChipText: {
+        color: 'rgba(200,215,255,0.85)',
+        fontSize: normalize(12),
+        fontWeight: '500',
     },
     // kept for dead-style compat
     comparison: {
