@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+
+const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import profile_photo_default from '../images/profile-photo-default.png';
 import { shareViewAsImage } from '../utils/shareUtils';
 
@@ -110,7 +112,7 @@ export default function WorkoutDetailsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
-      {/* Header */}
+      {DEV_SHARE_PREVIEW && <>
       <View style={{
         width: '100%',
         borderWidth: 1,
@@ -248,13 +250,16 @@ export default function WorkoutDetailsScreen() {
           )}
         </View>
       </View>
-      {DEV_SHARE_PREVIEW && (
-        <View style={{ paddingHorizontal: normalizeWidth(16), paddingBottom: normalizeHeight(16) }}>
-          {/* Share card — this view gets captured */}
-          <View
+      </>}
+      {/* Share card — always rendered for captureRef, off-screen when not debugging */}
+      <View style={DEV_SHARE_PREVIEW
+        ? { paddingHorizontal: normalizeWidth(16), marginBottom: normalizeHeight(12) }
+        : { position: 'absolute', left: -9999, width: CARD_CAPTURE_WIDTH }
+      }>
+        <View
             ref={shareCardRef}
             collapsable={false}
-            style={{ backgroundColor: '#1e2340', borderRadius: normalize(16), padding: normalize(20), marginBottom: normalizeHeight(12), borderWidth: 1, borderColor: 'gray' }}
+            style={{ backgroundColor: '#272d46', borderRadius: normalize(12), padding: normalize(20), marginBottom: normalizeHeight(12), borderWidth: normalize(1), borderColor: '#3d4563' }}
           >
             {/* Profile row */}
             <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: normalizeHeight(14) }}>
@@ -274,60 +279,77 @@ export default function WorkoutDetailsScreen() {
                   >{userInfo.bio}</Text>
                 )}
               </View>
-              <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(12), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }}>FitForge</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(12), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }}>FitForge</Text>
             </View>
 
             {/* Divider */}
-            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(14) }} />
+            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(14) }} />
 
-            {/* WORKOUT COMPLETE + duration */}
-            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10), letterSpacing: 2, textAlign: 'center', marginBottom: normalizeHeight(4) }}>WORKOUT COMPLETE</Text>
-            <Text style={{ color: '#ffffff', fontSize: normalize(38), fontWeight: '700', textAlign: 'center', letterSpacing: -1 }}>{durationText}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(10), letterSpacing: 1.5, textAlign: 'center', marginBottom: normalizeHeight(12) }}>TOTAL DURATION</Text>
+            {/* WORKOUT COMPLETE label + accent line */}
+            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(10) }}>
+              <Text style={{ color: '#b7c4ef', fontSize: normalize(11), fontWeight: '400', letterSpacing: 1.5 }}>WORKOUT COMPLETE</Text>
+              <View style={{ width: normalizeWidth(28), height: normalize(1), backgroundColor: '#7fb3ff', marginTop: normalizeHeight(8) }} />
+            </View>
+
+            {/* Hero duration */}
+            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(6) }}>
+              <Text style={{ color: '#ffffff', fontSize: normalize(42), fontWeight: '700', letterSpacing: -1 }}>{durationText}</Text>
+              <Text style={{ color: '#8090bc', fontSize: normalize(10), fontWeight: '500', letterSpacing: 1 }}>TOTAL DURATION</Text>
+            </View>
 
             {/* Stats row */}
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: normalizeHeight(14) }}>
-              <View style={{ alignItems: 'center', flex: 1 }}>
-                <Text style={{ color: '#ffffff', fontSize: normalize(20), fontWeight: '700' }}>{exerciseRows.length}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11) }}>Exercises</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: normalizeHeight(14), marginTop: normalizeHeight(10) }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '700' }}>{exerciseRows.length}</Text>
+                <Text style={{ color: '#9aadd0', fontSize: normalize(11), marginLeft: normalizeWidth(8) }}>Exercises</Text>
               </View>
-              <View style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.15)', marginVertical: normalizeHeight(4) }} />
-              <View style={{ alignItems: 'center', flex: 1 }}>
-                <Text style={{ color: '#ffffff', fontSize: normalize(20), fontWeight: '700' }}>{totalSets}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11) }}>Sets</Text>
+              <View style={{ width: 1, height: normalizeHeight(24), backgroundColor: 'rgba(255,255,255,0.2)', marginHorizontal: normalizeWidth(20) }} />
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '700' }}>{totalSets}</Text>
+                <Text style={{ color: '#9aadd0', fontSize: normalize(11), marginLeft: normalizeWidth(8) }}>Sets</Text>
               </View>
             </View>
 
             {/* Divider */}
-            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(12) }} />
+            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(12) }} />
 
             {/* Workout name */}
             <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '300', fontStyle: 'italic', letterSpacing: -0.5, marginBottom: normalizeHeight(10) }}>{workout?.name}</Text>
 
             {/* Exercise list */}
-            {visibleExercises.map((ex: any, i: number) => (
-              <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: normalizeHeight(5) }}>
-                <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: normalize(13) }}>• {ex.name}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(13) }}>{ex.sets} sets</Text>
-              </View>
-            ))}
-            {hiddenCount > 0 && (
-              <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>+{hiddenCount} more</Text>
-            )}
+            <View style={{ borderWidth: normalize(1), borderColor: '#33344f', backgroundColor: '#1d2039', borderRadius: normalize(6), paddingHorizontal: normalizeWidth(12) }}>
+              {visibleExercises.map((ex: any, i: number) => {
+                const isLast = i === visibleExercises.length - 1 && hiddenCount === 0;
+                return (
+                  <View key={i} style={[{ flexDirection: 'row', alignItems: 'center', paddingVertical: normalizeHeight(7) },
+                    !isLast && { borderBottomWidth: normalize(1), borderBottomColor: '#31324f' }]}>
+                    <View style={{ width: normalize(5), height: normalize(5), borderRadius: normalize(4), backgroundColor: '#7fb3ff', marginRight: normalizeWidth(10) }} />
+                    <Text style={{ flex: 1, color: 'rgba(255,255,255,0.9)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.name}</Text>
+                    <Text style={{ color: '#7fb3ff', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.sets} {ex.sets === 1 ? 'set' : 'sets'}</Text>
+                  </View>
+                );
+              })}
+              {hiddenCount > 0 && (
+                <View style={{ paddingVertical: normalizeHeight(7) }}>
+                  <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(11) }}>+{hiddenCount} more</Text>
+                </View>
+              )}
+            </View>
 
             {/* Date + time */}
-            <Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: normalize(11), marginTop: normalizeHeight(12) }}>{dateText} · {timeText}</Text>
-          </View>
-
-          {/* Share button */}
-          <TouchableOpacity
-            style={{ backgroundColor: '#404d7c', borderRadius: normalize(12), paddingVertical: normalizeHeight(14), alignItems: 'center' }}
-            onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nhttps://www.youtube.com`)}
-          >
-            <Text style={{ color: '#ffffff', fontSize: normalize(16), fontWeight: '600' }}>Share</Text>
-          </TouchableOpacity>
+            <Text style={{ color: '#8090bc', fontSize: normalize(11), marginTop: normalizeHeight(12) }}>{dateText} · {timeText}</Text>
         </View>
-      )}
+      </View>
+
+      {/* Share button — always visible */}
+      <View style={{ paddingHorizontal: normalizeWidth(16), paddingBottom: normalizeHeight(16) }}>
+        <TouchableOpacity
+          style={{ backgroundColor: '#404d7c', borderRadius: normalize(12), paddingVertical: normalizeHeight(14), alignItems: 'center' }}
+          onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nhttps://www.youtube.com`)}
+        >
+          <Text style={{ color: '#ffffff', fontSize: normalize(16), fontWeight: '600' }}>Share</Text>
+        </TouchableOpacity>
+      </View>
 
       <RoutineDetailsModal
         visible={!!detailsRoutine}
