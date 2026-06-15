@@ -428,9 +428,9 @@ export const StatisticsScreen = () => {
                 <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#fb7028' }}>{streakValue} <Text style={{ fontSize: normalize(10), color: 'rgba(251,112,40,0.7)', fontWeight: '500' }}>days</Text></Text>
               </View>
               <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginLeft: normalizeWidth(4) }}>
-                <Image source={plates_stack_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (469.0 / 425.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
-                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Sets/Workout</Text>
-                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#7fb3ff' }}>{avgSets}</Text>
+                <Image source={trend_arrow_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (512.0 / 325.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
+                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Sessions/Wk</Text>
+                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#7fb3ff' }}>{avgSessions}</Text>
               </View>
             </View>
 
