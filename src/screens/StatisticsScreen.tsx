@@ -1,10 +1,19 @@
 //@ts-nocheck
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import shareIcon from '../images/share.png';
+import fitforgeIcon from '../images/fitforge-icon.png';
+import profile_photo_default from '../images/profile-photo-default.png';
+import { databaseController } from '../data/controllers';
+import ProfileImageCircular from '../components/ProfileImageCircular';
+import { shareViewAsImage } from '../utils/shareUtils';
+
+const DEV_SHARE_PREVIEW = true;
+const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import { TimeRange } from '../enums/enums';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
 import { getStatsForTimeRange, getTimeRangeIntervalFormat, getStatsStartDate } from '../utils/workoutUtils';
@@ -116,7 +125,13 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
+  const shareCardRef = useRef(null);
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
+
+  const userInfo = databaseController.getUserInfo();
+  const userName = userInfo?.name || 'FitForge User';
+  const profilePhotoSource = userInfo?.profilePhotoPath ? { uri: userInfo.profilePhotoPath } : profile_photo_default;
+  const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
   const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
   const isEmptyStats = statsData.totalWorkouts === 0;
@@ -169,6 +184,13 @@ export const StatisticsScreen = () => {
         <Text style={{ fontSize: normalize(18), letterSpacing: 1, fontWeight: '700', color: '#fefefe' }}>
           Statistics
         </Text>
+        <TouchableOpacity
+          style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my fitness stats on FitForge! 💪\nhttps://fitforge.chinmaykarnik.com`)}
+        >
+          <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0 / 350.0), resizeMode: 'contain', tintColor: 'rgba(255,255,255,0.75)' }} />
+        </TouchableOpacity>
       </View>
 
       {/* Time Range Selector */}
@@ -364,6 +386,86 @@ export const StatisticsScreen = () => {
           }}>No workouts in the selected time range. Your stats will build as you track sessions</Text>
         </View>
       )}
+
+      {/* Share card */}
+      {(() => {
+        const card = (
+          <View
+            ref={shareCardRef}
+            collapsable={false}
+            style={{ backgroundColor: '#1c2238', borderRadius: normalize(12), padding: normalize(16), ...(DEV_SHARE_PREVIEW && { borderWidth: 1, borderColor: '#2e3458' }) }}
+          >
+            {/* Profile row */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(14) }}>
+              <ProfileImageCircular imageSource={profilePhotoSource} width={normalize(48)} aspectRatio={1} crop={profilePhotoCrop} />
+              <View style={{ flex: 1, marginLeft: normalizeWidth(10) }}>
+                <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '600' }}>{userName}</Text>
+                {!!userInfo?.bio && (
+                  <Text numberOfLines={2} style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(2), lineHeight: normalize(16) }}>{userInfo.bio}</Text>
+                )}
+              </View>
+              <Image source={fitforgeIcon} style={{ width: normalize(28), height: normalize(28), borderRadius: normalize(6), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }} />
+            </View>
+
+            {/* Divider */}
+            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(12) }} />
+
+            {/* Time range label */}
+            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(10), letterSpacing: 1.4, fontWeight: '600', marginBottom: normalizeHeight(12) }}>
+              {dateRangeLabel.toUpperCase()}
+            </Text>
+
+            {/* Top stat row: Total Workouts | Max Streak | Avg Sets */}
+            <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(8) }}>
+              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginRight: normalizeWidth(4) }}>
+                <Image source={dumbbell_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (410.0 / 241.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
+                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Total</Text>
+                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#ffffff' }}>{statsData.totalWorkouts ?? '-'}</Text>
+              </View>
+              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginHorizontal: normalizeWidth(4) }}>
+                <Image source={flame_3} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (462.0 / 620.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#fb7028' }} />
+                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Max Streak</Text>
+                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#fb7028' }}>{streakValue} <Text style={{ fontSize: normalize(10), color: 'rgba(251,112,40,0.7)', fontWeight: '500' }}>days</Text></Text>
+              </View>
+              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginLeft: normalizeWidth(4) }}>
+                <Image source={plates_stack_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (469.0 / 425.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
+                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Sets/Workout</Text>
+                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#7fb3ff' }}>{avgSets}</Text>
+              </View>
+            </View>
+
+            {/* Bottom row: Favourite Exercise + Busiest Day */}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', padding: normalize(12), marginRight: normalizeWidth(4) }}>
+                <Image source={medal_white} style={{ height: normalizeHeight(18), width: normalizeHeight(18) * (437.0 / 562.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
+                <Text style={{ color: '#ffffff', fontSize: normalize(13), fontWeight: '700', marginBottom: normalizeHeight(2) }} numberOfLines={1}>{statsData.favouriteExercise ?? '-'}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10) }}>Favourite Exercise</Text>
+              </View>
+              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', padding: normalize(12), marginLeft: normalizeWidth(4) }}>
+                <Image source={calendar} style={{ height: normalizeHeight(18), width: normalizeHeight(18) * (410.0 / 420.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(13), fontWeight: '700', marginBottom: normalizeHeight(2) }}>{statsData.busiestDay ?? '-'}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10) }}>Busiest Day</Text>
+              </View>
+            </View>
+          </View>
+        );
+
+        if (DEV_SHARE_PREVIEW) {
+          return (
+            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#1c2238', justifyContent: 'center', padding: normalize(16) }}>
+              {card}
+              <TouchableOpacity
+                onPress={() => shareViewAsImage(shareCardRef, `Check out my fitness stats on FitForge! 💪\nhttps://fitforge.chinmaykarnik.com`)}
+                activeOpacity={0.8}
+                style={{ marginTop: normalizeHeight(20), backgroundColor: '#3a4fa0', borderRadius: normalize(10), paddingVertical: normalizeHeight(14), alignItems: 'center', borderWidth: 1, borderColor: '#5a72c4' }}
+              >
+                <Text style={{ color: '#eef0fb', fontSize: normalize(15), fontWeight: '600' }}>Share</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }
+        return <View style={{ position: 'absolute', left: -9999, width: CARD_CAPTURE_WIDTH }}>{card}</View>;
+      })()}
     </View>
   );
 };
