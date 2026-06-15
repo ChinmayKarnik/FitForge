@@ -260,7 +260,7 @@ export default function WorkoutDetailsScreen() {
         <View
             ref={shareCardRef}
             collapsable={false}
-            style={{ backgroundColor: '#272d46', borderRadius: normalize(12), padding: normalize(20), marginBottom: normalizeHeight(12), borderWidth: normalize(1), borderColor: '#3d4563' }}
+            style={{ backgroundColor: '#272d46', borderRadius: normalize(12), paddingHorizontal: normalize(20), paddingTop: normalize(20), paddingBottom: normalize(12), marginBottom: normalizeHeight(12), borderWidth: normalize(1), borderColor: '#3d4563' }}
           >
             {/* Profile row */}
             <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: normalizeHeight(14) }}>
@@ -276,7 +276,7 @@ export default function WorkoutDetailsScreen() {
                   <Text
                     numberOfLines={2}
                     ellipsizeMode="tail"
-                    style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(11), marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
+                    style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
                   >{userInfo.bio}</Text>
                 )}
               </View>
@@ -338,7 +338,7 @@ export default function WorkoutDetailsScreen() {
             </View>
 
             {/* Date + time */}
-            <Text style={{ color: '#8090bc', fontSize: normalize(11), marginTop: normalizeHeight(12) }}>{dateText} · {timeText}</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(10), fontFamily: 'RobotoMono-Regular', marginTop: normalizeHeight(10) }}>{dateText} · {timeText}</Text>
         </View>
       </View>
 
