@@ -451,7 +451,7 @@ export const StatisticsScreen = () => {
                 <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
                   <Image source={medal_white} style={{ width: normalize(12), height: normalize(12) * (562.0 / 437.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
                 </View>
-                <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '800', marginBottom: normalizeHeight(4) }} numberOfLines={2}>{statsData.favouriteExercise ?? '-'}</Text>
+                <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '800', marginBottom: normalizeHeight(4) }} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.6}>{statsData.favouriteExercise ?? '-'}</Text>
                 <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6 }}>FAVOURITE</Text>
               </View>
 
