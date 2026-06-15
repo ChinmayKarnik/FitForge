@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import profile_photo_default from '../images/profile-photo-default.png';
+import { shareViewAsImage } from '../utils/shareUtils';
+
+const DEV_SHARE_PREVIEW = true;
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -10,8 +14,10 @@ import calendarIcon from '../images/calendar.png';
 import notes2Icon from '../images/notes-2.png';
 import infoIcon from '../images/info-icon.png';
 import { databaseController } from '../data/controllers';
+import { getExercisesListFromWorkout } from '../utils/workoutUtils';
 import CurrentWorkoutList from '../components/CurrentWorkoutList';
 import RoutineDetailsModal from '../components/RoutineDetailsModal';
+import ProfileImageCircular from '../components/ProfileImageCircular';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
@@ -34,6 +40,20 @@ export default function WorkoutDetailsScreen() {
   const routine = routineId ? databaseController.getRoutineById(routineId) : null;
   const routineName = routine?.name || '';
   const [detailsRoutine, setDetailsRoutine] = useState<any>(null);
+  const shareCardRef = useRef(null);
+
+  const userInfo = databaseController.getUserInfo();
+  const userName = userInfo?.name || 'FitForge User';
+  const profilePhotoSource = userInfo?.profilePhotoPath
+    ? { uri: userInfo.profilePhotoPath }
+    : profile_photo_default;
+  const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
+
+  const exerciseRows = getExercisesListFromWorkout(workout);
+  const totalSets = exerciseRows.reduce((sum: number, e: any) => sum + e.sets, 0);
+  const MAX_EXERCISES_SHOWN = 5;
+  const visibleExercises = exerciseRows.slice(0, MAX_EXERCISES_SHOWN);
+  const hiddenCount = exerciseRows.length - visibleExercises.length;
 
   let durationText = '';
   const durationMs = workout?.duration;
@@ -118,6 +138,15 @@ export default function WorkoutDetailsScreen() {
         <Text style={{ fontSize: 22, letterSpacing: 1, fontWeight: '700', color: PRIMARY }}>
           Workout Details
         </Text>
+        {false && (
+          <TouchableOpacity
+            style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            onPress={() => {/* TODO: share */}}
+          >
+            <Text style={{ color: '#7a9eef', fontSize: normalize(14), fontWeight: '600' }}>Share</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Fixed top content */}
@@ -219,6 +248,87 @@ export default function WorkoutDetailsScreen() {
           )}
         </View>
       </View>
+      {DEV_SHARE_PREVIEW && (
+        <View style={{ paddingHorizontal: normalizeWidth(16), paddingBottom: normalizeHeight(16) }}>
+          {/* Share card — this view gets captured */}
+          <View
+            ref={shareCardRef}
+            collapsable={false}
+            style={{ backgroundColor: '#1e2340', borderRadius: normalize(16), padding: normalize(20), marginBottom: normalizeHeight(12), borderWidth: 1, borderColor: 'gray' }}
+          >
+            {/* Profile row */}
+            <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: normalizeHeight(14) }}>
+              <ProfileImageCircular
+                imageSource={profilePhotoSource}
+                width={normalize(54)}
+                aspectRatio={1}
+                crop={profilePhotoCrop}
+              />
+              <View style={{ flex: 1, marginLeft: normalizeWidth(12), justifyContent: 'center' }}>
+                <Text style={{ color: '#ffffff', fontSize: normalize(15), fontWeight: '600' }}>{userName}</Text>
+                {!!userInfo?.bio && (
+                  <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(11), marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
+                  >{userInfo.bio}</Text>
+                )}
+              </View>
+              <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(12), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }}>FitForge</Text>
+            </View>
+
+            {/* Divider */}
+            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(14) }} />
+
+            {/* WORKOUT COMPLETE + duration */}
+            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10), letterSpacing: 2, textAlign: 'center', marginBottom: normalizeHeight(4) }}>WORKOUT COMPLETE</Text>
+            <Text style={{ color: '#ffffff', fontSize: normalize(38), fontWeight: '700', textAlign: 'center', letterSpacing: -1 }}>{durationText}</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(10), letterSpacing: 1.5, textAlign: 'center', marginBottom: normalizeHeight(12) }}>TOTAL DURATION</Text>
+
+            {/* Stats row */}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: normalizeHeight(14) }}>
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={{ color: '#ffffff', fontSize: normalize(20), fontWeight: '700' }}>{exerciseRows.length}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11) }}>Exercises</Text>
+              </View>
+              <View style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.15)', marginVertical: normalizeHeight(4) }} />
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={{ color: '#ffffff', fontSize: normalize(20), fontWeight: '700' }}>{totalSets}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11) }}>Sets</Text>
+              </View>
+            </View>
+
+            {/* Divider */}
+            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(12) }} />
+
+            {/* Workout name */}
+            <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '300', fontStyle: 'italic', letterSpacing: -0.5, marginBottom: normalizeHeight(10) }}>{workout?.name}</Text>
+
+            {/* Exercise list */}
+            {visibleExercises.map((ex: any, i: number) => (
+              <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: normalizeHeight(5) }}>
+                <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: normalize(13) }}>• {ex.name}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(13) }}>{ex.sets} sets</Text>
+              </View>
+            ))}
+            {hiddenCount > 0 && (
+              <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(12), marginTop: normalizeHeight(2) }}>+{hiddenCount} more</Text>
+            )}
+
+            {/* Date + time */}
+            <Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: normalize(11), marginTop: normalizeHeight(12) }}>{dateText} · {timeText}</Text>
+          </View>
+
+          {/* Share button */}
+          <TouchableOpacity
+            style={{ backgroundColor: '#404d7c', borderRadius: normalize(12), paddingVertical: normalizeHeight(14), alignItems: 'center' }}
+            onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nhttps://www.youtube.com`)}
+          >
+            <Text style={{ color: '#ffffff', fontSize: normalize(16), fontWeight: '600' }}>Share</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <RoutineDetailsModal
         visible={!!detailsRoutine}
         routine={detailsRoutine}
