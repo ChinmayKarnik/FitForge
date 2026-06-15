@@ -21,6 +21,7 @@ import { getExercisesListFromWorkout } from '../utils/workoutUtils';
 import CurrentWorkoutList from '../components/CurrentWorkoutList';
 import RoutineDetailsModal from '../components/RoutineDetailsModal';
 import ProfileImageCircular from '../components/ProfileImageCircular';
+import { thinSpace } from '../components/dateTimeUtils';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
@@ -260,7 +261,7 @@ export default function WorkoutDetailsScreen() {
         <View
             ref={shareCardRef}
             collapsable={false}
-            style={{ backgroundColor: '#272d46', borderRadius: normalize(12), paddingHorizontal: normalize(20), paddingTop: normalize(20), paddingBottom: normalize(12), marginBottom: normalizeHeight(12), borderWidth: normalize(1), borderColor: '#3d4563' }}
+            style={{ backgroundColor: '#272d46', borderRadius: normalize(12), paddingHorizontal: normalize(20), paddingTop: normalize(20), paddingBottom: normalize(12), marginBottom: normalizeHeight(12) }}
           >
             {/* Profile row */}
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(14) }}>
@@ -339,9 +340,9 @@ export default function WorkoutDetailsScreen() {
 
             {/* Date + time */}
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: normalizeHeight(10) }}>
-              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{dateText}</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{thinSpace(dateText)}</Text>
               <View style={{ width: normalize(3), height: normalize(3), borderRadius: normalize(2), backgroundColor: 'rgba(255,255,255,0.4)', marginHorizontal: normalizeWidth(8) }} />
-              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{timeText}</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{thinSpace(timeText)}</Text>
             </View>
         </View>
       </View>
