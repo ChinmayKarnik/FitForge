@@ -16,6 +16,8 @@ import RoutinesFaqScreen from '../screens/RoutinesFaqScreen';
 import ExitAppModal from '../components/ExitAppModal';
 
 import { View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
+import { Linking } from 'react-native';
+import { linkingConfig, resolveDeepLink } from './deepLinks';
 import { stylesTabBar } from './stylesTabBar';
 import { normalizeHeight } from '../utils/normalize';
 
@@ -196,9 +198,16 @@ export const AppNavigator = () => {
     return () => sub.remove();
   }, [handleBackPress]);
 
+  useEffect(() => {
+    const sub = Linking.addEventListener('url', ({ url }) => {
+      resolveDeepLink(url, navigationRef);
+    });
+    return () => sub.remove();
+  }, []);
+
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} linking={linkingConfig}>
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name="MainTabs" component={MainTabs} />
           <RootStack.Screen name="Routines" component={RoutinesScreen} />
