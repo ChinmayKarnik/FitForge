@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 
 const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import profile_photo_default from '../images/profile-photo-default.png';
+import fitforgeIcon from '../images/fitforge-icon.png';
 import { shareViewAsImage } from '../utils/shareUtils';
 
 const DEV_SHARE_PREVIEW = true;
@@ -279,7 +280,7 @@ export default function WorkoutDetailsScreen() {
                   >{userInfo.bio}</Text>
                 )}
               </View>
-              <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(12), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }}>FitForge</Text>
+              <Image source={fitforgeIcon} style={{ width: normalize(32), height: normalize(32), borderRadius: normalize(8), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }} />
             </View>
 
             {/* Divider */}
