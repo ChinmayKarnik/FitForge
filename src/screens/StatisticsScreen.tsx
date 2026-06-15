@@ -415,37 +415,54 @@ export const StatisticsScreen = () => {
               {dateRangeLabel.toUpperCase()}
             </Text>
 
-            {/* Top stat row: Total Workouts | Max Streak | Avg Sets */}
+            {/* Top stat row: Total | Max Streak | Sessions/Wk */}
             <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(8) }}>
-              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginRight: normalizeWidth(4) }}>
-                <Image source={dumbbell_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (410.0 / 241.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
-                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Total</Text>
-                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#ffffff' }}>{statsData.totalWorkouts ?? '-'}</Text>
+
+              <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginRight: normalizeWidth(4), justifyContent: 'space-between' }}>
+                <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
+                  <Image source={dumbbell_2} style={{ width: normalize(14), height: normalize(14) * (241.0 / 410.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                </View>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>TOTAL</Text>
+                <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '800' }}>{statsData.totalWorkouts ?? '-'}</Text>
               </View>
-              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginHorizontal: normalizeWidth(4) }}>
-                <Image source={flame_3} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (462.0 / 620.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#fb7028' }} />
-                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Max Streak</Text>
-                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#fb7028' }}>{streakValue} <Text style={{ fontSize: normalize(10), color: 'rgba(251,112,40,0.7)', fontWeight: '500' }}>days</Text></Text>
+
+              <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginHorizontal: normalizeWidth(4), justifyContent: 'space-between' }}>
+                <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(251,112,40,0.12)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
+                  <Image source={flame_3} style={{ width: normalize(12), height: normalize(12) * (620.0 / 462.0), resizeMode: 'contain', tintColor: '#fb7028' }} />
+                </View>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>MAX STREAK</Text>
+                <Text style={{ color: '#fb7028', fontSize: normalize(22), fontWeight: '800' }}>{streakValue}</Text>
               </View>
-              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', marginLeft: normalizeWidth(4) }}>
-                <Image source={trend_arrow_2} style={{ height: normalizeHeight(20), width: normalizeHeight(20) * (512.0 / 325.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
-                <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), marginBottom: normalizeHeight(4) }}>Sessions/Wk</Text>
-                <Text style={{ fontSize: normalize(18), fontWeight: '700', color: '#7fb3ff' }}>{avgSessions}</Text>
+
+              <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginLeft: normalizeWidth(4), justifyContent: 'space-between' }}>
+                <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
+                  <Image source={trend_arrow_2} style={{ width: normalize(14), height: normalize(14) * (325.0 / 512.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                </View>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>SESSIONS/WK</Text>
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '800' }}>{avgSessions}</Text>
               </View>
+
             </View>
 
             {/* Bottom row: Favourite Exercise + Busiest Day */}
             <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', padding: normalize(12), marginRight: normalizeWidth(4) }}>
-                <Image source={medal_white} style={{ height: normalizeHeight(18), width: normalizeHeight(18) * (437.0 / 562.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
-                <Text style={{ color: '#ffffff', fontSize: normalize(13), fontWeight: '700', marginBottom: normalizeHeight(2) }} numberOfLines={1}>{statsData.favouriteExercise ?? '-'}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10) }}>Favourite Exercise</Text>
+
+              <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginRight: normalizeWidth(4), justifyContent: 'space-between' }}>
+                <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
+                  <Image source={medal_white} style={{ width: normalize(12), height: normalize(12) * (562.0 / 437.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                </View>
+                <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '800', marginBottom: normalizeHeight(4) }} numberOfLines={2}>{statsData.favouriteExercise ?? '-'}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6 }}>FAVOURITE</Text>
               </View>
-              <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', padding: normalize(12), marginLeft: normalizeWidth(4) }}>
-                <Image source={calendar} style={{ height: normalizeHeight(18), width: normalizeHeight(18) * (410.0 / 420.0), resizeMode: 'contain', marginBottom: normalizeHeight(6), tintColor: '#ffffff' }} />
-                <Text style={{ color: '#7fb3ff', fontSize: normalize(13), fontWeight: '700', marginBottom: normalizeHeight(2) }}>{statsData.busiestDay ?? '-'}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: normalize(10) }}>Busiest Day</Text>
+
+              <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginLeft: normalizeWidth(4), justifyContent: 'space-between' }}>
+                <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
+                  <Image source={calendar} style={{ width: normalize(12), height: normalize(12) * (420.0 / 410.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                </View>
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(14), fontWeight: '800', marginBottom: normalizeHeight(4) }}>{statsData.busiestDay ?? '-'}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6 }}>BUSIEST DAY</Text>
               </View>
+
             </View>
           </View>
         );
