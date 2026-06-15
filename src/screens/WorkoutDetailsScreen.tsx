@@ -284,27 +284,27 @@ export default function WorkoutDetailsScreen() {
             </View>
 
             {/* Divider */}
-            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(14) }} />
+            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(18) }} />
 
             {/* WORKOUT COMPLETE label + accent line */}
-            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(10) }}>
+            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(16) }}>
               <Text style={{ color: '#b7c4ef', fontSize: normalize(11), fontWeight: '400', letterSpacing: 1.5 }}>WORKOUT COMPLETE</Text>
-              <View style={{ width: normalizeWidth(28), height: normalize(1), backgroundColor: '#7fb3ff', marginTop: normalizeHeight(8) }} />
+              <View style={{ width: normalizeWidth(36), height: normalize(1), backgroundColor: '#7fb3ff', marginTop: normalizeHeight(6) }} />
             </View>
 
             {/* Hero duration */}
-            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(6) }}>
-              <Text style={{ color: '#ffffff', fontSize: normalize(42), fontWeight: '700', letterSpacing: -1 }}>{durationText}</Text>
-              <Text style={{ color: '#8090bc', fontSize: normalize(10), fontWeight: '500', letterSpacing: 1 }}>TOTAL DURATION</Text>
+            <View style={{ alignItems: 'center', marginBottom: normalizeHeight(4) }}>
+              <Text style={{ color: '#ffffff', fontSize: normalize(38), fontWeight: '700', letterSpacing: -1 }}>{durationText}</Text>
+              <Text style={{ color: '#8090bc', fontSize: normalize(10), fontWeight: '500', letterSpacing: 1.5 }}>TOTAL DURATION</Text>
             </View>
 
             {/* Stats row */}
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: normalizeHeight(14), marginTop: normalizeHeight(10) }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: normalizeHeight(16), marginTop: normalizeHeight(16) }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '700' }}>{exerciseRows.length}</Text>
                 <Text style={{ color: '#9aadd0', fontSize: normalize(11), marginLeft: normalizeWidth(8) }}>Exercises</Text>
               </View>
-              <View style={{ width: 1, height: normalizeHeight(24), backgroundColor: 'rgba(255,255,255,0.2)', marginHorizontal: normalizeWidth(20) }} />
+              <View style={{ width: 1, height: normalizeHeight(18), backgroundColor: 'rgba(255,255,255,0.3)', marginHorizontal: normalizeWidth(24) }} />
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '700' }}>{totalSets}</Text>
                 <Text style={{ color: '#9aadd0', fontSize: normalize(11), marginLeft: normalizeWidth(8) }}>Sets</Text>
@@ -312,7 +312,7 @@ export default function WorkoutDetailsScreen() {
             </View>
 
             {/* Divider */}
-            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(12) }} />
+            <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.12)', marginBottom: normalizeHeight(14) }} />
 
             {/* Workout name */}
             <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '300', fontStyle: 'italic', letterSpacing: -0.5, marginBottom: normalizeHeight(10) }}>{workout?.name}</Text>
