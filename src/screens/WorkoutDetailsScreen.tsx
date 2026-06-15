@@ -263,10 +263,10 @@ export default function WorkoutDetailsScreen() {
             style={{ backgroundColor: '#272d46', borderRadius: normalize(12), paddingHorizontal: normalize(20), paddingTop: normalize(20), paddingBottom: normalize(12), marginBottom: normalizeHeight(12), borderWidth: normalize(1), borderColor: '#3d4563' }}
           >
             {/* Profile row */}
-            <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: normalizeHeight(14) }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(14) }}>
               <ProfileImageCircular
                 imageSource={profilePhotoSource}
-                width={normalize(54)}
+                width={normalize(64)}
                 aspectRatio={1}
                 crop={profilePhotoCrop}
               />
