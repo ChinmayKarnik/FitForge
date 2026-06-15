@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { shareViewAsImage } from '../utils/shareUtils';
 
 const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import profile_photo_default from '../images/profile-photo-default.png';
 import fitforgeIcon from '../images/fitforge-icon.png';
-import { shareViewAsImage } from '../utils/shareUtils';
 
 const DEV_SHARE_PREVIEW = false;
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
