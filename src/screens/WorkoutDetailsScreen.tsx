@@ -11,6 +11,7 @@ import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
+import shareIcon from '../images/share.png';
 import clock from '../images/clock-thick-white.png';
 import stopwatch from '../images/stopwatch-white.png';
 import calendarIcon from '../images/calendar.png';
@@ -144,9 +145,10 @@ export default function WorkoutDetailsScreen() {
         <TouchableOpacity
           style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout - \n${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`)}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout: ${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`)}
         >
-          <Text style={{ color: '#7a9eef', fontSize: normalize(14), fontWeight: '600' }}>Share</Text>
+          <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0/350.0), resizeMode: 'contain',
+             tintColor: 'rgba(255,255,255,0.75)' }} />
         </TouchableOpacity>
       </View>
 
