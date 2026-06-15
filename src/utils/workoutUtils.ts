@@ -124,6 +124,50 @@ export function getAverageWorkoutDurationCurrentWeekMins() {
 	return Math.round(totalDuration / workoutsThisWeek.length);
 }
 
+export function getMaxStreakForMonth(year: number, month: number): number {
+  const allWorkouts = databaseController.getAllWorkouts();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const workoutDays = new Set<number>();
+  allWorkouts.forEach(w => {
+    const d = new Date(w.startTime);
+    if (d.getFullYear() === year && d.getMonth() === month) {
+      workoutDays.add(d.getDate());
+    }
+  });
+
+  let maxStreak = 0;
+  let current = 0;
+  for (let day = 1; day <= daysInMonth; day++) {
+    if (workoutDays.has(day)) {
+      current++;
+      if (current > maxStreak) maxStreak = current;
+    } else {
+      current = 0;
+    }
+  }
+  return maxStreak;
+}
+
+export function getWorkoutCountForMonth(year: number, month: number): number {
+  const allWorkouts = databaseController.getAllWorkouts();
+  return allWorkouts.filter(w => {
+    const d = new Date(w.startTime);
+    return d.getFullYear() === year && d.getMonth() === month;
+  }).length;
+}
+
+export function getAverageWorkoutDurationForMonth(year: number, month: number): number {
+  const allWorkouts = databaseController.getAllWorkouts();
+  const monthWorkouts = allWorkouts.filter(w => {
+    const d = new Date(w.startTime);
+    return d.getFullYear() === year && d.getMonth() === month;
+  });
+  if (monthWorkouts.length === 0) return 0;
+  const totalMs = monthWorkouts.reduce((sum, w) => sum + (w.duration || 0), 0);
+  return Math.round(totalMs / monthWorkouts.length / 60000);
+}
+
 export const getWorkoutsForADay = (date: Date) => {
 	const allWorkouts = databaseController.getAllWorkouts();
 	return allWorkouts.filter(workout => {

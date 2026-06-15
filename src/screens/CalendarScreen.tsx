@@ -1,6 +1,8 @@
 //@ts-nocheck
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ToastAndroid, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ToastAndroid, Platform, ScrollView, Dimensions } from 'react-native';
+
+const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity, Image, Alert } from 'react-native';
@@ -14,12 +16,12 @@ import shareIcon from '../images/share.png';
 import fitforgeIcon from '../images/fitforge-icon.png';
 import profile_photo_default from '../images/profile-photo-default.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate } from '../utils/workoutUtils';
+import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate, getMaxStreakForMonth, getWorkoutCountForMonth, getAverageWorkoutDurationForMonth } from '../utils/workoutUtils';
 import { shareViewAsImage } from '../utils/shareUtils';
 import { databaseController } from '../data/controllers';
 import ProfileImageCircular from '../components/ProfileImageCircular';
 
-const DEV_SHARE_PREVIEW = true;
+const DEV_SHARE_PREVIEW = false;
 
 type RootStackParamList = {
   DayDetails: { date: Date };
@@ -174,6 +176,10 @@ export const CalendarScreen = () => {
   const streakText = currentStreak === 1 ? '1 Day' : `${currentStreak} Days`;
   const avrDurationThisWeekMins = getAverageWorkoutDurationCurrentWeekMins();
 
+  const maxStreakThisMonth = getMaxStreakForMonth(year, month);
+  const workoutCountThisMonth = getWorkoutCountForMonth(year, month);
+  const avgDurationThisMonthMins = getAverageWorkoutDurationForMonth(year, month);
+
   const handlePrevMonth = () => setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
   const handleNextMonth = () => setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
 
@@ -202,8 +208,6 @@ export const CalendarScreen = () => {
       style={{
         backgroundColor: '#1c2238',
         borderRadius: normalize(12),
-        borderWidth: 1,
-        borderColor: '#2e3458',
         padding: normalize(16),
       }}
     >
@@ -234,17 +238,17 @@ export const CalendarScreen = () => {
         <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginRight: normalizeWidth(4) }}>
           <Image source={flame} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (506.0 / 656.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
           <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Max Streak</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>4 Days</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginHorizontal: normalizeWidth(4) }}>
           <Image source={calendar2} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (337.0 / 365.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
           <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>This Month</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>4 Workouts</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{workoutCountThisMonth} {workoutCountThisMonth === 1 ? 'Workout' : 'Workouts'}</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginLeft: normalizeWidth(4) }}>
           <Image source={clock4} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (300.0 / 348.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
           <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Avg Duration</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>37 Min</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{avgDurationThisMonthMins} Min</Text>
         </View>
       </View>
 
@@ -275,6 +279,13 @@ export const CalendarScreen = () => {
     return (
       <View style={[styles.bg, { padding: normalize(16), justifyContent: 'center' }]}>
         {shareCard}
+        <TouchableOpacity
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my ${monthYearString} workout consistency! 💪\nTracked on https://fitforge.chinmaykarnik.com`)}
+          activeOpacity={0.8}
+          style={{ marginTop: normalizeHeight(20), backgroundColor: '#3a4fa0', borderRadius: normalize(10), paddingVertical: normalizeHeight(14), alignItems: 'center', borderWidth: 1, borderColor: '#5a72c4' }}
+        >
+          <Text style={{ color: '#eef0fb', fontSize: normalize(15), fontWeight: '600' }}>Share</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -351,7 +362,7 @@ export const CalendarScreen = () => {
           </View>
 
           {/* Share card off-screen for capture */}
-          <View style={{ position: 'absolute', left: -9999 }}>
+          <View style={{ position: 'absolute', left: -9999, width: CARD_CAPTURE_WIDTH }}>
             {shareCard}
           </View>
         </View>
