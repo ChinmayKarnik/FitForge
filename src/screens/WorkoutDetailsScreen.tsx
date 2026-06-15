@@ -276,7 +276,7 @@ export default function WorkoutDetailsScreen() {
                   <Text
                     numberOfLines={2}
                     ellipsizeMode="tail"
-                    style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
+                    style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
                   >{userInfo.bio}</Text>
                 )}
               </View>
