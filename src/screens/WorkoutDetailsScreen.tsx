@@ -144,7 +144,7 @@ export default function WorkoutDetailsScreen() {
         <TouchableOpacity
           style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nfitforge://`)}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout - \n${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`)}
         >
           <Text style={{ color: '#7a9eef', fontSize: normalize(14), fontWeight: '600' }}>Share</Text>
         </TouchableOpacity>

@@ -1,7 +1,7 @@
 import { LinkingOptions } from '@react-navigation/native';
 
 export const SCHEME = 'fitforge';
-export const PREFIXES = [`${SCHEME}://`];
+export const PREFIXES = [`${SCHEME}://`, 'https://fitforge.chinmaykarnik.com'];
 
 export const linkingConfig: LinkingOptions<any> = {
   prefixes: PREFIXES,
