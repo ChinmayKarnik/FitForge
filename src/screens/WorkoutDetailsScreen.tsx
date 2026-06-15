@@ -6,7 +6,7 @@ import profile_photo_default from '../images/profile-photo-default.png';
 import fitforgeIcon from '../images/fitforge-icon.png';
 import { shareViewAsImage } from '../utils/shareUtils';
 
-const DEV_SHARE_PREVIEW = true;
+const DEV_SHARE_PREVIEW = false;
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -114,7 +114,6 @@ export default function WorkoutDetailsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
-      {DEV_SHARE_PREVIEW && <>
       <View style={{
         width: '100%',
         borderWidth: 1,
@@ -142,15 +141,13 @@ export default function WorkoutDetailsScreen() {
         <Text style={{ fontSize: 22, letterSpacing: 1, fontWeight: '700', color: PRIMARY }}>
           Workout Details
         </Text>
-        {false && (
-          <TouchableOpacity
-            style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-            onPress={() => {/* TODO: share */}}
-          >
-            <Text style={{ color: '#7a9eef', fontSize: normalize(14), fontWeight: '600' }}>Share</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nhttps://www.youtube.com`)}
+        >
+          <Text style={{ color: '#7a9eef', fontSize: normalize(14), fontWeight: '600' }}>Share</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Fixed top content */}
@@ -252,7 +249,6 @@ export default function WorkoutDetailsScreen() {
           )}
         </View>
       </View>
-      </>}
       {/* Share card — always rendered for captureRef, off-screen when not debugging */}
       <View style={DEV_SHARE_PREVIEW
         ? { paddingHorizontal: normalizeWidth(16), marginBottom: normalizeHeight(12) }
@@ -347,17 +343,7 @@ export default function WorkoutDetailsScreen() {
         </View>
       </View>
 
-      {/* Share button — always visible */}
-      <View style={{ paddingHorizontal: normalizeWidth(16), paddingBottom: normalizeHeight(16) }}>
-        <TouchableOpacity
-          style={{ backgroundColor: '#404d7c', borderRadius: normalize(12), paddingVertical: normalizeHeight(14), alignItems: 'center' }}
-          onPress={() => shareViewAsImage(shareCardRef, `${workout?.name} 💪\nhttps://www.youtube.com`)}
-        >
-          <Text style={{ color: '#ffffff', fontSize: normalize(16), fontWeight: '600' }}>Share</Text>
-        </TouchableOpacity>
-      </View>
-
-      <RoutineDetailsModal
+<RoutineDetailsModal
         visible={!!detailsRoutine}
         routine={detailsRoutine}
         onClose={() => setDetailsRoutine(null)}
