@@ -338,7 +338,11 @@ export default function WorkoutDetailsScreen() {
             </View>
 
             {/* Date + time */}
-            <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: normalize(10), fontFamily: 'RobotoMono-Regular', marginTop: normalizeHeight(10) }}>{dateText} · {timeText}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: normalizeHeight(10) }}>
+              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{dateText}</Text>
+              <View style={{ width: normalize(3), height: normalize(3), borderRadius: normalize(2), backgroundColor: 'rgba(255,255,255,0.4)', marginHorizontal: normalizeWidth(8) }} />
+              <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>{timeText}</Text>
+            </View>
         </View>
       </View>
 
