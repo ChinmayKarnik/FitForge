@@ -266,7 +266,7 @@ export default function WorkoutDetailsScreen() {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(14) }}>
               <ProfileImageCircular
                 imageSource={profilePhotoSource}
-                width={normalize(64)}
+                width={normalize(60)}
                 aspectRatio={1}
                 crop={profilePhotoCrop}
               />
@@ -318,15 +318,15 @@ export default function WorkoutDetailsScreen() {
             <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '300', fontStyle: 'italic', letterSpacing: -0.5, marginBottom: normalizeHeight(10) }}>{workout?.name}</Text>
 
             {/* Exercise list */}
-            <View style={{ borderWidth: normalize(1), borderColor: '#33344f', backgroundColor: '#1d2039', borderRadius: normalize(6), paddingHorizontal: normalizeWidth(12) }}>
+            <View style={{ borderWidth: normalize(1), borderColor: 'rgba(127,179,255,0.25)', backgroundColor: '#1d2039', borderRadius: normalize(6), paddingHorizontal: normalizeWidth(12) }}>
               {visibleExercises.map((ex: any, i: number) => {
                 const isLast = i === visibleExercises.length - 1 && hiddenCount === 0;
                 return (
                   <View key={i} style={[{ flexDirection: 'row', alignItems: 'center', paddingVertical: normalizeHeight(7) },
                     !isLast && { borderBottomWidth: normalize(1), borderBottomColor: '#31324f' }]}>
                     <View style={{ width: normalize(5), height: normalize(5), borderRadius: normalize(4), backgroundColor: '#7fb3ff', marginRight: normalizeWidth(10) }} />
-                    <Text style={{ flex: 1, color: 'rgba(255,255,255,0.9)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.name}</Text>
-                    <Text style={{ color: '#7fb3ff', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.sets} {ex.sets === 1 ? 'set' : 'sets'}</Text>
+                    <Text style={{ flex: 1, color: 'rgba(255,255,255,0.8)', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.name}</Text>
+                    <Text style={{ color: '#8f99c5', fontSize: normalize(12), fontFamily: 'RobotoMono-Regular' }}>{ex.sets} {ex.sets === 1 ? 'set' : 'sets'}</Text>
                   </View>
                 );
               })}
