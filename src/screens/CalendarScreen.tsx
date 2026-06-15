@@ -226,19 +226,25 @@ export const CalendarScreen = () => {
         <Image source={fitforgeIcon} style={{ width: normalize(28), height: normalize(28), borderRadius: normalize(6), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }} />
       </View>
 
-      {/* Stats row */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: normalizeHeight(14), gap: normalizeWidth(8) }}>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(8), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(10), alignItems: 'center' }}>
-          <Text style={{ color: '#ffffff', fontSize: normalize(18), fontWeight: '700' }}>{streakText}</Text>
-          <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(10), marginTop: normalizeHeight(2) }}>Streak</Text>
+      {/* Divider */}
+      <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(14) }} />
+
+      {/* Stats: same style as calendar screen stat cards, scaled down */}
+      <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(14) }}>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginRight: normalizeWidth(4) }}>
+          <Image source={flame} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (506.0 / 656.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
+          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Max Streak</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>4 Days</Text>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(8), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(10), alignItems: 'center' }}>
-          <Text style={{ color: '#ffffff', fontSize: normalize(18), fontWeight: '700' }}>{workoutsText}</Text>
-          <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(10), marginTop: normalizeHeight(2) }}>This Week</Text>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginHorizontal: normalizeWidth(4) }}>
+          <Image source={calendar2} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (337.0 / 365.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
+          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>This Month</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>4 Workouts</Text>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(8), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(10), alignItems: 'center' }}>
-          <Text style={{ color: '#ffffff', fontSize: normalize(18), fontWeight: '700' }}>{avrDurationThisWeekMins} min</Text>
-          <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(10), marginTop: normalizeHeight(2) }}>Avg Duration</Text>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginLeft: normalizeWidth(4) }}>
+          <Image source={clock4} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (300.0 / 348.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
+          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Avg Duration</Text>
+          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>37 Min</Text>
         </View>
       </View>
 
