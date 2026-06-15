@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
@@ -10,13 +10,12 @@ export const ActivityScreen = () => {
   const navigation = useNavigation<any>();
   const [workouts, setWorkouts] = useState<any[]>([]);
 
-  useEffect(() => {
-    const loadWorkouts = async () => {
+  useFocusEffect(
+    useCallback(() => {
       const data = databaseController.getAllWorkouts();
       setWorkouts([...data].reverse());
-    };
-    loadWorkouts();
-  }, []);
+    }, [])
+  );
 
   const renderWorkout = ({ item }: { item: any }) => (
     <WorkoutSummaryCard

@@ -9,7 +9,6 @@ class DatabaseController {
   private workouts= null;
   private routines =null;
   private userInfo = null;
-  private processedProfilePhoto = null;
 
   // User Info CRUD
   getUserInfo() {
