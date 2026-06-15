@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 import crossIcon from '../images/cross-icon-white.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getExercisesListFromWorkout } from '../utils/workoutUtils';
@@ -31,11 +32,20 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
     const totalSets = exercisesList.reduce((sum, ex) => sum + ex.sets, 0);
 
     const onSaveWorkout = () => {
-        databaseController.addWorkout({ ...workout, name: workoutName });
+        const savedWorkout = { ...workout, name: workoutName };
+        databaseController.addWorkout(savedWorkout);
         onClose();
         onEndWorkout?.();
         if (navigation) {
-            navigation.navigate('Activity');
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 1,
+                    routes: [
+                        { name: 'MainTabs', state: { routes: [{ name: 'Activity' }], index: 0 } },
+                        { name: 'WorkoutDetails', params: { workout: savedWorkout } },
+                    ],
+                })
+            );
         }
     }
 
