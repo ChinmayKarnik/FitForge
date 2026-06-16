@@ -411,9 +411,10 @@ export const StatisticsScreen = () => {
             <View style={{ height: normalize(1), backgroundColor: 'rgba(255,255,255,0.1)', marginBottom: normalizeHeight(12) }} />
 
             {/* Time range label */}
-            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: normalize(10), letterSpacing: 1.4, fontWeight: '600', marginBottom: normalizeHeight(12) }}>
-              {dateRangeLabel.toUpperCase()}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(12) }}>
+              <View style={{ width: normalizeWidth(2), height: normalizeHeight(14), backgroundColor: 'rgba(127,179,255,0.5)', borderRadius: normalize(2), marginRight: normalizeWidth(4) }} />
+              <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(11), letterSpacing: 0.3, fontWeight: '600' }}>{dateRangeLabel}</Text>
+            </View>
 
             {/* Top stat row: Total | Max Streak | Sessions/Wk */}
             <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(8) }}>
