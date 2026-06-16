@@ -423,7 +423,7 @@ export const StatisticsScreen = () => {
                 <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
                   <Image source={dumbbell_2} style={{ width: normalize(14), height: normalize(14) * (241.0 / 410.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
                 </View>
-                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>TOTAL</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>WORKOUTS</Text>
                 <Text style={{ color: '#ffffff', fontSize: normalize(22), fontWeight: '800' }}>{statsData.totalWorkouts ?? '-'}</Text>
               </View>
 
@@ -432,7 +432,9 @@ export const StatisticsScreen = () => {
                   <Image source={flame_3} style={{ width: normalize(12), height: normalize(12) * (620.0 / 462.0), resizeMode: 'contain', tintColor: '#fb7028' }} />
                 </View>
                 <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>MAX STREAK</Text>
-                <Text style={{ color: '#fb7028', fontSize: normalize(22), fontWeight: '800' }}>{streakValue}</Text>
+                <Text style={{ color: '#fb7028', fontSize: normalize(22), fontWeight: '800' }}>
+                  {streakValue}{streakValue !== '-' && <Text style={{ fontSize: normalize(11), fontWeight: '600', color: 'rgba(251,112,40,0.65)' }}> days</Text>}
+                </Text>
               </View>
 
               <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginLeft: normalizeWidth(4), justifyContent: 'space-between' }}>
