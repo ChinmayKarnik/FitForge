@@ -198,9 +198,9 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: normalizeHeight(8) }}>
                       <Image source={plates_stack_2} style={{ width: normalizeWidth(14), height: normalizeWidth(14) * (425.0 / 469.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4), resizeMode: 'contain' }} />
                       <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{setRepsText}</Text>
-                      <Dot />
-                      <Image source={clock} style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (448.0 / 453.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4) }} />
-                      <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>
+                      {!!restText && <Dot />}
+                      {!!restText && <Image source={clock} style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (448.0 / 453.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4) }} />}
+                      {!!restText && <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>}
                       <Dot />
                       <Image source={stopwatch} style={{ width: normalizeWidth(12), height: normalizeWidth(12) * (395.0 / 346.0), tintColor: 'rgba(255,255,255,0.58)', marginRight: normalizeWidth(4), resizeMode: 'contain' }} />
                       <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{estimatedTimeMin} min</Text>
