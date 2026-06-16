@@ -171,7 +171,7 @@ export function getAverageWorkoutDurationForMonth(year: number, month: number): 
 }
 
 export const getWorkoutsForADay = (date: Date) => {
-	const allWorkouts = databaseController.getAllWorkouts();
+	const allWorkouts = filteroutInvalidWorkouts(databaseController.getAllWorkouts());
 	return allWorkouts.filter(workout => {
 		const workoutDate = new Date(workout.startTime);
 		return (
