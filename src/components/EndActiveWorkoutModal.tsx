@@ -155,7 +155,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                     fontSize: normalize(11),
                                     marginLeft: normalizeWidth(10),
                                     marginTop:normalizeHeight(2)
-                                }}>Exercises</Text>
+                                }}>{exercisesList.length === 1 ? 'Exercise' : 'Exercises'}</Text>
                             </View>
                             <View style={{
                                 width: 1,
@@ -177,7 +177,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                                     fontSize: normalize(11),
                                     marginLeft: normalizeWidth(10),
                                     marginTop:normalizeHeight(2)
-                                }}>Sets</Text>
+                                }}>{totalSets === 1 ? 'Set' : 'Sets'}</Text>
                             </View>
                         </View>
 
