@@ -304,7 +304,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
   const routine = databaseController.getRoutineById(selectedRoutineId);
   const [seconds, setSeconds] = useState(0);
-  const startTimeRef = useRef(Date.now());
+  const startTimeRef = useRef(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [activeExercise,setActiveExercise] =useState<any>(null);
   const [activeExerciseStartTime, setActiveExerciseStartTime] = useState<number | null>(null);
@@ -313,14 +313,13 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   const nextExerciseTime = useRef<number | null>(null);
   const restDurationRef = useRef(0);
   const [initialLoadingDone, setInitialLoadingDone] = useState(false);
-  const workout = useRef({
-    startTime: startTimeRef.current,
-    endTime: startTimeRef.current,
-    exercises: []
-  });
+  const workout = useRef( {
+        startTime: null,
+        endTime:null,
+        exercises: []
+      });
 
   const isInRestTime = !isExerciseInProgress && workout.current.exercises.length > 0 && !!nextExerciseRef.current;
-  const isInitialWaitTime = !isExerciseInProgress && workout.current.exercises.length === 0 && !!nextExerciseRef.current;
 
   const handleBackPress = useCallback(() => {
     if (selectedRoutineId) {
@@ -355,11 +354,18 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     nextExerciseRef.current = routine.exercises[0];
     nextExerciseTime.current = startTimeRef.current;
     setInitialLoadingDone(true);
+
     setSelectedRoutineId(routineId);
   };
 
   useEffect(() => {
     if (selectedRoutineId) {
+      startTimeRef.current = Date.now();
+      workout.current = {
+        startTime: startTimeRef.current,
+        endTime: startTimeRef.current,
+        exercises: []
+      }
       intervalRef.current = setInterval(() => {
         setSeconds((prev) => prev + 1);
       }, 1000);
@@ -375,6 +381,13 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
     const s = (secs % 60).toString().padStart(2, '0');
     return `${h}:${m}:${s}`;
   };
+
+  const getminsectime = (milis)=>{
+    const totalSec = Math.floor(milis / 1000);
+    const mins = Math.floor(totalSec / 60);
+    const secs = totalSec % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 
   const handleEndWorkout = () => {
     workout.current.endTime = Date.now();
