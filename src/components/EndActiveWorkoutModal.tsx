@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, TextInput, Image, ToastAndroid } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import crossIcon from '../images/cross-icon-white.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -34,6 +34,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
     const onSaveWorkout = () => {
         const savedWorkout = { ...workout, name: workoutName };
         databaseController.addWorkout(savedWorkout);
+        ToastAndroid.show('Workout saved 💪', ToastAndroid.SHORT);
         onClose();
         onEndWorkout?.();
         if (navigation) {
