@@ -86,18 +86,20 @@ const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={
-                            {
+                        <TouchableOpacity
+                            style={{
                                 marginRight: normalizeWidth(8),
-                                backgroundColor: '#2752b2',
+                                backgroundColor: value.trim().length > 0 ? '#2752b2' : '#1e2545',
                                 width: normalizeWidth(130),
                                 borderRadius: normalize(30),
                                 paddingVertical: normalizeHeight(6),
                                 alignItems: 'center',
                                 marginBottom: normalizeHeight(8),
-                            }
-                        } onPress={()=>{onSave(value)}}>
-                            <Text style={styles.saveText}>Save</Text>
+                            }}
+                            disabled={value.trim().length === 0}
+                            onPress={() => { onSave(value) }}
+                        >
+                            <Text style={[styles.saveText, value.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
