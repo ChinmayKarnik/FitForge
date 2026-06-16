@@ -32,7 +32,7 @@ const ACCENT = '#4f7ee8';
 
 export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableHorizontalMargin = false }) => {
   const durationMs = workout.endTime - workout.startTime;
-  const durationMin = Math.floor(durationMs / 60000);
+  const durationMin = Math.max(1, Math.ceil(durationMs / 60000));
   const durationText = durationMin >= 60
     ? durationMin % 60 === 0
       ? `${Math.floor(durationMin / 60)} hr`
