@@ -45,10 +45,12 @@ const getDateRangeLabel = (selectedTimeRange: TimeRange, startTime: number, endT
     if (firstDate === null) return 'All Time';
     return `Since ${formatDate(firstDate, true)}`;
   }
-  const startYear = new Date(startTime).getFullYear();
+  const firstDate = getStatsStartDate();
+  const effectiveStart = firstDate !== null && firstDate > startTime ? firstDate : startTime;
+  const startYear = new Date(effectiveStart).getFullYear();
   const endYear = new Date(endTime).getFullYear();
   const crossesYears = startYear !== endYear;
-  const start = formatDate(startTime, crossesYears);
+  const start = formatDate(effectiveStart, crossesYears);
   const end = formatDate(endTime, true);
   return `${start} – ${end}`;
 };
