@@ -150,7 +150,7 @@ const MainTabs = () => (
   <Tab.Navigator
     initialRouteName="Activity"
     tabBar={props => <CustomTabBar {...props} />}
-    screenOptions={{ headerShown: false }}
+    screenOptions={{ headerShown: false, lazy: false }}
   >
     <Tab.Screen 
       name="Activity" 

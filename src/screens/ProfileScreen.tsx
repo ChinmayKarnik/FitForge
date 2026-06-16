@@ -78,11 +78,12 @@ export const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const info = databaseController.getUserInfo();
-      if (info?.profilePhotoPath) {
+      if (info?.profilePhotoPath && info.profilePhotoPath!== profilePhotoPath) {
+      
         setProfilePhotoPath(info.profilePhotoPath);
         setPhotoTimestamp(Date.now());
       }
-      if (info?.profilePhotoCrop) {
+      if (info?.profilePhotoCrop && info.profilePhotoCrop !==imageCrop ) {
         setImageCrop(info.profilePhotoCrop);
       }
 
