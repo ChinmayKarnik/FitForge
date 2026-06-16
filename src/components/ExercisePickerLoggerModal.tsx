@@ -6,7 +6,7 @@ import SelectExerciseModalContent from './SelectExerciseModalContent';
 import SetsRepsSelector from './SetsRepsSelector';
 import ExerciseFormMultiset from './ExerciseFormMultiset';
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 
 
 export const ExercisePickerLoggerModal = ({ visible, onClose,
@@ -45,6 +45,26 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 	const logExercisesForParent = (exercise, loggedData) => {
 		addSetsForExercise(exercise, {numberOfSets: selectedData.data.sets, restTimeBetweenSets: selectedData.data.restTime}, loggedData);
 	}
+	if(!!isSelectionPending){
+      return (
+		<Modal
+			visible={visible}
+			transparent={true}
+			animationType="slide"
+			onRequestClose={onClose}
+		>
+			<View style={styles.fixedOverlay}>
+				<View style={[styles.modalContent, { maxHeight: screenHeight * 0.68 }]}>
+					<SelectExerciseModalContent
+						onSelectExercise={onSelectExercise}
+						closeModal={onClose}
+					/>
+				</View>
+			</View>
+		</Modal>
+	  )
+
+	}
 
     return (
 		<Modal
@@ -62,14 +82,6 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 			>
 				<View style={[styles.modalContent, !showSetsInput && styles.modalContentFixed]}>
 
-					{
-                        !!isSelectionPending && (
-                            <SelectExerciseModalContent
-                               onSelectExercise = {onSelectExercise}
-                               closeModal = {onClose}
-                             />
-                        )
-                    }
                     {
                         !!showNumberOfSetsInput && (
                             <SetsRepsSelector
@@ -104,6 +116,14 @@ const styles = StyleSheet.create({
 	modalOverlayKeyboardOpen: {
 		justifyContent: 'flex-start',
 		paddingTop: normalize(24),
+	},
+	fixedOverlay: {
+		position: 'absolute',
+		width: screenWidth,
+		height: screenHeight,
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+		justifyContent: 'flex-start',
+		paddingTop: screenHeight * 0.13,
 	},
 	modalContent: {
 		backgroundColor: '#272b48',

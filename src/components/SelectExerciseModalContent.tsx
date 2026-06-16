@@ -1,15 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import { TouchableOpacity, View, Text, Image, StyleSheet, FlatList, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
 import cross_icon from '../images/cross-icon-white.png';
 import magnifying_glass from '../images/magnifying-glass-white.png';
 import checkbox_blue_bg from '../images/checkbox-blue-bg.png';
+import notepad_with_glass from '../images/notepad-with-glass.png';
 import { databaseController, Exercise } from '../data';
 
 const SelectExerciseModalContent = ({
     onSelectExercise,
     closeModal
 }) => {
+    const navigation = useNavigation<any>();
     const exercises = databaseController.getAllExercises();
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -53,10 +56,7 @@ const SelectExerciseModalContent = ({
                         aspectRatio: 1,
                     }} />
                 <TextInput
-                    style={{
-                        fontSize: normalize(14), color: 'white',
-                        width: '100%'
-                    }}
+                    style={{ flex: 1, fontSize: normalize(14), color: 'white' }}
                     placeholder="Search exercises..."
                     hitSlop={{ left: 50, right: 50, top: 5, bottom: 5 }}
                     value={searchQuery}
@@ -65,6 +65,23 @@ const SelectExerciseModalContent = ({
                     autoCorrect={false}
                     placeholderTextColor={'#757689'}
                 />
+                {searchQuery.length > 0 && (
+                    <TouchableOpacity
+                        onPress={() => setSearchQuery('')}
+                        activeOpacity={0.7}
+                        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    >
+                        <View style={{
+                            width: normalize(18), height: normalize(18),
+                            borderRadius: normalize(9),
+                            borderWidth: normalize(1),
+                            borderColor: 'rgba(255,255,255,0.38)',
+                            alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <Image source={cross_icon} style={{ width: normalize(7), height: normalize(7), tintColor: 'rgba(255,255,255,0.62)' }} />
+                        </View>
+                    </TouchableOpacity>
+                )}
             </View>
 
             <FlatList
@@ -108,11 +125,22 @@ const SelectExerciseModalContent = ({
                                     }
                                     ListEmptyComponent={
                                         <View style={styles.emptyContainer}>
-                                            <Text style={styles.emptyText}>No exercises found</Text>
+                                            <Image source={notepad_with_glass} style={styles.emptyIcon} />
+                                            <Text style={styles.emptyTitle}>No exercises found</Text>
+                                            <Text style={styles.emptySubtitle}>
+                                                {'No results for '}
+                                                <Text style={styles.emptySubtitleHighlight}>"{searchQuery}"</Text>
+                                            </Text>
+                                            <TouchableOpacity
+                                                style={styles.emptyCtaButton}
+                                                onPress={() => { closeModal(); navigation.navigate('Exercises'); }}
+                                            >
+                                                <Text style={styles.emptyCtaText}>Browse Exercises</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     }
                                 />
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', paddingTop: normalizeHeight(10) }}>
                                     <TouchableOpacity
                                         style={{
                                             backgroundColor: '#1f2239',
@@ -177,12 +205,48 @@ const styles = StyleSheet.create({
 		marginBottom: normalize(12),
 	},
 	emptyContainer: {
-		paddingVertical: 32,
+		paddingTop: normalizeHeight(16),
+		paddingBottom: normalizeHeight(8),
 		alignItems: 'center',
 	},
 	emptyText: {
 		fontSize: 16,
 		color: '#888888',
+	},
+	emptyIcon: {
+		width: normalizeWidth(50),
+		height: normalizeWidth(50) * (588.0 / 551.0),
+		tintColor: 'rgba(255,255,255,0.5)',
+		marginBottom: normalizeHeight(12),
+	},
+	emptyTitle: {
+		fontSize: normalize(17),
+		fontWeight: '700',
+		color: '#ffffff',
+		marginBottom: normalizeHeight(4),
+	},
+	emptySubtitle: {
+		fontSize: normalize(13),
+		color: 'rgba(255,255,255,0.5)',
+		marginBottom: normalizeHeight(14),
+	},
+	emptySubtitleHighlight: {
+		color: '#67a4f9',
+		fontWeight: '500',
+	},
+	emptyCtaButton: {
+		backgroundColor: '#31467b',
+		borderWidth: normalize(1),
+		borderColor: 'gray',
+		borderRadius: normalize(8),
+		paddingVertical: normalizeHeight(11),
+		paddingHorizontal: normalizeWidth(24),
+		alignItems: 'center',
+	},
+	emptyCtaText: {
+		color: '#ffffff',
+		fontSize: normalize(14),
+		fontWeight: '600',
 	},
 	exerciseItem: {
 		paddingVertical: normalizeHeight(16),
