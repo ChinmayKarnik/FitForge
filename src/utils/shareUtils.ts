@@ -6,10 +6,8 @@ export const shareViewAsImage = async (
   ref: RefObject<any>,
   message: string,
 ) => {
-  const uri = await captureRef(ref, { format: 'png', quality: 0.9 });
-  await RNShare.open({
-    url: uri,
-    type: 'image/png',
-    message,
-  });
+  try {
+    const uri = await captureRef(ref, { format: 'png', quality: 0.9 });
+    await RNShare.open({ url: uri, type: 'image/png', message });
+  } catch (_) {}
 };
