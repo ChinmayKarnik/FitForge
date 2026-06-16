@@ -33,6 +33,11 @@ const ACCENT = '#4f7ee8';
 export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableHorizontalMargin = false }) => {
   const durationMs = workout.endTime - workout.startTime;
   const durationMin = Math.floor(durationMs / 60000);
+  const durationText = durationMin >= 60
+    ? durationMin % 60 === 0
+      ? `${Math.floor(durationMin / 60)} hr`
+      : `${Math.floor(durationMin / 60)} hr ${durationMin % 60} min`
+    : `${durationMin} min`;
   const dayOfTheWeek = getDayOfWeek(workout.startTime);
 
   const exerciseSetCounts: Record<string, number> = {};
@@ -185,7 +190,7 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
             backgroundColor: 'rgba(255,255,255,0.3)',
             marginLeft:normalizeWidth(25)
           }} />
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: normalizeWidth(14) }}>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingLeft: normalizeWidth(14) }}>
             <Image
               source={clock}
               style={{
@@ -195,12 +200,11 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
                 resizeMode: 'contain',
                 tintColor: 'rgba(255,255,255,0.6)',
                 marginRight: normalizeWidth(7),
-                marginLeft:normalizeWidth(12),
                 marginTop:normalizeHeight(1)
               }}
             />
             <Text style={{ color: 'rgba(255,255,255, 0.6)', fontSize: normalize(11), fontFamily: 'RobotoMono-Regular' }}>
-              {thinSpace(`${durationMin} min`)}
+              {thinSpace(durationText)}
             </Text>
           </View>
         </View>
