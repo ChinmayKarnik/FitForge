@@ -46,8 +46,14 @@ export const WorkoutSummaryCard: React.FC<Props> = ({ workout, onPress, disableH
 
   const routine = databaseController.getRoutineById(workout.routineId);
   const routineName = routine?.name || 'Free Workout';
-  const workoutTitle = workout.name ? workout.name : `${dayOfTheWeek} - ${routineName}`;
+  const workoutTitle = workout.name || '';
 
+
+  const isWorkoutInvalid = !workout.name || !workout.startTime
+  if(isWorkoutInvalid){
+     return null;
+  }
+  
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <View style={{

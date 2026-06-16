@@ -5,6 +5,10 @@
  * @param {Object} exercise - The exercise object (from a routine)
  * @returns {number} Estimated time in seconds
  */
+
+import { databaseController } from '../data/controllers';
+import { TimeRange } from '../enums/enums';
+
 export function getEstimatedExerciseTimeSeconds(exercise: any): number {
 	if (!exercise || typeof exercise.sets !== 'number' || exercise.sets <= 0) return 0;
 	const sets = exercise.sets;
@@ -14,8 +18,6 @@ export function getEstimatedExerciseTimeSeconds(exercise: any): number {
 	const totalWork = sets * 60; // 1 min per set
 	return totalWork + totalRest;
 }
-import { databaseController } from '../data/controllers';
-import { TimeRange } from '../enums/enums';
 
 export function getExercisesListFromWorkout(workout: any) {
 	const setsCount: Record<string, number> = {};
@@ -343,4 +345,15 @@ export const getStatsStartDate = (): number | null => {
 		(earliest, workout) => workout.startTime < earliest ? workout.startTime : earliest,
 		validWorkouts[0].startTime
 	);
+};
+
+export const isWorkoutValid = (workout: any): boolean => {
+  if (!workout || !workout.name|| !workout.startTime ) return false;
+  const exercises = workout.exercises || [];
+  if (exercises.length === 0) return false;
+  return true;
+}
+
+export const filteroutInvalidWorkouts = (workouts: any[]): any[] => {
+  return workouts.filter(isWorkoutValid);
 };

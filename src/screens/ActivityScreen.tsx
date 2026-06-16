@@ -5,6 +5,7 @@ import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
 import { normalize, normalizeHeight } from '../utils/normalize';
+import { filteroutInvalidWorkouts } from '../utils/workoutUtils';
 
 export const ActivityScreen = () => {
   const navigation = useNavigation<any>();
@@ -13,7 +14,7 @@ export const ActivityScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const data = databaseController.getAllWorkouts();
-      setWorkouts([...data].reverse());
+      setWorkouts(filteroutInvalidWorkouts([...data].reverse()));
     }, [])
   );
 
