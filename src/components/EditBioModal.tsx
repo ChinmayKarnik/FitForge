@@ -1,27 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, InteractionManager } from 'react-native';
+import React, { useRef } from 'react';
+import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
-const Divider = () => {
-    return (<View
-        style={{
-            width: '100%',
-            height: normalizeHeight(1),
-            backgroundColor: '#3b4572',
-        }}
-    />)
-}
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+const Divider = () => (
+    <View style={{ width: '100%', height: normalizeHeight(1), backgroundColor: '#3b4572' }} />
+);
 
 const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        if (visible && inputRef.current) {
-            setTimeout(() => {
-                inputRef.current?.focus();
-            }, 100);
-        }
-    }, [visible]);
 
     return (
         <Modal
@@ -30,29 +18,14 @@ const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
             transparent
             onRequestClose={onCancel}
         >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.centeredView}
-            >
-                <View style={{
-                    width: '90%',
-                    backgroundColor: '#232d5a',
-                    borderRadius: normalize(18),
-                    borderWidth: normalize(1),
-                    borderColor: '#2f3961',
-                    alignItems: 'center',
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 4,
-                    elevation: 5,
-                }}>
+            <View style={styles.overlay}>
+                <View style={styles.card}>
                     <Text style={{
                         fontSize: normalize(18),
                         fontWeight: '500',
                         letterSpacing: 0.7,
                         color: '#b9bfd4',
-                        marginVertical: normalizeHeight(12)
+                        marginVertical: normalizeHeight(12),
                     }}>Edit Bio</Text>
 
                     <Divider />
@@ -86,30 +59,34 @@ const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            marginRight: normalizeWidth(8),
-                            backgroundColor: '#2752b2',
-                            width: normalizeWidth(130),
-                            borderRadius: normalize(30),
-                            paddingVertical: normalizeHeight(6),
-                            alignItems: 'center',
-                            marginBottom: normalizeHeight(8),
-                        }} onPress={() => { onSave(value) }}>
+                        <TouchableOpacity style={styles.saveButton} onPress={() => onSave(value)}>
                             <Text style={styles.saveText}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    overlay: {
+        position: 'absolute',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
         backgroundColor: 'rgba(0,0,0,0.32)',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: SCREEN_HEIGHT * 0.25,
+    },
+    card: {
+        width: '90%',
+        backgroundColor: '#232d5a',
+        borderRadius: normalize(18),
+        borderWidth: normalize(1),
+        borderColor: '#2f3961',
+        alignItems: 'center',
+        elevation: 5,
     },
     buttonRow: {
         flexDirection: 'row',
@@ -129,6 +106,15 @@ const styles = StyleSheet.create({
         color: '#a5a7c1',
         fontSize: normalize(16),
         fontWeight: '500',
+    },
+    saveButton: {
+        marginRight: normalizeWidth(8),
+        backgroundColor: '#2752b2',
+        width: normalizeWidth(130),
+        borderRadius: normalize(30),
+        paddingVertical: normalizeHeight(6),
+        alignItems: 'center',
+        marginBottom: normalizeHeight(8),
     },
     saveText: {
         color: '#fff',
