@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
 import { shareViewAsImage } from '../utils/shareUtils';
-import SharePreviewModal from '../components/SharePreviewModal';
 
 const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import profile_photo_default from '../images/profile-photo-default.png';
@@ -48,16 +46,6 @@ export default function WorkoutDetailsScreen() {
   const routineName = routine?.name || '';
   const [detailsRoutine, setDetailsRoutine] = useState<any>(null);
   const shareCardRef = useRef(null);
-  const [shareModalVisible, setShareModalVisible] = useState(false);
-  const [shareUri, setShareUri] = useState<string | null>(null);
-
-  const onPressShare = async () => {
-    try {
-      const uri = await captureRef(shareCardRef, { format: 'png', quality: 0.9 });
-      setShareUri(uri);
-      setShareModalVisible(true);
-    } catch (_) {}
-  };
 
   const userInfo = databaseController.getUserInfo();
   const userName = userInfo?.name || 'FitForge User';
@@ -157,7 +145,7 @@ export default function WorkoutDetailsScreen() {
         <TouchableOpacity
           style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={onPressShare}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout: ${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`)}
         >
           <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0/350.0), resizeMode: 'contain',
              tintColor: 'rgba(255,255,255,0.75)' }} />
@@ -361,12 +349,6 @@ export default function WorkoutDetailsScreen() {
         visible={!!detailsRoutine}
         routine={detailsRoutine}
         onClose={() => setDetailsRoutine(null)}
-      />
-      <SharePreviewModal
-        visible={shareModalVisible}
-        uri={shareUri}
-        message={`Check out my workout: ${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`}
-        onClose={() => setShareModalVisible(false)}
       />
     </View>
   );
