@@ -12,7 +12,7 @@ import { databaseController } from '../data/controllers';
 import ProfileImageCircular from '../components/ProfileImageCircular';
 import { shareViewAsImage } from '../utils/shareUtils';
 
-const DEV_SHARE_PREVIEW = true;
+const DEV_SHARE_PREVIEW = false;
 const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import { TimeRange } from '../enums/enums';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
@@ -393,7 +393,7 @@ export const StatisticsScreen = () => {
           <View
             ref={shareCardRef}
             collapsable={false}
-            style={{ backgroundColor: '#1c2238', borderRadius: normalize(12), padding: normalize(16), ...(DEV_SHARE_PREVIEW && { borderWidth: 1, borderColor: '#2e3458' }) }}
+            style={{ backgroundColor: '#1c2238', borderRadius: normalize(12), padding: normalize(16) }}
           >
             {/* Profile row */}
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(14) }}>
