@@ -440,10 +440,16 @@ export const StatisticsScreen = () => {
 
               <View style={{ flex: 1, backgroundColor: '#272d46', borderRadius: normalize(12), borderWidth: 1, borderColor: '#3d4563', padding: normalize(10), marginLeft: normalizeWidth(4), justifyContent: 'space-between' }}>
                 <View style={{ width: normalize(26), height: normalize(26), borderRadius: normalize(6), backgroundColor: 'rgba(127,179,255,0.09)', alignItems: 'center', justifyContent: 'center', marginBottom: normalizeHeight(8) }}>
-                  <Image source={trend_arrow_2} style={{ width: normalize(14), height: normalize(14) * (325.0 / 512.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                  {selectedTimeRange === TimeRange.OneWeek
+                    ? <Image source={plates_stack_2} style={{ width: normalize(14), height: normalize(14) * (425.0 / 469.0), resizeMode: 'contain', tintColor: '#ffffff' }} />
+                    : <Image source={trend_arrow_2} style={{ width: normalize(14), height: normalize(14) * (325.0 / 512.0), resizeMode: 'contain', tintColor: '#ffffff' }} />}
                 </View>
-                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>SESSIONS/WK</Text>
-                <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '800' }}>{avgSessions}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.68)', fontSize: normalize(10), fontWeight: '600', letterSpacing: 0.6, marginBottom: normalizeHeight(4) }}>
+                  {selectedTimeRange === TimeRange.OneWeek ? 'AVG SETS' : 'SESSIONS/WK'}
+                </Text>
+                <Text style={{ color: '#7fb3ff', fontSize: normalize(22), fontWeight: '800' }}>
+                  {selectedTimeRange === TimeRange.OneWeek ? avgSets : avgSessions}
+                </Text>
               </View>
 
             </View>
