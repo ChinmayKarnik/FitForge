@@ -133,17 +133,16 @@ export const StatisticsScreen = () => {
   const profilePhotoSource = userInfo?.profilePhotoPath ? { uri: userInfo.profilePhotoPath } : profile_photo_default;
   const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
-  const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
-  const isEmptyStats = statsData.totalWorkouts === 0;
+  const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, 0);
 
   const dateRangeLabel = getDateRangeLabel(selectedTimeRange, timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
 
-  const streakValue = statsData.maximumStreak !== null ? String(statsData.maximumStreak) : '-';
+  const streakValue = statsData.maximumStreak !== null ? String(statsData.maximumStreak) : '0';
   const streakUnit = statsData.maximumStreak === 1 ? 'day in a row' : 'days in a row';
-  const avgSets = statsData.averageSets !== null ? String(statsData.averageSets) : '-';
+  const avgSets = statsData.averageSets !== null ? String(statsData.averageSets) : '0';
   const avgSessions = (statsData.averageWeeklySessions !== null && statsData.averageWeeklySessions !== 0)
     ? String(statsData.averageWeeklySessions)
-    : '-';
+    : '0';
 
   // dumbbell-2 in icon container: source is 410x241px, rendered width normalize(20)
   const dumbbellW = normalize(20);
@@ -154,6 +153,8 @@ export const StatisticsScreen = () => {
   // calendar in date range row: source is 410x420px, rendered width normalize(14)
   const calW = normalize(14);
   const calH = calW * (420 / 410);
+
+
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
@@ -221,8 +222,7 @@ export const StatisticsScreen = () => {
         }}>{dateRangeLabel}</Text>
       </View>
 
-      {!isEmptyStats ? (
-        <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(4), paddingBottom: normalizeHeight(16) }}>
+      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(4), paddingBottom: normalizeHeight(16) }}>
           {/* Featured top card: Total Workouts + Max Streak */}
           <View style={{
             height: normalizeHeight(168),
@@ -254,7 +254,7 @@ export const StatisticsScreen = () => {
                 fontWeight: '800',
                 letterSpacing: -1,
                 lineHeight: normalize(52),
-              }}>{statsData.totalWorkouts ?? '-'}</Text>
+              }}>{statsData.totalWorkouts ?? '0'}</Text>
             </View>
 
             {/* Divider */}
@@ -355,37 +355,7 @@ export const StatisticsScreen = () => {
             />
           </View>
         </View>
-      ) : (
-        <View style={{
-          flex: 1,
-          alignItems: 'center',
-          paddingHorizontal: normalizeWidth(32),
-          marginTop: normalizeHeight(120),
-        }}>
-          <Image
-            source={sad_dumbbell}
-            style={{
-              width: normalizeWidth(80),
-              height: normalizeWidth(80) * (818.0 / 604.0),
-              marginBottom: normalizeHeight(20),
-            }}
-          />
-          <Text style={{
-            color: 'rgba(255,255,255,0.95)',
-            fontSize: normalize(28),
-            fontWeight: '700',
-            marginBottom: normalizeHeight(10),
-            textAlign: 'center',
-          }}>No workouts here</Text>
-          <Text style={{
-            color: 'rgba(255,255,255,0.68)',
-            fontSize: normalize(15),
-            fontWeight: '400',
-            textAlign: 'center',
-            letterSpacing: 0.3,
-          }}>No workouts in the selected time range. Your stats will build as you track sessions</Text>
-        </View>
-      )}
+
 
       {/* Share card */}
       {(() => {
