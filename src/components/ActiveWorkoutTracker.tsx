@@ -8,6 +8,7 @@ import { ExerciseFormModal } from './ExerciseFormModal';
 import { TimerComponent } from './TimerComponent';
 import { Exercise } from '../data/types';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { sessionHelper } from '../utils/sessionHelper';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
@@ -98,6 +99,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
   }
 
   const handleEndWorkout = () => {
+    sessionHelper.setWorkoutActive(false);
     endWorkout()
     setShowEndModal(true);
   };
@@ -243,7 +245,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
                 }
               </>
             ) : (
-              <PreStartWorkoutUI onStartWorkout={() => setIsTimerStarted(true)} />
+              <PreStartWorkoutUI onStartWorkout={() => { sessionHelper.setWorkoutActive(true); setIsTimerStarted(true); }} />
             )}
           </>
         )}
@@ -283,7 +285,7 @@ export const ActiveWorkoutTracker = ({ onEndWorkout, onBackPress, navigation }) 
         title="Leave Workout?"
         description={"Your progress will be lost if you leave now."}
         primaryLabel="Leave"
-        onPrimary={() => { setShowBackConfirm(false); onBackPress?.(); }}
+        onPrimary={() => { setShowBackConfirm(false); sessionHelper.setWorkoutActive(false); onBackPress?.(); }}
         primaryVariant="destructive"
         secondaryLabel="Stay"
         onSecondary={() => setShowBackConfirm(false)}

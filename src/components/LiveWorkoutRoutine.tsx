@@ -7,6 +7,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import white_left_arrow from '../images/white-left-arrow.png';
 import { SelectRoutineLive } from './SelectRoutineLive';
 import { databaseController } from '../data';
+import { sessionHelper } from '../utils/sessionHelper';
 import { TimerComponent } from './TimerComponent';
 import { normalize, normalizeF, normalizeHeight, normalizeWidth, normalizeWidthF } from '../utils/normalize';
 import white_plus from '../images/white-plus.png';
@@ -360,6 +361,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
 
   useEffect(() => {
     if (selectedRoutineId) {
+      sessionHelper.setWorkoutActive(true);
       startTimeRef.current = Date.now();
       workout.current = {
         startTime: startTimeRef.current,
@@ -390,6 +392,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
   }
 
   const handleEndWorkout = () => {
+    sessionHelper.setWorkoutActive(false);
     workout.current.endTime = Date.now();
     workout.current.duration = workout.current.endTime - workout.current.startTime;
     setShowEndModal(true);
@@ -551,7 +554,7 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
         title="Leave Workout?"
         description="Your progress will be lost if you leave now."
         primaryLabel="Leave"
-        onPrimary={() => { setShowBackConfirm(false); onEndWorkout(); }}
+        onPrimary={() => { setShowBackConfirm(false); sessionHelper.setWorkoutActive(false); onEndWorkout(); }}
         primaryVariant="destructive"
         secondaryLabel="Stay"
         onSecondary={() => setShowBackConfirm(false)}
