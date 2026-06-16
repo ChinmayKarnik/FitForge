@@ -132,7 +132,7 @@ export const StatisticsScreen = () => {
   const profilePhotoSource = userInfo?.profilePhotoPath ? { uri: userInfo.profilePhotoPath } : profile_photo_default;
   const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
   const timeRangeIntervalFormat = getTimeRangeIntervalFormat(selectedTimeRange);
-  const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start, 0);
+  const statsData = getStatsForTimeRange(timeRangeIntervalFormat.start,timeRangeIntervalFormat.end );
 
   const dateRangeLabel = getDateRangeLabel(selectedTimeRange, timeRangeIntervalFormat.start, timeRangeIntervalFormat.end);
 
@@ -184,13 +184,15 @@ export const StatisticsScreen = () => {
         <Text style={{ fontSize: normalize(18), letterSpacing: 1, fontWeight: '700', color: '#fefefe' }}>
           Statistics
         </Text>
-        <TouchableOpacity
-          style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
-          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={() => shareViewAsImage(shareCardRef, `Check out my fitness stats on FitForge! 💪\nhttps://fitforge.chinmaykarnik.com`)}
-        >
-          <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0 / 350.0), resizeMode: 'contain', tintColor: 'rgba(255,255,255,0.75)' }} />
-        </TouchableOpacity>
+        {!!statsData.totalWorkouts && (
+          <TouchableOpacity
+            style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            onPress={() => shareViewAsImage(shareCardRef, `Check out my fitness stats on FitForge! 💪\nhttps://fitforge.chinmaykarnik.com`)}
+          >
+            <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0 / 350.0), resizeMode: 'contain', tintColor: 'rgba(255,255,255,0.75)' }} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Time Range Selector */}
