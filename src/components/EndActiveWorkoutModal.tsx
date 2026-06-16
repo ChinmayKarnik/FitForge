@@ -51,6 +51,20 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
     }
 
     if (isNoExercisesLogged) {
+        const onEndAnyway = () => {
+            onClose();
+            onEndWorkout?.();
+            if (navigation) {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            { name: 'MainTabs', state: { routes: [{ name: 'Activity' }], index: 0 } },
+                        ],
+                    })
+                );
+            }
+        };
         return (
             <AreYouSureModal
                 visible={visible}
@@ -58,7 +72,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
                 title="End Workout?"
                 description="You haven't logged any exercises yet."
                 primaryLabel="End Anyway"
-                onPrimary={onClose}
+                onPrimary={onEndAnyway}
                 primaryVariant="destructive"
                 secondaryLabel="Keep Going"
             />
