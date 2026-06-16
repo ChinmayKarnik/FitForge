@@ -15,7 +15,7 @@ import { DayDetails } from '../screens/DayDetails';
 import RoutinesFaqScreen from '../screens/RoutinesFaqScreen';
 import ExitAppModal from '../components/ExitAppModal';
 
-import { View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
+import { View, Text, TouchableOpacity, Image, BackHandler, ToastAndroid } from 'react-native';
 import { sessionHelper } from '../utils/sessionHelper';
 import { Linking } from 'react-native';
 import { linkingConfig, resolveDeepLink } from './deepLinks';
@@ -87,7 +87,15 @@ function CustomTabBar({ state, descriptors, navigation }) {
               : route.name;
           const isFocused = state.index === index;
           const onPress = () => {
-            if (!isFocused && !sessionHelper.isWorkoutActive()) navigation.navigate(route.name);
+            if (!isFocused) {
+              if (sessionHelper.isWorkoutActive()) {
+                if (sessionHelper.canShowWorkoutToast()) {
+                  ToastAndroid.show("Can't switch tabs during workout", ToastAndroid.SHORT);
+                }
+              } else {
+                navigation.navigate(route.name);
+              }
+            }
           };
           // Pick color for each tab
           const color = isFocused ?"#c62230" : "#a5a7c1"
