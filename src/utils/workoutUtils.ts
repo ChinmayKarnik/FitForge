@@ -298,8 +298,7 @@ export const getTimeRangeIntervalFormat = (timeRange: string) => {
 
 	switch (timeRange) {
 		case TimeRange.All:
-			// For all time, start from epoch (timestamp 0)
-			startTime = 0;
+			startTime = getStatsStartDate() ?? 0;
 			break;
 		case TimeRange.OneYear:
 			const oneYearAgo = new Date(now);
