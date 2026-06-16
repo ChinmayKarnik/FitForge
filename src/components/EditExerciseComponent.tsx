@@ -58,7 +58,7 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
 
     const [parameters, setParameters] = useState(() => {
         if (isAddExerciseScreen) {
-            return { reps: true, weight: true, toFailure: false, time: true };
+            return { reps: true, weight: true, toFailure: false, time: false };
         }
         const paramMap = { reps: false, weight: false, toFailure: false, time: false };
         if (Array.isArray(exerciseProp?.requiredParameters)) {
