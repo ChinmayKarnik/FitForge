@@ -59,8 +59,12 @@ const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.saveButton} onPress={() => onSave(value)}>
-                            <Text style={styles.saveText}>Save</Text>
+                        <TouchableOpacity
+                            style={[styles.saveButton, value.trim().length === 0 && { backgroundColor: '#1e2545' }]}
+                            disabled={value.trim().length === 0}
+                            onPress={() => onSave(value)}
+                        >
+                            <Text style={[styles.saveText, value.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
