@@ -242,13 +242,14 @@ export const StatisticsScreen = () => {
               <IconContainer>
                 <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
               </IconContainer>
-              <View>
+              <View style={{ marginBottom: normalizeHeight(14) }}>
                 <Text style={{
                   color: '#ffffff',
                   fontSize: normalize(44),
                   fontWeight: '800',
                   letterSpacing: -1,
                   lineHeight: normalize(48),
+                  textAlign: 'center',
                 }}>{statsData.totalWorkouts ?? '0'}</Text>
                 <Text style={{
                   color: 'rgba(255,255,255,0.68)',
@@ -256,6 +257,7 @@ export const StatisticsScreen = () => {
                   fontWeight: '600',
                   letterSpacing: 1.8,
                   marginTop: normalizeHeight(4),
+                  textAlign: 'center',
                 }}>TOTAL WORKOUTS</Text>
               </View>
             </View>
@@ -275,13 +277,14 @@ export const StatisticsScreen = () => {
                 }}>
                 <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
               </View>
-              <View>
+              <View style={{ marginBottom: normalizeHeight(14) }}>
                 <Text style={{
                   color: '#fb7028',
                   fontSize: normalize(44),
                   fontWeight: '800',
                   letterSpacing: -1,
                   lineHeight: normalize(48),
+                  textAlign: 'center',
                 }}>{streakValue}</Text>
                 <Text style={{
                   color: 'rgba(255,255,255,0.68)',
@@ -289,6 +292,7 @@ export const StatisticsScreen = () => {
                   fontWeight: '600',
                   letterSpacing: 1.8,
                   marginTop: normalizeHeight(4),
+                  textAlign: 'center',
                 }}>MAX STREAK</Text>
               </View>
             </View>
