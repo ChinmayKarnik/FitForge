@@ -315,17 +315,17 @@ export const CalendarScreen = () => {
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
-              <Text style={styles.statValue}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
+              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
               <Text style={styles.statLabel}>Max Streak</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={calendar2} style={styles.calendarIcon} />
-              <Text style={styles.statValue}>{workoutsText}</Text>
+              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{workoutsText}</Text>
               <Text style={styles.statLabel}>This Week</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={clock4} style={styles.clockIcon} />
-              <Text style={styles.statValue}>{avrDurationThisWeekMins} Min</Text>
+              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{avrDurationThisWeekMins} Min</Text>
               <Text style={styles.statLabel}>Avg Duration</Text>
             </View>
           </View>
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: normalizeWidth(8),
-    marginBottom: normalizeHeight(24),
+    marginBottom: normalizeHeight(18),
   },
   statCard: {
     flex: 1,
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   statValue: {
-    fontSize: normalizeWidth(17),
+    fontSize: normalizeWidth(16),
     fontWeight: '600',
     color: '#fefefe',
     textAlign: 'center',
