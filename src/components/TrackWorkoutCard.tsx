@@ -9,13 +9,13 @@ import white_arrow_right from '../images/white-right-arrow.png'
 const all_data = {
     "live-free": {
         title: "Track a Live Workout",
-        description: "Start a session and log \n exercises as you go",
+        description: "Start a session and log exercises as you go",
         image: live_workout_clock,
         imageAspectRatio: (178.0/192.0),
     },
     "live-routine": {
-        title: "Track a Live Workout\nwith Routine",
-        description: "Pre-planned schedule with\nrest timers and structure",
+        title: "Live Workout with Routine",
+        description: "Pre-planned schedule with rest timers and structure",
         image: live_workout_routine_calendar,
        imageAspectRatio: (173.0/185.0),
     },
