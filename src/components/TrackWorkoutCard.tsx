@@ -69,7 +69,7 @@ export const TrackWorkoutCard= ({ type, onPress, titleMarginTop = 14, titleDescG
                   fontSize: normalize(13),
                   fontWeight: '400',
                   lineHeight: normalize(18),
-                  color: '#A9B0C2',
+                  color: '#b8c2d4',
               }}>{description}</Text>
       </View>
       <Image source={white_arrow_right} style={{
