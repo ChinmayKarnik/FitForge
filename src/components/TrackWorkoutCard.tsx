@@ -27,7 +27,7 @@ const all_data = {
     }
 }
 
-export const TrackWorkoutCard= ({ type, onPress }) => {
+export const TrackWorkoutCard= ({ type, onPress, titleMarginTop = 14, titleDescGap = 8, descMarginBottom = 14 }) => {
   const data = all_data[type] || {};
   const title = data.title;
   const description =data.description
@@ -44,28 +44,28 @@ export const TrackWorkoutCard= ({ type, onPress }) => {
         alignItems:'center'
     }}
     onPress={onPress}
-    >    
+    >
               <Image style={{
-                  width: normalizeWidth(50), 
+                  width: normalizeWidth(50),
                   marginLeft: normalizeWidth(20),
                   marginRight: normalizeWidth(10),
                   aspectRatio: imageAspectRatio
               }}
                   source={image}>
               </Image>
-    
+
       <View style={{flex:1,marginRight:normalizeWidth(12),
       }}>
               <Text style={{
-                  marginTop: normalizeHeight(14),
+                  marginTop: normalizeHeight(titleMarginTop),
                   fontSize: normalize(16),
                   fontWeight: '600',
                   lineHeight: normalize(22),
                   color: '#F2F4F7'
               }}>{title}</Text>
               <Text style={{
-                  marginTop: normalizeHeight(8),
-                  marginBottom: normalizeHeight(14),
+                  marginTop: normalizeHeight(titleDescGap),
+                  marginBottom: normalizeHeight(descMarginBottom),
                   fontSize: normalize(13),
                   fontWeight: '400',
                   lineHeight: normalize(18),
