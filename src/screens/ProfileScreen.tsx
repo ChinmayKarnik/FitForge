@@ -1,5 +1,6 @@
 import React, { Activity, useState, useCallback, useRef } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import Svg, { Defs, LinearGradient as SvgLinearGradient, Stop, Rect } from 'react-native-svg';
 import ProfilePageSection from '../components/ProfilePageSection';
 import { View, StyleSheet, Text, Image, TouchableOpacity, Touchable, ScrollView } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -242,8 +243,8 @@ export const ProfileScreen = () => {
         borderWidth: normalize(1),
         borderColor: '#323b62',
         borderRadius: normalize(10),
-        marginTop:normalizeHeight(15),
-        marginBottom:normalizeHeight(10),
+        marginTop:normalizeHeight(16),
+        marginBottom:normalizeHeight(14),
         backgroundColor: '#283150',
         marginHorizontal:normalizeWidth(12)
       }}
@@ -275,10 +276,11 @@ export const ProfileScreen = () => {
     <ScrollView
       ref={sectionsScrollRef}
       scrollEnabled={true}
-      contentContainerStyle={{ paddingBottom: normalizeHeight(40) }}
-      showsVerticalScrollIndicator ={false}
+      style={{ marginBottom: normalizeHeight(70) }}
+      contentContainerStyle={{ paddingBottom: normalizeHeight(20) }}
+      showsVerticalScrollIndicator={false}
     >
-      <View style={{marginTop:normalizeHeight(10)}}>
+      <View style={{marginTop:normalizeHeight(14)}}>
         {sections.map((section) => (
           <ProfilePageSection key={section.route} section = {section}/>
         ))}
@@ -300,6 +302,17 @@ export const ProfileScreen = () => {
           </Text>
         </View>
     </ScrollView>
+    <View style={{ position: 'absolute', bottom: normalizeHeight(70), left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">
+      <Svg height="100%" width="100%">
+        <Defs>
+          <SvgLinearGradient id="profileFade" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+            <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+          </SvgLinearGradient>
+        </Defs>
+        <Rect width="100%" height="100%" fill="url(#profileFade)" />
+      </Svg>
+    </View>
     <EditNameModal
       visible={editNameVisible}
       value={editNameValue}
