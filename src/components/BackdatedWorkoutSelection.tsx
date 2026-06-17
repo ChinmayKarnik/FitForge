@@ -61,7 +61,7 @@ export const BackdatedWorkoutSelection = ({ onSelectMode, onBackPress }: Props) 
             activeOpacity={0.8}
           >
             <Image
-              style={styles.optionIcon}
+              style={[styles.optionIcon, { aspectRatio: (178.0/192.0) }]}
               source={live_workout_clock}
             />
             <View style={styles.textContent}>
@@ -83,13 +83,13 @@ export const BackdatedWorkoutSelection = ({ onSelectMode, onBackPress }: Props) 
             activeOpacity={0.8}
           >
             <Image
-              style={styles.optionIcon}
+              style={[styles.optionIcon, { aspectRatio: (173.0/185.0) }]}
               source={live_workout_routine_calendar}
             />
             <View style={styles.textContent}>
               <Text style={styles.optionTitle}>Use Routine</Text>
               <Text style={styles.optionDescription}>
-                Fill in data for an existing routine with structure
+                Log a workout using a saved routine
               </Text>
             </View>
             <Image
@@ -140,49 +140,44 @@ const styles = StyleSheet.create({
     paddingBottom: normalizeHeight(20),
   },
   contentContainer: {
-    paddingHorizontal: normalizeWidth(16),
-    gap: normalizeHeight(12),
+    gap: normalizeHeight(16),
   },
   optionCard: {
-    backgroundColor: 'rgba(42, 50, 75)',
-    borderRadius: normalize(12),
+    backgroundColor: '#292f46',
+    borderRadius: normalize(10),
     borderWidth: 1,
-    borderColor: 'rgba(68, 75, 95)',
-    paddingHorizontal: normalizeWidth(16),
-    paddingVertical: normalizeHeight(16),
+    borderColor: '#484d63',
+    marginHorizontal: normalizeWidth(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
   optionIcon: {
-    width: normalize(48),
-    height: normalize(48),
-    marginRight: normalizeWidth(12),
-    flexShrink: 0,
-    resizeMode: 'contain',
-  },
-  optionIconText: {
-    fontSize: normalize(24),
+    width: normalizeWidth(50),
+    marginLeft: normalizeWidth(20),
+    marginRight: normalizeWidth(10),
   },
   textContent: {
     flex: 1,
+    marginRight: normalizeWidth(12),
   },
   optionTitle: {
+    marginTop: normalizeHeight(14),
     fontSize: normalize(16),
     fontWeight: '600',
-    color: '#F2F4F8',
-    marginBottom: normalizeHeight(4),
+    lineHeight: normalize(22),
+    color: '#F2F4F7',
   },
   optionDescription: {
+    marginTop: normalizeHeight(8),
+    marginBottom: normalizeHeight(14),
     fontSize: normalize(13),
-    color: '#A9B1C2',
-    lineHeight: normalize(16),
+    fontWeight: '400',
+    lineHeight: normalize(18),
+    color: '#b8c2d4',
   },
   rightArrow: {
-    width: normalizeWidth(6),
-    height: normalizeWidth(10),
-    marginLeft: normalizeWidth(12),
-    tintColor: '#A9B1C2',
-    resizeMode: 'contain',
-    flexShrink: 0,
+    aspectRatio: (52.0/87.0),
+    width: normalizeWidth(8),
+    marginRight: normalizeWidth(15),
   },
 });
