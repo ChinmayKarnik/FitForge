@@ -243,7 +243,7 @@ export const ProfileScreen = () => {
         borderColor: '#323b62',
         borderRadius: normalize(10),
         marginTop:normalizeHeight(16),
-        marginBottom:normalizeHeight(14),
+        marginBottom:normalizeHeight(12),
         backgroundColor: '#283150',
         marginHorizontal:normalizeWidth(12)
       }}
@@ -278,7 +278,7 @@ export const ProfileScreen = () => {
       contentContainerStyle={{ paddingBottom: normalizeHeight(70) }}
       showsVerticalScrollIndicator={false}
     >
-      <View style={{marginTop:normalizeHeight(14)}}>
+      <View style={{marginTop:normalizeHeight(12)}}>
         {sections.map((section) => (
           <ProfilePageSection key={section.route} section = {section}/>
         ))}
