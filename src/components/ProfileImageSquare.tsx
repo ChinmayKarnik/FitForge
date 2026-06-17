@@ -57,7 +57,7 @@ const ProfileImageSquare: React.FC<ProfileImageSquareProps> = ({
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
         overflow: 'hidden',
-        backgroundColor: '#252d47',
+        backgroundColor: 'black',
       }}
     >
       <Image
