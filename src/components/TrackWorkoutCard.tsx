@@ -12,27 +12,31 @@ const all_data = {
         description: "Start a session and log exercises as you go",
         image: live_workout_clock,
         imageAspectRatio: (178.0/192.0),
+        iconWidth: 50,
     },
     "live-routine": {
         title: "Live Workout with Routine",
         description: "Pre-planned schedule with rest timers and structure",
         image: live_workout_routine_calendar,
-       imageAspectRatio: (173.0/185.0),
+        imageAspectRatio: (173.0/185.0),
+        iconWidth: 50,
     },
     "live-backdated": {
         title: "Log a Backdated Workout",
         description: "Log a workout done previously",
         image: backdated_workout_calendar,
         imageAspectRatio: (176.0/147.0),
+        iconWidth: 54,
     }
 }
 
-export const TrackWorkoutCard= ({ type, onPress, titleMarginTop = 14, titleDescGap = 8, descMarginBottom = 14 }) => {
+export const TrackWorkoutCard= ({ type, onPress, titleMarginTop = 14, titleDescGap = 8, descMarginBottom = 14 }: { type: keyof typeof all_data, onPress: () => void, titleMarginTop?: number, titleDescGap?: number, descMarginBottom?: number }) => {
   const data = all_data[type] || {};
   const title = data.title;
   const description =data.description
   const image = data.image
   const imageAspectRatio = data.imageAspectRatio
+  const iconWidth = data.iconWidth
   return (
     <TouchableOpacity style={{
         backgroundColor:'#292f46',
@@ -46,7 +50,7 @@ export const TrackWorkoutCard= ({ type, onPress, titleMarginTop = 14, titleDescG
     onPress={onPress}
     >
               <Image style={{
-                  width: normalizeWidth(50),
+                  width: normalizeWidth(iconWidth),
                   marginLeft: normalizeWidth(20),
                   marginRight: normalizeWidth(10),
                   aspectRatio: imageAspectRatio
