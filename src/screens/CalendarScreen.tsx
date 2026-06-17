@@ -16,7 +16,7 @@ import shareIcon from '../images/share.png';
 import fitforgeIcon from '../images/fitforge-icon.png';
 import profile_photo_default from '../images/profile-photo-default.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
-import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getStreakForDate, getMaxStreakForMonth, getWorkoutCountForMonth, getAverageWorkoutDurationForMonth } from '../utils/workoutUtils';
+import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurrentWeekWorkoutCount, getMaxStreakForMonth, getWorkoutCountForMonth, getAverageWorkoutDurationForMonth } from '../utils/workoutUtils';
 import { shareViewAsImage } from '../utils/shareUtils';
 import { databaseController } from '../data/controllers';
 import ProfileImageCircular from '../components/ProfileImageCircular';
@@ -170,10 +170,8 @@ export const CalendarScreen = () => {
   const profilePhotoSource = userInfo?.profilePhotoPath ? { uri: userInfo.profilePhotoPath } : profile_photo_default;
   const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
 
-  const currentStreak = getStreakForDate(new Date());
   const numberOfWorkoutsThisWeek = getCurrentWeekWorkoutCount();
   const workoutsText = numberOfWorkoutsThisWeek === 1 ? '1 Workout' : `${numberOfWorkoutsThisWeek} Workouts`;
-  const streakText = currentStreak === 1 ? '1 Day' : `${currentStreak} Days`;
   const avrDurationThisWeekMins = getAverageWorkoutDurationCurrentWeekMins();
 
   const maxStreakThisMonth = getMaxStreakForMonth(year, month);
@@ -317,8 +315,8 @@ export const CalendarScreen = () => {
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
-              <Text style={styles.statLabel}>Current Streak</Text>
-              <Text style={styles.statValue}>{streakText}</Text>
+              <Text style={styles.statLabel}>Max Streak</Text>
+              <Text style={styles.statValue}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={calendar2} style={styles.calendarIcon} />
@@ -430,7 +428,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: normalizeWidth(12),
+    gap: normalizeWidth(8),
     marginBottom: normalizeHeight(24),
   },
   statCard: {
@@ -439,33 +437,33 @@ const styles = StyleSheet.create({
     borderRadius: normalizeWidth(12),
     borderWidth: 1,
     borderColor: '#353c58',
-    paddingVertical: normalizeHeight(20),
+    paddingVertical: normalizeHeight(16),
     alignItems: 'center',
     justifyContent: 'center',
   },
   flameIcon: {
-    height: normalizeHeight(40),
+    height: normalizeHeight(32),
     aspectRatio: (506.0) / (656.0),
-    marginBottom: normalizeHeight(12),
+    marginBottom: normalizeHeight(8),
     resizeMode: 'contain',
   },
   calendarIcon: {
-    height: normalizeHeight(40),
+    height: normalizeHeight(32),
     aspectRatio: (337.0 / 365.0),
-    marginBottom: normalizeHeight(12),
+    marginBottom: normalizeHeight(8),
     resizeMode: 'contain',
   },
   clockIcon: {
-    height: normalizeHeight(40),
+    height: normalizeHeight(32),
     aspectRatio: (300.0 / 348.0),
-    marginBottom: normalizeHeight(12),
+    marginBottom: normalizeHeight(8),
     resizeMode: 'contain',
   },
   statLabel: {
     fontSize: normalize(12),
     color: 'rgba(254, 254, 254, 0.7)',
     fontWeight: '400',
-    marginBottom: normalizeHeight(8),
+    marginBottom: normalizeHeight(6),
     textAlign: 'center',
   },
   statValue: {
