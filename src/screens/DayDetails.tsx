@@ -66,7 +66,7 @@ export const DayDetails = () => {
                         <SvgText
                             x="0"
                             y={normalize(52)}
-                            fontFamily="BarlowCondensed-Black"
+                            //fontFamily="BarlowCondensed-Black"
                             fontSize={normalize(52)}
                             fill="#fefefe"
                             stroke="#fefefe"
@@ -83,7 +83,7 @@ export const DayDetails = () => {
                                 <SvgText
                                     x="0"
                                     y={normalize(30)}
-                                    fontFamily="BarlowCondensed-Black"
+                                   // fontFamily="BarlowCondensed-Black"
                                     fontSize={normalize(28)}
                                     fill="#7fb3ff"
                                     stroke="#7fb3ff"
@@ -100,7 +100,7 @@ export const DayDetails = () => {
                                 <SvgText
                                     x="0"
                                     y={normalize(30)}
-                                    fontFamily="BarlowCondensed-Black"
+                                   // fontFamily="BarlowCondensed-Black"
                                     fontSize={normalize(28)}
                                     fill="#7fb3ff"
                                     stroke="#7fb3ff"
