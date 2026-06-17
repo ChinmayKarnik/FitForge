@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
@@ -8,8 +8,13 @@ const Divider = () => (
     <View style={{ width: '100%', height: normalizeHeight(1), backgroundColor: '#3b4572' }} />
 );
 
-const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
+const EditBioModal = ({ visible, value, onCancel, onSave }) => {
     const inputRef = useRef(null);
+    const [localValue, setLocalValue] = React.useState(value);
+
+    useEffect(() => {
+        if (visible) setLocalValue(value);
+    }, [visible]);
 
     return (
         <Modal
@@ -45,8 +50,8 @@ const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                                 minHeight: normalizeHeight(80),
                                 textAlignVertical: 'top',
                             }}
-                            value={value}
-                            onChangeText={onChangeText}
+                            value={localValue}
+                            onChangeText={setLocalValue}
                             placeholder="Enter your bio"
                             placeholderTextColor="#a5a7c1"
                             returnKeyType="default"
@@ -60,11 +65,11 @@ const EditBioModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.saveButton, value.trim().length === 0 && { backgroundColor: '#1e2545' }]}
-                            disabled={value.trim().length === 0}
-                            onPress={() => onSave(value)}
+                            style={[styles.saveButton, localValue.trim().length === 0 && { backgroundColor: '#1e2545' }]}
+                            disabled={localValue.trim().length === 0}
+                            onPress={() => onSave(localValue)}
                         >
-                            <Text style={[styles.saveText, value.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
+                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

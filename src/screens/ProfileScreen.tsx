@@ -305,14 +305,12 @@ export const ProfileScreen = () => {
     <EditNameModal
       visible={editNameVisible}
       value={editNameValue}
-      onChangeText={setEditNameValue}
       onCancel={closeEditNameModal}
       onSave={onSave}
     />
     <EditBioModal
       visible={editBioVisible}
       value={editBioValue}
-      onChangeText={setEditBioValue}
       onCancel={closeEditBioModal}
       onSave={onSaveBio}
     />

@@ -12,11 +12,13 @@ const Divider = () => {
     />)
 }
 
-const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
+const EditNameModal = ({ visible, value, onCancel, onSave }) => {
     const inputRef = useRef(null);
+    const [localValue, setLocalValue] = React.useState(value);
 
     useEffect(() => {
-        if (visible && inputRef.current) {
+        if (visible) {
+            setLocalValue(value);
             setTimeout(() => {
                 inputRef.current?.focus();
             }, 100);
@@ -73,8 +75,8 @@ const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
 
                                 }
                             }
-                            value={value}
-                            onChangeText={onChangeText}
+                            value={localValue}
+                            onChangeText={setLocalValue}
                             placeholder="Enter your name"
                             placeholderTextColor="#a5a7c1"
                             returnKeyType="done"
@@ -89,17 +91,17 @@ const EditNameModal = ({ visible, value, onChangeText, onCancel, onSave }) => {
                         <TouchableOpacity
                             style={{
                                 marginRight: normalizeWidth(8),
-                                backgroundColor: value.trim().length > 0 ? '#2752b2' : '#1e2545',
+                                backgroundColor: localValue.trim().length > 0 ? '#2752b2' : '#1e2545',
                                 width: normalizeWidth(130),
                                 borderRadius: normalize(30),
                                 paddingVertical: normalizeHeight(6),
                                 alignItems: 'center',
                                 marginBottom: normalizeHeight(8),
                             }}
-                            disabled={value.trim().length === 0}
-                            onPress={() => { onSave(value) }}
+                            disabled={localValue.trim().length === 0}
+                            onPress={() => { onSave(localValue) }}
                         >
-                            <Text style={[styles.saveText, value.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
+                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
