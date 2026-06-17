@@ -316,17 +316,17 @@ export const CalendarScreen = () => {
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
               <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'day' : 'days'}</Text>
-              <Text style={styles.statLabel}>Max Streak</Text>
+              <Text style={styles.statLabel}>MAX STREAK</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={calendar2} style={styles.calendarIcon} />
               <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{workoutsText}</Text>
-              <Text style={styles.statLabel}>This Week</Text>
+              <Text style={styles.statLabel}>THIS WEEK</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={clock4} style={styles.clockIcon} />
               <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{avrDurationThisWeekMins} min</Text>
-              <Text style={styles.statLabel}>Avg Duration</Text>
+              <Text style={styles.statLabel}>AVG DURATION</Text>
             </View>
           </View>
 
@@ -460,10 +460,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   statLabel: {
-    fontSize: normalize(11),
-    color: 'rgba(254, 254, 254, 0.7)',
-    fontWeight: '400',
-    letterSpacing: 0.3,
+    fontSize: normalize(10),
+    color: '#b8c2d4',
+    fontWeight: '500',
+    letterSpacing: 0.8,
     marginTop: normalizeHeight(6),
     textAlign: 'center',
   },
