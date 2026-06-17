@@ -182,6 +182,11 @@ export const ProfileScreen = () => {
             width={profilePhotoWidth}
             aspectRatio={1}
             crop={imageCrop}
+            onFallback={() => {
+              setProfilePhotoPath(null);
+              setImageCrop({ x: 0, y: 0, size: 1 });
+              databaseController.updateUserInfo({ profilePhotoPath: null, profilePhotoCrop: null });
+            }}
           />
         </View>
       <TouchableOpacity style={{

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Image } from 'react-native';
+import profile_photo_default from '../images/profile-photo-default.png';
 
 interface CropConfig {
   x: number;
@@ -12,32 +13,37 @@ interface ProfileImageCircularProps {
   width: number;
   aspectRatio: number;
   crop: CropConfig;
+  onFallback?: () => void;
 }
 
 const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
   imageSource,
   width,
   crop,
+  onFallback,
 }) => {
- 
+
   const AVATAR_SIZE = width;
   const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
+  const [hasError, setHasError] = React.useState(false);
 
-  const isImageHorizontal = imageAspectRatio >= 1.0
-  
+  const activeSrc = hasError ? profile_photo_default : imageSource;
+  const activeCrop = hasError ? { x: 0, y: 0, size: 1 } : crop;
+  const activeAspectRatio = hasError ? 1 : imageAspectRatio;
+
+  const isImageHorizontal = activeAspectRatio >= 1.0;
+
   let imageWidth,imageHeight;
   if (isImageHorizontal) {
-    imageWidth = AVATAR_SIZE / crop.size;
-
-    imageHeight = imageWidth / imageAspectRatio;
+    imageWidth = AVATAR_SIZE / activeCrop.size;
+    imageHeight = imageWidth / activeAspectRatio;
   } else {
-    imageHeight = AVATAR_SIZE/crop.size;
-    imageWidth = (imageHeight*1.0) * imageAspectRatio
+    imageHeight = AVATAR_SIZE / activeCrop.size;
+    imageWidth = (imageHeight*1.0) * activeAspectRatio;
   }
-  
 
-  
   useEffect(() => {
+    setHasError(false);
     if (imageSource?.uri) {
       Image.getSize(imageSource.uri, (width, height) => {
         setImageAspectRatio(width / height);
@@ -56,14 +62,15 @@ const ProfileImageCircular: React.FC<ProfileImageCircularProps> = ({
       }}
     >
       <Image
-        source={imageSource}
+        source={activeSrc}
         style={{
           position: 'absolute',
           width:imageWidth,
           height: imageHeight,
-          left: -crop.x * (imageWidth),
-          top: -crop.y * (imageHeight),
+          left: -activeCrop.x * (imageWidth),
+          top: -activeCrop.y * (imageHeight),
         }}
+        onError={() => { setHasError(true); onFallback?.(); }}
       />
     </View>
   );

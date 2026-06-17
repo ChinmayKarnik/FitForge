@@ -111,12 +111,16 @@ export default function ProfilePhotoView() {
           justifyContent: 'center',
         }}
       >
-        {imgDimensions && profilePhotoPath && profilePhotoCrop ? (
+          {imgDimensions && profilePhotoPath && profilePhotoCrop ? (
           <ProfileImageSquare
             imageSource={{ uri: profilePhotoPath }}
             width={SQUARE_SIZE}
             aspectRatio={imageAspectRatio}
             crop={profilePhotoCrop}
+            onFallback={() => {
+              databaseController.updateUserInfo({ profilePhotoPath: null, profilePhotoCrop: null });
+              navigation.goBack();
+            }}
           />
         ) : imgDimensions && (
           <Image
