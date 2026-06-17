@@ -242,7 +242,7 @@ export const StatisticsScreen = () => {
               <IconContainer>
                 <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
               </IconContainer>
-              <View style={{ marginBottom: normalizeHeight(14) }}>
+              <View style={{ marginBottom: normalizeHeight(22) }}>
                 <Text style={{
                   color: '#ffffff',
                   fontSize: normalize(44),
@@ -277,7 +277,7 @@ export const StatisticsScreen = () => {
                 }}>
                 <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
               </View>
-              <View style={{ marginBottom: normalizeHeight(14) }}>
+              <View style={{ marginBottom: normalizeHeight(22) }}>
                 <Text style={{
                   color: '#fb7028',
                   fontSize: normalize(44),
