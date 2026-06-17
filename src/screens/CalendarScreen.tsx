@@ -315,18 +315,18 @@ export const CalendarScreen = () => {
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
-              <Text style={styles.statLabel}>Max Streak</Text>
               <Text style={styles.statValue}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
+              <Text style={styles.statLabel}>Max Streak</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={calendar2} style={styles.calendarIcon} />
-              <Text style={styles.statLabel}>This Week</Text>
               <Text style={styles.statValue}>{workoutsText}</Text>
+              <Text style={styles.statLabel}>This Week</Text>
             </View>
             <View style={styles.statCard}>
               <Image source={clock4} style={styles.clockIcon} />
-              <Text style={styles.statLabel}>Avg Duration</Text>
               <Text style={styles.statValue}>{avrDurationThisWeekMins} Min</Text>
+              <Text style={styles.statLabel}>Avg Duration</Text>
             </View>
           </View>
 
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   flameIcon: {
-    height: normalizeHeight(32),
+    height: normalizeHeight(30),
     aspectRatio: (506.0) / (656.0),
     marginBottom: normalizeHeight(8),
     resizeMode: 'contain',
@@ -454,21 +454,22 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   clockIcon: {
-    height: normalizeHeight(32),
+    height: normalizeHeight(34),
     aspectRatio: (300.0 / 348.0),
     marginBottom: normalizeHeight(8),
     resizeMode: 'contain',
   },
   statLabel: {
-    fontSize: normalize(12),
+    fontSize: normalize(11),
     color: 'rgba(254, 254, 254, 0.7)',
     fontWeight: '400',
-    marginBottom: normalizeHeight(6),
+    letterSpacing: 0.3,
+    marginTop: normalizeHeight(6),
     textAlign: 'center',
   },
   statValue: {
-    fontSize: normalizeWidth(16),
-    fontWeight: '500',
+    fontSize: normalizeWidth(17),
+    fontWeight: '600',
     color: '#fefefe',
     textAlign: 'center',
   },
