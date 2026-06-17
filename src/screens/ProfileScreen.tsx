@@ -209,7 +209,7 @@ export const ProfileScreen = () => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: normalizeHeight(5),
+        marginTop: normalizeHeight(10),
       }}
       onPress={openEditNameModal}
     >
@@ -248,30 +248,28 @@ export const ProfileScreen = () => {
         marginHorizontal:normalizeWidth(12)
       }}
     >
-      <Text
-        style={
-          {
-            fontSize: normalize(14),
-            fontWeight: '400',
-            color: '#b8bedb',
-            lineHeight: normalizeHeight(20),
-            paddingRight: normalizeWidth(30),
-          }
-        }
-      >
-        {editBioValue}
-      </Text>
-      <Image 
-        style={{width:bluePencilWidth,height:bluePencilHeight,
-          marginTop:normalize(6),
-          marginLeft:normalize(6),
-          position:'absolute',
-          right:normalizeWidth(12),
-          bottom:normalizeHeight(10),
+      <Image
+        style={{
+          width: bluePencilWidth,
+          height: bluePencilHeight,
+          position: 'absolute',
+          right: normalizeWidth(12),
+          top: normalizeHeight(12),
           tintColor: '#9fa5c4'
         }}
         source={blue_pencil}
       />
+      <Text
+        style={{
+          fontSize: normalize(14),
+          fontWeight: '400',
+          color: '#b8bedb',
+          lineHeight: normalizeHeight(20),
+          paddingRight: normalizeWidth(24),
+        }}
+      >
+        {editBioValue}
+      </Text>
     </TouchableOpacity>
 
     <ScrollView
