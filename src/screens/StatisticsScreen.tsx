@@ -238,25 +238,24 @@ export const StatisticsScreen = () => {
             padding: normalize(16),
           }}>
             {/* Total Workouts */}
-            <View style={{ flex: 1, paddingRight: normalizeWidth(12) }}>
-              <View style={{ marginBottom: normalizeHeight(6) }}>
+            <View style={{ flex: 1, paddingRight: normalizeWidth(12), justifyContent: 'space-between' }}>
+              <View style={{ gap: normalizeHeight(6) }}>
                 <IconContainer>
                   <Image source={dumbbell_2} style={{ width: dumbbellW, height: dumbbellH, tintColor: '#ffffff' }} />
                 </IconContainer>
+                <Text style={{
+                  color: 'rgba(255,255,255,0.68)',
+                  fontSize: normalize(11),
+                  fontWeight: '600',
+                  letterSpacing: 1.8,
+                }}>TOTAL WORKOUTS</Text>
               </View>
               <Text style={{
-                color: 'rgba(255,255,255,0.68)',
-                fontSize: normalize(11),
-                fontWeight: '600',
-                letterSpacing: 1.8,
-                marginBottom: normalizeHeight(6),
-              }}>TOTAL WORKOUTS</Text>
-              <Text style={{
                 color: '#ffffff',
-                fontSize: normalize(48),
+                fontSize: normalize(44),
                 fontWeight: '800',
                 letterSpacing: -1,
-                lineHeight: normalize(52),
+                lineHeight: normalize(48),
               }}>{statsData.totalWorkouts ?? '0'}</Text>
             </View>
 
@@ -264,38 +263,32 @@ export const StatisticsScreen = () => {
             <View style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.22)', marginHorizontal: normalizeWidth(4) }} />
 
             {/* Max Streak */}
-            <View style={{ flex: 1, paddingLeft: normalizeWidth(12) }}>
-              <View style={{
-                  width: normalize(34),
-                  height: normalize(34),
-                  borderRadius: normalize(8),
-                  backgroundColor: 'rgba(251,112,40,0.12)',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: normalizeHeight(6),
-                }}>
-                <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
+            <View style={{ flex: 1, paddingLeft: normalizeWidth(12), justifyContent: 'space-between' }}>
+              <View style={{ gap: normalizeHeight(6) }}>
+                <View style={{
+                    width: normalize(34),
+                    height: normalize(34),
+                    borderRadius: normalize(8),
+                    backgroundColor: 'rgba(251,112,40,0.12)',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={flame_3} style={{ width: flameW, height: flameH, tintColor: '#fb7028' }} />
+                </View>
+                <Text style={{
+                  color: 'rgba(255,255,255,0.68)',
+                  fontSize: normalize(11),
+                  fontWeight: '600',
+                  letterSpacing: 1.8,
+                }}>MAX STREAK</Text>
               </View>
               <Text style={{
-                color: 'rgba(255,255,255,0.68)',
-                fontSize: normalize(11),
-                fontWeight: '600',
-                letterSpacing: 1.8,
-                marginBottom: normalizeHeight(6),
-              }}>MAX STREAK</Text>
-              <Text style={{
                 color: '#fb7028',
-                fontSize: normalize(48),
+                fontSize: normalize(44),
                 fontWeight: '800',
                 letterSpacing: -1,
-                lineHeight: normalize(52),
+                lineHeight: normalize(48),
               }}>{streakValue}</Text>
-              <Text style={{
-                color: 'rgba(251,112,40,0.65)',
-                fontSize: normalize(12),
-                fontWeight: '500',
-                marginTop: normalizeHeight(4),
-              }}>{streakUnit}</Text>
             </View>
           </View>
 
