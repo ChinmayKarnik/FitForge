@@ -111,11 +111,11 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
       </View>
 
-      <View style={{marginTop:normalizeHeight(10)}}>
+      <View style={{marginTop:normalizeHeight(20)}}>
         <TrackWorkoutCard type={"live-free"} onPress={() => setWorkoutMode('live-free')}/>
-        <View style={{height:normalizeHeight(12)}} ></View>
+        <View style={{height:normalizeHeight(16)}} ></View>
         <TrackWorkoutCard type={"live-routine"} onPress={() => setWorkoutMode('live-routine')}/>
-        <View style={{height:normalizeHeight(12)}}></View>
+        <View style={{height:normalizeHeight(16)}}></View>
          <TrackWorkoutCard type={"live-backdated"}  onPress={() => setWorkoutMode('backdated')}/>
       </View>
     

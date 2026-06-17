@@ -57,15 +57,15 @@ export const TrackWorkoutCard= ({ type, onPress }) => {
       <View style={{flex:1,marginRight:normalizeWidth(12),
       }}>
               <Text style={{
-                  marginTop: normalizeHeight(12),
+                  marginTop: normalizeHeight(14),
                   fontSize: normalize(16),
                   fontWeight: '600',
                   lineHeight: normalize(22),
                   color: '#F2F4F7'
               }}>{title}</Text>
               <Text style={{
-                  marginTop: normalizeHeight(12),
-                  marginBottom: normalizeHeight(12),
+                  marginTop: normalizeHeight(8),
+                  marginBottom: normalizeHeight(14),
                   fontSize: normalize(13),
                   fontWeight: '400',
                   lineHeight: normalize(18),
