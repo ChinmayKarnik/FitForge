@@ -171,7 +171,7 @@ export const CalendarScreen = () => {
   const profilePhotoCrop = userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 };
 
   const numberOfWorkoutsThisWeek = getCurrentWeekWorkoutCount();
-  const workoutsText = numberOfWorkoutsThisWeek === 1 ? '1 Workout' : `${numberOfWorkoutsThisWeek} Workouts`;
+  const workoutsText = numberOfWorkoutsThisWeek === 1 ? '1 workout' : `${numberOfWorkoutsThisWeek} workouts`;
   const avrDurationThisWeekMins = getAverageWorkoutDurationCurrentWeekMins();
 
   const maxStreakThisMonth = getMaxStreakForMonth(year, month);
@@ -315,7 +315,7 @@ export const CalendarScreen = () => {
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
-              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
+              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'day' : 'days'}</Text>
               <Text style={styles.statLabel}>Max Streak</Text>
             </View>
             <View style={styles.statCard}>
@@ -325,7 +325,7 @@ export const CalendarScreen = () => {
             </View>
             <View style={styles.statCard}>
               <Image source={clock4} style={styles.clockIcon} />
-              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{avrDurationThisWeekMins} Min</Text>
+              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{avrDurationThisWeekMins} min</Text>
               <Text style={styles.statLabel}>Avg Duration</Text>
             </View>
           </View>
