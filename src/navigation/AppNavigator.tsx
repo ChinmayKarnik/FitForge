@@ -49,27 +49,32 @@ const TAB_ICONS_DATA = {
   Activity:  {
     unselectedImage: activity_icon_unselected,
     selectedImage: activity_icon_selected,
-    aspectRatio: (73.0/71.0)
+    aspectRatio: (73.0/71.0),
+    iconHeight: 26,
   },
   Calendar:  {
     unselectedImage: calendar_icon_unselected,
     selectedImage: calendar_icon_selected,
-    aspectRatio: (75.0/67.0)
+    aspectRatio: (75.0/67.0),
+    iconHeight: 26,
   },
   TrackWorkout:  {
     unselectedImage: track_icon_unselected,
     selectedImage: track_icon_selected,
-    aspectRatio: (79.0/78.0)
+    aspectRatio: (79.0/78.0),
+    iconHeight: 27,
   },
   Statistics:  {
     unselectedImage: stats_icon_unselected,
     selectedImage: stats_icon_selected,
-    aspectRatio: (87.0/63.0)
+    aspectRatio: (87.0/63.0),
+    iconHeight: 25,
   },
   Profile:  {
     unselectedImage: profile_icon_unselected,
     selectedImage: profile_icon_selected,
-    aspectRatio: (79.0/74.0)
+    aspectRatio: (79.0/74.0),
+    iconHeight: 26,
   },
 }
 
@@ -103,16 +108,18 @@ function CustomTabBar({ state, descriptors, navigation }) {
           const imgSource = isFocused ? TAB_ICONS_DATA[route.name].selectedImage:TAB_ICONS_DATA[route.name].unselectedImage 
       
           // Use a circle for all icons
+          const iconData = TAB_ICONS_DATA[route.name];
           const icon = (
-            <Image
-              source={imgSource}
-              style={[
-                {
-                  height:normalizeHeight(30),
-                  aspectRatio: TAB_ICONS_DATA[route.name].aspectRatio,
-                },
-              ]}
-            />
+            <View style={{ height: normalizeHeight(30), justifyContent: 'center', alignItems: 'center' }}>
+              <Image
+                source={imgSource}
+                style={{
+                  height: normalizeHeight(iconData.iconHeight),
+                  aspectRatio: iconData.aspectRatio,
+                  opacity: 1,
+                }}
+              />
+            </View>
           );
         
           return (
