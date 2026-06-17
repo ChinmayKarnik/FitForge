@@ -315,7 +315,7 @@ export const CalendarScreen = () => {
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <Image source={flame} style={styles.flameIcon} />
-              <Text style={styles.statValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'day' : 'days'}</Text>
+              <Text style={[styles.statValue, { color: '#fb7028' }]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'day' : 'days'}</Text>
               <Text style={styles.statLabel}>MAX STREAK</Text>
             </View>
             <View style={styles.statCard}>
