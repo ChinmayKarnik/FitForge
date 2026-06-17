@@ -25,19 +25,22 @@ const sections = [
     name: 'Routines',
     route: 'Routines',
     icon: routines_icon,
-    aspectRatio: (379.0/432.0)
+    aspectRatio: (379.0/432.0),
+    iconWidth: 24,
   },
   {
     name: 'Exercises',
     route: 'Exercises',
     icon: kettlebell_image,
-    aspectRatio: (457.0/582.0)
+    aspectRatio: (835.0/1115.0),
+    iconWidth: 22,
   },
   {
     name: 'Activity',
     route: 'Activity',
     icon: activity_image,
-    aspectRatio: 1
+    aspectRatio: 1,
+    iconWidth: 24,
   },
   {
     name: 'Stats',

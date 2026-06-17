@@ -6,9 +6,9 @@ import right_arrow from '../images/white-right-arrow.png';
 
 const ProfilePageSection = ({ section }) => {
   const navigation = useNavigation();
-  const { name, route, icon, aspectRatio } = section;
+  const { name, route, icon, aspectRatio, iconWidth } = section;
 
-  const width = normalizeWidth(26);
+  const width = iconWidth ? normalizeWidth(iconWidth) : normalizeWidth(26);
   const height = width / aspectRatio;
 
   const arrowHeight = normalizeHeight(14);
