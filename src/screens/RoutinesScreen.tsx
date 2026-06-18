@@ -7,6 +7,7 @@ import { normalizeHeight, normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import RoutineCard from '../components/RoutineCard';
 import magnifying_glass from '../images/magnifying-glass-white.png'
+import cross_icon from '../images/cross-icon-white.png'
 import white_plus from '../images/white-plus.png'
 import white_left_arrow from '../images/white-left-arrow.png'
 import notepad_with_glass from '../images/notepad-with-glass.png'
@@ -81,7 +82,7 @@ const RoutinesScreen = () => {
                    // paddingVertical: normalizeHeight(10),
                     marginHorizontal: normalizeWidth(16),
                     marginTop: normalizeHeight(12), 
-                    marginBottom: normalizeHeight(20),
+                    marginBottom: normalizeHeight(12),
                     flexDirection: 'row',
                     alignItems: 'center',
                    
@@ -107,6 +108,33 @@ const RoutinesScreen = () => {
                 value={searchText}
                 onChangeText={setSearchText}
             />
+            {searchText.length > 0 && (
+              <TouchableOpacity
+                onPress={() => setSearchText('')}
+                activeOpacity={0.7}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <View style={{
+                  width: normalize(18),
+                  height: normalize(18),
+                  borderRadius: normalize(9),
+                  borderWidth: normalize(1),
+                  borderColor: 'rgba(255,255,255,0.38)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: -normalizeWidth(5),
+                }}>
+                  <Image
+                    source={cross_icon}
+                    style={{
+                      width: normalize(7),
+                      height: normalize(7),
+                      tintColor: 'rgba(255,255,255,0.62)',
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
             </View>
 
             <View style={{ flex: 1, position: 'relative' }}>
