@@ -53,7 +53,7 @@ const RoutineCard = ({ routine }) => {
         >
             {/* Accent bar */}
             <View style={{
-                width: normalizeWidth(4),
+                width: normalizeWidth(6),
                 backgroundColor: ACCENT,
             }} />
 
