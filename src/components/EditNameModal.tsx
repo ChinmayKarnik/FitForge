@@ -7,7 +7,7 @@ const Divider = () => {
         style={{
             width: '100%',
             height: normalizeHeight(1),
-            backgroundColor: '#3b4572',
+            backgroundColor: 'rgba(68, 75, 95, 0.5)',
         }}
     />)
 }
@@ -37,23 +37,21 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                 style={styles.centeredView}
             >
                 <View style={{
-                    width: '90%',
-                    backgroundColor: '#232d5a',
-                    borderRadius: normalize(18),
-                    borderWidth: normalize(1),
-                    borderColor: '#2f3961',
+                    width: '88%',
+                    backgroundColor: '#243250',
+                    borderRadius: normalize(20),
                     alignItems: 'center',
                     shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 4,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 8,
                     elevation: 5,
                 }}>
                     <Text style={{
                         fontSize: normalize(18),
-                        fontWeight: '500',
-                        letterSpacing: 0.7,
-                        color: '#b9bfd4',
+                        fontWeight: '600',
+                        letterSpacing: 0.5,
+                        color: '#f9f9f9',
                         marginVertical: normalizeHeight(12)
                     }}>Edit Name</Text>
 
@@ -64,21 +62,20 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                             style={
                                 {
                                     borderWidth: normalize(1),
-                                    borderColor: '#4472c4',
-                                    borderRadius: 8,
+                                    borderColor: 'rgba(100, 120, 180, 0.55)',
+                                    borderRadius: normalize(12),
                                     padding: normalizeHeight(12),
-                                    fontSize: normalize(18),
-                                    color: '#c1c1d0',
-                                    backgroundColor: '#23253A',
+                                    fontSize: normalize(16),
+                                    color: '#e8ecf6',
+                                    backgroundColor: '#1a2240',
                                     marginVertical: normalizeHeight(10),
                                     marginHorizontal: normalizeWidth(16),
-
                                 }
                             }
                             value={localValue}
                             onChangeText={setLocalValue}
                             placeholder="Enter your name"
-                            placeholderTextColor="#a5a7c1"
+                            placeholderTextColor="rgba(255,255,255,0.35)"
                             returnKeyType="done"
                             autoFocus
                         />
@@ -91,7 +88,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                         <TouchableOpacity
                             style={{
                                 marginRight: normalizeWidth(8),
-                                backgroundColor: localValue.trim().length > 0 ? '#2752b2' : '#1e2545',
+                                backgroundColor: localValue.trim().length > 0 ? '#3d6fe0' : 'rgba(61, 111, 224, 0.2)',
                                 width: normalizeWidth(130),
                                 borderRadius: normalize(30),
                                 paddingVertical: normalizeHeight(6),
@@ -101,7 +98,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                             disabled={localValue.trim().length === 0}
                             onPress={() => { onSave(localValue) }}
                         >
-                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
+                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: 'rgba(255,255,255,0.3)' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.32)',
+        backgroundColor: 'rgba(0,0,0,0.6)',
     },
     buttonRow: {
         flexDirection: 'row',
@@ -129,12 +126,10 @@ const styles = StyleSheet.create({
         paddingVertical: normalizeHeight(6),
         backgroundColor: 'transparent',
         alignItems: 'center',
-        // borderWidth:1,
-        // borderColor:'red',
         marginBottom: normalizeHeight(8),
     },
     cancelText: {
-        color: '#a5a7c1',
+        color: 'rgba(255,255,255,0.9)',
         fontSize: normalize(16),
         fontWeight: '500',
     },
