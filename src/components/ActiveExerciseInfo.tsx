@@ -56,8 +56,8 @@ export default ActiveExerciseInfo;
 
 const styles = StyleSheet.create({
   exerciseInfoCard: {
-    marginTop: normalizeHeight(12),
-    marginBottom: normalizeHeight(16),
+    marginTop: normalizeHeight(20),
+    marginBottom: normalizeHeight(24),
     marginHorizontal: normalizeWidth(30),
     backgroundColor: '#20273d',
     borderWidth: normalizeF(3, 2),
