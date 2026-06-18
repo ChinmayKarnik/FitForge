@@ -468,13 +468,13 @@ const styles = StyleSheet.create({
     marginTop: normalizeHeight(10),
   },
   discardExerciseLinkText: {
-    color: 'rgba(255,255,255,0.35)',
+    color: 'rgba(255,255,255,0.65)',
     fontSize: normalize(13),
     fontWeight: '400',
     textAlign: 'center',
   },
   discardExerciseLinkUnderline: {
-    color: 'rgba(255,255,255,0.35)',
+    color: 'rgba(255,255,255,0.65)',
     fontSize: normalize(13),
     fontWeight: '400',
     textDecorationLine: 'underline',
