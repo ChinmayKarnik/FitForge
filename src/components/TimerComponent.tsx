@@ -15,7 +15,7 @@ export const TimerComponent: React.FC<TimerComponentProps> = ({ formatTime, elap
       borderColor: '#4b5171',
       borderRadius: normalize(12),
       marginHorizontal: normalizeWidth(30),
-      marginTop: normalizeHeight(40),
+      marginTop: normalizeHeight(24),
     }}>
       <View style={{
         backgroundColor: '#282e4e',

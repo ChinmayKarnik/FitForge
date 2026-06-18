@@ -62,6 +62,7 @@ const CurrentWorkoutList = (
     }
 
     if (isNoExercises) {
+        return null;
         return (
             <View
             style={{
@@ -100,7 +101,7 @@ const CurrentWorkoutList = (
     return (
         <View style={{
             ...(listMaxHeight ? {} : scrollEnabled ? { flex: 1 } : {}),
-            marginTop:normalizeHeight(10),
+            marginTop:normalizeHeight(22),
             paddingHorizontal: horizontalPadding ? normalize(14) : 0,
         }} >
             {showSectionHeader && (
