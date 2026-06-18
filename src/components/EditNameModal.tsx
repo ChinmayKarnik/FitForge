@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, InteractionManager } from 'react-native';
+import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const Divider = () => {
     return (<View
@@ -32,10 +34,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
             transparent
             onRequestClose={onCancel}
         >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.centeredView}
-            >
+            <View style={styles.overlay}>
                 <View style={{
                     width: '88%',
                     backgroundColor: '#243250',
@@ -102,17 +101,20 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    overlay: {
+        position: 'absolute',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
         backgroundColor: 'rgba(0,0,0,0.6)',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: SCREEN_HEIGHT * 0.25,
     },
     buttonRow: {
         flexDirection: 'row',
