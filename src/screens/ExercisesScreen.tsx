@@ -78,8 +78,8 @@ const ExercisesScreen = () => {
                      paddingHorizontal: normalizeWidth(12),
                    // paddingVertical: normalizeHeight(10),
                     marginHorizontal: normalizeWidth(16),
-                    marginTop: normalizeHeight(12), 
-                    marginBottom: normalizeHeight(20),
+                    marginTop: normalizeHeight(12),
+                    marginBottom: normalizeHeight(12),
                     flexDirection: 'row',
                     alignItems: 'center',
                    
