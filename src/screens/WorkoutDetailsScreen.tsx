@@ -153,7 +153,7 @@ export default function WorkoutDetailsScreen() {
       </View>
 
       {/* Fixed top content */}
-      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(14) }}>
+      <View style={{ paddingHorizontal: normalizeWidth(16), paddingTop: normalizeHeight(18) }}>
         {/* Workout Title */}
         <Text style={{
           fontSize: normalize(27),
@@ -169,7 +169,7 @@ export default function WorkoutDetailsScreen() {
         <View style={[cardStyle, {
           flexDirection: 'row',
           alignItems: 'center',
-          marginBottom: normalizeHeight(10),
+          marginBottom: normalizeHeight(12),
           paddingVertical: normalizeHeight(10),
           borderRadius: normalize(10)
         }]}>
@@ -196,7 +196,7 @@ export default function WorkoutDetailsScreen() {
             alignItems: 'center',
             paddingVertical: normalizeHeight(8),
             paddingHorizontal: normalizeWidth(14),
-            marginBottom: normalizeHeight(10),
+            marginBottom: normalizeHeight(12),
           }]}>
             <Image source={notes2Icon} style={{ width: normalize(18), height: normalize(18) * (458.0 / 399.0), aspectRatio: (399.0 / 458.0), resizeMode: 'contain', tintColor: '#a1a9ea', marginRight: normalizeWidth(16) }} />
             <View style={{ flex: 1 }}>
@@ -220,8 +220,8 @@ export default function WorkoutDetailsScreen() {
           fontSize: normalize(14),
           fontWeight: '600',
           letterSpacing: 0.4,
-          marginTop: normalizeHeight(14),
-          marginBottom: normalizeHeight(2),
+          marginTop: normalizeHeight(16),
+          marginBottom: normalizeHeight(8),
         }}>
           Exercises
         </Text>
