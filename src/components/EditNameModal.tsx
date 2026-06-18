@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
@@ -15,16 +15,11 @@ const Divider = () => {
 }
 
 const EditNameModal = ({ visible, value, onCancel, onSave }) => {
-    const inputRef = useRef(null);
+    const inputRef = useRef<TextInput>(null);
     const [localValue, setLocalValue] = React.useState(value);
 
-    useEffect(() => {
-        if (visible) {
-            setLocalValue(value);
-            setTimeout(() => {
-                inputRef.current?.focus();
-            }, 300);
-        }
+    React.useEffect(() => {
+        if (visible) setLocalValue(value);
     }, [visible]);
 
     return (
@@ -33,6 +28,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
             animationType="fade"
             transparent
             onRequestClose={onCancel}
+            onShow={() => { setTimeout(() => inputRef.current?.focus(), 100); }}
         >
             <View style={styles.overlay}>
                 <View style={{
@@ -76,7 +72,6 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                             placeholder="Enter your name"
                             placeholderTextColor="rgba(255,255,255,0.35)"
                             returnKeyType="done"
-                            autoFocus
                         />
                     </View>
                     <Divider />
