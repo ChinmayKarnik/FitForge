@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   instructionText: {
     fontSize: normalize(13),
     fontWeight: '400',
-    color: '#A9B1C2',
+    color: 'rgba(255,255,255,0.55)',
     textAlign: 'center',
     lineHeight: normalize(18),
     paddingHorizontal: normalizeWidth(8),
