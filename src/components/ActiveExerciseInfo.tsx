@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   currentExercisePill: {
     backgroundColor: 'transparent',
-    borderRadius: normalize(20),
+    borderRadius: normalize(10),
     borderWidth: normalizeF(3, 2),
     borderColor: 'rgba(255,255,255,0.1)',
     paddingHorizontal: normalizeWidth(12),
