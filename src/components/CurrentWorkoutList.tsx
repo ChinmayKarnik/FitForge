@@ -121,7 +121,7 @@ const CurrentWorkoutList = (
             {showHeaderDivider && <View style={{
                flex:1,
                 height:normalizeHeight(1),
-                backgroundColor:'rgba(255,255,255,0.15)' ,
+                backgroundColor:'rgba(255,255,255,0.3)' ,
                 marginTop: normalizeHeightF(7,2),
                 marginRight: normalizeWidth(8)
             }}/>}
