@@ -522,7 +522,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                     paddingBottom: isKeyboardVisible ? Math.max(keyboardHeight, normalizeHeight(280)) : 0,
                 }}
                 ListEmptyComponent={() => (
-                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(28), marginBottom: normalizeHeight(0) }}>
+                    <View style={{ alignItems: 'center', marginTop: normalizeHeight(16), marginBottom: normalizeHeight(0) }}>
                         <Image
                             source={notepad_with_plus}
                             style={{
