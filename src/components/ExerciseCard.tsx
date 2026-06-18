@@ -45,40 +45,37 @@ const ExerciseCard = ({ exercise }) => {
 
             <View style={{
                 flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
                 paddingVertical: normalizeHeight(16),
                 paddingLeft: normalizeWidth(14),
-                paddingRight: normalizeWidth(12),
+                paddingRight: normalizeWidth(32),
             }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={
-                        {
-                            fontSize: normalize(16),
-                            fontWeight: '600',
-                            color: 'white',
-                            letterSpacing: 0.2,
-                            marginBottom: normalizeHeight(6)
-                        }
-                    }>{name}</Text>
-                    {description && (
-                        <Text
-                            style={{
-                                fontSize:normalize(14),
-                                fontWeight: '400',
-                                color: 'rgba(255,255,255,0.6)',
-                            }}
-                        >{description}</Text>
-                    )}
-                </View>
+                <Text style={
+                    {
+                        fontSize: normalize(16),
+                        fontWeight: '600',
+                        color: 'white',
+                        letterSpacing: 0.2,
+                        marginBottom: normalizeHeight(6)
+                    }
+                }>{name}</Text>
+                {description && (
+                    <Text
+                        style={{
+                            fontSize:normalize(14),
+                            fontWeight: '400',
+                            color: 'rgba(255,255,255,0.6)',
+                        }}
+                    >{description}</Text>
+                )}
                 <Image
                     source={pencil_white}
                     style={{
-                        width: normalizeWidth(15),
-                        height: normalizeWidth(15) * (381.0 / 375.0),
+                        position: 'absolute',
+                        top: normalizeHeight(18),
+                        right: normalizeWidth(12),
+                        width: normalizeWidth(14),
+                        height: normalizeWidth(14) * (381.0 / 375.0),
                         aspectRatio: (375.0 / 381.0),
-                        marginLeft: normalizeWidth(12),
                         tintColor: 'rgba(255,255,255,0.5)'
                     }}
                 />
