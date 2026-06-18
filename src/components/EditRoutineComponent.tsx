@@ -543,7 +543,7 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                             No exercises added yet
                         </Text>
                         <Text style={{
-                            color: 'rgba(255,255,255,0.4)',
+                            color: 'rgba(255,255,255,0.65)',
                             fontSize: normalize(13),
                             fontWeight: '400',
                             textAlign: 'center',
