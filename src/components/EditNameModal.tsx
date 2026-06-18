@@ -90,8 +90,8 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                                 marginRight: normalizeWidth(8),
                                 backgroundColor: localValue.trim().length > 0 ? '#3d6fe0' : 'rgba(61, 111, 224, 0.2)',
                                 width: normalizeWidth(130),
-                                borderRadius: normalize(30),
-                                paddingVertical: normalizeHeight(6),
+                                borderRadius: normalize(10),
+                                paddingVertical: normalizeHeight(10),
                                 alignItems: 'center',
                                 marginBottom: normalizeHeight(8),
                             }}
