@@ -211,7 +211,7 @@ const RoutineDetailsScreen = (props) => {
                         if (typeof exercise.reps === 'number') {
                             setRepsText = `${exercise.sets}×${exercise.reps}`;
                         } else {
-                            setRepsText = `${exercise.sets} sets`;
+                            setRepsText = `${exercise.sets} ${exercise.sets === 1 ? 'set' : 'sets'}`;
                         }
                     }
                     let restText = '';
