@@ -220,7 +220,7 @@ export default function WorkoutDetailsScreen() {
           fontSize: normalize(14),
           fontWeight: '600',
           letterSpacing: 0.4,
-          marginTop: normalizeHeight(16),
+          marginTop: normalizeHeight(routineId ? 16 : 10),
           marginBottom: normalizeHeight(8),
         }}>
           Exercises
