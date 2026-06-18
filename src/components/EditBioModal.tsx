@@ -1,18 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const Divider = () => (
-    <View style={{ width: '100%', height: normalizeHeight(1), backgroundColor: '#3b4572' }} />
+    <View style={{ width: '100%', height: normalizeHeight(1), backgroundColor: 'rgba(68, 75, 95, 0.5)' }} />
 );
 
 const EditBioModal = ({ visible, value, onCancel, onSave }) => {
-    const inputRef = useRef(null);
+    const inputRef = useRef<TextInput>(null);
     const [localValue, setLocalValue] = React.useState(value);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (visible) setLocalValue(value);
     }, [visible]);
 
@@ -22,14 +22,15 @@ const EditBioModal = ({ visible, value, onCancel, onSave }) => {
             animationType="fade"
             transparent
             onRequestClose={onCancel}
+            onShow={() => { setTimeout(() => inputRef.current?.focus(), 100); }}
         >
             <View style={styles.overlay}>
                 <View style={styles.card}>
                     <Text style={{
                         fontSize: normalize(18),
-                        fontWeight: '500',
-                        letterSpacing: 0.7,
-                        color: '#b9bfd4',
+                        fontWeight: '600',
+                        letterSpacing: 0.5,
+                        color: '#f9f9f9',
                         marginVertical: normalizeHeight(12),
                     }}>Edit Bio</Text>
 
@@ -39,12 +40,12 @@ const EditBioModal = ({ visible, value, onCancel, onSave }) => {
                             ref={inputRef}
                             style={{
                                 borderWidth: normalize(1),
-                                borderColor: '#4472c4',
-                                borderRadius: 8,
+                                borderColor: 'rgba(255, 255, 255, 0.2)',
+                                borderRadius: normalize(12),
                                 padding: normalizeHeight(12),
                                 fontSize: normalize(15),
-                                color: '#c1c1d0',
-                                backgroundColor: '#23253A',
+                                color: '#e8ecf6',
+                                backgroundColor: '#1a2240',
                                 marginVertical: normalizeHeight(10),
                                 marginHorizontal: normalizeWidth(16),
                                 minHeight: normalizeHeight(80),
@@ -53,10 +54,9 @@ const EditBioModal = ({ visible, value, onCancel, onSave }) => {
                             value={localValue}
                             onChangeText={setLocalValue}
                             placeholder="Enter your bio"
-                            placeholderTextColor="#a5a7c1"
+                            placeholderTextColor="rgba(255,255,255,0.35)"
                             returnKeyType="default"
                             multiline
-                            autoFocus
                         />
                     </View>
                     <Divider />
@@ -65,11 +65,11 @@ const EditBioModal = ({ visible, value, onCancel, onSave }) => {
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.saveButton, localValue.trim().length === 0 && { backgroundColor: '#1e2545' }]}
+                            style={[styles.saveButton, localValue.trim().length === 0 && { backgroundColor: 'rgba(61, 111, 224, 0.2)' }]}
                             disabled={localValue.trim().length === 0}
                             onPress={() => onSave(localValue)}
                         >
-                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: '#555a7a' }]}>Save</Text>
+                            <Text style={[styles.saveText, localValue.trim().length === 0 && { color: 'rgba(255,255,255,0.3)' }]}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -83,18 +83,20 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
-        backgroundColor: 'rgba(0,0,0,0.32)',
+        backgroundColor: 'rgba(0,0,0,0.6)',
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingTop: SCREEN_HEIGHT * 0.25,
     },
     card: {
-        width: '90%',
-        backgroundColor: '#232d5a',
-        borderRadius: normalize(18),
-        borderWidth: normalize(1),
-        borderColor: '#2f3961',
+        width: '88%',
+        backgroundColor: '#243250',
+        borderRadius: normalize(20),
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
         elevation: 5,
     },
     buttonRow: {
@@ -112,16 +114,16 @@ const styles = StyleSheet.create({
         marginBottom: normalizeHeight(8),
     },
     cancelText: {
-        color: '#a5a7c1',
+        color: 'rgba(255,255,255,0.9)',
         fontSize: normalize(16),
         fontWeight: '500',
     },
     saveButton: {
         marginRight: normalizeWidth(8),
-        backgroundColor: '#2752b2',
-        width: normalizeWidth(130),
-        borderRadius: normalize(30),
-        paddingVertical: normalizeHeight(6),
+        backgroundColor: '#3d6fe0',
+        width: normalizeWidth(118),
+        borderRadius: normalize(10),
+        paddingVertical: normalizeHeight(10),
         alignItems: 'center',
         marginBottom: normalizeHeight(8),
     },
