@@ -23,7 +23,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
             setLocalValue(value);
             setTimeout(() => {
                 inputRef.current?.focus();
-            }, 100);
+            }, 300);
         }
     }, [visible]);
 
@@ -61,7 +61,7 @@ const EditNameModal = ({ visible, value, onCancel, onSave }) => {
                             style={
                                 {
                                     borderWidth: normalize(1),
-                                    borderColor: 'rgba(100, 120, 180, 0.55)',
+                                    borderColor: 'rgba(255, 255, 255, 0.2)',
                                     borderRadius: normalize(12),
                                     padding: normalizeHeight(12),
                                     fontSize: normalize(16),
