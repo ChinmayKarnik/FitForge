@@ -561,8 +561,18 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                             alignItems: 'center',
                         }}>
                             <TouchableOpacity
-                                style={{
-                                    width: isEmpty ? '60%' : '100%',
+                                style={isEmpty ? {
+                                    backgroundColor: '#31467b',
+                                    borderWidth: normalize(1),
+                                    borderColor: 'gray',
+                                    borderRadius: normalize(8),
+                                    paddingVertical: normalizeHeight(11),
+                                    paddingHorizontal: normalizeWidth(24),
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                } : {
+                                    width: '100%',
                                     borderWidth: normalize(1),
                                     borderColor: '#7f8ec7',
                                     backgroundColor: 'transparent',
@@ -574,18 +584,18 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
                                 }}
                                 onPress={onAddExercise}
                             >
-                                <Image
+                                {!isEmpty && <Image
                                     source={white_plus}
                                     style={{
                                         height: normalizeHeight(10),
                                         width: (112.0 / 115.0) * normalize(10),
                                         aspectRatio: (115.0 / 112.0),
                                         marginRight: normalizeWidth(6),
-                                        tintColor: '#7f8ec7'
+                                        tintColor: '#7f8ec7',
                                     }}
-                                />
+                                />}
                                 <Text style={{
-                                    color: '#7f8ec7',
+                                    color: isEmpty ? '#ffffff' : '#7f8ec7',
                                     fontSize: normalize(14),
                                     fontWeight: '600'
                                 }}>Add Exercise</Text>
