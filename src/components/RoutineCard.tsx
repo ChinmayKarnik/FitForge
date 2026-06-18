@@ -29,7 +29,7 @@ const RoutineCard = ({ routine }) => {
         if (typeof exercise.rest === 'number') {
             return `${exercise.rest}s`;
         }
-        return '';
+        return '-  ';
     };
 
     return (
