@@ -263,17 +263,19 @@ const RoutineDetailsScreen = (props) => {
                                         }}
                                     />
                                     <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{setRepsText}</Text>
-                                    <Dot />
-                                    <Image
-                                        source={clock}
-                                        style={{
-                                            width: normalizeWidth(12),
-                                            height: normalizeWidth(12) * (448.0 / 453.0),
-                                            tintColor: 'rgba(255,255,255,0.58)',
-                                            marginRight: normalizeWidth(4),
-                                        }}
-                                    />
-                                    <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>
+                                    {!!restText && <>
+                                        <Dot />
+                                        <Image
+                                            source={clock}
+                                            style={{
+                                                width: normalizeWidth(12),
+                                                height: normalizeWidth(12) * (448.0 / 453.0),
+                                                tintColor: 'rgba(255,255,255,0.58)',
+                                                marginRight: normalizeWidth(4),
+                                            }}
+                                        />
+                                        <Text style={{ color: 'rgba(255,255,255,0.58)', fontSize: normalize(12) }}>{restText}</Text>
+                                    </>}
                                     <Dot />
                                     <Image
                                         source={stopwatch}
