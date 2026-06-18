@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
-import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeHeight, normalizeHeightF, normalizeWidth } from '../utils/normalize';
 import no_workout_image from '../images/notepad-with-dumbell.png'
 import ExerciseSummaryCard from './ExerciseSummaryCard';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
@@ -112,7 +112,7 @@ const CurrentWorkoutList = (
             }}>
             <Text
             style={{
-                color:'#807e97',
+                color:'rgba(255,255,255,0.7)',
                 fontWeight:'500',
                 fontSize: normalize(14),
                 marginRight:normalizeWidth(7)
@@ -121,7 +121,9 @@ const CurrentWorkoutList = (
             {showHeaderDivider && <View style={{
                flex:1,
                 height:normalizeHeight(1),
-                backgroundColor:'#464668'
+                backgroundColor:'rgba(255,255,255,0.15)' ,
+                marginTop: normalizeHeightF(7,2),
+                marginRight: normalizeWidth(8)
             }}/>}
             </View>
             )}
