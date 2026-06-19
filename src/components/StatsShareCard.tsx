@@ -5,6 +5,15 @@ import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { TimeRange } from '../enums/enums';
 import ProfileImageCircular from './ProfileImageCircular';
 import fitforgeIcon from '../images/fitforge-icon.png';
+
+const renderBioWithEmojis = (bio: string) => {
+  const parts = bio.split(/(\p{Extended_Pictographic})/gu);
+  return parts.map((part, i) =>
+    /\p{Extended_Pictographic}/u.test(part)
+      ? <Text key={i} style={{ color: '#ffffff' }}>{part}</Text>
+      : part
+  );
+};
 import flame_3 from '../images/flame-3.png';
 import calendar from '../images/calendar.png';
 import dumbbell_2 from '../images/dumbbell-2.png';
@@ -48,7 +57,7 @@ export const StatsShareCard = React.forwardRef<View, Props>(({
       <View style={{ flex: 1, marginLeft: normalizeWidth(10) }}>
         <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '600' }}>{userName}</Text>
         {!!userInfo?.bio && (
-          <Text numberOfLines={2} style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(2), lineHeight: normalize(16) }}>{userInfo.bio}</Text>
+          <Text numberOfLines={2} style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(3), lineHeight: normalize(16) }}>{renderBioWithEmojis(userInfo.bio)}</Text>
         )}
       </View>
       <Image source={fitforgeIcon} style={{ width: normalize(28), height: normalize(28), borderRadius: normalize(6), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }} />
