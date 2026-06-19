@@ -79,7 +79,7 @@ const StayButton = ({ onPress }) => {
 
 const ExitAppModal = ({ visible, onClose }) => {
 
-  const descText = "Are you sure you want to quit?"
+  const descText = "Are you sure you want to exit?"
   const mainImageWidth = normalize(46);
   const mainImageAspectRatio = (455.0 / 607.0);
   const mainImageHeight = mainImageWidth / mainImageAspectRatio;
