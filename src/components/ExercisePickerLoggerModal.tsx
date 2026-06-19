@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Modal, KeyboardAvoidingView, Keyboard, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Modal, Dimensions } from 'react-native';
 import { normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import SelectExerciseModalContent from './SelectExerciseModalContent';
@@ -19,14 +19,6 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
     const isSelectionPending = !selectedData.exerciseId;
     const showNumberOfSetsInput = !!selectedData.exerciseId && !selectedData.data?.sets;
     const showSetsInput = !isSelectionPending && !showNumberOfSetsInput;
-
-	const [keyboardVisible, setKeyboardVisible] = useState(false);
-
-	useEffect(() => {
-		const show = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-		const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
-		return () => { show.remove(); hide.remove(); };
-	}, []);
 
     const onSelectExercise = (exercise)=>{
         setSelectedData({exerciseId: exercise.id, data: {}});
@@ -73,14 +65,11 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 			animationType="slide"
 			onRequestClose={onClose}
 		>
-			<KeyboardAvoidingView
-				style={[
-					styles.modalOverlay,
-					keyboardVisible && styles.modalOverlayKeyboardOpen,
-				]}
-				behavior="padding"
-			>
-				<View style={[styles.modalContent, !showSetsInput && styles.modalContentFixed]}>
+			<View style={styles.modalOverlay}>
+				<View style={[styles.modalContent,
+				 !showSetsInput && styles.modalContentFixed,
+                 !!showSetsInput && {backgroundColor:'#283050'}
+				]}>
 
                     {
                         !!showNumberOfSetsInput && (
@@ -102,7 +91,7 @@ export const ExercisePickerLoggerModal = ({ visible, onClose,
 						)
 					}
 				</View>
-			</KeyboardAvoidingView>
+			</View>
 		</Modal>
 	);
 };
@@ -111,11 +100,8 @@ const styles = StyleSheet.create({
 	modalOverlay: {
 		flex: 1,
 		backgroundColor: 'rgba(0, 0, 0, 0.35)',
-		justifyContent: 'center',
-	},
-	modalOverlayKeyboardOpen: {
 		justifyContent: 'flex-start',
-		paddingTop: normalize(24),
+		paddingTop: screenHeight * 0.13,
 	},
 	fixedOverlay: {
 		position: 'absolute',

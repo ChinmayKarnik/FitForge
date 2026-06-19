@@ -114,7 +114,6 @@ const ExerciseFormMultiset = ({
                 )}
             </View>
 
-            <View style={{ height: 1, backgroundColor: '#4a5878', marginBottom: normalizeHeight(10) }} />
 
             <View>
                 {

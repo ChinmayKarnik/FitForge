@@ -8,8 +8,8 @@ import TimeSelectionModal from './TimeSelectionModal';
 import { normalizeHeight, normalizeWidth, normalize, normalizeF } from '../utils/normalize';
 import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
-import calendar_3 from '../images/calendar-3.png';
-import clock_2 from '../images/clock-2.png';
+import calendar from '../images/calendar.png';
+import clock_thick_white from '../images/clock-thick-white.png';
 import Svg, { Defs, LinearGradient, Stop, Rect, Path, Circle } from 'react-native-svg';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
@@ -255,8 +255,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                             }}
                         >
                             <Image
-                                source={calendar_3}
-                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (506.0 / 569.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                                source={calendar}
+                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (410.0 / 420.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                                 resizeMode="contain"
                             />
                             <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
@@ -279,8 +279,8 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                             }}
                         >
                             <Image
-                                source={clock_2}
-                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (542.0 / 533.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                                source={clock_thick_white}
+                                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (453.0 / 448.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                                 resizeMode="contain"
                             />
                             <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
