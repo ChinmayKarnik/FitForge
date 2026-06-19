@@ -14,7 +14,6 @@ const parseText = (t: string): number => {
   return (parseInt(mPart) || 0) * 60 + (parseInt(sPart) || 0);
 };
 
-// Valid while typing: 1-2 minute digits, colon, 0-2 second digits; seconds ≤ 59 if both filled
 const isValidPartial = (t: string): boolean => {
   if (!/^\d{0,2}:\d{0,2}$/.test(t)) return false;
   const secPart = t.split(':')[1];
@@ -31,7 +30,6 @@ const TimeSelection = ({ value, setValue }: { value: number; setValue: (v: numbe
       setText(newText);
       setValue(parseText(newText));
     }
-    // else: silently reject — text stays, cursor stays where it is
   };
 
   const handleBlur = () => {
@@ -43,7 +41,9 @@ const TimeSelection = ({ value, setValue }: { value: number; setValue: (v: numbe
 
   return (
     <View style={styles.container}>
-      <Image source={clock_icon} style={styles.icon} />
+      <View style={styles.iconContainer}>
+        <Image source={clock_icon} style={styles.icon} />
+      </View>
       <TextInput
         style={styles.valueText}
         value={text}
@@ -51,8 +51,8 @@ const TimeSelection = ({ value, setValue }: { value: number; setValue: (v: numbe
         onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
         keyboardType="number-pad"
-        placeholder="00:00"
-        placeholderTextColor="#F2F4F8"
+        placeholder="0:00"
+        placeholderTextColor="rgba(255,255,255,0.3)"
         selectionColor="#F2F4F8"
         textAlign="center"
         caretHidden={!isFocused}
@@ -64,29 +64,36 @@ const TimeSelection = ({ value, setValue }: { value: number; setValue: (v: numbe
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
     borderWidth: normalize(1),
-    borderColor: '#7A8CB3',
+    borderColor: '#3d4563',
     borderRadius: normalize(10),
     overflow: 'hidden',
-    backgroundColor: '#21203f',
-    paddingLeft: normalizeWidth(4),
+    backgroundColor: '#1a2138',
+    minHeight: normalizeHeight(44),
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1a2138',
+    paddingHorizontal: normalizeWidth(10),
+    borderRightWidth: normalize(1),
+    borderRightColor: '#3d4563',
   },
   icon: {
-    width: normalize(16),
-    height: normalize(16) * (448.0 / 453.0),
-    opacity: 0.88,
+    width: normalize(15),
+    height: normalize(15) * (448.0 / 453.0),
+    opacity: 0.45,
   },
   valueText: {
-    color: 'white',
-    fontSize: normalizeHeight(22),
+    color: '#F2F4F8',
+    fontSize: normalize(20),
     fontWeight: '600',
     letterSpacing: 0.5,
-    paddingVertical: normalize(8),
-    paddingLeft: normalize(6),
-    paddingRight: normalize(14),
+    paddingVertical: normalize(7),
+    paddingHorizontal: normalize(13),
     margin: 0,
     includeFontPadding: false,
+    backgroundColor: '#161d30',
   },
 });
 

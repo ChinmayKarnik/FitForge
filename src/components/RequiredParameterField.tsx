@@ -52,9 +52,9 @@ const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateP
         <Text
           style={{
             fontSize: normalize(12),
-            fontWeight: '600',
+            fontWeight: '400',
             letterSpacing: 1,
-            color: 'rgba(255,255,255,0.58)',
+            color: 'rgba(255,255,255,0.62)',
             textTransform: 'uppercase',
           }}
         >
