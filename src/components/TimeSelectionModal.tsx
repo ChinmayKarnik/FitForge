@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-native';
+import { Modal, View, StyleSheet, TouchableOpacity, Text, TextInput, Dimensions } from 'react-native';
 import { normalize, normalizeWidth, normalizeHeight } from '../utils/normalize';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 interface TimeSelectionModalProps {
   visible: boolean;
@@ -63,8 +65,7 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
           onPress={onClose}
           activeOpacity={1}
         />
-        <View style={styles.centeredContent} pointerEvents="box-none">
-          <View style={styles.container}>
+        <View style={styles.container} pointerEvents="box-none">
 
             {/* Title */}
             <Text style={styles.title}>Enter time</Text>
@@ -137,7 +138,6 @@ const TimeSelectionModal: React.FC<TimeSelectionModalProps> = ({ visible, onClos
               </TouchableOpacity>
             </View>
 
-          </View>
         </View>
       </View>
     </Modal>
@@ -148,18 +148,9 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  centeredContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    paddingTop: SCREEN_HEIGHT * 0.24,
   },
   container: {
     backgroundColor: '#1c2238',

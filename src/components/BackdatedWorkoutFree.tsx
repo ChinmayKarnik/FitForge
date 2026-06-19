@@ -8,8 +8,9 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import CurrentWorkoutList from './CurrentWorkoutList';
 import white_plus from '../images/white-plus.png'
 import white_donut from '../images/white-donut.png'
-import calendar_3 from '../images/calendar-3.png'
-import clock_2 from '../images/clock-2.png'
+import calendar from '../images/calendar.png'
+import clock_thick_white from '../images/clock-thick-white.png'
+import notepad_with_dumbell from '../images/notepad-with-dumbell.png'
 import ExercisePickerLoggerModal from './ExercisePickerLoggerModal';
 import DateSelectionModal from './DateSelectionModal.tsx';
 import TimeSelectionModal from './TimeSelectionModal';
@@ -23,6 +24,7 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
   const [showEndModal, setShowEndModal] = useState(false);
   const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [isListAtBottom, setIsListAtBottom] = useState(false);
+  const [exerciseCount, setExerciseCount] = useState(0);
 
   const handleListScroll = (event: any) => {
     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -149,8 +151,9 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
           setExercise.loggedData = loggedData[i];
           workoutRef.current.exercises.push(setExercise);
         }
-        workoutRef.current.endTime =  firstSetStartTime + numberOfSets*(defaultSetTime) + 
+        workoutRef.current.endTime =  firstSetStartTime + numberOfSets*(defaultSetTime) +
         numberOfSets*(restTimeBetweenSets);
+        setExerciseCount(prev => prev + 1);
     }
 
 
@@ -229,8 +232,8 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
               }}
             >
               <Image
-                source={calendar_3}
-                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (506.0 / 569.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                source={calendar}
+                style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (410.0 / 420.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                 resizeMode="contain"
               />
               <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
@@ -255,8 +258,8 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
-                  source={clock_2}
-                  style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (542.0 / 533.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
+                  source={clock_thick_white}
+                  style={{ height: normalizeHeight(17), width: normalizeHeight(17) * (453.0 / 448.0), tintColor: '#C5CADE', marginRight: normalizeWidth(7) }}
                   resizeMode="contain"
                 />
                 <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
@@ -269,21 +272,35 @@ export const BackdatedWorkoutFree = ({ onEnd, onBackPress, navigation }: { onEnd
         </View>
 
 
-        {/* Render the current workout list */}
+        {/* Empty state or exercise list */}
         <View style={{ position: 'relative', flex: 1 }}>
-          <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} onScroll={handleListScroll} />
-          {!isListAtBottom && (
-            <View style={styles.listBottomFade} pointerEvents="none">
-              <Svg height="100%" width="100%">
-                <Defs>
-                  <LinearGradient id="backdatedListFade" x1="0" y1="0" x2="0" y2="1">
-                    <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
-                    <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
-                  </LinearGradient>
-                </Defs>
-                <Rect width="100%" height="100%" fill="url(#backdatedListFade)" />
-              </Svg>
+          {exerciseCount === 0 ? (
+            <View style={styles.emptyState}>
+              <Image source={notepad_with_dumbell} style={styles.emptyStateIcon} resizeMode="contain" />
+              <Text style={styles.emptyStateTitle}>No exercises yet</Text>
+              <Text style={styles.emptyStateSubtitle}>
+                {'Tap '}
+                <Text style={{ color: '#7fb3ff' }}>"Add Exercise"</Text>
+                {' below to\nstart logging your workout'}
+              </Text>
             </View>
+          ) : (
+            <>
+              <CurrentWorkoutList workout={workoutRef.current} emptyStateText='Tap "Add Exercise" to log your first set' horizontalPadding={false} onScroll={handleListScroll} />
+              {!isListAtBottom && (
+                <View style={styles.listBottomFade} pointerEvents="none">
+                  <Svg height="100%" width="100%">
+                    <Defs>
+                      <LinearGradient id="backdatedListFade" x1="0" y1="0" x2="0" y2="1">
+                        <Stop offset="0" stopColor="#1c2238" stopOpacity="0" />
+                        <Stop offset="1" stopColor="#1c2238" stopOpacity="1" />
+                      </LinearGradient>
+                    </Defs>
+                    <Rect width="100%" height="100%" fill="url(#backdatedListFade)" />
+                  </Svg>
+                </View>
+              )}
+            </>
           )}
         </View>
 
@@ -404,6 +421,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#A9B1C2',
     marginBottom: 2,
+  },
+  emptyState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: normalizeHeight(20),
+  },
+  emptyStateIcon: {
+    width: normalizeWidth(110),
+    height: normalizeWidth(110) * (364.0 / 394.0),
+    marginBottom: normalizeHeight(20),
+  },
+  emptyStateTitle: {
+    fontSize: normalize(20),
+    fontWeight: '700',
+    color: '#ffffff',
+    marginBottom: normalizeHeight(8),
+  },
+  emptyStateSubtitle: {
+    fontSize: normalize(14),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.62)',
+    textAlign: 'center',
+    lineHeight: normalize(19),
+    paddingHorizontal: normalizeWidth(32),
   },
   listBottomFade: {
     position: 'absolute',

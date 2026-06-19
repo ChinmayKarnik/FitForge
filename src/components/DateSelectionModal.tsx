@@ -206,8 +206,8 @@ const styles = StyleSheet.create({
     fontSize: normalize(20),
     fontWeight: '600',
     color: '#FFFFFF',
-    marginTop: normalizeHeight(16),
-    marginBottom: normalizeHeight(16),
+    marginTop: normalizeHeight(24),
+    marginBottom: normalizeHeight(20),
     marginLeft: normalizeWidth(16),
   },
   separator: {
@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
     borderRadius: Math.max(normalizeWidth(38), normalizeHeight(38)) / 2,
     width: normalizeWidth(38),
     height: normalizeHeight(38),
+    marginHorizontal: normalizeWidth(1),
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
