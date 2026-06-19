@@ -42,9 +42,10 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 				alignItems: 'center',
 				borderRadius: normalize(8),
 				overflow: 'hidden',
-				backgroundColor: '#232441',
+				backgroundColor: '#1a2138',
 				borderWidth: normalize(1),
-				borderColor: '#5a5a74',
+				borderColor: '#3d4563',
+				minHeight: normalizeHeight(52),
 			}}
 		>
 			<TouchableOpacity
@@ -57,8 +58,8 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 			style={{
 			  borderTopLeftRadius: normalize(8),
 			  borderBottomLeftRadius: normalize(8),
+			  backgroundColor: '#1a2138',
               paddingHorizontal:normalizeWidth(12),
-			  borderRightColor: '#35365C',
 			  justifyContent: 'center',
 			  alignItems: 'center',
 			}}
@@ -69,15 +70,15 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 			</TouchableOpacity>
 			<View
 			style={{
-			  backgroundColor: '#15162c',
+			  backgroundColor: '#161d30',
 			}}
 			>
 				<TextInput
-					style={{ color: '#F2F4F8', fontSize: normalize(20), fontWeight: '600',
+					style={{ color: '#F2F4F8', fontSize: normalize(28), fontWeight: '700',
 
-						paddingVertical:normalize(8),
-						paddingHorizontal: normalizeWidth(10),
-						lineHeight:normalize(18),
+						paddingVertical:normalize(10),
+						paddingHorizontal: normalizeWidth(14),
+						lineHeight:normalize(28),
 						 textAlign: 'center',
 					}}
 					onChange={(event)=>{
@@ -92,18 +93,14 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 					placeholderTextColor="#F2F4F8"
 					selectionColor="#F2F4F8"
 				/>
-				{/* <Text style={{ color: '#F2F4F8', fontSize: normalize(20), fontWeight: '600', paddingHorizontal: normalizeWidth(14),
-                    paddingVertical: normalizeHeight(2)
-                 }}>{value}</Text> */}
 			</View>
 			<TouchableOpacity
 				onPress={() => setValue(value + 1)}
 			style={{
-			  backgroundColor: '#232441',
+			  backgroundColor: '#1a2138',
 			  borderTopRightRadius: normalize(8),
 			  borderBottomRightRadius: normalize(8),
               paddingHorizontal:normalizeWidth(12),
-			  borderLeftColor: '#35365C',
 			  justifyContent: 'center',
 			  alignItems: 'center',
 			}}

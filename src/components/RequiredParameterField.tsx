@@ -46,16 +46,16 @@ const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateP
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginVertical: 10,
+          paddingVertical: normalizeHeight(12),
         }}
       >
         <Text
           style={{
-            fontSize: normalize(16),
-            fontWeight: '400',
-            lineHeight: normalize(18),
-            letterSpacing: normalize(0.2),
-            color: '#eeeef3',
+            fontSize: normalize(12),
+            fontWeight: '600',
+            letterSpacing: 1,
+            color: 'rgba(255,255,255,0.58)',
+            textTransform: 'uppercase',
           }}
         >
           {parameter.name}
@@ -66,8 +66,8 @@ const RequiredParameterField = ({ parameter, showBottomSeparator = true, updateP
         <View
           style={{
             width: '100%',
-            height: normalizeHeight(1.4),
-            backgroundColor: '#545671',
+            height: normalizeHeight(1),
+            backgroundColor: 'rgba(255,255,255,0.1)',
           }}
         />
       )}

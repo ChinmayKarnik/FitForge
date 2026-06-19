@@ -1,39 +1,35 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import { normalize, normalizeWidth } from '../utils/normalize';
+import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 
 const YesNoSelection = ({ value, onChange }) => {
   return (
-    <View style={{ flexDirection: 'row', borderRadius: normalize(8), overflow: 'hidden', backgroundColor: '#232441', borderWidth: normalize(1), borderColor: '#5a5a74' }}>
+    <View style={{ flexDirection: 'row', borderRadius: normalize(8), overflow: 'hidden', backgroundColor: '#1a2138', borderWidth: normalize(1), borderColor: '#3d4563', minHeight: normalizeHeight(52) }}>
       <TouchableOpacity
         onPress={() => onChange(true)}
         style={{
-          backgroundColor: value === true ? '#3e4c84' : '#13142a',
-          paddingVertical: normalize(5),
-          paddingHorizontal: normalize(17),
-          borderTopLeftRadius: normalize(7),
-          borderBottomLeftRadius: normalize(7),
+          alignSelf: 'stretch',
+          backgroundColor: value === true ? '#2f4880' : '#1a2138',
+          paddingHorizontal: normalize(24),
           borderRightWidth: normalizeWidth(1),
-          borderRightColor: '#5a5a74',
+          borderRightColor: '#3d4563',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <Text style={{ color: value === true ? '#F2F4F8' : '#A9B1C2', fontWeight: '600', fontSize: normalize(15) }}>Yes</Text>
+        <Text style={{ color: value === true ? '#F2F4F8' : 'rgba(255,255,255,0.38)', fontWeight: '600', fontSize: normalize(17) }}>Yes</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => onChange(false)}
         style={{
-          backgroundColor: value === false ? '#3e4c84' : '#13142a',
-          paddingVertical: normalize(4),
-          paddingHorizontal: normalize(17),
-          borderTopRightRadius: normalize(8),
-          borderBottomRightRadius: normalize(8),
+          alignSelf: 'stretch',
+          backgroundColor: value === false ? '#2f4880' : '#1a2138',
+          paddingHorizontal: normalize(24),
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <Text style={{ color: value === false ? '#F2F4F8' : '#A9B1C2', fontWeight: '600', fontSize: normalize(15) }}>No</Text>
+        <Text style={{ color: value === false ? '#F2F4F8' : 'rgba(255,255,255,0.38)', fontWeight: '600', fontSize: normalize(17) }}>No</Text>
       </TouchableOpacity>
     </View>
   );

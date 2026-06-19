@@ -50,40 +50,40 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderWidth: normalize(1),
-    borderColor: '#7A8CB3',
+    borderColor: '#3d4563',
     borderRadius: normalize(10),
     overflow: 'hidden',
-    backgroundColor: '#22274c',
+    backgroundColor: '#1a2138',
     alignItems: 'center',
-    minHeight:normalizeHeight(40)
+    minHeight:normalizeHeight(52)
   },
   valueContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#21203f',
+    backgroundColor: '#161d30',
     borderRightWidth: normalize(1),
-    borderRightColor: '#323863',
+    borderRightColor: '#3d4563',
   },
   valueText: {
     color: 'white',
-    fontSize: normalizeHeight(20),
-    fontWeight: '600',
+    fontSize: normalize(28),
+    fontWeight: '700',
     letterSpacing: 0.5,
-    paddingVertical: normalize(8),
-    paddingHorizontal: normalize(10),
+    paddingVertical: normalize(10),
+    paddingHorizontal: normalize(14),
     margin: 0,
     includeFontPadding: false,
   },
   unitContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#22264c',
+    backgroundColor: '#1a2138',
     paddingVertical:normalizeHeight(5),
-    paddingHorizontal:normalizeWidth(5)
+    paddingHorizontal:normalizeWidth(8)
   },
   unitText: {
-    color: '#d7d7e1',
-    fontSize: normalize(15),
+    color: 'rgba(255,255,255,0.45)',
+    fontSize: normalize(13),
     fontWeight: '500',
     letterSpacing: 0.5,
   },
