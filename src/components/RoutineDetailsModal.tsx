@@ -89,8 +89,6 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
             paddingHorizontal: normalizeWidth(16),
             paddingTop: normalizeHeight(14),
             paddingBottom: normalizeHeight(8),
-            borderBottomWidth: normalize(1),
-            borderBottomColor: 'rgba(255,255,255,0.08)',
           }}>
             <Text style={{ fontSize: normalize(17), fontWeight: '700', color: '#fefefe', letterSpacing: 0.5 }}>
               Routine Details
@@ -110,7 +108,6 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
           >
             {/* Hero Card */}
             <View style={{
-              flexDirection: 'row',
               marginHorizontal: normalizeWidth(16),
               marginTop: normalizeHeight(8),
               borderRadius: normalize(12),
@@ -119,8 +116,7 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
               borderColor: '#3d4563',
               overflow: 'hidden',
             }}>
-              <View style={{ width: normalizeWidth(6), backgroundColor: ACCENT }} />
-              <View style={{ flex: 1, paddingHorizontal: normalizeWidth(14), paddingVertical: normalizeHeight(14) }}>
+              <View style={{ paddingLeft: normalizeWidth(20), paddingRight: normalizeWidth(14), paddingVertical: normalizeHeight(14) }}>
                 <Text style={{ fontSize: normalize(20), fontWeight: '700', color: '#ffffff' }}>
                   {routine.name}
                 </Text>
@@ -183,7 +179,7 @@ const RoutineDetailsModal = ({ visible, onClose, routine }: RoutineDetailsModalP
                 <View key={exercise.id ?? idx} style={{
                   flexDirection: 'row',
                   marginHorizontal: normalizeWidth(16),
-                  marginTop: normalizeHeight(idx === 0 ? 12 : 10),
+                  marginTop: normalizeHeight(idx === 0 ? 20 : 10),
                   borderRadius: normalize(12),
                   backgroundColor: '#252d47',
                   borderWidth: normalize(1),
