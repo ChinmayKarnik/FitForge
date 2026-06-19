@@ -32,9 +32,10 @@ type RootStackParamList = {
 type MonthCalendarGridProps = {
   selectedDate: Date;
   onPressCell?: (dateNumber: number | null, hasWorkout: boolean) => void;
+  cellHeight?: number;
 };
 
-const MonthCalendarGrid = ({ selectedDate, onPressCell }: MonthCalendarGridProps) => {
+const MonthCalendarGrid = ({ selectedDate, onPressCell, cellHeight = normalizeHeight(50) }: MonthCalendarGridProps) => {
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
   const firstDay = new Date(year, month, 1).getDay();
@@ -108,7 +109,7 @@ const MonthCalendarGrid = ({ selectedDate, onPressCell }: MonthCalendarGridProps
                     onPress={() => onPressCell?.(dateNumber, hasWorkout)}
                     style={[{
                       flex: 1,
-                      height: normalizeHeight(50),
+                      height: cellHeight,
                       borderWidth: normalize(1),
                       borderColor: '#30374c',
                     },
@@ -149,6 +150,15 @@ const MonthCalendarGrid = ({ selectedDate, onPressCell }: MonthCalendarGridProps
         })}
       </View>
     </View>
+  );
+};
+
+const renderBioWithEmojis = (bio: string) => {
+  const parts = bio.split(/(\p{Extended_Pictographic})/gu);
+  return parts.map((part, i) =>
+    /\p{Extended_Pictographic}/u.test(part)
+      ? <Text key={i} style={{ color: '#ffffff' }}>{part}</Text>
+      : part
   );
 };
 
@@ -218,10 +228,11 @@ export const CalendarScreen = () => {
           crop={profilePhotoCrop}
         />
         <View style={{ flex: 1, marginLeft: normalizeWidth(10), justifyContent: 'center' }}>
-          <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '600' }}>{userName}</Text>
+          <Text style={{ color: '#ffffff', fontSize: normalize(14), fontWeight: '600',
+           }}>{userName}</Text>
           {!!userInfo?.bio && (
-            <Text numberOfLines={2} ellipsizeMode="tail" style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(2), lineHeight: normalize(16) }}>
-              {userInfo.bio}
+            <Text numberOfLines={2} ellipsizeMode="tail" style={{ color: 'rgba(255,255,255,0.6)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(3), lineHeight: normalize(16) }}>
+              {renderBioWithEmojis(userInfo.bio)}
             </Text>
           )}
         </View>
@@ -233,20 +244,20 @@ export const CalendarScreen = () => {
 
       {/* Stats: same style as calendar screen stat cards, scaled down */}
       <View style={{ flexDirection: 'row', marginBottom: normalizeHeight(14) }}>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginRight: normalizeWidth(4) }}>
-          <Image source={flame} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (506.0 / 656.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
-          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Max Streak</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'Day' : 'Days'}</Text>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), paddingHorizontal: normalizeWidth(4), alignItems: 'center', justifyContent: 'center', marginRight: normalizeWidth(4) }}>
+          <Image source={flame} style={{ height: normalizeHeight(27), width: normalizeHeight(27) * (506.0 / 656.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
+          <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: normalize(13), fontWeight: '600', color: '#fb7028', textAlign: 'center' }}>{maxStreakThisMonth} {maxStreakThisMonth === 1 ? 'day' : 'days'}</Text>
+          <Text style={{ fontSize: normalize(10), color: '#b8c2d4', fontWeight: '500', letterSpacing: 0.8, marginTop: normalizeHeight(6), textAlign: 'center' }}>MAX STREAK</Text>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginHorizontal: normalizeWidth(4) }}>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), paddingHorizontal: normalizeWidth(4), alignItems: 'center', justifyContent: 'center', marginHorizontal: normalizeWidth(4) }}>
           <Image source={calendar2} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (337.0 / 365.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
-          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>This Month</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{workoutCountThisMonth} {workoutCountThisMonth === 1 ? 'Workout' : 'Workouts'}</Text>
+          <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: normalize(13), fontWeight: '600', color: '#fefefe', textAlign: 'center' }}>{workoutCountThisMonth} {workoutCountThisMonth === 1 ? 'workout' : 'workouts'}</Text>
+          <Text style={{ fontSize: normalize(10), color: '#b8c2d4', fontWeight: '500', letterSpacing: 0.8, marginTop: normalizeHeight(6), textAlign: 'center' }}>THIS MONTH</Text>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), alignItems: 'center', justifyContent: 'center', marginLeft: normalizeWidth(4) }}>
+        <View style={{ flex: 1, backgroundColor: '#252c49', borderRadius: normalize(10), borderWidth: 1, borderColor: '#353c58', paddingVertical: normalizeHeight(12), paddingHorizontal: normalizeWidth(4), alignItems: 'center', justifyContent: 'center', marginLeft: normalizeWidth(4) }}>
           <Image source={clock4} style={{ height: normalizeHeight(24), width: normalizeHeight(24) * (300.0 / 348.0), resizeMode: 'contain', marginBottom: normalizeHeight(6) }} />
-          <Text style={{ color: 'rgba(254,254,254,0.7)', fontSize: normalize(10), fontWeight: '400', marginBottom: normalizeHeight(4), textAlign: 'center' }}>Avg Duration</Text>
-          <Text style={{ fontSize: normalize(14), fontWeight: '500', color: '#fefefe', textAlign: 'center' }}>{avgDurationThisMonthMins} Min</Text>
+          <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: normalize(13), fontWeight: '600', color: '#fefefe', textAlign: 'center' }}>{avgDurationThisMonthMins} min</Text>
+          <Text style={{ fontSize: normalize(10), color: '#b8c2d4', fontWeight: '500', letterSpacing: 0.8, marginTop: normalizeHeight(6), textAlign: 'center' }}>AVG DURATION</Text>
         </View>
       </View>
 
@@ -254,7 +265,7 @@ export const CalendarScreen = () => {
       <View style={{ backgroundColor: '#1c2238' }}>
         <View style={{
           backgroundColor: '#282d4b',
-          height: normalizeHeight(40),
+          height: normalizeHeight(34),
           borderTopWidth: normalize(1),
           borderTopColor: '#3d4868',
           borderLeftWidth: normalize(1),
@@ -268,7 +279,10 @@ export const CalendarScreen = () => {
         }}>
           <Text style={{ color: '#e7ebf5', fontWeight: '500', fontSize: normalize(14) }}>{monthYearString}</Text>
         </View>
-        <MonthCalendarGrid selectedDate={selectedDate} />
+        <MonthCalendarGrid
+          selectedDate={selectedDate}
+          cellHeight={Math.round((CARD_CAPTURE_WIDTH - 2 * normalize(16)) / 7 * 1.15)}
+        />
       </View>
     </View>
   );
@@ -278,7 +292,7 @@ export const CalendarScreen = () => {
       <View style={[styles.bg, { padding: normalize(16), justifyContent: 'center' }]}>
         {shareCard}
         <TouchableOpacity
-          onPress={() => shareViewAsImage(shareCardRef, `Check out my ${monthYearString} workout consistency! 💪\nTracked on https://fitforge.chinmaykarnik.com`)}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my ${monthYearString} workout consistency! 💪\n\nTracked on https://fitforge.chinmaykarnik.com`)}
           activeOpacity={0.8}
           style={{ marginTop: normalizeHeight(20), backgroundColor: '#3a4fa0', borderRadius: normalize(10), paddingVertical: normalizeHeight(14), alignItems: 'center', borderWidth: 1, borderColor: '#5a72c4' }}
         >
