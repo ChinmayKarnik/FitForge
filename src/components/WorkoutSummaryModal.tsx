@@ -41,7 +41,7 @@ const WorkoutSummaryModal = ({
             paddingBottom: normalizeHeight(20),
           }}>
             <View style={{ paddingHorizontal: normalizeWidth(16),
-              paddingBottom: normalizeHeight(10)
+              paddingBottom: normalizeHeight(4)
              }}>
               <Text style={{
                 color: '#F2F4F8',

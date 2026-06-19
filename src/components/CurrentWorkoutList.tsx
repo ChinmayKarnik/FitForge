@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import { normalize, normalizeHeight, normalizeHeightF, normalizeWidth } from '../utils/normalize';
 import no_workout_image from '../images/notepad-with-dumbell.png'
@@ -51,6 +51,12 @@ const CurrentWorkoutList = (
         separatedExercisesReverse)
     const isNoExercises = !exercises.length;
     const [isAtBottom, setIsAtBottom] = useState(false);
+    const containerHeightRef = useRef(0);
+    const contentHeightRef = useRef(0);
+
+    const checkAtBottom = (containerH: number, contentH: number) => {
+        setIsAtBottom(contentH <= containerH + 16);
+    };
 
     const handleScroll = (event: any) => {
         const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -101,7 +107,7 @@ const CurrentWorkoutList = (
     return (
         <View style={{
             ...(listMaxHeight ? {} : scrollEnabled ? { flex: 1 } : {}),
-            marginTop:normalizeHeight(22),
+            marginTop: normalizeHeight(showSectionHeader ? 22 : 10),
             paddingHorizontal: horizontalPadding ? normalize(14) : 0,
         }} >
             {showSectionHeader && (
@@ -144,6 +150,14 @@ const CurrentWorkoutList = (
                                 showsVerticalScrollIndicator={false}
                                 onScroll={(e) => { handleScroll(e); onScrollProp?.(e); }}
                                 scrollEventThrottle={16}
+                                onLayout={(e) => {
+                                    containerHeightRef.current = e.nativeEvent.layout.height;
+                                    checkAtBottom(containerHeightRef.current, contentHeightRef.current);
+                                }}
+                                onContentSizeChange={(_, h) => {
+                                    contentHeightRef.current = h;
+                                    checkAtBottom(containerHeightRef.current, h);
+                                }}
                             />
                             {(listMaxHeight || showBottomFade) && !isAtBottom && (
                                 <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: normalizeHeight(60) }} pointerEvents="none">

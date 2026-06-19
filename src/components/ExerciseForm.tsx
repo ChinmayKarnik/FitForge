@@ -34,7 +34,7 @@ const ExerciseForm: React.FC = ({
    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} scrollEnabled={false} keyboardShouldPersistTaps="handled">
        <View style={[{
-                   backgroundColor: '#252d47',
+                   backgroundColor: '#283050',
                    borderWidth: normalize(1),
                    borderRadius: normalize(16),
                    borderColor: 'rgba(255,255,255,0.20)',

@@ -565,8 +565,8 @@ export const LiveWorkoutRoutine = ({ onEndWorkout, navigation }: { onEndWorkout:
 
 const restStyles = StyleSheet.create({
   card: {
-    marginTop: normalizeHeight(12),
-    marginBottom: normalizeHeight(16),
+    marginTop: normalizeHeight(16),
+    marginBottom: normalizeHeight(20),
     marginHorizontal: normalizeWidth(30),
     backgroundColor: '#1f243b',
     borderWidth:normalizeF(3,2),
@@ -793,7 +793,7 @@ const styles = StyleSheet.create({
     borderColor: '#dc6c72',
     backgroundColor: '#ad2126',
     borderRadius: normalize(12),
-    marginTop: normalize(6),
+    marginTop: normalizeHeight(12),
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: normalizeHeight(32),

@@ -49,7 +49,7 @@ const EndActiveWorkoutModal = ({ visible, onClose, workout, navigation, onEndWor
             );
         }
     }
-
+  
     if (isNoExercisesLogged) {
         const onEndAnyway = () => {
             onClose();
