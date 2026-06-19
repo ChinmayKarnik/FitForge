@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#1a2138',
     alignItems: 'center',
-    minHeight:normalizeHeight(52)
+    minHeight:normalizeHeight(44)
   },
   valueContainer: {
     justifyContent: 'center',
@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
   },
   valueText: {
     color: 'white',
-    fontSize: normalize(28),
-    fontWeight: '700',
+    fontSize: normalize(20),
+    fontWeight: '600',
     letterSpacing: 0.5,
-    paddingVertical: normalize(10),
-    paddingHorizontal: normalize(14),
+    paddingVertical: normalize(7),
+    paddingHorizontal: normalize(13),
     margin: 0,
     includeFontPadding: false,
   },
