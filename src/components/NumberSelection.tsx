@@ -45,7 +45,7 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 				backgroundColor: '#1a2138',
 				borderWidth: normalize(1),
 				borderColor: '#3d4563',
-				minHeight: normalizeHeight(52),
+				minHeight: normalizeHeight(44),
 			}}
 		>
 			<TouchableOpacity
@@ -59,7 +59,7 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 			  borderTopLeftRadius: normalize(8),
 			  borderBottomLeftRadius: normalize(8),
 			  backgroundColor: '#1a2138',
-              paddingHorizontal:normalizeWidth(12),
+              paddingHorizontal:normalizeWidth(11),
 			  justifyContent: 'center',
 			  alignItems: 'center',
 			}}
@@ -74,11 +74,9 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 			}}
 			>
 				<TextInput
-					style={{ color: '#F2F4F8', fontSize: normalize(28), fontWeight: '700',
-
-						paddingVertical:normalize(10),
-						paddingHorizontal: normalizeWidth(14),
-						lineHeight:normalize(28),
+					style={{ color: '#F2F4F8', fontSize: normalize(20), fontWeight: '600',
+						paddingHorizontal: normalizeWidth(13),
+						lineHeight:normalize(20),
 						 textAlign: 'center',
 					}}
 					onChange={(event)=>{
@@ -100,7 +98,7 @@ const NumberSelection = ({ value, setValue, areNegativeNumbersAllowed = true }) 
 			  backgroundColor: '#1a2138',
 			  borderTopRightRadius: normalize(8),
 			  borderBottomRightRadius: normalize(8),
-              paddingHorizontal:normalizeWidth(12),
+              paddingHorizontal:normalizeWidth(11),
 			  justifyContent: 'center',
 			  alignItems: 'center',
 			}}
