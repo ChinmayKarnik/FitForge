@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Modal, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
 import ExerciseForm from './ExerciseForm';
 import { databaseController } from '../data/controllers';
@@ -33,7 +35,7 @@ export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx, onSave, ini
                 onPress={onClose}
             >
                 {/* Container */}
-                <View
+                <View 
                     style={styles.container}
                     onStartShouldSetResponder={() => true}
                 >
@@ -49,6 +51,8 @@ export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx, onSave, ini
                         onDiscard={onClose}
                         setNumber={setIdx + 1}
                         removeHorizontalMargin={true}
+                        shouldUseKAV = {false}
+                        showBorder = {false}
                     />
                 </View>
             </TouchableOpacity>
@@ -56,12 +60,14 @@ export const LogSetsModal = ({ visible, onClose, exerciseId, setIdx, onSave, ini
     );
 };
 
+
 const styles = StyleSheet.create({
     backdrop: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingTop: SCREEN_HEIGHT * 0.2,
     },
     container: {
         backgroundColor: '#1c2238',

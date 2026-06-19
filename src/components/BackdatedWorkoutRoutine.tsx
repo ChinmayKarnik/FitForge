@@ -10,10 +10,13 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import white_donut from '../images/white-donut.png';
 import calendar from '../images/calendar.png';
 import clock_thick_white from '../images/clock-thick-white.png';
+import notes2Icon from '../images/notes-2.png';
+import infoIcon from '../images/info-icon.png';
 import Svg, { Defs, LinearGradient, Stop, Rect, Path, Circle } from 'react-native-svg';
 import { LogSetsModal } from './LogSetsModal.tsx';
 import EndActiveWorkoutModal from './EndActiveWorkoutModal';
 import AreYouSureModal from './AreYouSureModal';
+import RoutineDetailsModal from './RoutineDetailsModal';
 
 // Helper function to get current time
 const getCurrentTime = () => {
@@ -36,6 +39,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
     const [selectedRoutineId, setSelectedRoutineId] = useState<string | null>(null);
     const [logSetModalState,setLogSetModalState] = useState<{visible:boolean;exerciseId?:string;setIdx?:number;initialData?:Record<string,any>|null}>({visible:false})
     const [isListAtBottom, setIsListAtBottom] = useState(false);
+    const [detailsRoutine, setDetailsRoutine] = useState<any>(null);
     const workoutRef = useRef({})
 
     // State variable to force re-render
@@ -235,7 +239,7 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                     <Text style={{
                         fontSize: normalize(15),
                         fontWeight: '600',
-                        color: '#B0B7C3',
+                        color: 'rgba(255,255,255,0.65)',
                         marginBottom: normalizeHeight(8),
                     }}>Date and time</Text>
                     <View style={{ flexDirection: 'row' }}>
@@ -292,12 +296,6 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
 
                 {/* Selected Routine Section */}
                 <View style={{ marginTop: normalizeHeight(20) }}>
-                    <Text style={{
-                        fontSize: normalize(15),
-                        fontWeight: '600',
-                        color: '#B0B7C3',
-                        marginBottom: normalizeHeight(8),
-                    }}>Routine</Text>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -305,19 +303,32 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                         borderRadius: normalizeHeight(12),
                         borderWidth: 1,
                         borderColor: 'rgba(68, 75, 95, 1)',
-                        paddingVertical: normalizeHeight(12),
-                        paddingHorizontal: normalizeWidth(16),
+                        paddingVertical: normalizeHeight(8),
+                        paddingHorizontal: normalizeWidth(14),
                     }}>
-                        <Text style={{ fontSize: normalizeHeight(15), color: '#F2F4F8', fontWeight: '500' }}>
-                            {databaseController.getRoutineById(selectedRoutineId)?.name || 'Unknown Routine'}
-                        </Text>
+                        <Image
+                            source={notes2Icon}
+                            style={{ width: normalize(18), height: normalize(18) * (458.0 / 399.0), aspectRatio: (399.0 / 458.0), resizeMode: 'contain', tintColor: '#a1a9ea', marginRight: normalizeWidth(16) }}
+                        />
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: normalize(11), fontWeight: '400', marginBottom: 1 }}>Routine</Text>
+                            <Text style={{ color: '#ffffff', fontSize: normalize(13), fontWeight: '600' }}>
+                                {databaseController.getRoutineById(selectedRoutineId)?.name || 'Unknown Routine'}
+                            </Text>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => setDetailsRoutine(databaseController.getRoutineById(selectedRoutineId))}
+                            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                        >
+                            <Image source={infoIcon} style={{ width: normalize(17), height: normalize(17) * (401.0 / 411.0), tintColor: 'rgba(255,255,255,0.5)' }} />
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{ marginTop: normalizeHeight(20), flex: 1 }}>
                     <Text style={{
                         fontSize: normalize(15),
                         fontWeight: '600',
-                        color: '#B0B7C3',
+                        color: 'rgba(255,255,255,0.65)',
                         marginBottom: normalizeHeight(8),
                     }}>Exercises</Text>
                     <View style={{ flex: 1 }}>
@@ -630,6 +641,11 @@ export const BackdatedWorkoutRoutine = ({ onEnd, onBackPress, navigation }: { on
                 primaryVariant="destructive"
                 secondaryLabel="Stay"
                 onSecondary={() => setShowBackConfirm(false)}
+            />
+            <RoutineDetailsModal
+                visible={!!detailsRoutine}
+                routine={detailsRoutine}
+                onClose={() => setDetailsRoutine(null)}
             />
         </>
     );
