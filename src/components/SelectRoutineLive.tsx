@@ -8,6 +8,7 @@ import magnifying_glass from '../images/magnifying-glass-white.png';
 import white_left_arrow from '../images/white-left-arrow.png';
 import info_icon from '../images/info-icon.png';
 import question_mark_with_circle from '../images/question-mark-with-circle.png';
+import cross_icon from '../images/cross-icon-white.png';
 import notepad_with_glass from '../images/notepad-with-glass.png';
 import dumbbell_slant_2 from '../images/dumbbell-slant-2.png';
 import RoutineDetailsModal from './RoutineDetailsModal';
@@ -68,6 +69,9 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
         onPress={() => handleSelectRoutine(item.id)}
         activeOpacity={0.7}
       >
+        {isSelected && (
+          <View style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: normalize(5), backgroundColor: '#4e68a6' }} />
+        )}
         {/* Radio button — left */}
         <View style={[styles.radioOuter, isSelected && styles.radioOuterSelected]}>
           {isSelected && <View style={styles.radioInner} />}
@@ -75,10 +79,14 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
 
         {/* Text content — middle */}
         <View style={styles.routineTextContainer}>
-          <Text style={styles.routineName}>{item.name}</Text>
-          <Text style={styles.routineExerciseCount}>
-            {item.exercises.length === 1 ? '1 Exercise' : `${item.exercises.length} Exercises`}
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: normalizeHeight(3), gap: normalizeWidth(8) }}>
+            <Text style={styles.routineName}>{item.name}</Text>
+            <View style={styles.exerciseTag}>
+              <Text style={styles.exerciseTagText}>
+                {item.exercises.length} {item.exercises.length === 1 ? 'EXERCISE' : 'EXERCISES'}
+              </Text>
+            </View>
+          </View>
           <Text style={styles.routineExerciseNames} numberOfLines={1}>
             {item.exercises.map((e: any) => e.name).join(', ')}
           </Text>
@@ -128,6 +136,33 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
             value={searchText}
             onChangeText={setSearchText}
           />
+          {searchText.length > 0 && (
+            <TouchableOpacity
+              onPress={() => setSearchText('')}
+              activeOpacity={0.7}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              style={{ marginRight: -normalizeWidth(4) }}
+            >
+              <View style={{
+                width: normalize(18),
+                height: normalize(18),
+                borderRadius: normalize(9),
+                borderWidth: normalize(1),
+                borderColor: 'rgba(255,255,255,0.38)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Image
+                  source={cross_icon}
+                  style={{
+                    width: normalize(7),
+                    height: normalize(7),
+                    tintColor: 'rgba(255,255,255,0.62)',
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -208,8 +243,8 @@ export const SelectRoutineLive = ({ onSelectRoutine, onEndWorkout }: SelectRouti
   );
 };
 
-const RADIO_SIZE = normalize(22);
-const INFO_SIZE = normalize(20);
+const RADIO_SIZE = normalize(18);
+const INFO_SIZE = normalize(18);
 const QM_SIZE = normalize(20);
 
 const styles = StyleSheet.create({
@@ -356,13 +391,14 @@ const styles = StyleSheet.create({
     borderColor: '#383e55',
     borderWidth: normalize(1),
     borderRadius: normalize(10),
+    overflow: 'hidden',
     paddingHorizontal: normalizeWidth(14),
     paddingVertical: normalizeHeight(14),
     marginBottom: normalizeHeight(10),
   },
   routineItemSelected: {
     borderColor: '#4e68a6',
-    backgroundColor: 'rgba(78, 104, 166, 0.12)',
+    backgroundColor: 'rgba(78, 104, 166, 0.15)',
   },
   radioOuter: {
     width: RADIO_SIZE,
@@ -379,10 +415,10 @@ const styles = StyleSheet.create({
     borderColor: '#4e68a6',
   },
   radioInner: {
-    width: RADIO_SIZE * 0.5,
-    height: RADIO_SIZE * 0.5,
-    borderRadius: (RADIO_SIZE * 0.5) / 2,
-    backgroundColor: '#4e68a6',
+    width: RADIO_SIZE * 0.44,
+    height: RADIO_SIZE * 0.44,
+    borderRadius: (RADIO_SIZE * 0.44) / 2,
+    backgroundColor: '#ffffff',
   },
   routineTextContainer: {
     flex: 1,
@@ -393,16 +429,25 @@ const styles = StyleSheet.create({
     color: '#fefefe',
     marginBottom: normalizeHeight(3),
   },
-  routineExerciseCount: {
-    fontSize: normalize(13),
-    fontWeight: '400',
-    color: '#4f8ff4',
-    marginBottom: normalizeHeight(2),
+  exerciseTag: {
+    borderWidth: normalize(1),
+    borderColor: '#4e68a6',
+    borderRadius: normalize(4),
+    backgroundColor: '#1f243b',
+    paddingHorizontal: normalizeWidth(5),
+    paddingVertical: normalizeHeight(1),
+  },
+  exerciseTagText: {
+    color: '#7fb3ff',
+    fontSize: normalize(9),
+    fontWeight: '600',
+    letterSpacing: 0.3,
   },
   routineExerciseNames: {
     fontSize: normalize(12),
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.5)',
+    fontStyle: 'italic',
+    color: 'rgba(255,255,255,0.62)',
   },
   infoIcon: {
     width: INFO_SIZE,
@@ -419,15 +464,16 @@ const styles = StyleSheet.create({
   startButton: {
     backgroundColor: '#2f4880',
     borderWidth: normalize(1),
-    borderColor: '#4e68a6',
-    paddingVertical: normalizeHeight(16),
+    borderColor: 'rgba(255,255,255,0.18)',
+    paddingVertical: normalizeHeight(14),
     borderRadius: normalize(10),
     alignItems: 'center',
   },
   startButtonDisabled: {
-    backgroundColor: '#313960',
-    borderWidth: 0,
-    opacity: 0.8,
+    backgroundColor: '#252d47',
+    borderWidth: normalize(1),
+    borderColor: 'rgba(78,104,166,0.35)',
+    opacity: 0.62,
   },
   startButtonText: {
     color: '#ffffff',
