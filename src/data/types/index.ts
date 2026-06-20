@@ -1,6 +1,6 @@
 export interface ExerciseParameter {
   name: string;
-  type: 'number' | 'boolean' | 'string';
+  type: 'reps' | 'weight' | 'time' | 'number' | 'boolean' | 'string';
   moreIsBetter?: boolean;
 }
 

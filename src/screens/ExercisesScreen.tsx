@@ -23,9 +23,9 @@ const ExercisesScreen = () => {
         setIsAtBottom(contentOffset.y + layoutMeasurement.height >= contentSize.height - 16);
     };
 
-    const filteredExercises = exercises.filter(exercise =>
-        exercise.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+    const filteredExercises = exercises
+        .filter(exercise => exercise.name.toLowerCase().includes(searchText.toLowerCase()))
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     const renderItem = ({ item }) => {
         return (
