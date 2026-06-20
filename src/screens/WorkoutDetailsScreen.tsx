@@ -7,6 +7,15 @@ import profile_photo_default from '../images/profile-photo-default.png';
 import fitforgeIcon from '../images/fitforge-icon.png';
 
 const DEV_SHARE_PREVIEW = false;
+
+const renderBioWithEmojis = (bio: string) => {
+  const parts = bio.split(/(\p{Extended_Pictographic})/gu);
+  return parts.map((part, i) =>
+    /\p{Extended_Pictographic}/u.test(part)
+      ? <Text key={i} style={{ color: '#ffffff' }}>{part}</Text>
+      : part
+  );
+};
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { normalizeHeight, normalizeWidth, normalize } from '../utils/normalize';
@@ -145,7 +154,7 @@ export default function WorkoutDetailsScreen() {
         <TouchableOpacity
           style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout: ${workout?.name} 💪\nLog yours at https://fitforge.chinmaykarnik.com`)}
+          onPress={() => shareViewAsImage(shareCardRef, `Check out my workout: ${workout?.name} 💪\n\nLog yours at https://fitforge.chinmaykarnik.com`)}
         >
           <Image source={shareIcon} style={{ width: normalize(22), height: normalize(22) * (344.0/350.0), resizeMode: 'contain',
              tintColor: 'rgba(255,255,255,0.75)' }} />
@@ -275,7 +284,7 @@ export default function WorkoutDetailsScreen() {
                     numberOfLines={2}
                     ellipsizeMode="tail"
                     style={{ color: 'rgba(255,255,255,0.65)', fontSize: normalize(11), fontStyle: 'italic', marginTop: normalizeHeight(3), lineHeight: normalize(16) }}
-                  >{userInfo.bio}</Text>
+                  >{renderBioWithEmojis(userInfo.bio)}</Text>
                 )}
               </View>
               <Image source={fitforgeIcon} style={{ width: normalize(32), height: normalize(32), borderRadius: normalize(8), marginLeft: normalizeWidth(8), alignSelf: 'flex-start' }} />
