@@ -27,8 +27,8 @@ export const initializeDatabase = async () => {
       databaseController.setUserInfo(userInfo);
     } else {
       databaseController.setUserInfo({
-        name: "John Doe",
-        bio: "Fitness enthusiast. Working hard everyday to improve myself and reach new goals.",
+        name: "Chris Miller",
+        bio: "Every rep counts. Every session matters. Show up and let consistency do the rest.",
         profilePicture: null
       })
     }
