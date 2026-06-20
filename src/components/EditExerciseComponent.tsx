@@ -32,11 +32,12 @@ const PARAMETER_ROWS = [
         icon: flame_icon,
         iconWidth: 22,
         iconHeight: 28,
+        hidden: true,
     },
     {
         key: 'time' as const,
         title: 'Time',
-        description: 'Track the duration of each set',
+        description: 'Track how long each set takes to complete',
         icon: stopwatch_icon,
         iconWidth: 23,
         iconHeight: 26,
@@ -256,13 +257,13 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
                         borderRadius: normalize(12),
                         overflow: 'hidden',
                     }}>
-                        {PARAMETER_ROWS.map((row, index) => (
+                        {PARAMETER_ROWS.filter(row => !row.hidden).map((row, index) => (
                             <View key={row.key}>
                                 <View style={{
                                     paddingHorizontal: normalizeWidth(12),
                                     paddingVertical: normalizeHeight(14),
                                     flexDirection: 'row',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
                                 }}>
                                     <View style={{
                                         width: normalizeWidth(30),
@@ -319,7 +320,7 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
                                         }} />
                                     </TouchableOpacity>
                                 </View>
-                                {index < PARAMETER_ROWS.length - 1 && (
+                                {index < PARAMETER_ROWS.filter(r => !r.hidden).length - 1 && (
                                     <View style={{ height: 1, backgroundColor: '#3d4563', marginHorizontal: normalizeWidth(14) }} />
                                 )}
                             </View>
