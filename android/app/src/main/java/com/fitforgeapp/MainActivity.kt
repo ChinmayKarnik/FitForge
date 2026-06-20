@@ -10,7 +10,11 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 class MainActivity : ReactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    installSplashScreen()
+    val splashScreen = installSplashScreen()
+    val startTime = System.currentTimeMillis()
+    splashScreen.setKeepOnScreenCondition {
+      System.currentTimeMillis() - startTime < 800L
+    }
     super.onCreate(savedInstanceState)
   }
 

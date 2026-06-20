@@ -102,6 +102,8 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "FitForge Dev"
         }
         release {
             signingConfig signingConfigs.release
