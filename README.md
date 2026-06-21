@@ -49,32 +49,32 @@ There's no good, well-known app dedicated to strength training tracking. Most fi
 
 <table>
   <tr>
-    <td align="center"><img src="src/design/screenshots/track-start-ss.png" width="200"/><br/><sub>Start a Workout</sub></td>
+    <td align="center"><img src="src/design/screenshots/track-start-ss.png" width="200"/><br/>Start a Workout</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/live-workout-ss.png" width="200"/><br/><sub>Live Workout</sub></td>
+    <td align="center"><img src="src/design/screenshots/live-workout-ss.png" width="200"/><br/>Live Workout</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/live-workout-between-ss.png" width="200"/><br/><sub>Sets Logged</sub></td>
+    <td align="center"><img src="src/design/screenshots/live-workout-between-ss.png" width="200"/><br/>Sets Logged</td>
   </tr>
   <tr>
-    <td align="center"><img src="src/design/screenshots/select-routine-ss.png" width="200"/><br/><sub>Select Routine</sub></td>
+    <td align="center"><img src="src/design/screenshots/select-routine-ss.png" width="200"/><br/>Select Routine</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/routine-detail-ss.png" width="200"/><br/><sub>Routine Details</sub></td>
+    <td align="center"><img src="src/design/screenshots/routine-detail-ss.png" width="200"/><br/>Routine Details</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/backdated-routine-ss.png" width="200"/><br/><sub>Log a Past Workout</sub></td>
+    <td align="center"><img src="src/design/screenshots/backdated-routine-ss.png" width="200"/><br/>Log a Past Workout</td>
   </tr>
   <tr>
-    <td align="center"><img src="src/design/screenshots/calendar-ss.png" width="200"/><br/><sub>Calendar</sub></td>
+    <td align="center"><img src="src/design/screenshots/calendar-ss.png" width="200"/><br/>Calendar</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/statistics-ss.png" width="200"/><br/><sub>Statistics</sub></td>
+    <td align="center"><img src="src/design/screenshots/statistics-ss.png" width="200"/><br/>Statistics</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/activity-ss.png" width="200"/><br/><sub>Activity Feed</sub></td>
+    <td align="center"><img src="src/design/screenshots/activity-ss.png" width="200"/><br/>Activity Feed</td>
   </tr>
   <tr>
-    <td align="center"><img src="src/design/screenshots/workout-detail-ss.png" width="200"/><br/><sub>Workout Details</sub></td>
+    <td align="center"><img src="src/design/screenshots/workout-detail-ss.png" width="200"/><br/>Workout Details</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/day-detail-ss.png" width="200"/><br/><sub>Day Details</sub></td>
+    <td align="center"><img src="src/design/screenshots/day-detail-ss.png" width="200"/><br/>Day Details</td>
     <td width="30"></td>
-    <td align="center"><img src="src/design/screenshots/profile-ss.png" width="200"/><br/><sub>Profile</sub></td>
+    <td align="center"><img src="src/design/screenshots/profile-ss.png" width="200"/><br/>Profile</td>
   </tr>
 </table>
 
