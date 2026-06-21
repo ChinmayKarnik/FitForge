@@ -19,7 +19,7 @@ FitForge is dedicated to one thing: helping you systematically log your weight t
 • **Progress Analytics** - Track your progression over days and months with visual statistics
 • **Calendar View** - See your consistency at a glance with a calendar overview of your training
 • **Profile Customization** - Manage your profile and upload your photo
-• **Offline-First** - Works completely offline with sync capabilities
+• **Offline-First** - Works completely offline, no account required
 • **No Ads, No Paywalls** - Everything essential is free
 
 ### Who Is This For?
@@ -32,6 +32,6 @@ There's no good, dedicated app for strength training tracking. Most fitness apps
 - Minimal data collection - your workouts stay private
 - Works offline - log even without internet
 - Clean, intuitive interface optimized for the gym
-- Built with React Native for seamless iOS and Android experience
+- Built with React Native for Android
 
 Start logging your strength training today with FitForge!
