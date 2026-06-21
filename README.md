@@ -12,9 +12,9 @@
 
 <p align="center">
   <img src="src/design/screenshots/live-workout-ss.png" width="175" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="src/design/screenshots/activity-ss.png" width="175" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="src/design/screenshots/calendar-ss.png" width="175" />
 </p>
 
