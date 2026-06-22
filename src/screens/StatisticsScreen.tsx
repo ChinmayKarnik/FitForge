@@ -321,6 +321,7 @@ export const StatisticsScreen = () => {
               value={statsData.busiestDay ?? '-'}
               valueColor="#7fb3ff"
               valueFontSize={normalize(26)}
+              valueLines={1}
               label="Busiest Day"
               isLeft={false}
               groupLabelValue={true}
