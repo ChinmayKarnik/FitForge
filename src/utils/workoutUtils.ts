@@ -245,11 +245,12 @@ export const getStatsForTimeRange = (startTime, endTime) => {
 
 	// 4. Average weekly sessions
 	let averageWeeklySessions: number | null = null;
-	const rangeMs = endTime - startTime;
-	const rangeWeeks = rangeMs / (1000 * 60 * 60 * 24 * 7);
-	if (rangeWeeks > 0) {
-		averageWeeklySessions = workoutsInRange.length > 0 ? Math.round((workoutsInRange.length / rangeWeeks) * 100) / 100 : 0;
-	}
+	const firstWorkoutTime = getStatsStartDate();
+	const effectiveStartTime = firstWorkoutTime !== null ? Math.max(startTime, firstWorkoutTime) : startTime;
+	const rangeMs = endTime - effectiveStartTime;
+	const rangeDays = Math.ceil(rangeMs / (1000 * 60 * 60 * 24));
+	const rangeWeeks = Math.max(1, rangeDays / 7);
+	averageWeeklySessions = workoutsInRange.length > 0 ? Math.round((workoutsInRange.length / rangeWeeks) * 100) / 100 : 0;
 
 	// 5. Favourite exercise (most performed by number of sets)
 	let favouriteExercise: string | null = null;
