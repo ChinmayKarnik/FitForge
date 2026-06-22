@@ -5,9 +5,9 @@ import { routines as dummyRoutines } from '../dummy/routines';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class DatabaseController {
-  private exercises =null;
-  private workouts= null;
-  private routines =null;
+  private exercises = [];
+  private workouts = [];
+  private routines = [];
   private userInfo = null;
 
   // User Info CRUD

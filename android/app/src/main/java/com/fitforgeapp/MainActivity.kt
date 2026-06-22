@@ -15,7 +15,7 @@ class MainActivity : ReactActivity() {
     splashScreen.setKeepOnScreenCondition {
       System.currentTimeMillis() - startTime < 800L
     }
-    super.onCreate(savedInstanceState)
+    super.onCreate(null)
   }
 
   /**
