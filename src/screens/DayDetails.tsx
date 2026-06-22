@@ -11,11 +11,12 @@ import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 export const DayDetails = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const date = route.params?.date;
+    const dateTimestamp = route.params?.date;
+    const date = dateTimestamp ? new Date(dateTimestamp) : null;
     let dayName = '';
     let dateText = '';
     if (date) {
-        const d = new Date(date);
+        const d = date;
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         dayName = days[d.getDay()];
         const monthName = d.toLocaleString('default', { month: 'long' });

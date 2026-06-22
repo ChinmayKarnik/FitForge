@@ -24,7 +24,7 @@ import ProfileImageCircular from '../components/ProfileImageCircular';
 const DEV_SHARE_PREVIEW = false;
 
 type RootStackParamList = {
-  DayDetails: { date: Date };
+  DayDetails: { date: number };
 };
 
 // ─── Extracted calendar grid component ───────────────────────────────────────
@@ -206,7 +206,7 @@ export const CalendarScreen = () => {
       return;
     }
     const date = new Date(year, month, dateNumber);
-    navigation.navigate('DayDetails', { date });
+    navigation.navigate('DayDetails', { date: date.getTime() });
   };
 
   const shareCard = (
