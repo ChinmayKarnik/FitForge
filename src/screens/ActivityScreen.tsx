@@ -5,10 +5,12 @@ import ActivityListEmpty from '../components/ActivityListEmpty';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
 import { databaseController } from '../data';
 import { normalize, normalizeHeight } from '../utils/normalize';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { filteroutInvalidWorkouts } from '../utils/workoutUtils';
 
 export const ActivityScreen = () => {
   const navigation = useNavigation<any>();
+  const { top } = useSafeAreaInsets();
   const [workouts, setWorkouts] = useState<any[]>([]);
 
   useFocusEffect(
@@ -29,11 +31,11 @@ export const ActivityScreen = () => {
     <View style={styles.bg}>
       <View style={{
         width: '100%',
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderColor: 'rgba(68, 75, 95)',
         alignItems: 'center',
         backgroundColor: 'rgba(36, 42, 65)',
-        paddingTop: normalizeHeight(40),
+        paddingTop: top,
         paddingBottom: normalizeHeight(12),
       }}>
         <Text style={{

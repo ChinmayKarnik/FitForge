@@ -11,9 +11,11 @@ import cross_icon from '../images/cross-icon-white.png'
 import white_plus from '../images/white-plus.png'
 import white_left_arrow from '../images/white-left-arrow.png'
 import notepad_with_glass from '../images/notepad-with-glass.png'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ExercisesScreen = () => {
     const navigation = useNavigation();
+    const { top } = useSafeAreaInsets();
     const exercises = databaseController.getAllExercises();
     const [searchText, setSearchText] = useState('');
     const [isAtBottom, setIsAtBottom] = useState(false);
@@ -38,15 +40,15 @@ const ExercisesScreen = () => {
     return (
         <View style={styles.bg}>
             <View style={{
-                width: '100%', borderWidth: 1,
+                width: '100%', borderBottomWidth: 1,
                 borderColor: 'rgba(68, 75, 95)',
                 alignItems: 'center',
                 backgroundColor: 'rgba(36, 42, 65)',
-                paddingTop: normalizeHeight(40),
+                paddingTop: top,
                 paddingBottom: normalizeHeight(12)
             }}>
                 <TouchableOpacity
-                    style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                    style={{ position: 'absolute', top: top + normalizeHeight(6), left: normalizeWidth(16) }}
                     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                     onPress={() => navigation.goBack()}
                 >
@@ -62,7 +64,7 @@ const ExercisesScreen = () => {
                 </TouchableOpacity>
                 <Text
                     style={{
-                        fontSize: 22,
+                        fontSize: normalize(18),
                         letterSpacing: 1,
                         fontWeight: '700',
                         color: "#fefefe"

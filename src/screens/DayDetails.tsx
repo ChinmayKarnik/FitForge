@@ -7,9 +7,11 @@ import white_left_arrow from '../images/white-left-arrow.png';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import { getWorkoutsForADay } from '../utils/workoutUtils';
 import { WorkoutSummaryCard } from '../components/WorkoutSummaryCard';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const DayDetails = () => {
     const navigation = useNavigation();
+    const { top } = useSafeAreaInsets();
     const route = useRoute();
     const dateTimestamp = route.params?.date;
     const date = dateTimestamp ? new Date(dateTimestamp) : null;
@@ -44,9 +46,9 @@ export const DayDetails = () => {
 
     return (
         <View style={styles.bg}>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: top }]}>
                 <TouchableOpacity
-                    style={styles.backButton}
+                    style={[styles.backButton, { top: top + normalizeHeight(6) }]}
                     hitSlop={{ top: normalizeHeight(20), bottom: normalizeHeight(20), left: normalizeWidth(20), right: normalizeWidth(20) }}
                     onPress={() => navigation.goBack()}
                 >
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderColor: 'rgba(68, 75, 95)',
         alignItems: 'center',
         backgroundColor: 'rgba(36, 42, 65)',

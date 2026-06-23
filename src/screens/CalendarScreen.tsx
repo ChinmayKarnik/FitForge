@@ -20,6 +20,7 @@ import { doesDayHaveWorkout, getAverageWorkoutDurationCurrentWeekMins, getCurren
 import { shareViewAsImage } from '../utils/shareUtils';
 import { databaseController } from '../data/controllers';
 import ProfileImageCircular from '../components/ProfileImageCircular';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const DEV_SHARE_PREVIEW = false;
 
@@ -166,6 +167,7 @@ const renderBioWithEmojis = (bio: string) => {
 
 export const CalendarScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { top } = useSafeAreaInsets();
   const toastLock = useRef(false);
   const shareCardRef = useRef(null);
 
@@ -305,9 +307,9 @@ export const CalendarScreen = () => {
   return (
     <View style={styles.bg}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: top }]}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={[styles.backButton, { top: top + normalizeHeight(6) }]}
           hitSlop={{ top: normalizeHeight(20), bottom: normalizeHeight(20), left: normalizeWidth(20), right: normalizeWidth(20) }}
           onPress={() => navigation.goBack()}
         >
@@ -315,7 +317,7 @@ export const CalendarScreen = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Calendar</Text>
         <TouchableOpacity
-          style={styles.shareButton}
+          style={[styles.shareButton, { top: top + normalizeHeight(6) }]}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           onPress={() => shareViewAsImage(shareCardRef, `Check out my ${monthYearString} workout consistency! 💪\nTracked on https://fitforge.chinmaykarnik.com`)}
         >
@@ -390,7 +392,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(68, 75, 95)',
     alignItems: 'center',
     backgroundColor: 'rgba(36, 42, 65)',

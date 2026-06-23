@@ -11,6 +11,7 @@ import profile_photo_default from '../images/profile-photo-default.png';
 import { databaseController } from '../data/controllers';
 import { shareViewAsImage } from '../utils/shareUtils';
 import { StatsShareCard } from '../components/StatsShareCard';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CARD_CAPTURE_WIDTH = Dimensions.get('window').width - 32;
 import { TimeRange } from '../enums/enums';
@@ -126,6 +127,7 @@ const SmallCard = ({ icon, iconW, iconH, iconTint, value, valueColor, label, isL
 
 export const StatisticsScreen = () => {
   const navigation = useNavigation();
+  const { top } = useSafeAreaInsets();
   const shareCardRef = useRef(null);
   const [selectedTimeRange, setSelectedTimeRange] = useState(TimeRange.All);
 
@@ -166,12 +168,12 @@ export const StatisticsScreen = () => {
         borderColor: 'rgba(68,75,95,1)',
         alignItems: 'center',
         backgroundColor: 'rgba(36,42,65,1)',
-        paddingTop: normalizeHeight(40),
+        paddingTop: top,
         paddingBottom: normalizeHeight(12),
         position: 'relative',
       }}>
         <TouchableOpacity
-          style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+          style={{ position: 'absolute', top: top + normalizeHeight(6), left: normalizeWidth(16) }}
           onPress={() => navigation.goBack()}
         >
           <Image
@@ -188,7 +190,7 @@ export const StatisticsScreen = () => {
         </Text>
         {!!statsData.totalWorkouts && (
           <TouchableOpacity
-            style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+            style={{ position: 'absolute', top: top + normalizeHeight(6), right: normalizeWidth(16) }}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
             onPress={() => shareViewAsImage(shareCardRef, `Check out my fitness stats on FitForge! 💪\nhttps://fitforge.chinmaykarnik.com`)}
           >

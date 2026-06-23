@@ -32,6 +32,7 @@ import CurrentWorkoutList from '../components/CurrentWorkoutList';
 import RoutineDetailsModal from '../components/RoutineDetailsModal';
 import ProfileImageCircular from '../components/ProfileImageCircular';
 import { thinSpace } from '../components/dateTimeUtils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CARD_BG = '#272d46';
 const CARD_BORDER = '#3d4563';
@@ -47,6 +48,7 @@ const cardStyle = {
 
 export default function WorkoutDetailsScreen() {
   const navigation = useNavigation<any>();
+  const { top } = useSafeAreaInsets();
   const route = useRoute<any>();
   const workout = route.params?.workout;
 
@@ -126,15 +128,15 @@ export default function WorkoutDetailsScreen() {
     <View style={{ flex: 1, backgroundColor: '#1c2238' }}>
       <View style={{
         width: '100%',
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderColor: 'rgba(68, 75, 95)',
         alignItems: 'center',
         backgroundColor: 'rgba(36, 42, 65)',
-        paddingTop: normalizeHeight(40),
+        paddingTop: top,
         paddingBottom: normalizeHeight(12),
       }}>
         <TouchableOpacity
-          style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+          style={{ position: 'absolute', top: top + normalizeHeight(6), left: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           onPress={() => navigation.goBack()}
         >
@@ -148,11 +150,11 @@ export default function WorkoutDetailsScreen() {
             source={white_left_arrow}
           />
         </TouchableOpacity>
-        <Text style={{ fontSize: 22, letterSpacing: 1, fontWeight: '700', color: PRIMARY }}>
+        <Text style={{ fontSize: normalize(18), letterSpacing: 1, fontWeight: '700', color: PRIMARY }}>
           Workout Details
         </Text>
         <TouchableOpacity
-          style={{ position: 'absolute', top: normalizeHeight(46), right: normalizeWidth(16) }}
+          style={{ position: 'absolute', top: top + normalizeHeight(6), right: normalizeWidth(16) }}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           onPress={() => shareViewAsImage(shareCardRef, `Check out my workout: ${workout?.name} 💪\n\nLog yours at https://fitforge.chinmaykarnik.com`)}
         >

@@ -8,6 +8,7 @@ import stopwatch from '../images/stopwatch-white.png';
 import plates_stack_2 from '../images/plates-stack-2.png';
 import dumbbell from '../images/dumbbell.png';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ACCENT = '#4f7ee8';
 
@@ -35,6 +36,7 @@ const RoutineDetailsScreen = (props) => {
     const { params } = props.route;
     const { routine } = params || {};
     const { navigation } = props;
+    const { top } = useSafeAreaInsets();
 
     let totalEstimatedTimeText = '';
     if (Array.isArray(routine?.exercises)) {
@@ -55,15 +57,15 @@ const RoutineDetailsScreen = (props) => {
             {/* Header */}
             <View style={{
                 width: '100%',
-                borderWidth: 1,
+                borderBottomWidth: 1,
                 borderColor: 'rgba(68, 75, 95)',
                 alignItems: 'center',
                 backgroundColor: 'rgba(36, 42, 65)',
-                paddingTop: normalizeHeight(40),
+                paddingTop: top,
                 paddingBottom: normalizeHeight(12),
             }}>
                 <TouchableOpacity
-                    style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                    style={{ position: 'absolute', top: top + normalizeHeight(6), left: normalizeWidth(16) }}
                     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                     onPress={() => navigation.goBack()}
                 >
@@ -78,7 +80,7 @@ const RoutineDetailsScreen = (props) => {
                     />
                 </TouchableOpacity>
                 <Text style={{
-                    fontSize: 22,
+                    fontSize: normalize(18),
                     letterSpacing: 1,
                     fontWeight: '700',
                     color: '#fefefe',

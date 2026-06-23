@@ -19,6 +19,7 @@ import EditNameModal from '../components/EditNameModal';
 import EditBioModal from '../components/EditBioModal';
 import ProfileImageCircular from '../components/ProfileImageCircular';
 import UpdateProfilePhotoModal from '../components/UpdateProfilePhotoModal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const sections = [
   {
@@ -58,6 +59,7 @@ const sections = [
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<any>();
+  const { top } = useSafeAreaInsets();
   const sectionsScrollRef = useRef<ScrollView>(null);
   const [userInfo, setUserInfo] = useState(databaseController.getUserInfo());
   const name = userInfo?.name ?? '';
@@ -136,15 +138,15 @@ export const ProfileScreen = () => {
 
   return (
     <View style={styles.container} >
-     <View style={{width:'100%',borderWidth:1,
+     <View style={{width:'100%',borderBottomWidth:1,
             borderColor: 'rgba(68, 75, 95)',
               alignItems:'center',
               backgroundColor: 'rgba(36, 42, 65)',
-              paddingTop:normalizeHeight(40),
+              paddingTop: top,
               paddingBottom:normalizeHeight(12)
             }}>
               <TouchableOpacity
-                style={{ position: 'absolute', top: normalizeHeight(46), left: normalizeWidth(16) }}
+                style={{ position: 'absolute', top: top + normalizeHeight(6), left: normalizeWidth(16) }}
                 hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                 onPress={() => navigation.goBack()}
               >
@@ -159,7 +161,7 @@ export const ProfileScreen = () => {
                 />
               </TouchableOpacity>
               <Text
-              style={{fontSize:22,
+              style={{fontSize:normalize(18),
                 letterSpacing: 1,
                 fontWeight: '700',
                 color:"#fefefe"
