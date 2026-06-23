@@ -16,6 +16,7 @@ import RoutinesFaqScreen from '../screens/RoutinesFaqScreen';
 import ExitAppModal from '../components/ExitAppModal';
 
 import { View, Text, TouchableOpacity, Image, BackHandler, ToastAndroid } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { sessionHelper } from '../utils/sessionHelper';
 import { Linking } from 'react-native';
 import { linkingConfig, resolveDeepLink } from './deepLinks';
@@ -79,9 +80,10 @@ const TAB_ICONS_DATA = {
 }
 
 function CustomTabBar({ state, descriptors, navigation }) {
+  const { bottom } = useSafeAreaInsets();
   return (
     <View style={stylesTabBar.barWrapper}>
-      <View style={stylesTabBar.barContainer}>
+      <View style={[stylesTabBar.barContainer, { paddingBottom: bottom }]}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =

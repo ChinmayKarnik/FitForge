@@ -9,6 +9,7 @@ import { BackdatedWorkoutFree } from '../components/BackdatedWorkoutFree';
 import { BackdatedWorkoutSelection } from '../components/BackdatedWorkoutSelection';
 import { databaseController } from '../data';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import white_left_arrow from '../images/white-left-arrow.png';
 import TrackWorkoutCard from '../components/TrackWorkoutCard';
 
@@ -23,6 +24,7 @@ type WorkoutMode = 'selection' | 'live-free' | 'live-routine' | 'backdated' | 'b
 export const TrackWorkoutScreen = ({ navigation }: Props) => {
 
 
+  const { top } = useSafeAreaInsets();
   const [workoutMode, setWorkoutMode] = useState<WorkoutMode>('selection');
 
   const endWorkout = () => {
@@ -75,12 +77,12 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
         borderColor: 'rgba(68, 75, 95)',
         alignItems: 'center',
         backgroundColor: 'rgba(36, 42, 65)',
-        paddingTop: normalizeHeight(40),
+        paddingTop: top,
         paddingBottom: normalizeHeight(12)
       }}>
-        <TouchableOpacity 
+        <TouchableOpacity
         style={{ position: 'absolute',
-           top: normalizeHeight(46), left: normalizeWidth(16),
+           top: top + normalizeHeight(6), left: normalizeWidth(16),
           
         }
         }
@@ -106,7 +108,6 @@ export const TrackWorkoutScreen = ({ navigation }: Props) => {
                       color:"#fefefe"
                     }}
         >Track Workout</Text>
-
 
 
       </View>

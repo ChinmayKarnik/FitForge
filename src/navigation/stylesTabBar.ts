@@ -28,7 +28,7 @@ export const stylesTabBar = StyleSheet.create({
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    height: normalizeHeight(70),
+    height: normalizeHeight(50),
     paddingTop:normalizeHeight(8)
   },
   iconCircle: {
