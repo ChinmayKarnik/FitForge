@@ -59,9 +59,9 @@ const sections = [
 export const ProfileScreen = () => {
   const navigation = useNavigation<any>();
   const sectionsScrollRef = useRef<ScrollView>(null);
-  const userInfo = databaseController.getUserInfo() || { name: 'John Doe', bio: 'Fitness enthusiast. Working hard every day to improve myself and reach new goals.' };
-  const name = userInfo.name;
-  const bio = userInfo.bio;
+  const [userInfo, setUserInfo] = useState(databaseController.getUserInfo());
+  const name = userInfo?.name ?? '';
+  const bio = userInfo?.bio ?? '';
 
   const [editNameVisible, setEditNameVisible] = useState(false);
   const [editNameValue, setEditNameValue] = useState(name);
@@ -70,10 +70,10 @@ export const ProfileScreen = () => {
   const [editBioValue, setEditBioValue] = useState(bio);
 
   const [profilePhotoModalVisible, setProfilePhotoModalVisible] = useState(false);
-  const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo.profilePhotoPath || null);
+  const [profilePhotoPath, setProfilePhotoPath] = useState<string | null>(userInfo?.profilePhotoPath || null);
   const [photoTimestamp, setPhotoTimestamp] = useState<number>(Date.now());
   const [imageCrop, setImageCrop] = useState(
-    userInfo.profilePhotoCrop || { x: 0, y: 0, size: 1 }
+    userInfo?.profilePhotoCrop || { x: 0, y: 0, size: 1 }
   );
   console.log('ckck imageCrop here is ',imageCrop)
 
@@ -81,12 +81,14 @@ export const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const info = databaseController.getUserInfo();
-      if (info?.profilePhotoPath && info.profilePhotoPath!== profilePhotoPath) {
-      
+      setUserInfo(info);
+      setEditNameValue(info?.name ?? '');
+      setEditBioValue(info?.bio ?? '');
+      if (info?.profilePhotoPath && info.profilePhotoPath !== profilePhotoPath) {
         setProfilePhotoPath(info.profilePhotoPath);
         setPhotoTimestamp(Date.now());
       }
-      if (info?.profilePhotoCrop && info.profilePhotoCrop !==imageCrop ) {
+      if (info?.profilePhotoCrop && info.profilePhotoCrop !== imageCrop) {
         setImageCrop(info.profilePhotoCrop);
       }
 
