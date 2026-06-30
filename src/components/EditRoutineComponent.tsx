@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity, BackHandler, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
+import { View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity, BackHandler, KeyboardAvoidingView, Keyboard, Platform, ToastAndroid } from 'react-native';
 import AreYouSureModal from './AreYouSureModal';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
@@ -141,8 +141,10 @@ export const EditRoutineComponent = ({ navigation, route, isAddRoutineScreen }: 
         console.log('Routine Object:', routine);
         if (isAddRoutineScreen) {
             databaseController.addRoutine(routine);
+            ToastAndroid.show('Routine created', ToastAndroid.SHORT);
         } else {
             databaseController.updateRoutine(routine.id, routine);
+            ToastAndroid.show('Routine updated', ToastAndroid.SHORT);
         }
         navigation.goBack();
     };

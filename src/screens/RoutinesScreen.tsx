@@ -1,8 +1,8 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { normalizeHeight, normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import RoutineCard from '../components/RoutineCard';
@@ -16,9 +16,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const RoutinesScreen = () => {
     const navigation = useNavigation();
     const { top } = useSafeAreaInsets();
-    const routines = databaseController.getAllRoutines();
+    const [routines, setRoutines] = useState(databaseController.getAllRoutines());
     const [searchText, setSearchText] = useState('');
     const [isAtBottom, setIsAtBottom] = useState(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            setRoutines(databaseController.getAllRoutines());
+        }, [])
+    );
 
     const handleScroll = (event: any) => {
         const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;

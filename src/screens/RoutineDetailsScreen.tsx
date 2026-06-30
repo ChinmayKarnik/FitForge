@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { normalize, normalizeHeight, normalizeWidth } from '../utils/normalize';
 import clock from '../images/clock-thick-white.png';
 import pencil from '../images/pencil-slant.png';
@@ -9,6 +10,7 @@ import plates_stack_2 from '../images/plates-stack-2.png';
 import dumbbell from '../images/dumbbell.png';
 import { getEstimatedExerciseTimeSeconds } from '../utils/workoutUtils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { databaseController } from '../data';
 
 const ACCENT = '#4f7ee8';
 
@@ -34,9 +36,20 @@ const ShortDivider = () => (
 
 const RoutineDetailsScreen = (props) => {
     const { params } = props.route;
-    const { routine } = params || {};
+    const { routine: routineParam } = params || {};
     const { navigation } = props;
     const { top } = useSafeAreaInsets();
+
+    const [routine, setRoutine] = useState(routineParam);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (routineParam?.id) {
+                const fresh = databaseController.getRoutineById(routineParam.id);
+                if (fresh) setRoutine(fresh);
+            }
+        }, [routineParam?.id])
+    );
 
     let totalEstimatedTimeText = '';
     if (Array.isArray(routine?.exercises)) {
