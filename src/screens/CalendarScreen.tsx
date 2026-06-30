@@ -194,7 +194,7 @@ export const CalendarScreen = () => {
   const handleNextMonth = () => setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
 
   const onPressCell = (dateNumber: number | null, hasWorkout: boolean) => {
-    if (!dateNumber || toastLock.current) return;
+    if (!dateNumber) return;
     if (!hasWorkout) {
       if (toastLock.current) return;
       toastLock.current = true;
