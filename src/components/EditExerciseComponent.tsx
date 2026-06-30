@@ -116,8 +116,10 @@ export const EditExerciseComponent = ({ navigation, route, isAddExerciseScreen }
         try {
             if (isAddExerciseScreen) {
                 await databaseController.addExercise(exerciseToSubmit);
+                ToastAndroid.show('Exercise created', ToastAndroid.SHORT);
             } else {
                 await databaseController.updateExercise(exerciseProp.id, exerciseToSubmit);
+                ToastAndroid.show('Exercise updated', ToastAndroid.SHORT);
             }
             navigation.goBack();
         } catch (error) {

@@ -1,8 +1,8 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { normalizeHeight, normalize, normalizeWidth } from '../utils/normalize';
 import { databaseController } from '../data';
 import ExerciseCard from '../components/ExerciseCard';
@@ -16,9 +16,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const ExercisesScreen = () => {
     const navigation = useNavigation();
     const { top } = useSafeAreaInsets();
-    const exercises = databaseController.getAllExercises();
+    const [exercises, setExercises] = useState(databaseController.getAllExercises());
     const [searchText, setSearchText] = useState('');
     const [isAtBottom, setIsAtBottom] = useState(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            setExercises(databaseController.getAllExercises());
+        }, [])
+    );
 
     const handleScroll = (event: any) => {
         const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
