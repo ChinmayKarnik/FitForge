@@ -118,20 +118,20 @@ export const ProfileScreen = () => {
   const closeEditNameModal = () => setEditNameVisible(false);
 
   const onSave = (name)=>{
-    databaseController.updateUserInfo({
-      ...userInfo,
-      name});
-      setEditNameValue(name);
-      closeEditNameModal();
+    const updatedInfo = { ...userInfo, name };
+    databaseController.updateUserInfo(updatedInfo);
+    setUserInfo(updatedInfo);
+    setEditNameValue(name);
+    closeEditNameModal();
   }
 
   const openEditBioModal = () => setEditBioVisible(true);
   const closeEditBioModal = () => setEditBioVisible(false);
 
   const onSaveBio = (bio) => {
-    databaseController.updateUserInfo({
-      ...userInfo,
-      bio});
+    const updatedInfo = { ...userInfo, bio };
+    databaseController.updateUserInfo(updatedInfo);
+    setUserInfo(updatedInfo);
     setEditBioValue(bio);
     closeEditBioModal();
   }
