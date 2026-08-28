@@ -9,14 +9,13 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-FitForge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-FitForge.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		7949304251F34C0EADE6154F /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */; };
 		67A5BAF37EC4430FBD2C1D12 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2C25E379B6B43BAA54913A4 /* SpaceMono-Regular.ttf */; };
+		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		7654D9860618C61EBC354340 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		7949304251F34C0EADE6154F /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B4DC31D7B5054A84815A2A79 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A331B151AF6845B1BDF44D78 /* NunitoSans-Regular.ttf */; };
 		BDD35EEACAB443929CE56F38 /* BarlowCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7F50D4F86E94F8FBD1C14AB /* BarlowCondensed-Black.ttf */; };
-		B2116CBE991D444BBCAF217C /* Anton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D29351BD92BD409781BCA3CF /* Anton-Regular.ttf */; };
-		D70D8B28BDA943139133C224 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87082EB7D9BC4C1A8697073E /* BebasNeue-Regular.ttf */; };
-		7398C4918DB14048A2B6F196 /* BigShouldersDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19F52F2F8E51462EB5F499D3 /* BigShouldersDisplay-Black.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,13 +28,11 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-FitForge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FitForge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FitForge/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FitForge/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A331B151AF6845B1BDF44D78 /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Regular.ttf"; path = "../assets/fonts/NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
+		A7F50D4F86E94F8FBD1C14AB /* BarlowCondensed-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowCondensed-Black.ttf"; path = "../assets/fonts/BarlowCondensed-Black.ttf"; sourceTree = "<group>"; };
+		B2C25E379B6B43BAA54913A4 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B2C25E379B6B43BAA54913A4 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A7F50D4F86E94F8FBD1C14AB /* BarlowCondensed-Black.ttf */ = {isa = PBXFileReference; name = "BarlowCondensed-Black.ttf"; path = "../assets/fonts/BarlowCondensed-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D29351BD92BD409781BCA3CF /* Anton-Regular.ttf */ = {isa = PBXFileReference; name = "Anton-Regular.ttf"; path = "../assets/fonts/Anton-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		87082EB7D9BC4C1A8697073E /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; name = "BebasNeue-Regular.ttf"; path = "../assets/fonts/BebasNeue-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		19F52F2F8E51462EB5F499D3 /* BigShouldersDisplay-Black.ttf */ = {isa = PBXFileReference; name = "BigShouldersDisplay-Black.ttf"; path = "../assets/fonts/BigShouldersDisplay-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +98,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A51EC97E1EC14443A79C1E13 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */,
+				B2C25E379B6B43BAA54913A4 /* SpaceMono-Regular.ttf */,
+				A7F50D4F86E94F8FBD1C14AB /* BarlowCondensed-Black.ttf */,
+				A331B151AF6845B1BDF44D78 /* NunitoSans-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,20 +117,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		A51EC97E1EC14443A79C1E13 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				F847E8E3608D4DADB1BF84B8 /* RobotoMono-Regular.ttf */,
-				B2C25E379B6B43BAA54913A4 /* SpaceMono-Regular.ttf */,
-				A7F50D4F86E94F8FBD1C14AB /* BarlowCondensed-Black.ttf */,
-				D29351BD92BD409781BCA3CF /* Anton-Regular.ttf */,
-				87082EB7D9BC4C1A8697073E /* BebasNeue-Regular.ttf */,
-				19F52F2F8E51462EB5F499D3 /* BigShouldersDisplay-Black.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -189,9 +183,8 @@
 				7949304251F34C0EADE6154F /* RobotoMono-Regular.ttf in Resources */,
 				67A5BAF37EC4430FBD2C1D12 /* SpaceMono-Regular.ttf in Resources */,
 				BDD35EEACAB443929CE56F38 /* BarlowCondensed-Black.ttf in Resources */,
-				B2116CBE991D444BBCAF217C /* Anton-Regular.ttf in Resources */,
-				D70D8B28BDA943139133C224 /* BebasNeue-Regular.ttf in Resources */,
-				7398C4918DB14048A2B6F196 /* BigShouldersDisplay-Black.ttf in Resources */,
+				B4DC31D7B5054A84815A2A79 /* NunitoSans-Regular.ttf in Resources */,
+				7654D9860618C61EBC354340 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,9 +215,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FitForge/Pods-FitForge-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FitForge/Pods-FitForge-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -261,9 +258,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FitForge/Pods-FitForge-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FitForge/Pods-FitForge-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -291,6 +292,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B34WRQPLH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FitForge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -319,6 +321,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B34WRQPLH;
 				INFOPLIST_FILE = FitForge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -399,6 +402,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -407,7 +411,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -464,6 +471,7 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -472,7 +480,9 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

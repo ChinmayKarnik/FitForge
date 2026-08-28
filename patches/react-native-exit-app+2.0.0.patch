@@ -1,0 +1,26 @@
+diff --git a/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.h b/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.h
+index 50a2135..4a598a3 100644
+--- a/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.h
++++ b/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.h
+@@ -7,7 +7,7 @@
+ #endif
+ 
+ #if RCT_NEW_ARCH_ENABLED
+-#import <React-Codegen/RNExitAppSpec/RNExitAppSpec.h>
++#import <ReactCodegen/RNExitAppSpec/RNExitAppSpec.h>
+ #endif
+ 
+ @interface RNExitApp : NSObject <RCTBridgeModule>
+diff --git a/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.mm b/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.mm
+index bec5948..f2a8743 100644
+--- a/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.mm
++++ b/node_modules/react-native-exit-app/ios/RNExitApp/RNExitApp.mm
+@@ -3,7 +3,7 @@
+ #import "RNExitApp.h"
+ 
+ #if RCT_NEW_ARCH_ENABLED
+-#import <RNExitAppSpec/RNExitAppSpec.h>
++#import <ReactCodegen/RNExitAppSpec/RNExitAppSpec.h>
+ #endif
+ 
+ @implementation RNExitApp

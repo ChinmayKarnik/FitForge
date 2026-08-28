@@ -30,5 +30,22 @@ target 'FitForge' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # Xcode 26's Clang claims consteval support but fails on fmt's
+    # FMT_STRING(...) call sites in format-inl.h ("call to consteval
+    # function ... is not a constant expression"). fmt/include/fmt/base.h
+    # unconditionally re-#defines FMT_USE_CONSTEVAL itself (no #ifndef
+    # guard), so overriding it via -D on the command line gets silently
+    # clobbered. Instead, compile just the fmt pod as C++17 — fmt's own
+    # feature-detection ladder treats anything below C++20 as "no
+    # consteval support" and falls back to runtime format-string
+    # validation, which is the documented/supported path, not a hack.
+    installer.pods_project.targets.each do |target|
+      if target.name == 'fmt'
+        target.build_configurations.each do |bc|
+          bc.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+        end
+      end
+    end
   end
 end
