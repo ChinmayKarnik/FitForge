@@ -46,7 +46,12 @@
       "Bash(echo \"exit code: $?\")",
       "Bash(xcrun devicectl *)",
       "Bash(xcodebuild -workspace FitForge.xcworkspace -scheme FitForge -configuration Debug -destination \"id=44E6851B-C534-5188-B12A-341E389AA28D\" -allowProvisioningUpdates build)",
-      "Bash(open -a Xcode \"/Users/chinmaykarnik/Documents/Dev/Miscellaneous Repos/FitnessApp/FitForge/ios/FitForge.xcworkspace\")"
+      "Bash(open -a Xcode \"/Users/chinmaykarnik/Documents/Dev/Miscellaneous Repos/FitnessApp/FitForge/ios/FitForge.xcworkspace\")",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git push *)",
+      "Bash(git add *)"
     ]
   }
 }
