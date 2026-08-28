@@ -10,6 +10,8 @@
   Built with a focus on capturing the nuance of strength training that existing apps miss.
 </p>
 
+<br/>
+
 <p align="center">
   <img src="src/design/demo/fitforge-demo.gif" width="300" />
 </p>
