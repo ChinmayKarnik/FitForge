@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/6f292033-8cd2-47eb-a85f-ab0a4b59e75a" width="300" autoplay muted loop playsinline></video>
+  <img src="src/design/demo/fitforge-demo.gif" width="300" />
 </p>
 
 ---
