@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <video src="src/design/demo/fitforge-demo.mp4" width="300" autoplay muted loop playsinline></video>
+  <video src="https://raw.githubusercontent.com/ChinmayKarnik/FitForge/video-demo/src/design/demo/fitforge-demo.mp4" width="300" autoplay muted loop playsinline></video>
 </p>
 
 ---
