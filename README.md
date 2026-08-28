@@ -18,6 +18,10 @@
   <img src="src/design/screenshots/calendar-ss.png" width="175" />
 </p>
 
+<p align="center">
+  <video src="src/design/demo/fitforge-demo.mp4" width="300" autoplay muted loop playsinline></video>
+</p>
+
 ---
 
 ## Why FitForge?
