@@ -16,7 +16,7 @@
   <img src="src/design/demo/fitforge-demo.gif" width="300" />
 </p>
 <p align="center">
-  <em>Live demo — logging sets in real time</em>
+  <em>Live demo: logging a set in real time</em>
 </p>
 
 ---
