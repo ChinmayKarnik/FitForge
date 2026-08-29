@@ -135,7 +135,15 @@
       "Bash(awk -F, '$1>=16.76 && $1<=60' all_frames.csv)",
       "Bash(mkdir -p \"/private/tmp/claude-501/-Users-chinmaykarnik-Documents-Dev-Miscellaneous-Repos-FitnessApp-FitForge/bf79416e-2038-4895-b70d-f7412c19d296/scratchpad/giffing\")",
       "Bash(time gifsicle -O3 raw.gif -o optimized.gif)",
-      "Bash(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 optimized.gif)"
+      "Bash(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 optimized.gif)",
+      "Bash(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate,duration -of default=noprint_wrappers=1 \"/Users/chinmaykarnik/Documents/Dev/Miscellaneous Repos/FitnessApp/FitForge/src/design/demo/fitforge-demo.mp4\")",
+      "Bash(python3 make_test_frames.py)",
+      "Bash(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate,duration,nb_frames -of default=noprint_wrappers=1 raw.gif)",
+      "Bash(gifsicle -O3 raw.gif -o optimized.gif)",
+      "Bash(ffmpeg -y -i optimized.gif -vframes 1 -pix_fmt rgba check_frame0.png -loglevel error)",
+      "Bash(ffmpeg -y -i optimized.gif -ss 10 -vframes 1 -pix_fmt rgba check_frame_mid.png -loglevel error)",
+      "Bash(ffprobe -v error -show_entries stream=width,height,avg_frame_rate,duration,nb_frames -of default=noprint_wrappers=1 optimized.gif)",
+      "Bash(ffprobe -v error -show_entries stream=width,height,avg_frame_rate,duration,nb_frames -of default=noprint_wrappers=1 \"/Users/chinmaykarnik/Documents/Dev/Miscellaneous Repos/FitnessApp/FitForge/src/design/demo/fitforge-demo.gif\")"
     ]
   }
 }
